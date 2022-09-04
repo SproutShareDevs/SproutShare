@@ -11,7 +11,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 app.get('/', (req,res)=>{
-   res.send('Sprout Share...' + '\nMore Coming Soon');
+   res.send('Sprout Share... More Coming Soon');
 });
 
 app.listen(3000, ()=>{console.log('Listening on port 3000...')});
