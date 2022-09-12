@@ -25,9 +25,9 @@
 
 ### Local Tunnel
 
-### In order to communicate between node and react native, the server must be ran on an https server (not local host). This is where localtunnel helps out by forwarding your localhost server to a https server
+#### In order to communicate between node and react native, the server must be ran on an https server (not local host). This is where localtunnel helps out by forwarding your localhost server to a https server
 
-### *Install local tunnel globally:* npm install -g localtunnel
+#### *Install local tunnel globally:* npm install -g localtunnel
 
 ## Database Setup
 
