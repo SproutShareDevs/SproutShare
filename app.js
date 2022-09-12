@@ -1,17 +1,60 @@
 
-/**
- * Express
- */
+/** npm packages */
 const express = require('express');
-const app = express();
-
-/**
- * Mongoose
- */
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
+const path = require('path');
+const ejs = require('ejs');
 
-app.get('/', (req,res)=>{
-   res.send('Sprout Share... More Coming Soon');
-});
+/** database connection(s) */
+mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
+
+/** npm package middleware */
+const app = express();
+app.use(express.json());
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.set('view engine', 'ejs');
+
+/** custom middleware */
+
+/** controllers */
+// page view controllers
+const homePageController = require('./controllers/homePage');
+const commPostPageController = require('./controllers/commPostPage');
+const exchangeListPageController = require('./controllers/exchangeListPage');
+const notificationsPageController = require('./controllers/notificationsPage');
+
+// create view controllers
+const storeCommPostController = require('./controllers/storeCommPost');
+
+/** route handling */
+
+// render pages
+app.get('/', homePageController);
+app.get('/communityPosts', commPostPageController);
+app.get('/exchangeListings', exchangeListPageController);
+app.get('/notifications', notificationsPageController);
+
+// get by id
+app.get('/communityPosts/:id', commPostPageController);
+app.get('/exchangeListings/:id', exchangeListPageController);
+app.get('/notifications/:id', notificationsPageController);
+
+// storing data
+app.post('/communityPosts/store', storeCommPostController);
+app.post('/exchangeListings/store');
+app.post('notificaitons/store');
+
+// updating data
+app.put('/communityPosts/store');
+app.put('/exchangeListings/store');
+app.put('notificaitons/store');
+
+// deleting data
+app.delete('/communityPosts/store');
+app.delete('/exchangeListings/store');
+app.delete('notificaitons/store');
 
 app.listen(3000, ()=>{console.log('Listening on port 3000...')});

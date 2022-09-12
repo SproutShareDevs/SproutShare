@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <title>Comm</title>
+   </head>
+   <body>
+      <%-include('layouts/navbar');-%>
+      <h1>Community Posts</h1>
+      <br/>
+      <br/>
+      <br/>
+      <form action="/communityPosts/store" method="post" enctype="application/x-www-form-urlencoded">
+         <label for="user_ID">User ID</label>
+         <input type="text" name="user_ID">
+
+         <label for="comm_post_title">Title</label>
+         <input type="text" name="comm_post_title">
+
+         <label for="comm_post_body">Body</label>
+         <input type="text" name="comm_post_body">
+
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <br/>
+      <br/>
+      <% if (typeof commPost != 'undefined') { %>
+         <p>
+            <%=commPost%> 
+         </p>
+      <% } %>
+   </body>
+</html>
