@@ -1,4 +1,11 @@
-/** Route handling for the exchange listing page */
-module.exports = (req, res) => {
-   res.render('exchangeListing');
+/** 
+ * Route handling for the exchange listing page 
+ * Gets all exchange listings
+ * renders them with ejs
+ */
+const ExchangeListings = require('../models/ExchangeListing');
+
+module.exports = async(req, res) => {
+   const exchangeListings = await ExchangeListings.find({});
+   res.render('exchangeListing', {exchangeListings});
 }

@@ -25,14 +25,17 @@ const homePageController = require('./controllers/homePage');
 const commPostPageController = require('./controllers/commPostPage');
 const exchangeListPageController = require('./controllers/exchangeListPage');
 const notificationsPageController = require('./controllers/notificationsPage');
+const testHomePageController = require('./controllers/testPageController');
 
 // create view controllers
 const storeCommPostController = require('./controllers/storeCommPost');
-
+const storeExPostController = require('./controllers/storeExPost');
+const storeNotificationsController = require('./controllers/storeNotification');
 /** route handling */
 
 // render pages
 app.get('/', homePageController);
+app.get('/test', testHomePageController);
 app.get('/communityPosts', commPostPageController);
 app.get('/exchangeListings', exchangeListPageController);
 app.get('/notifications', notificationsPageController);
@@ -44,8 +47,8 @@ app.get('/notifications/:id', notificationsPageController);
 
 // storing data
 app.post('/communityPosts/store', storeCommPostController);
-app.post('/exchangeListings/store');
-app.post('notificaitons/store');
+app.post('/exchangeListings/store', storeExPostController);
+app.post('/notificaitons/store', storeNotificationsController);
 
 // updating data
 app.put('/communityPosts/store');

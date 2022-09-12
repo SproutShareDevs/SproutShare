@@ -6,5 +6,35 @@
    <body>
       <%-include('layouts/navbar');-%>
       <h1>Notifications</h1>
+      <br/>
+      <br/>
+      <br/>
+      <form action="/notificaitons/store" method="post" enctype="application/x-www-form-urlencoded">
+         <label for="user_ID">User ID</label>
+         <input type="text" name="user_ID">
+
+         <label for="user_plant">Plant Name</label>
+         <input type="text" name="user_plant">
+
+         <label for="notification_title">Title</label>
+         <input type="text" name="notification_title">
+
+         <label for="notification_body">Body</label>
+         <input type="text" name="notification_body">
+
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <br/>
+      <br/>
+      <% if (typeof notifications !== 'undefined') { %>
+         <p>
+            <% notifications.forEach(notification => { %>
+               <%= notification %> 
+               <br/>
+               <br/>
+            <% }) %>
+         </p>
+      <% } %>
    </body>
 </html>
