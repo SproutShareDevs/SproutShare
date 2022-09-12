@@ -1,11 +1,14 @@
-// import 'react-native-gesture-handler';
+
+// React / Expo Imports
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
+
+// Navbar Imports
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons'
+
+// Local Component Imports
 import Exchange from './components/Exchange.js';
 import PlantWiki from './components/PlantWiki.js';
 import CommunityFeed from './components/CommunityFeed.js';
@@ -25,7 +28,12 @@ export default class App extends React.Component {
         <NavigationContainer>
           <Tab.Navigator 
             initialRouteName='UserGarden'
+
+            {/* Bottom tab icon styling 
+                More info on how to manipulate this specific navigator: https://reactnavigation.org/docs/bottom-tab-navigator/ */}
+            
             screenOptions={({ route }) => ({
+              
               tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
     
@@ -46,16 +54,27 @@ export default class App extends React.Component {
             })}
           >
             
-            
+            {/* In order for this navigation to work, the node server url must be passed down to all child screens
+                to utilize the server calls in all of them */}
             <Tab.Screen name={'UserGarden'}>
                   {props => <UserGarden {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name="CommunityFeed" component={CommunityFeed} />
-            <Tab.Screen name="PlantWiki" component={PlantWiki} />
-            <Tab.Screen name="Exchange" component={Exchange} />
+            <Tab.Screen name={'CommunityFeed'}>
+                  {props => <CommunityFeed {...props} nodeServer={nodeServer}/>}
+            </Tab.Screen>
+
+            <Tab.Screen name={'PlantWiki'}>
+                  {props => <PlantWiki {...props} nodeServer={nodeServer}/>}
+            </Tab.Screen>
+
+            <Tab.Screen name={'Exchange'}>
+                  {props => <Exchange {...props} nodeServer={nodeServer}/>}
+            </Tab.Screen>
+            {/* Alt Syntax if addtional props dont need to be passed down: <Tab.Screen name="PlantWiki" component={PlantWiki} />*/} 
 
           </Tab.Navigator>
+          {/* Colors system status bar */}
           <StatusBar style="auto" />
         </NavigationContainer>
     );
