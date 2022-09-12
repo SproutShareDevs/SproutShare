@@ -25,9 +25,13 @@
       <br/>
       <br/>
       <br/>
-      <% if (typeof commPost != 'undefined') { %>
+      <% if (typeof commPosts !== 'undefined') { %>
          <p>
-            <%=commPost%> 
+            <% commPosts.forEach(post => { %>
+               <%= post %> 
+               <br/>
+               <br/>
+            <% }) %>
          </p>
       <% } %>
    </body>

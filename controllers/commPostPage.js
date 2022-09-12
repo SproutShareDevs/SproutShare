@@ -1,5 +1,13 @@
-/** For displaying the community post page */
+/** 
+ * For displaying the community post page
+ * Queries the CommunityPost collection
+ * retrieves all documents
+ * sends them to ejs for rendering
+*/
+const CommunityPost = require('../models/CommunityPost');
 
-module.exports = (req, res) => {
-   res.render('communityPosts');
+module.exports = async(req, res) => {
+   const commPosts = await CommunityPost.find({});
+   console.log(commPosts);
+   res.render('communityPosts', {commPosts});
 }
