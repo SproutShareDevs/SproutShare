@@ -19,18 +19,18 @@ import UserGarden from './components/UserGarden.js';
 const Tab = createBottomTabNavigator();
 
 // Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
-const nodeServer = 'https://big-spiders-lay-68-0-34-101.loca.lt';
+const nodeServer = 'https://many-webs-deny-68-0-34-101.loca.lt';
 
 export default class App extends React.Component {
 
   render() {
     return (
         <NavigationContainer>
+          {/* Bottom tab icon styling. More info on how to manipulate this specific navigator: https://reactnavigation.org/docs/bottom-tab-navigator/ */}
           <Tab.Navigator 
             initialRouteName='UserGarden'
 
-            {/* Bottom tab icon styling 
-                More info on how to manipulate this specific navigator: https://reactnavigation.org/docs/bottom-tab-navigator/ */}
+            
             
             screenOptions={({ route }) => ({
               
@@ -54,8 +54,7 @@ export default class App extends React.Component {
             })}
           >
             
-            {/* In order for this navigation to work, the node server url must be passed down to all child screens
-                to utilize the server calls in all of them */}
+            {/* In order for this navigation to work, the node server url must be passed down to all child screens to utilize the server calls in all of them */}
             <Tab.Screen name={'UserGarden'}>
                   {props => <UserGarden {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
@@ -80,4 +79,6 @@ export default class App extends React.Component {
     );
   };
 };
+
+
 
