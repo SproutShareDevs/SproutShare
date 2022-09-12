@@ -51,7 +51,7 @@
 
 ### Start Up The Expo App
 
-#### 0. Ensure that the baseUrl variable in UserGarden.js points to the localtunnel link that was generated. This must be done everytime a new server is created. 
+#### 0. Ensure that the nodeServer variable in App.js points to the localtunnel link that was generated. This must be done everytime a new server is created. 
 #### 1. Run an android emulator on your PC with Play Store Connectivity (the ones with the play store logo next to it)
 #### 2. *Open a new terminal window. cd into:* /node-native/expo-client
 #### 3. *Start the expo app with:* "npm start"
