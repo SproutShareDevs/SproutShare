@@ -53,11 +53,11 @@ app.post('/notificaitons/store', storeNotificationsController);
 // updating data
 app.put('/communityPosts/store');
 app.put('/exchangeListings/store');
-app.put('notificaitons/store');
+app.put('/notificaitons/store');
 
 // deleting data
 app.delete('/communityPosts/store');
 app.delete('/exchangeListings/store');
-app.delete('notificaitons/store');
+app.delete('/notificaitons/store');
 
 app.listen(3000, ()=>{console.log('Listening on port 3000...')});
