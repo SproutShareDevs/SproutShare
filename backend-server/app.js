@@ -27,10 +27,15 @@ const exchangeListPageController = require('./controllers/exchangeListPage');
 const notificationsPageController = require('./controllers/notificationsPage');
 const testHomePageController = require('./controllers/testPageController');
 
-// create view controllers
+// store view controllers
 const storeCommPostController = require('./controllers/storeCommPost');
 const storeExPostController = require('./controllers/storeExPost');
 const storeNotificationsController = require('./controllers/storeNotification');
+
+// get by  id
+const getCommPostByIdController = require('./controllers/getCommPostById');
+const getExListingByIdController = require('./controllers/getExListingById');
+const getNotificationByIdcontroller = require('./controllers/getNotificationsById.js');
 /** route handling */
 
 // render pages
@@ -41,9 +46,9 @@ app.get('/exchangeListings', exchangeListPageController);
 app.get('/notifications', notificationsPageController);
 
 // get by id
-app.get('/communityPosts/:id', commPostPageController);
-app.get('/exchangeListings/:id', exchangeListPageController);
-app.get('/notifications/:id', notificationsPageController);
+app.get('/communityPosts/id', getCommPostByIdController);
+app.get('/exchangeListings/id', getExListingByIdController);
+app.get('/notifications/id', getNotificationByIdcontroller);
 
 // storing data
 app.post('/communityPosts/store', storeCommPostController);

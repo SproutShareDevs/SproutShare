@@ -22,9 +22,14 @@
 
          <button type="submit">Submit</button>
       </form>
+      <br />
+      <form action="/communityPosts/id" method="get">
+         <input type="text" name="id"  placeholder = "Search by id..." >
+         <button type="submit">Submit</button>
+      </form>
       <br/>
       <br/>
-      <br/>
+      
       <% if (typeof commPosts !== 'undefined') { %>
          <p>
             <% commPosts.forEach(post => { %>
