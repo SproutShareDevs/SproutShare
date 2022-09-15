@@ -30,6 +30,10 @@
          <button type="submit">Submit</button>
       </form>
       <br/>
+      <form action="/exchangeListings/query" method="get">
+         <input type="text" name="string"  placeholder = "Search by description..." >
+         <button type="submit">Submit</button>
+      </form>
       <br/>
       <% if (typeof exchangeListings !== 'undefined') { %>
          <p>

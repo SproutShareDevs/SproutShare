@@ -20,6 +20,7 @@ app.set('view engine', 'ejs');
 /** custom middleware */
 
 /** controllers */
+
 // page view controllers
 const homePageController = require('./controllers/homePage');
 const commPostPageController = require('./controllers/commPostPage');
@@ -29,38 +30,49 @@ const testHomePageController = require('./controllers/testPageController');
 
 // store view controllers
 const storeCommPostController = require('./controllers/storeCommPost');
-const storeExPostController = require('./controllers/storeExPost');
+const storeExListingController = require('./controllers/storeExListing');
 const storeNotificationsController = require('./controllers/storeNotification');
 
-// get by  id
+// get by ID controllers
 const getCommPostByIdController = require('./controllers/getCommPostById');
 const getExListingByIdController = require('./controllers/getExListingById');
-const getNotificationByIdcontroller = require('./controllers/getNotificationsById.js');
-/** route handling */
+const getNotificationByIdController = require('./controllers/getNotificationsById.js');
 
-// render pages
+// get by search string controllers
+const getCommPostsByQueryController = require('./controllers/getCommPostByQuery');
+const getExListingsByQueryController = require('./controllers/getExListingByQuery');
+const getNotificationsByQueryController = require('./controllers/getNotificationByQuery')
+
+
+/** route handling */
+// get pages
 app.get('/', homePageController);
 app.get('/test', testHomePageController);
 app.get('/communityPosts', commPostPageController);
 app.get('/exchangeListings', exchangeListPageController);
 app.get('/notifications', notificationsPageController);
 
-// get by id
+// get post by id
 app.get('/communityPosts/id', getCommPostByIdController);
 app.get('/exchangeListings/id', getExListingByIdController);
-app.get('/notifications/id', getNotificationByIdcontroller);
+app.get('/notifications/id', getNotificationByIdController);
 
-// storing data
+// get post(s) by regex query
+app.get('/communityPosts/query', getCommPostsByQueryController);
+app.get('/exchangeListings/query', getExListingsByQueryController);
+app.get('/notifications/query', getNotificationsByQueryController);
+
+// store post
 app.post('/communityPosts/store', storeCommPostController);
-app.post('/exchangeListings/store', storeExPostController);
+app.post('/exchangeListings/store', storeExListingController);
 app.post('/notificaitons/store', storeNotificationsController);
 
-// updating data
+// update post
 app.put('/communityPosts/store');
 app.put('/exchangeListings/store');
 app.put('/notificaitons/store');
 
-// deleting data
+// delete post
 app.delete('/communityPosts/store');
 app.delete('/exchangeListings/store');
 app.delete('/notificaitons/store');

@@ -28,6 +28,10 @@
          <button type="submit">Submit</button>
       </form>
       <br/>
+      <form action="/communityPosts/query" method="get">
+         <input type="text" name="string"  placeholder = "Search by description..." >
+         <button type="submit">Submit</button>
+      </form>
       <br/>
       
       <% if (typeof commPosts !== 'undefined') { %>
