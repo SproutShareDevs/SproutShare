@@ -35,13 +35,20 @@
       <br/>
       
       <% if (typeof commPosts !== 'undefined') { %>
-         <p>
+         <div>
             <% commPosts.forEach(post => { %>
-               <%= post %> 
-               <br/>
+               <%= "{" %> 
+               <div>ID: <%=post._id%></div> 
+               <div>User ID: <%=post.user_ID%></div>
+               <div>Date: <%=post.comm_post_date%></div>
+               <div>Title: <%=post.comm_post_title%></div>
+               <div>Body: <%=post.comm_post_body%></div>
+               <%= "}" %> 
+               <br/><!--The buttons below this comment currently do not work-->
+               <button class = "edit-record">Edit</button>&emsp;<button class = "delete-record" ty>Delete</button>
                <br/>
             <% }) %>
-         </p>
+         </div>
       <% } %>
    </body>
 </html>

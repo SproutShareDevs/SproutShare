@@ -43,7 +43,12 @@ const getCommPostsByQueryController = require('./controllers/getCommPostByQuery'
 const getExListingsByQueryController = require('./controllers/getExListingByQuery');
 const getNotificationsByQueryController = require('./controllers/getNotificationByQuery')
 
+// edit post controllers
 
+// delete post controllers
+const delCommPostByIdController = require('./controllers/delCommPostById');
+const delExListingByIdController = require('./controllers/delExListingById');
+const delNotificationByIdController = require('./controllers/delNotificationById')
 /** route handling */
 // get pages
 app.get('/', homePageController);
@@ -73,8 +78,8 @@ app.put('/exchangeListings/store');
 app.put('/notificaitons/store');
 
 // delete post
-app.delete('/communityPosts/store');
-app.delete('/exchangeListings/store');
-app.delete('/notificaitons/store');
+app.delete('/communityPosts/delete/:id', delCommPostByIdController);
+app.delete('/exchangeListings/delete/:id', delExListingByIdController);
+app.delete('/notifications/delete/:id', delNotificationByIdController);
 
 app.listen(3000, ()=>{console.log('Listening on port 3000...')});
