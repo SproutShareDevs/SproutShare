@@ -2,6 +2,7 @@
 <html>
    <head>
       <title>Home</title>
+      <%-include('layouts/header');-%>
    </head>
    <body>
       <%-include('layouts/navbar');-%>
@@ -36,13 +37,51 @@
       </form>
       <br/>
       <% if (typeof notifications !== 'undefined') { %>
-         <p>
+         <span id="notifications-selectable" hidden><%=JSON.stringify(notifications);%></span>
+         <div>
             <% notifications.forEach(notification => { %>
-               <%= notification %> 
+               <%= "{" %> 
+               <div>ID: <%=notification._id%></div> 
+               <div>User ID: <%=notification.user_ID%></div>
+               <div>Date: <%=notification.user_plant%></div>
+               <div>Date: <%=notification.notification_datetime%></div>
+               <div>Title: <%=notification.notification_title%></div>
+               <div>Body: <%=notification.notification_body%></div>
+               <%= "}" %> 
                <br/>
+               <button class = "edit-record" value="<%=notification._id%>">Edit</button>
+               &emsp;
+               <button class = "delete-record" value="<%=notification._id%>">Delete</button>
                <br/>
             <% }) %>
-         </p>
+         </div>
       <% } %>
+      <script>
+         var notifications = JSON.parse($('#notifications-selectable').text());
+         console.log(notifications);
+         
+         const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
+            button.addEventListener('click',  (e)=>{
+               console.log('delete pressed ' + e.target.value);
+               const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
+               if(confirm(promptText)){
+                  console.log("Deleted record: " + e.target.value);
+                  const deletePost = fetch('http://localhost:3000/notifications/delete/' + e.target.value, {
+                     method:'DELETE'
+                  })
+               }
+               else{
+                  console.log("Deleted record canceled for: " + e.target.value);
+               }
+            });
+         });
+
+         let editButtons = document.querySelectorAll('.edit-record');
+         editButtons.forEach(button=>{
+            button.addEventListener('click', (e)=>{
+               console.log('edit pressed ' + e.target.value);
+            });
+         });
+      </script>
    </body>
 </html>

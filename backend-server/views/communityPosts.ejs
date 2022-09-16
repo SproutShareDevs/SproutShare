@@ -3,6 +3,7 @@
 <html>
    <head>
       <title>Comm</title>
+      <%-include('layouts/header');-%>
    </head>
    <body>
       <%-include('layouts/navbar');-%>
@@ -35,6 +36,7 @@
       <br/>
       
       <% if (typeof commPosts !== 'undefined') { %>
+         <span id="commPosts-selectable" hidden><%=JSON.stringify(commPosts);%></span>
          <div>
             <% commPosts.forEach(post => { %>
                <%= "{" %> 
@@ -44,11 +46,40 @@
                <div>Title: <%=post.comm_post_title%></div>
                <div>Body: <%=post.comm_post_body%></div>
                <%= "}" %> 
-               <br/><!--The buttons below this comment currently do not work-->
-               <button class = "edit-record">Edit</button>&emsp;<button class = "delete-record" ty>Delete</button>
+               <br/>
+               <button class = "edit-record" value="<%=post._id%>">Edit</button>
+               &emsp;
+               <button class = "delete-record" value="<%=post._id%>">Delete</button>
                <br/>
             <% }) %>
          </div>
       <% } %>
+      <script>
+         var commPosts = JSON.parse($('#commPosts-selectable').text());
+         console.log(commPosts);
+         
+         const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
+            button.addEventListener('click',  (e)=>{
+               console.log('delete pressed ' + e.target.value);
+               const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
+               if(confirm(promptText)){
+                  console.log("Deleted record: " + e.target.value);
+                  const deletePost = fetch('http://localhost:3000/communityPosts/delete/' + e.target.value, {
+                     method:'DELETE'
+                  })
+               }
+               else{
+                  console.log("Deleted record canceled for: " + e.target.value);
+               }
+            });
+         });
+
+         let editButtons = document.querySelectorAll('.edit-record');
+         editButtons.forEach(button=>{
+            button.addEventListener('click', (e)=>{
+               console.log('edit pressed ' + e.target.value);
+            });
+         });
+      </script>
    </body>
 </html>

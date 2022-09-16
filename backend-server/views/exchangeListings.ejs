@@ -2,6 +2,7 @@
 <html>
    <head>
       <title>Exch</title>
+      <%-include('layouts/header');-%>
    </head>
    <body>
       <%-include('layouts/navbar');-%>
@@ -36,13 +37,51 @@
       </form>
       <br/>
       <% if (typeof exchangeListings !== 'undefined') { %>
-         <p>
+         <span id="exchangeListings-selectable" hidden><%=JSON.stringify(exchangeListings);%></span>
+         <div>
             <% exchangeListings.forEach(listing => { %>
-               <%= listing %> 
+               <%= "{" %> 
+               <div>ID: <%=listing._id%></div> 
+               <div>User ID: <%=listing.user_ID%></div>
+               <div>User Plant: <%=listing.ex_plant%></div>
+               <div>Date: <%=listing.ex_post_date%></div>
+               <div>Title: <%=listing.ex_post_title%></div>
+               <div>Body: <%=listing.ex_post_body%></div>
+               <%= "}" %> 
                <br/>
+               <button class = "edit-record" value="<%=listing._id%>">Edit</button>
+               &emsp;
+               <button class = "delete-record" value="<%=listing._id%>">Delete</button>
                <br/>
             <% }) %>
-         </p>
+         </div>
       <% } %>
+      <script>
+         var exchangeListings = JSON.parse($('#exchangeListings-selectable').text());
+         console.log();
+         
+         const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
+            button.addEventListener('click',  (e)=>{
+               console.log('delete pressed ' + e.target.value);
+               const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
+               if(confirm(promptText)){
+                  console.log("Deleted record: " + e.target.value);
+                  const deletePost = fetch('http://localhost:3000/exchangeListings/delete/' + e.target.value, {
+                     method:'DELETE'
+                  })
+               }
+               else{
+                  console.log("Deleted record canceled for: " + e.target.value);
+               }
+            });
+         });
+
+         let editButtons = document.querySelectorAll('.edit-record');
+         editButtons.forEach(button=>{
+            button.addEventListener('click', (e)=>{
+               console.log('edit pressed ' + e.target.value);
+            });
+         });
+      </script>
    </body>
 </html>
