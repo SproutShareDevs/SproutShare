@@ -44,11 +44,13 @@ const getExListingsByQueryController = require('./controllers/getExListingByQuer
 const getNotificationsByQueryController = require('./controllers/getNotificationByQuery')
 
 // edit post controllers
-
+const editCommPostController = require('./controllers/editCommPost');
+const editExListingController = require('./controllers/editExListing');
+const editNotificationController = require('./controllers/editNotification');
 // delete post controllers
 const delCommPostByIdController = require('./controllers/delCommPostById');
 const delExListingByIdController = require('./controllers/delExListingById');
-const delNotificationByIdController = require('./controllers/delNotificationById')
+const delNotificationByIdController = require('./controllers/delNotificationById');
 /** route handling */
 // get pages
 app.get('/', homePageController);
@@ -73,9 +75,9 @@ app.post('/exchangeListings/store', storeExListingController);
 app.post('/notificaitons/store', storeNotificationsController);
 
 // update post
-app.put('/communityPosts/store');
-app.put('/exchangeListings/store');
-app.put('/notificaitons/store');
+app.put('/communityPosts/update/:id', editCommPostController);
+app.put('/exchangeListings/update/:id', editExListingController);
+app.put('/notificaitons/update/:id', editNotificationController);
 
 // delete post
 app.delete('/communityPosts/delete/:id', delCommPostByIdController);
