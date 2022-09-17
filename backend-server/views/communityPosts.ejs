@@ -40,16 +40,36 @@
          <div>
             <% commPosts.forEach(post => { %>
                <%= "{" %> 
-               <div>ID: <%=post._id%></div> 
-               <div>User ID: <%=post.user_ID%></div>
-               <div>Date: <%=post.comm_post_date%></div>
-               <div>Title: <%=post.comm_post_title%></div>
-               <div>Body: <%=post.comm_post_body%></div>
+               <div class="id-field" value="<%=post._id%>" data-field="<%=post._id%>">
+                  <input class="edit-select" type="hidden"> 
+                  <span class="key">_id</span>: <span class="value"><%=post._id%></span>
+                  <input class="edit-content" type="hidden"> 
+               </div> 
+               <div class="user-field" value="<%=post._id%>" data-field="<%=post.user_ID%>">
+                  <input class="edit-select" type="hidden"> 
+                  <span class="key">user_ID</span>: <span class="value"><%=post.user_ID%></span>
+                  <input class="edit-content" type="hidden"> 
+               </div>
+               <div class="date-field" value="<%=post._id%>" data-field="<%=post.comm_post_date%>">
+                  <input class="edit-select" type="hidden"> 
+                  <span class="key">comm_post_date</span>: <span class="value"><%=post.comm_post_date%></span>
+                  <input class="edit-content" type="hidden"> 
+               </div>
+               <div class="title-field" value="<%=post._id%>" data-field="<%=post.comm_post_title%>">
+                  <input class="edit-select" type="hidden"> 
+                  <span class="key">comm_post_title</span>: <span class="value"><%=post.comm_post_title%></span>
+                  <input class="edit-content" type="hidden"> 
+               </div>
+               <div class="body-field" value ="<%=post._id%>" data-field="<%=post.comm_post_body%>">
+                  <input class="edit-select" type="hidden"> 
+                  Body: <%=post.comm_post_body%>
+                  <input class="edit-content" type="hidden"> 
+               </div>
                <%= "}" %> 
                <br/>
-               <button class = "edit-record" value="<%=post._id%>">Edit</button>
+               <button class="edit-fields" value="<%=post._id%>">Edit</button>
                &emsp;
-               <button class = "delete-record" value="<%=post._id%>">Delete</button>
+               <button class="delete-record" value="<%=post._id%>">Delete</button>
                <br/>
             <% }) %>
          </div>
@@ -57,7 +77,9 @@
       <script>
          var commPosts = JSON.parse($('#commPosts-selectable').text());
          console.log(commPosts);
-         
+         let checkBoxesById = [];
+         let editFields = [];
+         let recordToEdit;
          const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
             button.addEventListener('click',  (e)=>{
                console.log('delete pressed ' + e.target.value);
@@ -74,12 +96,53 @@
             });
          });
 
-         let editButtons = document.querySelectorAll('.edit-record');
+         let editButtons = document.querySelectorAll('.edit-fields');
          editButtons.forEach(button=>{
             button.addEventListener('click', (e)=>{
-               console.log('edit pressed ' + e.target.value);
+               /*
+               checkBoxesById = document.querySelectorAll(`.edit-select[value="${e.target.value}"]`);
+               console.log(checkBoxesById);
+               checkBoxesById.forEach(box=>{
+                  box.setAttribute('type', 'checkbox');
+                  box.addEventListener('click', (e)=>{
+                     console.log(e.target.dataset.field);
+                     button.type="submit";
+                     button.innerText = "Submit";
+                     let editField = document.querySelector(`.edit-content[data-field="${e.target.dataset.field}"]`);
+                     editField.removeAttribute('value');
+                     editField.setAttribute('type', 'text');
+                  });
+               });
+            */
+               recordToEdit = document.querySelectorAll(`div[value="${e.target.value}"`);
+               enableEditing(recordToEdit);
+               enableTextField(recordToEdit, checkBoxesById);
             });
          });
+
+         function enableEditing(recordToEdit){
+            let checkBoxes = [];
+            recordToEdit.forEach(field=>{
+               checkBoxes.push(field.querySelector('.edit-select'));
+            });
+            //console.log(checkBoxes);
+            checkBoxes.forEach(box=>{box.setAttribute('type', 'checkbox')});
+            checkBoxesById = [...checkBoxes];
+         }
+
+         function enableTextField(recordToEdit, checkBoxesById){
+            let textFields = [];
+            recordToEdit.forEach(field=>{
+               textFields.push(field.querySelector('.edit-content'));
+            });
+            console.log(textFields);
+            checkBoxesById.forEach(box => addEventListener('click', ()=>{
+               let parent = this.className;
+               console.log(parent);
+            })
+            );
+         }
+         //console.log(checkBoxesById);
       </script>
    </body>
 </html>
