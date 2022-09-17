@@ -2,6 +2,7 @@
 // React / Expo Imports
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
+import { View } from 'react-native';
 
 // Navbar Imports
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,12 +20,13 @@ import UserGarden from './components/UserGarden.js';
 const Tab = createBottomTabNavigator();
 
 // Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
-const nodeServer = 'https://many-webs-deny-68-0-34-101.loca.lt';
+const nodeServer = 'https://clean-eagles-refuse-68-0-34-101.loca.lt';
 
 export default class App extends React.Component {
 
   render() {
     return (
+      <>
         <NavigationContainer>
           {/* Bottom tab icon styling. More info on how to manipulate this specific navigator: https://reactnavigation.org/docs/bottom-tab-navigator/ */}
           <Tab.Navigator 
@@ -74,8 +76,10 @@ export default class App extends React.Component {
 
           </Tab.Navigator>
           {/* Colors system status bar */}
-          <StatusBar style="auto" />
+          
         </NavigationContainer>
+        <StatusBar style="dark"/>
+        </>
     );
   };
 };
