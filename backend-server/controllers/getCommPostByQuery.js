@@ -15,6 +15,5 @@ module.exports = async(req, res) =>{
             {comm_post_body: {$regex:req.query.string}}
          ]
    );
-   console.log(commPosts);
-   res.render('communityPosts', {commPosts});
+   res.send(commPosts);
 }

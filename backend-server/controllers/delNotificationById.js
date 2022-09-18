@@ -7,6 +7,5 @@ const Notifications = require('../models/Notification');
 
 module.exports = async(req,res)=>{
    const notification = await Notifications.findByIdAndDelete(req.params.id);
-   console.log(notification);
-   res.redirect('/notifications');
+   res.send(notification);
 }

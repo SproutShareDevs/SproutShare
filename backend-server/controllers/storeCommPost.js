@@ -7,7 +7,7 @@ module.exports = (req,res) =>{
       if(error){
          console.error(error);
       }
+      res.send(communityPost);
    });
-   res.redirect('/communityPosts');
 }
 

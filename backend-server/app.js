@@ -109,12 +109,12 @@ app.get('/notifications/query', getNotificationsByQueryController);
 // store post
 app.post('/communityPosts/store', storeCommPostController);
 app.post('/exchangeListings/store', storeExListingController);
-app.post('/notificaitons/store', storeNotificationsController);
+app.post('/notifications/store', storeNotificationsController);
 
 // update post
 app.put('/communityPosts/update/:id', editCommPostController);
 app.put('/exchangeListings/update/:id', editExListingController);
-app.put('/notificaitons/update/:id', editNotificationController);
+app.put('/notifications/update/:id', editNotificationController);
 
 // delete post
 app.delete('/communityPosts/delete/:id', delCommPostByIdController);

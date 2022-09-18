@@ -13,6 +13,7 @@ module.exports = (req, res)=>{
       if(error){
          console.error(error);
       }
+      res.send(notification);
    });
-   res.redirect('/notifications');
+   
 }

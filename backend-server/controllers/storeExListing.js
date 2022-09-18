@@ -6,6 +6,6 @@ module.exports = (req, res) => {
       if(error){
          console.error(error);
       }
+      res.send(exchangeListing);
    });
-   res.redirect('/exchangeListings');
 }

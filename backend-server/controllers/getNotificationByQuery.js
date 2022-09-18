@@ -15,6 +15,5 @@ module.exports = async(req, res)=>{
       {notification_title: {$regex:req.query.string}},
       {notification_body: {$regex: req.query.string}}
    ]);
-
-   res.render('notifications', {notifications});
+   res.send(notifications);
 }

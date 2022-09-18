@@ -14,6 +14,5 @@ module.exports = async(req, res) => {
          {ex_post_title: {$regex: req.query.string}},
          {ex_post_body: {$regex: req.query.string}}
       ]);
-   console.log(exchangeListings);
-   res.render('exchangeListings', {exchangeListings});
+   res.send(exchangeListings);
 }

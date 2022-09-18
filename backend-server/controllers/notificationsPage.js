@@ -8,5 +8,5 @@
 const Notifications = require('../models/Notification');
 module.exports = async(req, res) => {
    const notifications = await Notifications.find({});
-   res.render('notifications', {notifications});
+   res.send(notifications);
 }
