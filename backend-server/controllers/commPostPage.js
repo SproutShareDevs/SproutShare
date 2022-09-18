@@ -8,5 +8,5 @@ const CommunityPost = require('../models/CommunityPost');
 
 module.exports = async(req, res) => {
    const commPosts = await CommunityPost.find({});
-   res.render('communityPosts', {commPosts});
+   res.send({commPosts});
 }
