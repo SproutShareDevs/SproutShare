@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Plant Types</title>
+      <%-include('layouts/header');-%>
+   </head>
+   <body>
+      <%-include('layouts/navbar');-%>
+      <h1>Plant Types</h1>
+      <br/>
+      <br/>
+      <br/>
+      <form action="/ejs-testing/plantType/store" method="post" enctype="application/x-www-form-urlencoded">
+         <label for="plant_type_id">Plant Type Id</label>
+         <input type="text" name="plant_type_id">
+
+         <label for="light_level">Light Level</label>
+         <input type="text" name="light_level">
+
+         <label for="min_temp">Min. Temp</label>
+         <input type="text" name="min_temp">
+
+         <label for="max_temp">Max. Temp</label>
+         <input type="text" name="max_temp">
+
+         <label for="rec_temp">Rec. Temp</label>
+         <input type="text" name="rec_temp">
+
+         <label for="hardiness_zone">Hardiness</label>
+         <input type="text" name="hardiness_zone">
+
+         <label for="soil_type">Soil Type</label>
+         <input type="text" name="soil_type">
+
+         <label for="common_disease">Common Disease</label>
+         <input type="text" name="common_disease">
+
+         <label for="common_pest">Common Pest</label>
+         <input type="text" name="common_disease">
+
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <form action="/ejs-testing/plantType/id" method="get">
+         <input type="text" name="id"  placeholder = "Search by id..." >
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <form action="/ejs-testing/plantType/query" method="get">
+         <input type="text" name="string" placeholder = "Search by description...">
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <% if (typeof plantTypes !== 'undefined') { %>
+         <span id="plantTypes-selectable" hidden><%=JSON.stringify(plantTypes);%></span>
+         <div>
+            <% plantTypes.forEach(plantType => { %>
+               <%= "{" %> 
+               <div>ID: <%=plantType.plant_type_id%></div> 
+               <div>Light Level: <%=plantType.light_level%></div>
+               <div>Min. Temp: <%=plantType.min_temp%></div>
+               <div>Max. Temp: <%=plantType.max_temp%></div>
+               <div>Rec. Temp: <%=plantType.max_temp%></div>
+               <div>Hardiness Zone: <%=plantType.hardiness_zone%></div>
+               <div>Soil Type: <%=plantType.soil_type%></div>
+               <div>Common Disease: <%=plantType.common_disease%></div>
+               <div>Common Pest: <%=plantType.common_pest%></div>
+               <%= "}" %> 
+               <br/>
+               <button class = "edit-record" value="<%=plantType.plant_type_id%>">Edit</button>
+               &emsp;
+               <button class = "delete-record" value="<%=plantType.plant_type_id%>">Delete</button>
+               <br/>
+            <% }) %>
+         </div>
+      <% } %>
+      <script>
+         var notifications = JSON.parse($('#plantTypes-selectable').text());
+         console.log(plantTypes);
+         
+         const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
+            button.addEventListener('click',  (e)=>{
+               console.log('delete pressed ' + e.target.value);
+               const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
+               if(confirm(promptText)){
+                  console.log("Deleted record: " + e.target.value);
+                  const deletePost = fetch('http://localhost:3000/ejs-testing/delete/' + e.target.value, {
+                     method:'DELETE'
+                  })
+               }
+               else{
+                  console.log("Deleted record canceled for: " + e.target.value);
+               }
+            });
+         });
+
+         let editButtons = document.querySelectorAll('.edit-record');
+         editButtons.forEach(button=>{
+            button.addEventListener('click', (e)=>{
+               console.log('edit pressed ' + e.target.value);
+            });
+         });
+      </script>
+   </body>
+</html>

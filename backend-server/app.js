@@ -4,9 +4,11 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const path = require('path');
 const ejs = require('ejs');
+const cors = require('cors');
 
 /** database connection(s) */
 mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
+//const pool = require('./models/postgresPool');
 
 /** npm package middleware */
 const app = express();
@@ -15,10 +17,13 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
+app.use(cors());
 
 /** custom middleware */
 
-/** prod controllers */
+/** prod postgres controllers */
+
+/** prod mongodb controllers */
 
 // page view controllers
 const homePageController = require('./controllers/homePage');
@@ -50,8 +55,14 @@ const delCommPostByIdController = require('./controllers/mongodb/delCommPostById
 const delExListingByIdController = require('./controllers/mongodb/delExListingById');
 const delNotificationByIdController = require('./controllers/mongodb/delNotificationById');
 
+/**
+ * postgres ejs-testing controllers
+ * 
+ */
+const plantTypePageController = require('./controllers/ejs-testing/postgres/plantTypeRoute');
+
 /** 
- * ejs-testing controllers 
+ * mongodb ejs-testing controllers 
  * 
  */
 
@@ -80,14 +91,18 @@ const getNotificationsByQueryEjsController = require('./controllers/ejs-testing/
 const editCommPostEjsController = require('./controllers/ejs-testing/mongodb/editCommPost');
 const editExListingEjsController = require('./controllers/ejs-testing/mongodb/editExListing');
 const editNotificationEjsController = require('./controllers/ejs-testing/mongodb/editNotification');
+
 // delete post controllers/ejs-testing
 const delCommPostByIdEjsController = require('./controllers/ejs-testing/mongodb/delCommPostById');
 const delExListingByIdEjsController = require('./controllers/ejs-testing/mongodb/delExListingById');
 const delNotificationByIdEjsController = require('./controllers/ejs-testing/mongodb/delNotificationById');
 
+/**
+ * postgres prod route handling
+ */
 
 /** 
- * prod route handling 
+ * mongodb prod route handling 
  * 
  */
 // get pages
@@ -101,7 +116,7 @@ app.get('/communityPosts/id', getCommPostByIdController);
 app.get('/exchangeListings/id', getExListingByIdController);
 app.get('/notifications/id', getNotificationByIdController);
 
-// get post(s) by regex query
+// get post(s) by search query
 app.get('/communityPosts/query', getCommPostsByQueryController);
 app.get('/exchangeListings/query', getExListingsByQueryController);
 app.get('/notifications/query', getNotificationsByQueryController);
@@ -121,10 +136,17 @@ app.delete('/communityPosts/delete/:id', delCommPostByIdController);
 app.delete('/exchangeListings/delete/:id', delExListingByIdController);
 app.delete('/notifications/delete/:id', delNotificationByIdController);
 
+/**
+ * postgres ejs-testing route handling
+ */
+
+app.use('/ejs-testing/plantTypes', plantTypePageController);
+
 /** 
- * ejs-testing route handling 
+ * mongodb ejs-testing route handling 
  * 
  */
+
 // get pages
 app.get('/ejs-testing', testHomePageEjsController);
 app.get('/ejs-testing/communityPosts', commPostPageEjsController);
@@ -136,7 +158,7 @@ app.get('/ejs-testing/communityPosts/id', getCommPostByIdEjsController);
 app.get('/ejs-testing/exchangeListings/id', getExListingByIdEjsController);
 app.get('/ejs-testing/notifications/id', getNotificationByIdEjsController);
 
-// get post(s) by regex query
+// get post(s) by search query
 app.get('/ejs-testing/communityPosts/query', getCommPostsByQueryEjsController);
 app.get('/ejs-testing/exchangeListings/query', getExListingsByQueryEjsController);
 app.get('/ejs-testing/notifications/query', getNotificationsByQueryEjsController);
