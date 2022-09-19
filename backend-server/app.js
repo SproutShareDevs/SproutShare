@@ -22,33 +22,33 @@ app.set('view engine', 'ejs');
 
 // page view controllers
 const homePageController = require('./controllers/homePage');
-const commPostPageController = require('./controllers/commPostPage');
-const exchangeListPageController = require('./controllers/exchangeListPage');
-const notificationsPageController = require('./controllers/notificationsPage');
+const commPostPageController = require('./controllers/mongodb/commPostPage');
+const exchangeListPageController = require('./controllers/mongodb/exchangeListPage');
+const notificationsPageController = require('./controllers/mongodb/notificationsPage');
 
 // store view controllers
-const storeCommPostController = require('./controllers/storeCommPost');
-const storeExListingController = require('./controllers/storeExListing');
-const storeNotificationsController = require('./controllers/storeNotification');
+const storeCommPostController = require('./controllers/mongodb/storeCommPost');
+const storeExListingController = require('./controllers/mongodb/storeExListing');
+const storeNotificationsController = require('./controllers/mongodb/storeNotification');
 
 // get by ID controllers
-const getCommPostByIdController = require('./controllers/getCommPostById');
-const getExListingByIdController = require('./controllers/getExListingById');
-const getNotificationByIdController = require('./controllers/getNotificationsById.js');
+const getCommPostByIdController = require('./controllers/mongodb/getCommPostById');
+const getExListingByIdController = require('./controllers/mongodb/getExListingById');
+const getNotificationByIdController = require('./controllers/mongodb/getNotificationsById.js');
 
 // get by search string controllers
-const getCommPostsByQueryController = require('./controllers/getCommPostByQuery');
-const getExListingsByQueryController = require('./controllers/getExListingByQuery');
-const getNotificationsByQueryController = require('./controllers/getNotificationByQuery')
+const getCommPostsByQueryController = require('./controllers/mongodb/getCommPostByQuery');
+const getExListingsByQueryController = require('./controllers/mongodb/getExListingByQuery');
+const getNotificationsByQueryController = require('./controllers/mongodb/getNotificationByQuery')
 
 // edit post controllers
-const editCommPostController = require('./controllers/editCommPost');
-const editExListingController = require('./controllers/editExListing');
-const editNotificationController = require('./controllers/editNotification');
+const editCommPostController = require('./controllers/mongodb/editCommPost');
+const editExListingController = require('./controllers/mongodb/editExListing');
+const editNotificationController = require('./controllers/mongodb/editNotification');
 // delete post controllers
-const delCommPostByIdController = require('./controllers/delCommPostById');
-const delExListingByIdController = require('./controllers/delExListingById');
-const delNotificationByIdController = require('./controllers/delNotificationById');
+const delCommPostByIdController = require('./controllers/mongodb/delCommPostById');
+const delExListingByIdController = require('./controllers/mongodb/delExListingById');
+const delNotificationByIdController = require('./controllers/mongodb/delNotificationById');
 
 /** 
  * ejs-testing controllers 
@@ -56,34 +56,34 @@ const delNotificationByIdController = require('./controllers/delNotificationById
  */
 
 // page view controllers
-const commPostPageEjsController = require('./controllers/ejs-testing/commPostPage');
-const exchangeListPageEjsController = require('./controllers/ejs-testing/exchangeListPage');
-const notificationsPageEjsController = require('./controllers/ejs-testing/notificationsPage');
 const testHomePageEjsController = require('./controllers/ejs-testing/testPageController');
+const commPostPageEjsController = require('./controllers/ejs-testing/mongodb/commPostPage');
+const exchangeListPageEjsController = require('./controllers/ejs-testing/mongodb/exchangeListPage');
+const notificationsPageEjsController = require('./controllers/ejs-testing/mongodb/notificationsPage');
 
 // store view controllers/ejs-testing
-const storeCommPostEjsController = require('./controllers/ejs-testing/storeCommPost');
-const storeExListingEjsController = require('./controllers/ejs-testing/storeExListing');
-const storeNotificationsEjsController = require('./controllers/ejs-testing/storeNotification');
+const storeCommPostEjsController = require('./controllers/ejs-testing/mongodb/storeCommPost');
+const storeExListingEjsController = require('./controllers/ejs-testing/mongodb/storeExListing');
+const storeNotificationsEjsController = require('./controllers/ejs-testing/mongodb/storeNotification');
 
 // get by ID controllers/ejs-testing
-const getCommPostByIdEjsController = require('./controllers/ejs-testing/getCommPostById');
-const getExListingByIdEjsController = require('./controllers/ejs-testing/getExListingById');
-const getNotificationByIdEjsController = require('./controllers/ejs-testing/getNotificationsById.js');
+const getCommPostByIdEjsController = require('./controllers/ejs-testing/mongodb/getCommPostById');
+const getExListingByIdEjsController = require('./controllers/ejs-testing/mongodb/getExListingById');
+const getNotificationByIdEjsController = require('./controllers/ejs-testing/mongodb/getNotificationsById.js');
 
 // get by search string controllers/ejs-testing
-const getCommPostsByQueryEjsController = require('./controllers/ejs-testing/getCommPostByQuery');
-const getExListingsByQueryEjsController = require('./controllers/ejs-testing/getExListingByQuery');
-const getNotificationsByQueryEjsController = require('./controllers/ejs-testing/getNotificationByQuery')
+const getCommPostsByQueryEjsController = require('./controllers/ejs-testing/mongodb/getCommPostByQuery');
+const getExListingsByQueryEjsController = require('./controllers/ejs-testing/mongodb/getExListingByQuery');
+const getNotificationsByQueryEjsController = require('./controllers/ejs-testing/mongodb/getNotificationByQuery')
 
 // edit post controllers/ejs-testing
-const editCommPostEjsController = require('./controllers/ejs-testing/editCommPost');
-const editExListingEjsController = require('./controllers/ejs-testing/editExListing');
-const editNotificationEjsController = require('./controllers/ejs-testing/editNotification');
+const editCommPostEjsController = require('./controllers/ejs-testing/mongodb/editCommPost');
+const editExListingEjsController = require('./controllers/ejs-testing/mongodb/editExListing');
+const editNotificationEjsController = require('./controllers/ejs-testing/mongodb/editNotification');
 // delete post controllers/ejs-testing
-const delCommPostByIdEjsController = require('./controllers/ejs-testing/delCommPostById');
-const delExListingByIdEjsController = require('./controllers/ejs-testing/delExListingById');
-const delNotificationByIdEjsController = require('./controllers/ejs-testing/delNotificationById');
+const delCommPostByIdEjsController = require('./controllers/ejs-testing/mongodb/delCommPostById');
+const delExListingByIdEjsController = require('./controllers/ejs-testing/mongodb/delExListingById');
+const delNotificationByIdEjsController = require('./controllers/ejs-testing/mongodb/delNotificationById');
 
 
 /** 
