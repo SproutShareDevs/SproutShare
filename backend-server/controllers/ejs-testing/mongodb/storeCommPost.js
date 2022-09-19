@@ -8,6 +8,6 @@ module.exports = (req,res) =>{
          console.error(error);
       }
    });
-   res.redirect('/communityPosts');
+   res.redirect('/ejs-testing/communityPosts');
 }
 

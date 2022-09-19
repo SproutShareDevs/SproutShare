@@ -7,5 +7,5 @@ module.exports = (req, res) => {
          console.error(error);
       }
    });
-   res.redirect('/exchangeListings');
+   res.redirect('/ejs-testing/exchangeListings');
 }

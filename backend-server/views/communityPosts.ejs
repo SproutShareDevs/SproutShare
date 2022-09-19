@@ -11,7 +11,7 @@
       <br/>
       <br/>
       <br/>
-      <form action="/communityPosts/store" method="post" enctype="application/x-www-form-urlencoded">
+      <form action="/ejs-testing/communityPosts/store" method="post" enctype="application/x-www-form-urlencoded">
          <label for="user_ID">User ID</label>
          <input type="text" name="user_ID">
 
@@ -24,12 +24,12 @@
          <button type="submit">Submit</button>
       </form>
       <br />
-      <form action="/communityPosts/id" method="get">
+      <form action="/ejs-testing/communityPosts/id" method="get">
          <input type="text" name="id"  placeholder = "Search by id..." >
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <form action="/communityPosts/query" method="get">
+      <form action="/ejs-testing/communityPosts/query" method="get">
          <input type="text" name="string"  placeholder = "Search by description..." >
          <button type="submit">Submit</button>
       </form>
@@ -86,7 +86,7 @@
                const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
                if(confirm(promptText)){
                   console.log("Deleted record: " + e.target.value);
-                  const deletePost = fetch('http://localhost:3000/communityPosts/delete/' + e.target.value, {
+                  const deletePost = fetch('http://localhost:3000/ejs-testing/communityPosts/delete/' + e.target.value, {
                      method:'DELETE'
                   })
                }

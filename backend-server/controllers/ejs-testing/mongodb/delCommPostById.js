@@ -8,5 +8,5 @@ const CommunityPosts = require('../../../models/CommunityPost');
 module.exports = async(req, res)=>{
    const communityPost = await CommunityPosts.findByIdAndDelete(req.params.id);  
    console.log(communityPost);
-   res.redirect('/communityPosts');
+   res.redirect('/ejs-testing/communityPosts');
 }

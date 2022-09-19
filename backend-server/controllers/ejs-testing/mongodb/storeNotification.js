@@ -14,5 +14,5 @@ module.exports = (req, res)=>{
          console.error(error);
       }
    });
-   res.redirect('/notifications');
+   res.redirect('/ejs-testing/notifications');
 }
