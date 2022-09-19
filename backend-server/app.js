@@ -129,7 +129,7 @@ app.delete('/notifications/delete/:id', delNotificationByIdController);
 app.get('/ejs-testing', testHomePageEjsController);
 app.get('/ejs-testing/communityPosts', commPostPageEjsController);
 app.get('/ejs-testing/exchangeListings', exchangeListPageEjsController);
-app.get('/ejs-testing/notifications', notificationsPageController);
+app.get('/ejs-testing/notifications', notificationsPageEjsController);
 
 // get post by id
 app.get('/ejs-testing/communityPosts/id', getCommPostByIdEjsController);
