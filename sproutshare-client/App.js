@@ -20,7 +20,7 @@ import UserGarden from './components/UserGarden.js';
 const Tab = createBottomTabNavigator();
 
 // Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
-const nodeServer = 'https://clean-eagles-refuse-68-0-34-101.loca.lt';
+const nodeServer = 'https://lemon-cats-melt-68-0-34-101.loca.lt';
 
 export default class App extends React.Component {
 
@@ -78,7 +78,6 @@ export default class App extends React.Component {
           {/* Colors system status bar */}
           
         </NavigationContainer>
-        <StatusBar style="dark"/>
         </>
     );
   };
