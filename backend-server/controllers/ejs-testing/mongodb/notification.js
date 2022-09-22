@@ -23,19 +23,21 @@ router.get('/id', async(req, res) => {
 
 /** 
  * Searches the communityposts collection for strings matching the regex query string in...
- * comm_post_title
- * comm_post_body
+ * user_plant
+ * notification_title
+ * notification_body
  * Can return multiple records as a collection
  */
-router.get('/search', async(req, res) =>{
-    const notifications = await Notifications.find()
-    .or(
-          [
-             {comm_post_title: {$regex:req.query.string}}, 
-             {comm_post_body: {$regex:req.query.string}}
-          ]
-    );
-    res.render('notifications', {notifications});
+ router.get('/search', async(req, res) =>{
+   const notifications = await Notifications.find()
+   .or(
+         [
+            {user_plant: {$regex:req.query.string}}, 
+            {notification_title: {$regex:req.query.string}},
+            {notification_body: {$regex:req.query.string}}
+         ]
+   );
+   res.send(notifications);
 })
 
 /** Handler for creating a community post */

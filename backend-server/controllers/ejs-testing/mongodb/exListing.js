@@ -23,16 +23,18 @@ router.get('/id', async(req, res) => {
 
 /** 
  * Searches the ExchangeListings collection for strings matching the regex query string in...
- * comm_post_title
- * comm_post_body
+ * ex_plant
+ * ex_post_title
+ * ex_post_body
  * Can return multiple records as a collection
  */
 router.get('/search', async(req, res) =>{
     const exchangeListings = await ExchangeListings.find()
     .or(
           [
-             {comm_post_title: {$regex:req.query.string}}, 
-             {comm_post_body: {$regex:req.query.string}}
+            {ex_plant: {$regex:req.query.string}}, 
+            {ex_post_title: {$regex:req.query.string}}, 
+            {ex_post_body: {$regex:req.query.string}}
           ]
     );
     res.render('exchangeListings', {exchangeListings});
