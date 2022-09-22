@@ -21,9 +21,7 @@ app.use(cors());
 
 /** custom middleware */
 
-/** prod postgres controllers */
-
-/** prod mongodb controllers */
+/** production */
 
 const homePageController = require('./controllers/homePage');
 const commPostController = require('./controllers/mongodb/commPost');
@@ -31,29 +29,27 @@ const exchangeListingController = require('./controllers/mongodb/exListing');
 const notificationsController = require('./controllers/mongodb/notification');
 const forumPostController = require('./controllers/mongodb/forumPost');
 
-/** postgres ejs-testing controllers  */
-const plantTypeController = require('./controllers/ejs-testing/postgres/plantTypeRoute');
-
-/** mongodb ejs-testing controllers */
-const ejsTestPageController = require('./controllers/ejs-testing/testPageController');
-const ejsCommPostController = require('./controllers/ejs-testing/mongodb/commPost');
-const ejsExchangeListingController = require('./controllers/ejs-testing/mongodb/exListing');
-const ejsNotificationController = require('./controllers/ejs-testing/mongodb/notification');
-const ejsForumPostController = require('./controllers/ejs-testing/mongodb/forumPost');
-
-/** postgres prod route handling */
-
-/** mongodb prod route handling */
 app.get('/', homePageController);
 app.use('/communityPosts', commPostController);
 app.use('/exchangeListings', exchangeListingController);
 app.use('/notifications', notificationsController);
 app.use('/forumPosts', forumPostController);
 
-/** postgres ejs-testing route handling */
+
+/** ejs */
+
+/** postgres */
+const plantTypeController = require('./controllers/ejs-testing/postgres/plantTypeRoute');
+
 app.use('/ejs-testing/plantTypes', plantTypeController);
 
-/** mongodb ejs-testing route handling */
+/** mongodb */
+const ejsTestPageController = require('./controllers/ejs-testing/testPageController');
+const ejsCommPostController = require('./controllers/ejs-testing/mongodb/commPost');
+const ejsExchangeListingController = require('./controllers/ejs-testing/mongodb/exListing');
+const ejsNotificationController = require('./controllers/ejs-testing/mongodb/notification');
+const ejsForumPostController = require('./controllers/ejs-testing/mongodb/forumPost');
+
 app.get('/ejs-testing', ejsTestPageController);
 app.use('/ejs-testing/communityPosts', ejsCommPostController);
 app.use('/ejs-testing/exchangeListings', ejsExchangeListingController);
