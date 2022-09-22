@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Home</title>
+      <%-include('layouts/header');-%>
+   </head>
+   <body>
+      <%-include('layouts/navbar');-%>
+      <h1>Forum Posts</h1>
+      <br/>
+      <br/>
+      <br/>
+      <form action="/ejs-testing/forumPosts/store" method="post" enctype="application/x-www-form-urlencoded">
+         <label for="user_ID">User ID</label>
+         <input type="text" name="user_ID">
+
+         <label for="user_plant">Plant Name</label>
+         <input type="text" name="user_plant">
+
+         <label for="forum_post_title">Title</label>
+         <input type="text" name="forum_post_title">
+
+         <label for="forum_post_body">Body</label>
+         <input type="text" name="forum_post_body">
+
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <form action="/ejs-testing/forumPosts/id" method="get">
+         <input type="text" name="id"  placeholder = "Search by id..." >
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <form action="/ejs-testing/forumPosts/search" method="get">
+         <input type="text" name="string" placeholder = "Search by description...">
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <% if (typeof forumPosts !== 'undefined') { %>
+         <span id="forumPosts-selectable" hidden><%=JSON.stringify(forumPosts);%></span>
+         <div>
+            <% forumPosts.forEach(forumPost => { %>
+               <%= "{" %> 
+               <div>ID: <%=forumPost._id%></div> 
+               <div>User ID: <%=forumPost.user_ID%></div>
+               <div>Date: <%=forumPost.user_plant%></div>
+               <div>Date: <%=forumPost.forum_post_date%></div>
+               <div>Title: <%=forumPost.forum_post_title%></div>
+               <div>Body: <%=forumPost.forum_post_body%></div>
+               <%= "}" %> 
+               <br/>
+               <button class = "edit-record" value="<%=forumPost._id%>">Edit</button>
+               &emsp;
+               <button class = "delete-record" value="<%=forumPost._id%>">Delete</button>
+               <br/>
+            <% }) %>
+         </div>
+      <% } %>
+      <script>
+         var forumPosts = JSON.parse($('#forumPosts-selectable').text());
+         console.log(forumPosts);
+         
+         const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
+            button.addEventListener('click',  (e)=>{
+               console.log('delete pressed ' + e.target.value);
+               const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
+               if(confirm(promptText)){
+                  console.log("Deleted record: " + e.target.value);
+                  const deletePost = fetch('http://localhost:3000/ejs-testing/forumPosts/delete/' + e.target.value, {
+                     method:'DELETE'
+                  })
+               }
+               else{
+                  console.log("Deleted record canceled for: " + e.target.value);
+               }
+            });
+         });
+
+         let editButtons = document.querySelectorAll('.edit-record');
+         editButtons.forEach(button=>{
+            button.addEventListener('click', (e)=>{
+               console.log('edit pressed ' + e.target.value);
+            });
+         });
+      </script>
+   </body>
+</html>

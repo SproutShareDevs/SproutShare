@@ -29,50 +29,35 @@ const homePageController = require('./controllers/homePage');
 const commPostController = require('./controllers/mongodb/commPost');
 const exchangeListingController = require('./controllers/mongodb/exListing');
 const notificationsController = require('./controllers/mongodb/notification');
+const forumPostController = require('./controllers/mongodb/forumPost');
 
-/**
- * postgres ejs-testing controllers
- * 
- */
-const plantTypePageController = require('./controllers/ejs-testing/postgres/plantTypeRoute');
+/** postgres ejs-testing controllers  */
+const plantTypeController = require('./controllers/ejs-testing/postgres/plantTypeRoute');
 
-/** 
- * mongodb ejs-testing controllers 
- * 
- */
-const testHomePageEjsController = require('./controllers/ejs-testing/testPageController');
+/** mongodb ejs-testing controllers */
+const ejsTestPageController = require('./controllers/ejs-testing/testPageController');
 const ejsCommPostController = require('./controllers/ejs-testing/mongodb/commPost');
 const ejsExchangeListingController = require('./controllers/ejs-testing/mongodb/exListing');
-const ejsNotificationController = require('./controllers/ejs-testing/mongodb/notification')
+const ejsNotificationController = require('./controllers/ejs-testing/mongodb/notification');
+const ejsForumPostController = require('./controllers/ejs-testing/mongodb/forumPost');
 
-/**
- * postgres prod route handling
- */
+/** postgres prod route handling */
 
-/** 
- * mongodb prod route handling 
- */
-// get pages
+/** mongodb prod route handling */
 app.get('/', homePageController);
 app.use('/communityPosts', commPostController);
 app.use('/exchangeListings', exchangeListingController);
 app.use('/notifications', notificationsController);
+app.use('/forumPosts', forumPostController);
 
-/**
- * postgres ejs-testing route handling
- */
+/** postgres ejs-testing route handling */
+app.use('/ejs-testing/plantTypes', plantTypeController);
 
-app.use('/ejs-testing/plantTypes', plantTypePageController);
-
-/** 
- * mongodb ejs-testing route handling 
- * 
- */
-
-// get pages
-app.get('/ejs-testing', testHomePageEjsController);
+/** mongodb ejs-testing route handling */
+app.get('/ejs-testing', ejsTestPageController);
 app.use('/ejs-testing/communityPosts', ejsCommPostController);
 app.use('/ejs-testing/exchangeListings', ejsExchangeListingController);
 app.use('/ejs-testing/notifications', ejsNotificationController);
+app.use('/ejs-testing/forumPosts', ejsForumPostController);
 
 app.listen(3000, ()=>{console.log('Listening on port 3000...')});

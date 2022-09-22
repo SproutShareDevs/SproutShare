@@ -17,8 +17,8 @@ router.get('/', async(req, res) => {
  * This route gets a community post ID via parameter in the get request and renders it in EJS 
  */
 router.get('/id', async(req, res) => {
-   const notification = [await Notifications.findById(req.query.id)];
-   res.render('notifications', {notification});
+   const notifications = [await Notifications.findById(req.query.id)];
+   res.render('notifications', {notifications});
 }) 
 
 /** 
@@ -54,7 +54,7 @@ router.post('/store', (req,res) =>{
  *  Updates a document in the communityposts collection in mongodb
  */
 router.put('/update/:id', async(req,res)=>{
-   const notification = await Notifications.findByIdAndUpdate(req.params.id, {...req.body});
+   const notifications = await Notifications.findByIdAndUpdate(req.params.id, {...req.body});
    res.redirect('/ejs-testing/notifications');
 })
 
@@ -64,7 +64,7 @@ router.put('/update/:id', async(req,res)=>{
  * console logs the deleted record and redirects to notifications page
  */
 router.delete('/delete/:id', async(req, res)=>{
-    const notification = await Notifications.findByIdAndDelete(req.params.id);  
+    const notifications = await Notifications.findByIdAndDelete(req.params.id);  
     res.redirect('/ejs-testing/notifications');
 })
 

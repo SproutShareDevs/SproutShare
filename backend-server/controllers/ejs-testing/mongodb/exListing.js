@@ -17,8 +17,8 @@ router.get('/', async(req, res) => {
  * This route gets a community post ID via parameter in the get request and renders it in EJS 
  */
 router.get('/id', async(req, res) => {
-   const exchangeListing = [await ExchangeListings.findById(req.query.id)];
-   res.render('exchangeListings', {exchangeListing});
+   const exchangeListings = [await ExchangeListings.findById(req.query.id)];
+   res.render('exchangeListings', {exchangeListings});
 }) 
 
 /** 
@@ -42,7 +42,7 @@ router.get('/search', async(req, res) =>{
 
 /** Handler for creating a community post */
 router.post('/store', (req,res) =>{
-   ExchangeListings.create(req.body, (error, exchangeListing)=>{
+   ExchangeListings.create(req.body, (error, exchangeListings)=>{
       console.log(req.body);
       if(error){
          console.error(error);
@@ -54,7 +54,7 @@ router.post('/store', (req,res) =>{
  *  Updates a document in the ExchangeListings collection in mongodb
  */
 router.put('/update/:id', async(req,res)=>{
-   const exchangeListing = await ExchangeListings.findByIdAndUpdate(req.params.id, {...req.body});
+   const exchangeListings = await ExchangeListings.findByIdAndUpdate(req.params.id, {...req.body});
    res.redirect('/ejs-testing/exchangeListings');
 })
 
@@ -64,8 +64,8 @@ router.put('/update/:id', async(req,res)=>{
  * console logs the deleted record and redirects to ExchangeListings page
  */
 router.delete('/delete/:id', async(req, res)=>{
-    const exchangeListing = await ExchangeListings.findByIdAndDelete(req.params.id);  
-    res.redirect('/ejs-testing/exchangeListing');
+    const exchangeListings = await ExchangeListings.findByIdAndDelete(req.params.id);  
+    res.redirect('/ejs-testing/exchangeListings');
 })
 
 module.exports = router;
