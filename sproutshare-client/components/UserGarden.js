@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {Text, View, Button } from 'react-native';
 import axios from 'axios';
 
-// Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
-const baseUrl = 'https://big-spiders-lay-68-0-34-101.loca.lt';
-
 class UserGarden extends React.Component {
 
     constructor(props) {
