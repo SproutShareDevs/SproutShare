@@ -6,6 +6,9 @@ const path = require('path');
 const ejs = require('ejs');
 const cors = require('cors');
 
+/** seed db */
+const seedDB = require("./seed.js");
+
 /** database connection(s) */
 mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
 //const pool = require('./models/postgresPool');
@@ -55,5 +58,9 @@ app.use('/ejs-testing/communityPosts', ejsCommPostController);
 app.use('/ejs-testing/exchangeListings', ejsExchangeListingController);
 app.use('/ejs-testing/notifications', ejsNotificationController);
 app.use('/ejs-testing/forumPosts', ejsForumPostController);
+
+
+// seed database, comment out unless you want to reseed database
+// seedDB();
 
 app.listen(3000, ()=>{console.log('Listening on port 3000...')});
