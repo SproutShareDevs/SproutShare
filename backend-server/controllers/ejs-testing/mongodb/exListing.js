@@ -28,7 +28,7 @@ router.get('/id', async(req, res) => {
  * ex_post_body
  * Can return multiple records as a collection
  */
-router.get('/search', async(req, res) =>{
+router.get('/query', async(req, res) =>{
     const exchangeListings = await ExchangeListings.find()
     .or(
           [

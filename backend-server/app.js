@@ -31,20 +31,23 @@ const commPostController = require('./controllers/mongodb/commPost');
 const exchangeListingController = require('./controllers/mongodb/exListing');
 const notificationsController = require('./controllers/mongodb/notification');
 const forumPostController = require('./controllers/mongodb/forumPost');
+const plantController = require('./controllers/postgres/plants');
+
 
 app.get('/', homePageController);
 app.use('/communityPosts', commPostController);
 app.use('/exchangeListings', exchangeListingController);
 app.use('/notifications', notificationsController);
 app.use('/forumPosts', forumPostController);
+app.use('/plants', plantController);
 
 
 /** ejs */
 
 /** postgres */
-const plantTypeController = require('./controllers/ejs-testing/postgres/plantTypeRoute');
+const ejsPlantController = require('./controllers/ejs-testing/postgres/plants');
 
-app.use('/ejs-testing/plantTypes', plantTypeController);
+app.use('/ejs-testing/plants', ejsPlantController);
 
 /** mongodb */
 const ejsTestPageController = require('./controllers/ejs-testing/testPageController');
