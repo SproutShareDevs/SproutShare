@@ -8,7 +8,6 @@ class SearchBar extends React.Component {
     }
 
     handleChange = (search) =>{
-        console.log('called handleChange')
         this.props.updateSearch(search);
 
     }
@@ -29,7 +28,6 @@ const styles = StyleSheet.create({
     paddingLeft:4,
     justifyContent: "flex-start",
     alignItems: "center",
-    flexDirection: "row",
     width: "90%",
     borderColor: '#000000',
     borderWidth: 1

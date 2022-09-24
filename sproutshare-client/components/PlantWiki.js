@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -5,66 +6,103 @@ import SearchBar from './SearchBar';
 
 class PlantWiki extends React.Component {
 
-
     constructor(props){
         super(props);
         this.state = {
-                    plantList: [],
+                    data: [],
                     search: '',
                     success: 'No search yet'
         }
-        this.query = this.query.bind(this);
         this.updateSearch = this.updateSearch.bind(this);
+        this.renderItem = this.renderItem.bind(this);
     }
 
-    query = (search) => {
-      //TODO: request DB for filtered plant data by search term, needs endpoint to access
-      //Placeholder output to test
-      this.setState(state => {
-        return {success: 'you searched for '+ search};
-      });
-    }
 
     updateSearch = (search) => {
+      console.log('called updateSearch')
+      console.log(this.state.data);
       this.setState(state => {
         return {search: search};
       });
-      this.query(search);
+    }
+
+    /*Returns item if state.search is included in common name*/
+    renderItem = ({ item }) => {
+      const searchPhrase = this.state.search;
+      // when no input, show all
+      if (searchPhrase === "") {
+        return (
+          <View style={styles.item}>
+            <Text style={styles.title}>Plant Name: {item.common_name}</Text>
+            <Text style={styles.title}>Latin Name: {item.latin_name}</Text>
+            <Text style={styles.title}>Hardiness Zone: {item.hardiness_zone}</Text>
+            <Text style={styles.title}>min_temp: {item.min_temp}</Text>
+            <Text style={styles.title}>max_temp: {item.max_temp}</Text>
+          </View>
+        );
+      }
+      // filter of the name
+      if (item.common_name.toUpperCase().includes(searchPhrase.toUpperCase().trim())) {
+        return (
+          <View style={styles.item}>
+            <Text style={styles.title}>Plant Name: {item.common_name}</Text>
+            <Text style={styles.title}>Latin Name: {item.latin_name}</Text>
+            <Text style={styles.title}>Hardiness Zone: {item.hardiness_zone}</Text>
+            <Text style={styles.title}>min_temp: {item.min_temp}</Text>
+            <Text style={styles.title}>max_temp: {item.max_temp}</Text>
+          </View>
+        );
+      }
     }
 
     render() {
         return(
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <SearchBar
-                    placeholder='Search Here...'
-                    updateSearch={this.updateSearch}
-                />
-                <Text>Welcome to the Plant Wiki</Text>
-                <Text>{this.state.success}</Text>
-                <FlatList
-                  data = {this.state.data}
-                  keyExtractor={item => item._id}
-                />
+            <View style={styles.container}>
+                <View >
+                  <SearchBar
+                      placeholder='Search Here...'
+                      updateSearch={this.updateSearch}
+                      />
+                </View>
+                <View>
+                  <FlatList
+                    data = {this.state.data}
+                    renderItem={this.renderItem}
+                    keyExtractor={item => item._id}
+                  />
+                  <Text>Welcome to the Plant Wiki</Text>
+                  <Text>{this.state.success}</Text>
+                </View>
 
             </View>
         );
     }
 
+    componentDidMount = async() => {
+      await axios.get(`${this.props.nodeServer}/plants`).then((response) => {
+          this.setState(state => {
+              return {data: response.data}
+          });
+        }).catch(err => {
+          console.log('Error: ', err);
+      });
+  }
+
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    item: {
-      backgroundColor: '#90EE90',
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
-    },
-    title: {
-      fontSize: 16,
-    },
-  });
+  container: {
+    flex: 1,
+  },
+  item: {
+    backgroundColor: '#90EE90',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 16,
+  },
+});
 
 export default PlantWiki;
