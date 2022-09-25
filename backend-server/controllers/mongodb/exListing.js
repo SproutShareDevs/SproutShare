@@ -14,6 +14,25 @@ router.get('/', async(req, res) => {
 })
 
 /** 
+ * Searches the ExchangeListings collection for strings matching the regex query string in...
+ * ex_plant
+ * ex_post_title
+ * ex_post_body
+ * Can return multiple records as a collection
+ */
+ router.get('/search', async(req, res) =>{
+   const exchangeListings = await ExchangeListings.find()
+   .or(
+         [
+           {ex_plant: {$regex:req.query.string}}, 
+           {ex_post_title: {$regex:req.query.string}}, 
+           {ex_post_body: {$regex:req.query.string}}
+         ]
+   );
+   res.send(exchangeListings);
+})
+
+/** 
  * This route gets a community post ID via parameter in the get request and renders it in EJS 
  */
 router.get('/:id', async(req, res) => {
@@ -21,24 +40,6 @@ router.get('/:id', async(req, res) => {
    res.send(exchangeListing);
 }) 
 
-/** 
- * Searches the ExchangeListings collection for strings matching the regex query string in...
- * ex_plant
- * ex_post_title
- * ex_post_body
- * Can return multiple records as a collection
- */
-router.get('/search', async(req, res) =>{
-    const exchangeListings = await ExchangeListings.find()
-    .or(
-          [
-            {ex_plant: {$regex:req.query.string}}, 
-            {ex_post_title: {$regex:req.query.string}}, 
-            {ex_post_body: {$regex:req.query.string}}
-          ]
-    );
-    res.send(exchangeListings);
-})
 
 /** Handler for creating a community post */
 router.post('/store', (req,res) =>{

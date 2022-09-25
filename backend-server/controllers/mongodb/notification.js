@@ -14,21 +14,13 @@ router.get('/', async(req, res) => {
 })
 
 /** 
- * This route gets a community post ID via parameter in the get request and renders it in EJS 
- */
-router.get('/:id', async(req, res) => {
-   const notification = await Notifications.findById(req.params.id);
-   res.send(notification);
-}) 
-
-/** 
  * Searches the communityposts collection for strings matching the regex query string in...
  * user_plant
  * notification_title
  * notification_body
  * Can return multiple records as a collection
  */
-router.get('/search', async(req, res) =>{
+ router.get('/search', async(req, res) =>{
    const notifications = await Notifications.find()
    .or(
          [
@@ -39,6 +31,14 @@ router.get('/search', async(req, res) =>{
    );
    res.send(notifications);
 })
+
+/** 
+ * This route gets a community post ID via parameter in the get request and renders it in EJS 
+ */
+router.get('/:id', async(req, res) => {
+   const notification = await Notifications.findById(req.params.id);
+   res.send(notification);
+}) 
 
 /** Handler for creating a community post */
 router.post('/store', async(req,res) =>{

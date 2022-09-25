@@ -14,31 +14,31 @@ router.get('/', async(req, res) => {
 })
 
 /** 
- * This route gets a community post ID via parameter in the get request and renders it in EJS 
- */
-router.get('/:id', async(req, res) => {
-   const forumPost = await ForumPosts.findById(req.params.id);
-   res.send(forumPost);
-}) 
-
-/** 
  * Searches the ForumPosts collection for strings matching the regex query string in...
  * user_plant
  * forum_post_title
  * forum_post_body
  * Can return multiple records as a collection
  */
-router.get('/search', async(req, res) =>{
-    const forumPosts = await ForumPosts.find()
-    .or(
-          [
-            {user_plant: {$regex:req.query.string}}, 
-            {forum_post_title: {$regex:req.query.string}}, 
-            {forum_post_body: {$regex:req.query.string}}
-          ]
-    );
-    res.send(forumPosts);
+ router.get('/search', async(req, res) =>{
+   const forumPosts = await ForumPosts.find()
+   .or(
+         [
+           {user_plant: {$regex:req.query.string}}, 
+           {forum_post_title: {$regex:req.query.string}}, 
+           {forum_post_body: {$regex:req.query.string}}
+         ]
+   );
+   res.send(forumPosts);
 })
+
+/** 
+ * This route gets a community post ID via parameter in the get request and renders it in EJS 
+ */
+router.get('/:id', async(req, res) => {
+   const forumPost = await ForumPosts.findById(req.params.id);
+   res.send(forumPost);
+}) 
 
 /** Handler for creating a community post */
 router.post('/store', (req,res) =>{

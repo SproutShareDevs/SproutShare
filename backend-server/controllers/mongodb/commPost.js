@@ -12,32 +12,34 @@ router.get('/', async(req, res) => {
    const commPosts = await CommunityPosts.find({});
    res.send(commPosts);
 })
-
-/** 
- * This route gets a community post ID via parameter in the get request and sends it in EJS 
- */
-router.get('/:id', async(req, res) => {
-   const commPosts = await CommunityPosts.findById(req.params.id);
-   
-   res.send(commPosts);
-}) 
-
 /** 
  * Searches the communityposts collection for strings matching the regex query string in...
  * comm_post_title
  * comm_post_body
  * Can return multiple records as a collection
  */
-router.get('/search', async(req, res) =>{
-    const commPosts = await CommunityPosts.find()
-    .or(
-          [
+ router.get('/search', async(req, res) =>{
+   const commPosts = await CommunityPosts.find()
+   .or(
+         [
             {comm_post_title: {$regex:req.query.string}}, 
             {comm_post_body: {$regex:req.query.string}}
-          ]
-    );
-    res.send(commPosts);
+         ]
+   );
+   
+   res.send(commPosts);
 })
+
+/** 
+ * This route gets a community post ID via parameter in the get request and sends it in EJS 
+ */
+router.get('/:id', async(req, res) => {
+   console.log("in /:id");
+   const commPosts = await CommunityPosts.findById(req.params.id);
+   
+   res.send(commPosts);
+}) 
+
 
 /** Handler for creating a community post */
 router.post('/store', async(req,res) =>{
