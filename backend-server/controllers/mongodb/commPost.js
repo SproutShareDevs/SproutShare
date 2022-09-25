@@ -40,8 +40,8 @@ router.get('/search', async(req, res) =>{
 })
 
 /** Handler for creating a community post */
-router.post('/store', (req,res) =>{
-   const commPost = CommunityPosts.create(req.body);
+router.post('/store', async(req,res) =>{
+   const commPost = await CommunityPosts.create(req.body);
    res.send(commPost);
 })
 /**

@@ -16,8 +16,8 @@ router.get('/', async(req, res) => {
 /** 
  * This route gets a community post ID via parameter in the get request and renders it in EJS 
  */
-router.get('/id', async(req, res) => {
-   const notification = [await Notifications.findById(req.query.id)];
+router.get('/:id', async(req, res) => {
+   const notification = await Notifications.findById(req.params.id);
    res.send(notification);
 }) 
 
@@ -41,14 +41,9 @@ router.get('/search', async(req, res) =>{
 })
 
 /** Handler for creating a community post */
-router.post('/store', (req,res) =>{
-   Notifications.create(req.body, (error, communityPost)=>{
-      console.log(req.body);
-      if(error){
-         console.error(error);
-      }
-   });
-   res.send(req.body);
+router.post('/store', async(req,res) =>{
+   const notification = await Notifications.create(req.body);
+   res.send(notification);
 })
 /**
  *  Updates a document in the communityposts collection in mongodb
