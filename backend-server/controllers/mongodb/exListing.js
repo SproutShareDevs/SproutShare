@@ -16,8 +16,8 @@ router.get('/', async(req, res) => {
 /** 
  * This route gets a community post ID via parameter in the get request and renders it in EJS 
  */
-router.get('/id', async(req, res) => {
-   const exchangeListing = [await ExchangeListings.findById(req.query.id)];
+router.get('/:id', async(req, res) => {
+   const exchangeListing = await ExchangeListings.findById(req.params.id);
    res.send(exchangeListing);
 }) 
 
@@ -28,7 +28,7 @@ router.get('/id', async(req, res) => {
  * ex_post_body
  * Can return multiple records as a collection
  */
-router.get('/query', async(req, res) =>{
+router.get('/search', async(req, res) =>{
     const exchangeListings = await ExchangeListings.find()
     .or(
           [
@@ -42,12 +42,7 @@ router.get('/query', async(req, res) =>{
 
 /** Handler for creating a community post */
 router.post('/store', (req,res) =>{
-   ExchangeListings.create(req.body, (error, exchangeListing)=>{
-      console.log(req.body);
-      if(error){
-         console.error(error);
-      }
-   });
+   ExchangeListings.create(req.body);
    res.send(req.body);
 })
 /**
