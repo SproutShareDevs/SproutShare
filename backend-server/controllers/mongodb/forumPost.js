@@ -16,8 +16,8 @@ router.get('/', async(req, res) => {
 /** 
  * This route gets a community post ID via parameter in the get request and renders it in EJS 
  */
-router.get('/id', async(req, res) => {
-   const forumPost = [await ForumPosts.findById(req.query.id)];
+router.get('/:id', async(req, res) => {
+   const forumPost = await ForumPosts.findById(req.params.id);
    res.send(forumPost);
 }) 
 
