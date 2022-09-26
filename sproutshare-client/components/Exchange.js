@@ -11,25 +11,24 @@ class Exchange extends React.Component {
             data: [],
             modalIsVisible: false
         }
-        this.setModalIsVisible = this.setModalIsVisible.bind(this);
-        this.setModalIsInvisible = this.setModalIsInvisible.bind(this);
+        this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
     }
 
-    setModalIsVisible() {
-        this.setState({modalIsVisible: true});
-    }
-
-    setModalIsInvisible() {
-        this.setState({modalIsVisible: false});
+    toggleModalVisibility() {
+        if(this.state.modalIsVisible == true) {
+            this.setState({modalIsVisible: false});
+        } else {
+            this.setState({modalIsVisible: true});    
+        }
     }
 
     render() {
         return(
             <View styles={styles.container}>
                 <Text>Welcome to the Plant Exchange</Text>
-                <Button title='Search for post' color='#228b22' onPress={this.setModalIsVisible}/>
+                <Button title='Search for post' color='#228b22' onPress={this.toggleModalVisibility}/>
                 <Modal style={styles.modalcss} visible={this.state.modalIsVisible} animationType='slide'>
-                    <Button title='Exchange Home' color='#228b22' onPress={this.setModalIsInvisible}/>
+                    <Button title='Exchange Home' color='#228b22' onPress={this.toggleModalVisibility}/>
                     
                     <TextInput
                         style={styles.textInput} 
