@@ -25,6 +25,28 @@ const plants = [
       rec_temp: 80, 
       hardiness_zone: "ZONE_B", 
       soil_type: "TYPE_B", 
+   },
+   {
+      plant_id:3,
+      common_name:'Tomato',
+      latin_name: 'Solanum Lycopersicum',
+      light_level: '10',
+      min_temp: 55,
+      max_temp: 90,
+      rec_temp: 80,
+      hardiness_zone: "TYPE_C",
+      soil_type: "TYPE_C"
+   },
+   {
+      plant_id:4,
+      common_name:'Zucchini',
+      latin_name: 'Cucurbita pepo',
+      light_level: '10',
+      min_temp: 55,
+      max_temp: 90,
+      rec_temp: 75,
+      hardiness_zone: "TYPE_D",
+      soil_type: "TYPE_D"
    }
 ];
 

@@ -19,8 +19,6 @@ class PlantWiki extends React.Component {
 
 
     updateSearch = (search) => {
-      console.log('called updateSearch')
-      console.log(this.state.data);
       this.setState(state => {
         return {search: search};
       });
@@ -68,7 +66,7 @@ class PlantWiki extends React.Component {
                   <FlatList
                     data = {this.state.data}
                     renderItem={this.renderItem}
-                    keyExtractor={item => item._id}
+                    keyExtractor={item => item.plamt_id}
                   />
                   <Text>Welcome to the Plant Wiki</Text>
                   <Text>{this.state.success}</Text>
