@@ -66,7 +66,7 @@ class PlantWiki extends React.Component {
                   <FlatList
                     data = {this.state.data}
                     renderItem={this.renderItem}
-                    keyExtractor={item => item.plamt_id}
+                    keyExtractor={item => item.plant_id}
                   />
                   <Text>Welcome to the Plant Wiki</Text>
                   <Text>{this.state.success}</Text>
