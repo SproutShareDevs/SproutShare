@@ -1,6 +1,6 @@
 const mongoose 	= require("mongoose"),
-	ExchangeListings = require("./models/ExchangeListing"),
-	CommunityPosts = require("./models/CommunityPost");
+	ExchangeListings = require("../models/ExchangeListing"),
+	CommunityPosts = require("../models/CommunityPost");
 
 const MockExchangeData = [
     {

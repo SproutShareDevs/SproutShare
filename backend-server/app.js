@@ -7,7 +7,7 @@ const ejs = require('ejs');
 const cors = require('cors');
 
 /** seed db */
-const seedDB = require("./seed.js");
+//const seedDB = require("./db/seed.js");
 
 /** database connection(s) */
 mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
