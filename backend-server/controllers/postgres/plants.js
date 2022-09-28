@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../../models/postgresPool');
 
 // temporary data
-const plants = [
+const plantsList = [
    {
       plant_id: 1,
       common_name: "daisy",
@@ -52,13 +52,12 @@ const plants = [
 
 router.get('/', (req,res)=>{
    //... db call using pool
-   res.send(plants);
+   res.send(plantsList);
 });
 
 router.get('/:id', async(req,res)=>{
    //... db call using pool
-   console.log(req.params.id);
-   const plant = plants.find(p => p.plant_id === parseInt(req.params.id));
+   const plant = plantsList.find(p => p.plant_id === parseInt(req.params.id));
    
    if(!plant) return res.status(404).send(`No plant with the ID ${req.params.id} found`);
    
@@ -74,7 +73,7 @@ router.get('/query', async(req,res)=>{
 router.post('/store', async(req,res)=>{
    //... db call using pool
    const plant = {
-      plant_id: req.body.id || plants.length + 1,
+      plant_id: req.body.id || plantsList.length + 1,
       common_name: req.body.common_name,
       latin_name: req.body.latin_name,
       light_level: req.body.light_level, 
@@ -84,17 +83,17 @@ router.post('/store', async(req,res)=>{
       hardiness_zone: req.body.hardiness_zone, 
       soil_type: req.body.soil_type
    }
-   plants.push(plant);
-   res.send(plants)
+   plantsList.push(plant);
+   res.send(plant)
 });
 
 router.put('/update/:id', async(req,res)=>{
    //... db call using pool
-   const plant = plants.find(p => p.plant_id === parseInt(req.params.id));
+   const plant = plantsList.find(p => p.plant_id === parseInt(req.params.id));
    
    if(!plant) return res.status(404).send(`No plant with the ID ${req.params.id} found`);
 
-   for(let plant of plants){
+   for(let plant of plantsList){
       // this assumes id uniqueness is strictly enforced!
       if (plant.plant_id === parseInt(req.params.id)){ 
          plant.common_name = req.body.common_name,
@@ -112,12 +111,12 @@ router.put('/update/:id', async(req,res)=>{
 
 router.delete('/delete/:id', async(req,res)=>{
    //... db call using pool
-   const plant = plants.find(p => p.plant_id === parseInt(req.params.id));
+   const plant = plantsList.find(p => p.plant_id === parseInt(req.params.id));
    
    if(!plant) return res.status(404).send(`No plant with the ID ${req.params.id} found`);
 
-   const index = plants.indexOf(plant);
-   plants.splice(index, 1);
+   const index = plantsList.indexOf(plant);
+   plantsList.splice(index, 1);
    res.send(plant);
 });
 

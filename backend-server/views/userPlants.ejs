@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>User Plants</title>
+      <%-include('layouts/header');-%>
+   </head>
+   <body>
+      <%-include('layouts/navbar');-%>
+      <h1>User Plants</h1>
+      <br/>
+      <br/>
+      <br/>
+      <form action="/ejs-testing/userPlants/store" method="post" enctype="application/x-www-form-urlencoded">
+         <label for="user_id">User Id</label>
+         <input type="text" name="user_id">
+
+         <label for="plant_id">Plant ID</label>
+         <input type="text" name="plant_id">
+
+         <label for="garden_id">Garden ID</label>
+         <input type="text" name="latin_name">
+
+         <label for="current_disease">Curr. Disease</label>
+         <input type="text" name="current_disease">
+
+         <label for="current_pest">Curr. Pest</label>
+         <input type="text" name="current_pest">
+
+         <label for="plant_qty">Plant Qty</label>
+         <input type="text" name="plant_qty">
+
+         <label for="plant_difficulty">Plant Difficulty</label>
+         <input type="text" name="plant_difficulty">
+
+         <label for="plant_quality">Plant Quality</label>
+         <input type="text" name="plant_quality">
+
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <form action="/ejs-testing/userPlants/id" method="get">
+         <input type="text" name="id"  placeholder = "Search by id..." >
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <form action="/ejs-testing/userPlants/query" method="get">
+         <input type="text" name="string" placeholder = "Search by description...">
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <% if (typeof userPlants !== 'undefined') { %>
+         <!--<span id="userPlants-selectable" hidden><%=JSON.stringify(userPlants);%></span>-->
+         <div>
+            <% userPlants.forEach(plant => { %>
+               <%= "{" %> 
+               <div>ID: <%=plant.user_ID%></div>
+               <div>plant ID: <%=plant.plant_ID%></div> 
+               <div>garden ID: <%=plant.garden_ID%></div>
+               <div>Curr. Disease: <%=plant.current_disease%></div>
+               <div>Curr. Pest: <%=plant.current_pest%></div>
+               <div>Plant Qty: <%=plant.plant_qty%></div>
+               <div>Plant Difficulty: <%=plant.plant_difficulty%></div>
+               <div>Plant Quality: <%=plant.plant_quality%></div>
+               <%= "}" %> 
+               <br/>
+               <button class = "edit-record" value="<%=plant.user_ID%>">Edit</button>
+               &emsp;
+               <button class = "delete-record" value="<%=plant.user_ID%>">Delete</button>
+               <br/>
+            <% }) %>
+         </div>
+      <% } %>
+      <script>
+         //var plants = JSON.parse($('#plants-selectable').text());
+         //console.log(plants);
+         
+         const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
+            button.addEventListener('click',  (e)=>{
+               console.log('delete pressed ' + e.target.value);
+               const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
+               if(confirm(promptText)){
+                  console.log("Deleted record: " + e.target.value);
+                  const deletePost = fetch('http://localhost:3000/ejs-testing/userPlants/delete/' + e.target.value, {
+                     method:'DELETE'
+                  })
+               }
+               else{
+                  console.log("Deleted record canceled for: " + e.target.value);
+               }
+            });
+         });
+
+         let editButtons = document.querySelectorAll('.edit-record');
+         editButtons.forEach(button=>{
+            button.addEventListener('click', (e)=>{
+               console.log('edit pressed ' + e.target.value);
+            });
+         });
+      </script>
+   </body>
+</html>

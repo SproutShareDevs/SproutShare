@@ -36,7 +36,6 @@ router.get('/', (req,res)=>{
 
 router.get('/id', async(req,res)=>{
    //... db call using pool
-   console.log(req.query.id);
    const plants = plantList.find(p => p.plant_id === parseInt(req.query.id));
    
    if(!plants) return res.status(404).send(`No plant with the ID ${req.query.id} found`);

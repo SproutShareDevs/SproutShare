@@ -7,7 +7,7 @@ const ejs = require('ejs');
 const cors = require('cors');
 
 /** seed db */
-//const seedDB = require("./db/seed.js");
+const seedDB = require("./db/seed.js");
 
 /** database connection(s) */
 mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
@@ -26,12 +26,20 @@ app.use(cors());
 
 /** production */
 
+/* postgres */
+const plantController = require('./controllers/postgres/plants');
+const userPlantsController = require('./controllers/postgres/userPlants');
+
+app.use('/plants', plantController);
+app.use('/userPlants', userPlantsController);
+
+/* mongodb */
+
 const homePageController = require('./controllers/homePage');
 const commPostController = require('./controllers/mongodb/commPost');
 const exchangeListingController = require('./controllers/mongodb/exListing');
 const notificationsController = require('./controllers/mongodb/notification');
 const forumPostController = require('./controllers/mongodb/forumPost');
-const plantController = require('./controllers/postgres/plants');
 
 
 app.get('/', homePageController);
@@ -39,15 +47,16 @@ app.use('/communityPosts', commPostController);
 app.use('/exchangeListings', exchangeListingController);
 app.use('/notifications', notificationsController);
 app.use('/forumPosts', forumPostController);
-app.use('/plants', plantController);
 
 
 /** ejs */
 
 /** postgres */
 const ejsPlantController = require('./controllers/ejs-testing/postgres/plants');
+const ejsUserPlantController = require('./controllers/ejs-testing/postgres/userPlants');
 
 app.use('/ejs-testing/plants', ejsPlantController);
+app.use('/ejs-testing/userPlants', ejsUserPlantController);
 
 /** mongodb */
 const ejsTestPageController = require('./controllers/ejs-testing/testPageController');
@@ -64,6 +73,6 @@ app.use('/ejs-testing/forumPosts', ejsForumPostController);
 
 
 // seed database, comment out unless you want to reseed database
-// seedDB();
+//seedDB();
 
 app.listen(3000, ()=>{console.log('Listening on port 3000...')});
