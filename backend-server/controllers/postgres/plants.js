@@ -13,7 +13,8 @@ const plantsList = [
       max_temp: 70, 
       rec_temp: 52, 
       hardiness_zone: "ZONE_A", 
-      soil_type: "TYPE_A"
+      soil_type: "TYPE_A",
+      image: "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
    },
    {
       plant_id: 2, 
@@ -25,6 +26,7 @@ const plantsList = [
       rec_temp: 80, 
       hardiness_zone: "ZONE_B", 
       soil_type: "TYPE_B", 
+      image: "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
    },
    {
       plant_id:3,
@@ -35,7 +37,8 @@ const plantsList = [
       max_temp: 90,
       rec_temp: 80,
       hardiness_zone: "TYPE_C",
-      soil_type: "TYPE_C"
+      soil_type: "TYPE_C",
+      image: "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
    },
    {
       plant_id:4,
@@ -46,7 +49,8 @@ const plantsList = [
       max_temp: 90,
       rec_temp: 75,
       hardiness_zone: "TYPE_D",
-      soil_type: "TYPE_D"
+      soil_type: "TYPE_D",
+      image: "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
    }
 ];
 
@@ -81,7 +85,8 @@ router.post('/store', async(req,res)=>{
       max_temp: req.body.max_temp, 
       rec_temp: req.body.rec_temp, 
       hardiness_zone: req.body.hardiness_zone, 
-      soil_type: req.body.soil_type
+      soil_type: req.body.soil_type,
+      image: req.body.image
    }
    plantsList.push(plant);
    res.send(plant)
@@ -104,6 +109,7 @@ router.put('/update/:id', async(req,res)=>{
          plant.rec_temp = req.body.rec_temp, 
          plant.hardiness_zone = req.body.hardiness_zone, 
          plant.soil_type = req.body.soil_type 
+         plant.image = req.body.image
       }  
    }
    res.send(plant);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Image} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
 
@@ -31,9 +31,18 @@ class PlantWiki extends React.Component {
       if (searchPhrase === "") {
         return (
           <View style={styles.item}>
-            <Text style={styles.title}>Plant Name: {item.common_name}</Text>
-            <Text style={styles.title}>Latin Name: {item.latin_name}</Text>
+            <View style={styles.nameplate}>
+              <Image
+                style={styles.tinyImage}
+                source={{uri: item.image }}
+              />
+              <View>
+                <Text style={styles.title}>Plant Name: {item.common_name}</Text>
+                <Text style={styles.title}>Latin Name: {item.latin_name}</Text>
+              </View>
+            </View>
             <Text style={styles.title}>Hardiness Zone: {item.hardiness_zone}</Text>
+            <Text style={styles.title}>Soil Type: {item.soil_type}</Text>
             <Text style={styles.title}>min_temp: {item.min_temp}</Text>
             <Text style={styles.title}>max_temp: {item.max_temp}</Text>
           </View>
@@ -101,6 +110,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
   },
+  tinyImage: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  nameplate: {
+    flexDirection: 'row',
+    marginBottom: 10
+  }
 });
 
 export default PlantWiki;

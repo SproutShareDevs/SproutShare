@@ -43,7 +43,8 @@ CREATE TABLE "Plant" (
   "max_temp" int,
   "rec_temp" int,
   "hardiness_zone" varchar,
-  "soil_type" SoilType
+  "soil_type" SoilType,
+  "image" varchar
 );
 
 CREATE TABLE "UserPlant" (
