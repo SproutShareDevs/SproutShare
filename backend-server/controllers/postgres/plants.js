@@ -6,32 +6,32 @@ const pool = require('../../models/postgresPool');
 const plantsList = [
    {
       plant_id: 1,
-      common_name: "daisy",
-      latin_name: "lorem",
+      common_name: "Cucumber",
+      latin_name: "Cucumis sativus",
       light_level: "5", 
       min_temp: 32, 
       max_temp: 70, 
       rec_temp: 52, 
       hardiness_zone: "ZONE_A", 
       soil_type: "TYPE_A",
-      image: "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+      image: "https://images.unsplash.com/photo-1587411768638-ec71f8e33b78?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
    },
    {
       plant_id: 2, 
-      common_name: "lily",
-      latin_name: "ipsum",
+      common_name: "Carrot",
+      latin_name: "Darcus carota",
       light_level: "10", 
       min_temp: 0, 
       max_temp: 120, 
       rec_temp: 80, 
       hardiness_zone: "ZONE_B", 
       soil_type: "TYPE_B", 
-      image: "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+      image: "https://images.unsplash.com/photo-1606355601253-61a57fe375e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
    },
    {
       plant_id:3,
       common_name:'Tomato',
-      latin_name: 'Solanum Lycopersicum',
+      latin_name: 'Solanum lycopersicum',
       light_level: '10',
       min_temp: 55,
       max_temp: 90,
@@ -50,8 +50,20 @@ const plantsList = [
       rec_temp: 75,
       hardiness_zone: "TYPE_D",
       soil_type: "TYPE_D",
-      image: "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-   }
+      image: "https://cdn.pixabay.com/photo/2017/05/30/13/01/vegetables-2356861_960_720.jpg"
+   },
+   {
+      plant_id:5,
+      common_name:'Bell pepper',
+      latin_name: 'Capsicum annum',
+      light_level: '10',
+      min_temp: 55,
+      max_temp: 90,
+      rec_temp: 80,
+      hardiness_zone: "TYPE_C",
+      soil_type: "TYPE_C",
+      image: "https://images.unsplash.com/photo-1625675411855-534ee6b464ac?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+   },
 ];
 
 router.get('/', (req,res)=>{

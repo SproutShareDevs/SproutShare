@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image, Pressable} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
+import PlantPreview from './PlantPreview';
 
 class PlantWiki extends React.Component {
 
@@ -15,6 +16,7 @@ class PlantWiki extends React.Component {
         }
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
+        this.pressablePressed = this.pressablePressed.bind(this);
     }
 
 
@@ -24,40 +26,23 @@ class PlantWiki extends React.Component {
       });
     }
 
+    pressablePressed() {
+      console.log("Pressable pressed.");
+    }
+
     /*Returns item if state.search is included in common name*/
     renderItem = ({ item }) => {
       const searchPhrase = this.state.search;
       // when no input, show all
       if (searchPhrase === "") {
         return (
-          <View style={styles.item}>
-            <View style={styles.nameplate}>
-              <Image
-                style={styles.tinyImage}
-                source={{uri: item.image }}
-              />
-              <View>
-                <Text style={styles.title}>Plant Name: {item.common_name}</Text>
-                <Text style={styles.title}>Latin Name: {item.latin_name}</Text>
-              </View>
-            </View>
-            <Text style={styles.title}>Hardiness Zone: {item.hardiness_zone}</Text>
-            <Text style={styles.title}>Soil Type: {item.soil_type}</Text>
-            <Text style={styles.title}>min_temp: {item.min_temp}</Text>
-            <Text style={styles.title}>max_temp: {item.max_temp}</Text>
-          </View>
+          <PlantPreview plant={item} />
         );
       }
       // filter of the name
       if (item.common_name.toUpperCase().includes(searchPhrase.toUpperCase().trim())) {
         return (
-          <View style={styles.item}>
-            <Text style={styles.title}>Plant Name: {item.common_name}</Text>
-            <Text style={styles.title}>Latin Name: {item.latin_name}</Text>
-            <Text style={styles.title}>Hardiness Zone: {item.hardiness_zone}</Text>
-            <Text style={styles.title}>min_temp: {item.min_temp}</Text>
-            <Text style={styles.title}>max_temp: {item.max_temp}</Text>
-          </View>
+          <PlantPreview plant={item}/>
         );
       }
     }
@@ -71,14 +56,13 @@ class PlantWiki extends React.Component {
                       updateSearch={this.updateSearch}
                       />
                 </View>
-                <View>
+                
+                <View style={styles.listBottomMargin}>
                   <FlatList
                     data = {this.state.data}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.plant_id}
                   />
-                  <Text>Welcome to the Plant Wiki</Text>
-                  <Text>{this.state.success}</Text>
                 </View>
 
             </View>
@@ -101,23 +85,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  item: {
-    backgroundColor: '#90EE90',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 16,
-  },
-  tinyImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-  },
-  nameplate: {
-    flexDirection: 'row',
-    marginBottom: 10
+  listBottomMargin: {
+   marginBottom: 60
   }
 });
 
