@@ -29,12 +29,13 @@ app.use(cors());
 /* postgres */
 const plantController = require('./controllers/postgres/plants');
 const userPlantsController = require('./controllers/postgres/userPlants');
+const gardensController = require('./controllers/postgres/gardens');
 
 app.use('/plants', plantController);
 app.use('/userPlants', userPlantsController);
+app.use('/gardens/', gardensController);
 
 /* mongodb */
-
 const homePageController = require('./controllers/homePage');
 const commPostController = require('./controllers/mongodb/commPost');
 const exchangeListingController = require('./controllers/mongodb/exListing');
@@ -54,9 +55,11 @@ app.use('/forumPosts', forumPostController);
 /** postgres */
 const ejsPlantController = require('./controllers/ejs-testing/postgres/plants');
 const ejsUserPlantController = require('./controllers/ejs-testing/postgres/userPlants');
+const ejsGardensController = require('./controllers/ejs-testing/postgres/gardens');
 
 app.use('/ejs-testing/plants', ejsPlantController);
 app.use('/ejs-testing/userPlants', ejsUserPlantController);
+app.use('/ejs-testing/gardens', ejsGardensController);
 
 /** mongodb */
 const ejsTestPageController = require('./controllers/ejs-testing/testPageController');

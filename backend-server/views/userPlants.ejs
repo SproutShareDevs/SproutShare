@@ -49,10 +49,10 @@
       </form>
       <br/>
       <% if (typeof userPlants !== 'undefined') { %>
-         <!--<span id="userPlants-selectable" hidden><%=JSON.stringify(userPlants);%></span>-->
          <div>
             <% userPlants.forEach(plant => { %>
                <%= "{" %> 
+               <div>User Plant ID: <%=plant.user_plant_ID%></div>
                <div>ID: <%=plant.user_ID%></div>
                <div>plant ID: <%=plant.plant_ID%></div> 
                <div>garden ID: <%=plant.garden_ID%></div>
