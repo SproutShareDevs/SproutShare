@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import{SafeAreaView, Text, View, Button, FlatList, StyleSheet, Modal, TextInput, Pressable } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'
+import{SafeAreaView, Text, View, Button, StyleSheet, Modal, TextInput, Pressable } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import SearchBar from './SearchBar';
+import ExchangePreview from './ExchangePreview';
 
 
 class Exchange extends React.Component {
@@ -9,44 +11,54 @@ class Exchange extends React.Component {
         super(props);
         this.state = {
             data: [],
-            modalIsVisible: false
+            modalIsVisible: false,
+            search: '',
+            success: 'No search yet'
         }
-        this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
+        this.updateSearch = this.updateSearch.bind(this);
+        this.renderItem = this.renderItem.bind(this);
     }
 
-    toggleModalVisibility() {
-        if(this.state.modalIsVisible == true) {
-            this.setState({modalIsVisible: false});
-        } else {
-            this.setState({modalIsVisible: true});    
-        }
+    updateSearch = (search) => {
+        this.setState(state => {
+          return {search: search};
+        });
     }
+
+    /*Returns item if state.search is included in common name*/
+    renderItem = ({ item }) => {
+        const searchPhrase = this.state.search;
+        // when no input, show all
+        if (searchPhrase === "") {
+          return (
+            <ExchangePreview listing={item} />
+          );
+        }
+        // filter of the name
+        if (item.ex_post_title.toUpperCase().includes(searchPhrase.toUpperCase().trim())) {
+          return (
+            <ExchangePreview listing={item}/>
+          );
+        }
+      }
 
     render() {
         return(
             <View styles={styles.container}>
-                <Text>Welcome to the Plant Exchange</Text>
-                <Button title='Search for post' color='#228b22' onPress={this.toggleModalVisibility}/>
-                <Modal style={styles.modalcss} visible={this.state.modalIsVisible} animationType='slide'>
-                    <Button title='Exchange Home' color='#228b22' onPress={this.toggleModalVisibility}/>
-                    
-                    <TextInput
-                        style={styles.textInput} 
-                        placeholder='Search by plant, user, or description' 
+                <View>
+                    <SearchBar 
+                        placeholder='Search Here...'
+                        updateSearch={this.updateSearch}
                     />
-                </Modal>
+                </View>
 
-                <FlatList 
-                    data={this.state.data}
-                    renderItem={({ item }) => 
-                    <View style={styles.item}>
-                        <Text style={styles.title}>User: {item.user_ID}</Text>
-                        <Text style={styles.title}>Post Title: {item.ex_post_title}</Text>
-                        <Text style={styles.title}>Body: {item.ex_post_body}</Text>
-                        <Text style={styles.title}>Post Date: {item.ex_post_date}</Text>
-                    </View>}
-                    keyExtractor={item => item._id}
-                />
+                <View style={styles.listBottomMargin}>
+                    <FlatList 
+                        data={this.state.data}
+                        renderItem={this.renderItem}
+                        keyExtractor={item => item._id}
+                    />
+                </View>
             </View>
         );
     }
@@ -66,45 +78,9 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
     },
-    item: {
-      backgroundColor: '#B2D3C2',
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
-    },
-    title: {
-      fontSize: 16,
-    },
-    textInput: {
-        borderWidth: 1,
-        borderRadius: 6,
-        padding: 16,
-        backgroundColor: '#B2D3C2',
-        borderColor: '#B2D3C2',
-        width: '100%',
-        padding: 8,
-        color: '#120438'
-    },
-
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-        backgroundColor: "#2196F3",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-
-
-
+    listBottomMargin: {
+        marginBottom: 60
+    }
   });
 
 export default Exchange;

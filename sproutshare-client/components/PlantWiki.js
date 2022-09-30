@@ -16,18 +16,12 @@ class PlantWiki extends React.Component {
         }
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
-        this.pressablePressed = this.pressablePressed.bind(this);
     }
-
 
     updateSearch = (search) => {
       this.setState(state => {
         return {search: search};
       });
-    }
-
-    pressablePressed() {
-      console.log("Pressable pressed.");
     }
 
     /*Returns item if state.search is included in common name*/
@@ -50,7 +44,7 @@ class PlantWiki extends React.Component {
     render() {
         return(
             <View style={styles.container}>
-                <View >
+                <View>
                   <SearchBar
                       placeholder='Search Here...'
                       updateSearch={this.updateSearch}
