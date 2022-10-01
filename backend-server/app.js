@@ -1,6 +1,6 @@
 /** npm packages */
 const express = require('express');
-const bodyParser = require('body-parser')test
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const path = require('path');
 const ejs = require('ejs');
