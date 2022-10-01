@@ -21,10 +21,6 @@ export default StyleSheet.create({
     },
 
     /* text styling */
-
-    title: {
-        fontSize: 16,
-    },
     commonName: {
         fontSize: 32,
         fontWeight: 'bold',
@@ -34,6 +30,9 @@ export default StyleSheet.create({
         fontSize: 20,
         fontStyle: 'italic',
         textAlign: 'center'
+    },
+    title: {
+        fontSize: 16,
     },
     
     /* image styling */
@@ -48,28 +47,27 @@ export default StyleSheet.create({
         height: 50,
         marginRight: 10,
     },
-    nameplate: {
-        flexDirection: 'row',
-        marginBottom: 10
-    },
 
     /* miscellaneous */
-
     button: {
         margin: 15
     },
     buttonContainer: {
         flexDirection: 'row'
     },
-    
-    listBottomMargin: {
-        marginBottom: 60
+    nameplate: {
+        flexDirection: 'row',
+        marginBottom: 10
     },
     item: {
         backgroundColor: '#90EE90',
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
+    },
+
+    listBottomMargin: {
+        marginBottom: 60
     },
     textInput: {
         borderWidth: 1,
