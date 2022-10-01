@@ -1,19 +1,22 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {SafeAreaView, Text, View, Button, FlatList, StyleSheet } from 'react-native';
-
+import NewPost from './NewPost';
 
 class CommunityFeed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
         }
     }
+
+    
 
     render() {
         return(
             <View styles={styles.container}>
+                <NewPost/>
                 <FlatList 
                     data={this.state.data}
                     renderItem={({ item }) => 
@@ -25,7 +28,6 @@ class CommunityFeed extends React.Component {
                     </View>}
                     keyExtractor={item => item._id}
                 />
-        
             </View>
         );
     }
