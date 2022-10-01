@@ -45,7 +45,7 @@ function NewPost(props) {
                     value={postTitle}
                 />
                 <TextInput style={styles.textInput}
-                    placeholder='Post Title'
+                    placeholder='Post Body'
                     onChangeText={bodyInputHandler}
                     value={postBody}
                 />
