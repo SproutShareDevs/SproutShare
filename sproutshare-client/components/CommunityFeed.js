@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {SafeAreaView, Text, View, Button, FlatList, StyleSheet } from 'react-native';
 import NewPost from './NewPost';
+import styles from '../styles/styles';
 
 class CommunityFeed extends React.Component {
     constructor(props) {
@@ -55,20 +56,5 @@ class CommunityFeed extends React.Component {
         });
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    item: {
-      backgroundColor: '#90EE90',
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
-    },
-    title: {
-      fontSize: 16,
-    },
-  });
 
 export default CommunityFeed;

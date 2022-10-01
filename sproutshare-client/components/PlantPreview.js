@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {StyleSheet, View, Text, Pressable, Image } from 'react-native'
 import PlantFullView from './PlantFullView';
+import styles from "../styles/styles";
 
 function PlantPreview(props) {
     const [modalVisible, setModalIsVisible] = useState(false);
@@ -31,25 +32,6 @@ function PlantPreview(props) {
     );
 }
 
-const styles = StyleSheet.create({
-    item: {
-      backgroundColor: '#90EE90',
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
-    },
-    title: {
-      fontSize: 16,
-    },
-    tinyImage: {
-      width: 50,
-      height: 50,
-      marginRight: 10,
-    },
-    nameplate: {
-      flexDirection: 'row',
-      marginBottom: 10
-    }
-  });
+
 
 export default PlantPreview;

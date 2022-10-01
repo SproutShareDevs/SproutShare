@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import {Text, View, StyleSheet, Image, Pressable} from 'react-native';
+import {View} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
 import PlantPreview from './PlantPreview';
+import styles from '../styles/styles';
 
 class PlantWiki extends React.Component {
 
@@ -74,14 +75,5 @@ class PlantWiki extends React.Component {
   }
 
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  listBottomMargin: {
-   marginBottom: 60
-  }
-});
 
 export default PlantWiki;

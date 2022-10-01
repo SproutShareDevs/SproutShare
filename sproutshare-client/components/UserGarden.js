@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Text, View, Button } from 'react-native';
 import axios from 'axios';
+import styles from '../styles/styles';
 
 class UserGarden extends React.Component {
 
@@ -17,7 +18,7 @@ class UserGarden extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.containerCenter}>
               <Text>User Garden</Text>
               <Button color="#228b22" onPress={this.handlePress} title='Press Me'/>
                 {this.state.buttonPressed &&

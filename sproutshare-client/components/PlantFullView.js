@@ -1,4 +1,5 @@
-import {StyleSheet, View, Text, Pressable, Image, Modal, Button } from 'react-native'
+import {View, Text, Image, Modal, Button } from 'react-native'
+import styles from '../styles/styles';
 
 function PlantFullView(props) {
 
@@ -7,7 +8,7 @@ function PlantFullView(props) {
     return(
         <>
         <Modal visible={props.visible} animationType="slide">
-            <View style={styles.container}>
+            <View style={styles.containerCenter}>
                 <View style={{justifyContent: 'center'}}>
                     <Text style={styles.commonName}>Plant Name: {props.plant.common_name}</Text>
                     <Text style={styles.latinName}>Latin Name: {props.plant.latin_name}</Text>
@@ -29,35 +30,5 @@ function PlantFullView(props) {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }, 
-    commonName: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },  
-    latinName: {
-        fontSize: 20,
-        fontStyle: 'italic',
-        textAlign: 'center'
-    },
-    title: {
-      fontSize: 16,
-      textAlign: 'center'
-    },
-    mediumImage: {
-      width: 175,
-      height: 175,
-      marginRight: 10,
-    },
-    nameplate: {
-      flexDirection: 'row',
-      marginBottom: 10
-    }
-  });
 
 export default PlantFullView;

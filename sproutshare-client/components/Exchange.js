@@ -4,6 +4,7 @@ import{SafeAreaView, Text, View, Button, StyleSheet, Modal, TextInput, Pressable
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
 import ExchangePreview from './ExchangePreview';
+import styles from '../styles/styles';
 
 
 class Exchange extends React.Component {
@@ -73,14 +74,5 @@ class Exchange extends React.Component {
         });
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    listBottomMargin: {
-        marginBottom: 60
-    }
-  });
 
 export default Exchange;

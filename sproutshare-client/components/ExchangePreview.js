@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {StyleSheet, View, Text, Pressable, Image } from 'react-native'
 import PlantFullView from './PlantFullView';
+import styles from "../styles/styles";
 
 function ExchangePreview(props) {
     const [modalVisible, setModalIsVisible] = useState(false);
@@ -31,17 +32,5 @@ function ExchangePreview(props) {
       </View>
     );
 }
-
-const styles = StyleSheet.create({
-    item: {
-      backgroundColor: '#90EE90',
-      padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
-    },
-    title: {
-      fontSize: 16,
-    },
-  });
 
 export default ExchangePreview;
