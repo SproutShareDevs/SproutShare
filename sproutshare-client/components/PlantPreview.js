@@ -5,24 +5,11 @@ import PlantFullView from './PlantFullView';
 function PlantPreview(props) {
     const [modalVisible, setModalIsVisible] = useState(false);
 
-    function pressablePressed() {
-        console.log("Pressable pressed.");
-    }
-
-    function openModal() {
-        setModalIsVisible(true);
-    }
-
-    function closeModal() {
-        setModalIsVisible(false);
-    }
-
-
 
     return(
         <View style={styles.item}>
             <Pressable 
-            onPress={openModal}
+            onPress={() => setModalIsVisible(true)}
             >
             <View style={styles.nameplate}>
             <Image
@@ -39,7 +26,7 @@ function PlantPreview(props) {
             <Text style={styles.title}>min_temp: {props.plant.min_temp}</Text>
             <Text style={styles.title}>max_temp: {props.plant.max_temp}</Text>
             </Pressable>
-            <PlantFullView visible={modalVisible} plant={props.plant} onClose={closeModal}/>
+            <PlantFullView visible={modalVisible} plant={props.plant} onClose={() => setModalIsVisible(false)}/>
       </View>
     );
 }

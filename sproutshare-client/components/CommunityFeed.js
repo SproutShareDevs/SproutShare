@@ -9,6 +9,8 @@ class CommunityFeed extends React.Component {
         this.state = {
             data: [],
         }
+        this.rerender = this.rerender.bind(this);
+        this.fetchCommunityPosts = this.fetchCommunityPosts.bind(this);
     }
 
     
@@ -16,7 +18,7 @@ class CommunityFeed extends React.Component {
     render() {
         return(
             <View styles={styles.container}>
-                <NewPost/>
+                <NewPost nodeServer={this.props.nodeServer} onNewPost={this.rerender}/>
                 <FlatList 
                     data={this.state.data}
                     renderItem={({ item }) => 
@@ -32,7 +34,18 @@ class CommunityFeed extends React.Component {
         );
     }
 
+    // each time a new post is created, community posts needs to be rerendered
+    rerender = async() => {
+        this.fetchCommunityPosts();
+    }
+
+    // on initial rendering of this screen, fetch the community posts
     componentDidMount = async() => {
+        this.fetchCommunityPosts();
+    }
+
+    // axios GET request to root /communityPosts endpoint. retreives all posts
+    fetchCommunityPosts = async() => {
         await axios.get(`${this.props.nodeServer}/communityPosts`).then((response) => {
             this.setState(state => {
                 return {data: response.data}
