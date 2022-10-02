@@ -2,87 +2,89 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../../../models/postgresPool');
 
-const gardensList = [
-   {
-      garden_ID: 1,
-      user_ID: 'QuirkyUsername1',
-      light_level: 5,
-      soil: 1
-   },
-   {
-      garden_ID: 3,
-      user_ID: 'UnfunnyUsername',
-      light_level: 3,
-      soil: 55
-   }
-];
 
 /** 
  * For displaying the garden page
  * Reads from 
  * sends them to ejs for rendering
 */
-router.get('/', (req, res)=>{
-   //... db call using pool
-   const gardens = [...gardensList];
+router.get('/', async(req, res)=>{
+   const getAllGardens = await pool.query("SELECT * FROM garden");
+   gardens = getAllGardens.rows;
    res.render('gardens', {gardens});
 });
 
 /** 
- * This route receives garden_ID via parameter in the get request and renders it in EJS 
+ * This route receives garden_id via parameter in the get request and renders it in EJS 
  */
-router.get('/id', (req, res)=>{
-   const gardens = gardensList.find(g =>g.garden_ID === parseInt(req.query.id));
-
-   if(!gardens) return res.status(404).send(`No Garden with ID ${req.query.id} found`);
-
-   res.render('gardens', {gardens});
+router.get('/id', async(req, res)=>{
+   const id = req.query.id;
+   const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_id = $1", [id]);
+   const gardens = getGardenById.rows;
+   res.render('gardens', {gardens}); 
 });
 
-router.get('/query', async(req,res)=>{
-   //... db call using pool
-   // not implemented yet
+/**
+ * This route can be used to find a users garden by users first name (partial match too)
+ * does not work, but also will not crash the ejs page
+ * work in progresss
+ */
+router.get('/search', async(req,res)=>{
+   const firstName = req.query.string;
+   console.log(firstName);
+   try {
+      const getSproutShareUser = await pool.query("SELECT * FROM sproutshareuser WHERE first_name LIKE %$1%", [firstName]);
+      console.log(getSproutShareUser.rows);
+
+   } catch (error) {
+      console.log("in catch");
+   }
+   /*const getGardenBySearch = await pool.query(
+      "SELECT * FROM garden WHERE user_id IN (SELECT user_id FROM sproutshareuser WHERE first_name LIKE '%$1%')", 
+      [firstName]
+   );*/
+   //const gardens = getGardenBySearch.rows;
+   res.render('gardens');
 });
+
+/**
+ * Creates an entry in the garden table using req.body
+ */
 
 router.post('/store', async(req,res)=>{
-   //... db call using pool
-   const gardens = {
-      garden_ID: req.body.garden_ID || gardensList.length + 1,
-      user_ID: req.body.user_ID,
-      light_level: req.body.light_level,
-      soil: req.body.soil
+   try {
+      const gardenToInsert = await pool.query("INSERT INTO garden(user_id, soil_id, light_level) VALUES ($1, $2, $3) RETURNING *", 
+      [req.body.user_id, req.body.soil_id, req.body.light_level]);
+   } catch (error) {
+      console.log(error.message);
    }
-   gardensList.push(gardens);
-   res.redirect('/ejs-testing/gardens');
+   res.redirect('/ejs-testing/gardens');   
 });
 
+/**
+ * This route takes a garden_id as a route parameter (req.params.id) and updates that garden using information
+ * passed in req.body
+ * not functional in ejs at this time, to test use postman or similar
+ */
 router.put('/update/:id', async(req,res)=>{
-   //... db call using pool
-   const gardens = gardensList.find(g =>{g.garden_ID === parseInt(req.params.id)});
-   
-   if(!gardens) return res.status(404).send(`No garden with the ID ${req.params.id} found`);
-
-   
-   for(let garden of gardensList){
-      // this assumes id uniqueness is strictly enforced!
-      if (garden.garden_ID === parseInt(req.params.id)){ 
-         garden.user_ID = req.body.user_ID,
-         garden.light_level = req.body.light_level,
-         garden.soil = req.body.soil
-      }  
+   try {
+      const gardenToUpdate = await pool.query("UPDATE garden SET user_id = $1, soil_id = $2, light_level = $3 WHERE garden_id = $4 RETURNING *", 
+      [req.body.user_id, req.body.soil_id, req.body.light_level, req.params.id]);
+   return res.send(gardenToUpdate.rows);
+   } catch (error) {
+      console.log(error.message);
    }
-   res.send(gardens);
+   res.send(`Could not edit garden ${req.params.id}`);
+   //res.redirect('/ejs-testing/garden');
 });
 
 router.delete('/delete/:id', async(req,res)=>{
-   //... db call using pool
-   const gardens = gardensList.find(g =>g.garden_ID === parseInt(req.params.id));
-   
-   if(!gardens) return res.status(404).send(`No garden with the ID ${req.params.id} found`);
-
-   const index = gardensList.indexOf(gardens);
-   gardensList.splice(index, 1);
-   res.redirect('/ejs-testing/gardens');
+   try {
+      const gardenToDelete = await pool.query("DELETE FROM garden WHERE garden_id = $1 RETURNING *", [req.params.id]);
+   } catch (error) {
+      console.log(error.message);
+   }
+   res.redirect('/ejs-testing/gardens');   
 });
 
 module.exports = router;

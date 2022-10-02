@@ -33,7 +33,7 @@ const gardensController = require('./controllers/postgres/gardens');
 
 app.use('/plants', plantController);
 app.use('/userPlants', userPlantsController);
-app.use('/gardens/', gardensController);
+app.use('/gardens', gardensController);
 
 /* mongodb */
 const homePageController = require('./controllers/homePage');

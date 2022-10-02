@@ -1,11 +1,19 @@
 const Pool = require('pg').Pool;
-
+/**
+ * Please read these comments carefully!
+ */
 const pool = new Pool({
    user: "postgres",
-   password: "", //whats the best way to do this? this does not seem right
+   // You will have to enter your user password here at this time
+   // it is recommended to change your password to something you dont use, currently mine is 1234
+   // use the following script when logged into psql to do this
+   // ALTER ROLE postgres WITH PASSWORD '1234';
+   // you can also use $env:PGPASSWORD='1234' in powershell to avoid entering your password everytime you use psql
+   password: "1234",
    host: "localhost",
    port: 5432,
-   database: ""
+   // this is your db name!
+   database: "SproutShare-dev-1"
 });
 
 module.exports = pool;

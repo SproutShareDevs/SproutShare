@@ -11,8 +11,8 @@
       <br/>
       <br/>
       <form action="/ejs-testing/gardens/store" method="post" enctype="application/x-www-form-urlencoded">
-         <label for="garden_id">Garden ID</label>
-         <input type="text" name="latin_name">
+         <label for="garden_id">Garden id</label>
+         <input type="text" name="garden_id">
 
          <label for="user_id">User Id</label>
          <input type="text" name="user_id">
@@ -20,7 +20,7 @@
          <label for="light_level">Light Lvl</label>
          <input type="text" name="light_level">
 
-         <label for="soil">Soil</label>
+         <label for="soil">Soil </label>
          <input type="text" name="soil">
 
          <button type="submit">Submit</button>
@@ -31,8 +31,8 @@
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <form action="/ejs-testing/gardens/query" method="get">
-         <input type="text" name="string" placeholder = "Search by description...">
+      <form action="/ejs-testing/gardens/search" method="get">
+         <input type="text" name="string" placeholder = "Search by name...">
          <button type="submit">Submit</button>
       </form>
       <br/>
@@ -40,23 +40,20 @@
          <div>
             <% gardens.forEach(garden => { %>
                <%= "{" %> 
-               <div>garden ID: <%=garden.garden_ID%></div>
-               <div>ID: <%=garden.user_ID%></div>
+               <div>garden id: <%=garden.garden_id%></div>
+               <div>id: <%=garden.user_id%></div>
                <div>Light Lvl: <%=garden.light_level%></div> 
-               <div>Soil: <%=garden.soil%></div>
+               <div>Soil: <%=garden.soil_id%></div>
                <%= "}" %> 
                <br/>
-               <button class = "edit-record" value="<%=garden.garden_ID%>">Edit</button>
+               <button class = "edit-record" value="<%=garden.garden_id%>">Edit</button>
                &emsp;
-               <button class = "delete-record" value="<%=garden.garden_ID%>">Delete</button>
+               <button class = "delete-record" value="<%=garden.garden_id%>">Delete</button>
                <br/>
             <% }) %>
          </div>
       <% } %>
-      <script>
-         //var gardens = JSON.parse($('#gardens-selectable').text());
-         //console.log(gardens);
-         
+      <script>         
          const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
             button.addEventListener('click',  (e)=>{
                console.log('delete pressed ' + e.target.value);

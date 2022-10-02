@@ -2,90 +2,109 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../../models/postgresPool');
 
-const gardensList = [
-   {
-      garden_ID: 1,
-      user_ID: 'QuirkyUsername1',
-      light_level: 5,
-      soil: 1
-   },
-   {
-      garden_ID: 3,
-      user_ID: 'UnfunnyUsername',
-      light_level: 3,
-      soil: 55
-   }
-];
 
 /** 
- * For displaying the garden page
- * Reads from 
- * sends them to ejs for rendering
+ * For retrieving all gardens
+ * queries the garden table
+ * sends to prod as 
+ * if there is an error, the message is sent instead
 */
-router.get('/', (req, res)=>{
-   //... db call using pool
-   const gardens = [...gardensList];
-   res.send(gardens);
+router.get('/', async(req, res)=>{
+   try {
+      const getAllGardens = await pool.query("SELECT * FROM garden");
+      res.send(getAllGardens.rows);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
 });
 
 /** 
- * This route receives garden_ID via parameter in the get request and renders it in EJS 
+ * This route sends a single garden
+ * The garden to send is requested by the garden_id parameter in the request
+ * queries the garden table
+ * sends to prod as a JSON obj
+ * if there is an error, the message is sent instead
  */
-router.get('/:id', (req, res)=>{
-   const garden = gardensList.find(g =>g.garden_ID === parseInt(req.params.id));
-
-   if(!garden) return res.status(404).send(`No Garden with ID ${req.params.id} found`);
-
-   res.send(garden);
+router.get('/:id', async(req, res)=>{
+   try {
+      const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_id = $1", [req.params.id]);
+      res.send(getGardenById.rows); 
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
 });
 
-router.get('/query', async(req,res)=>{
-   //... db call using pool
-   // not implemented yet
+/**
+ * This route can be used to find a users garden by users first name (partial match too)
+ * does not work, but also will not crash anything (hopefully)
+ * work in progresss
+ */
+router.get('/search', async(req,res)=>{
+   const firstName = req.query.string;
+   console.log(firstName);
+   try {
+      const getSproutShareUser = await pool.query("SELECT * FROM sproutshareuser WHERE first_name LIKE %$1%", [firstName]);
+      console.log(getSproutShareUser.rows);
+
+   } catch (error) {
+      console.log("in catch");
+   }
+   res.send(JSON.stringify("Sorry, but I don't work yet"))
+   /*const getGardenBySearch = await pool.query(
+      "SELECT * FROM garden WHERE user_id IN (SELECT user_id FROM sproutshareuser WHERE first_name LIKE '%$1%')", 
+      [firstName]
+   );*/
+   //const gardens = getGardenBySearch.rows;
 });
+
+/**
+ * This route inserts a garden record into the garden table
+ * Receives the parameters via req.body
+ * sends back the inserted row as a JSON object
+ * if there is an error, the message is sent instead
+ */
 
 router.post('/store', async(req,res)=>{
-   //... db call using pool
-   const garden = {
-      garden_ID: req.body.garden_ID || gardensList.length + 1,
-      user_ID: req.body.user_ID,
-      light_level: req.body.light_level,
-      soil: req.body.soil
+   try {
+      const gardenToInsert = await pool.query("INSERT INTO garden(user_id, soil_id, light_level) VALUES ($1, $2, $3) RETURNING *", 
+      [req.body.user_id, req.body.soil_id, req.body.light_level]);
+      res.send(gardenToInsert.rows[0]);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
    }
-   gardensList.push(garden);
-   res.send(garden);
 });
 
-router.put('/update/:id', async(req,res)=>{
-   //... db call using pool
-   const garden = gardensList.find(g =>g.garden_ID === parseInt(req.params.id));
-   
-   if(!garden) return res.status(404).send(`No garden with the ID ${req.params.id} found`);
-
-   
-   for(let garden of gardensList){
-      // this assumes id uniqueness is strictly enforced!
-      if (garden.garden_ID === parseInt(req.params.id)){ 
-         garden.user_ID = req.body.user_ID,
-         garden.light_level = req.body.light_level,
-         garden.soil = req.body.soil
-      }  
-   }
-   res.send(garden);
-});
 /**
- * Finds the garden in gardensList
- * 
+ * This route takes a garden_id as a route parameter (req.params.id) and updates that garden using information
+ * passed in req.body
+ * sends back the updated record
+ * if there is an error, the message is sent instead
  */
-router.delete('/delete/:id', async(req,res)=>{
-   //... db call using pool
-   const garden = gardensList.find(g =>g.garden_ID === parseInt(req.params.id));
-   
-   if(!garden) return res.status(404).send(`No garden with the ID ${req.params.id} found`);
+router.put('/update/:id', async(req,res)=>{
+   try {
+      const gardenToUpdate = await pool.query("UPDATE garden SET user_id = $1, soil_id = $2, light_level = $3 WHERE garden_id = $4 RETURNING *", 
+      [req.body.user_id, req.body.soil_id, req.body.light_level, req.params.id]);
+   res.send(gardenToUpdate.rows[0]);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
+});
 
-   const index = gardensList.indexOf(garden);
-   gardensList.splice(index, 1);
-   res.send(garden);
+
+/**
+ * This route deletes a record in the garden table
+ * the record to delete is found by the garden_id
+ * the deleted record is returned back to prod as a JSON object
+ * if there is an error, the message is sent instead
+ */
+
+router.delete('/delete/:id', async(req,res)=>{
+   try {
+      const gardenToDelete = await pool.query("DELETE FROM garden WHERE garden_id = $1 RETURNING *", [req.params.id]);
+      res.send(gardenToDelete.rows[0]);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
 });
 
 module.exports = router;
