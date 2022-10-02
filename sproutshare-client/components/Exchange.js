@@ -32,13 +32,13 @@ class Exchange extends React.Component {
         // when no input, show all
         if (searchPhrase === "") {
           return (
-            <ExchangePreview listing={item} />
+            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} />
           );
         }
         // filter of the name
         if (item.ex_post_title.toUpperCase().includes(searchPhrase.toUpperCase().trim())) {
           return (
-            <ExchangePreview listing={item}/>
+            <ExchangePreview nodeServer={this.props.nodeServer} listing={item}/>
           );
         }
       }
