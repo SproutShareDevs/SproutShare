@@ -36,8 +36,8 @@ function GardenFullView(props) {
                     renderItem={renderItem}
                     keyExtractor={item => item.user_plant_ID}
                   />
+                  <Button title='Close' onPress={props.onClose}/>
                 </View>
-                <Button title='Close' onPress={props.onClose}/>
             </View>
         </Modal>
       </>
