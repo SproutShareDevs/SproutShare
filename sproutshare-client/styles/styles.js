@@ -69,6 +69,9 @@ export default StyleSheet.create({
     listBottomMargin: {
         marginBottom: 60
     },
+    rippleEffect: {
+        color: '#638c07'
+    },
     textInput: {
         borderWidth: 1,
         borderRadius: 6,
