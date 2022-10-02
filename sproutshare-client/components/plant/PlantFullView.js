@@ -1,5 +1,5 @@
 import {View, Text, Image, Modal, Button } from 'react-native'
-import styles from '../styles/styles';
+import styles from '../../styles/styles';
 
 function PlantFullView(props) {
 
