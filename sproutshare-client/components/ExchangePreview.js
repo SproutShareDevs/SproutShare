@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {StyleSheet, View, Text, Pressable, Image } from 'react-native'
-import PlantFullView from './PlantFullView';
+import PlantFullView from './plant/PlantFullView';
 import styles from "../styles/styles";
 
 function ExchangePreview(props) {

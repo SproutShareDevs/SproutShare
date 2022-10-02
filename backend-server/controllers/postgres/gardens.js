@@ -5,15 +5,15 @@ const pool = require('../../models/postgresPool');
 const gardensList = [
    {
       garden_ID: 1,
-      user_ID: 'QuirkyUsername1',
+      user_ID: 'Erik',
       light_level: 5,
-      soil: 1
+      soil: 'clay'
    },
    {
-      garden_ID: 3,
-      user_ID: 'UnfunnyUsername',
+      garden_ID: 2,
+      user_ID: 'Erik',
       light_level: 3,
-      soil: 55
+      soil: 'sand'
    }
 ];
 

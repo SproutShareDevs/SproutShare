@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {View} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
-import PlantPreview from './PlantPreview';
+import PlantPreview from './plant/PlantPreview';
 import styles from '../styles/styles';
 
 class PlantWiki extends React.Component {

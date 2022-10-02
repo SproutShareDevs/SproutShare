@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {StyleSheet, View, Text, Pressable, Image } from 'react-native'
 import PlantFullView from './PlantFullView';
-import styles from "../styles/styles";
+import styles from "../../styles/styles";
 
 function PlantPreview(props) {
     const [modalVisible, setModalIsVisible] = useState(false);
