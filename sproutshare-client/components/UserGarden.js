@@ -29,13 +29,9 @@ class UserGarden extends React.Component {
               <FlatList
                 data = {this.state.data}
                 renderItem={this.renderItem}
-                keyExtractor={item => item.garden_ID}
+                keyExtractor={item => item.garden_id}
               />
             </View>
-
-            {this.state.connected && 
-            <Text>Connected to {this.props.nodeServer}</Text>
-            }
           </View>
           );
     }
