@@ -35,6 +35,23 @@ router.get('/:id', async(req, res)=>{
 });
 
 /**
+ * this route gets either a collection or a single garden
+ * the garden(s) to send are requested via the user_id
+ * queries the garden table
+ * sends to prod as a JSON obj
+ * if there is an error, the message is sent instead
+ */
+
+router.get('/getByUser/:id', async(req, res)=>{
+   try {
+      const getGardenByUser = await pool.query("SELECT * FROM garden WHERE user_id = $1", [req.params.id]);
+      res.send(getGardenByUser.rows);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
+})
+
+/**
  * This route can be used to find a users garden by users first name (partial match too)
  * does not work, but also will not crash anything (hopefully)
  * work in progresss
