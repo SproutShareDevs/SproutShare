@@ -14,10 +14,10 @@
          <label for="user_id">User Id</label>
          <input type="text" name="user_id">
 
-         <label for="plant_id">Plant ID</label>
+         <label for="plant_id">Plant id</label>
          <input type="text" name="plant_id">
 
-         <label for="garden_id">Garden ID</label>
+         <label for="garden_id">Garden id</label>
          <input type="text" name="latin_name">
 
          <label for="current_disease">Curr. Disease</label>
@@ -43,7 +43,12 @@
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <form action="/ejs-testing/userPlants/query" method="get">
+      <form action="/ejs-testing/userPlants/getByGarden/id" method="get">
+         <input type="text" name="id"  placeholder = "Search by garden id..." >
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <form action="/ejs-testing/userPlants/search" method="get">
          <input type="text" name="string" placeholder = "Search by description...">
          <button type="submit">Submit</button>
       </form>
@@ -52,10 +57,10 @@
          <div>
             <% userPlants.forEach(plant => { %>
                <%= "{" %> 
-               <div>User Plant ID: <%=plant.user_plant_ID%></div>
-               <div>ID: <%=plant.user_ID%></div>
-               <div>plant ID: <%=plant.plant_ID%></div> 
-               <div>garden ID: <%=plant.garden_ID%></div>
+               <div>User Plant id: <%=plant.user_plant_id%></div>
+               <div>id: <%=plant.user_id%></div>
+               <div>plant id: <%=plant.plant_id%></div> 
+               <div>garden id: <%=plant.garden_id%></div>
                <div>Curr. Disease: <%=plant.current_disease%></div>
                <div>Curr. Pest: <%=plant.current_pest%></div>
                <div>Plant Qty: <%=plant.plant_qty%></div>
@@ -63,9 +68,9 @@
                <div>Plant Quality: <%=plant.plant_quality%></div>
                <%= "}" %> 
                <br/>
-               <button class = "edit-record" value="<%=plant.user_ID%>">Edit</button>
+               <button class = "edit-record" value="<%=plant.user_id%>">Edit</button>
                &emsp;
-               <button class = "delete-record" value="<%=plant.user_ID%>">Delete</button>
+               <button class = "delete-record" value="<%=plant.user_id%>">Delete</button>
                <br/>
             <% }) %>
          </div>

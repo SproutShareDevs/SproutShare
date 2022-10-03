@@ -28,7 +28,7 @@ router.get('/', async(req, res)=>{
 router.get('/:id', async(req, res)=>{
    try {
       const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_id = $1", [req.params.id]);
-      res.send(getGardenById.rows); 
+      res.send(getGardenById.rows[0]); 
    } catch (error) {
       res.send(JSON.stringify(error.message));
    }

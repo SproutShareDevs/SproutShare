@@ -2,110 +2,120 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../../../models/postgresPool');
 
-const userPlantsList = [
-   {
-      user_plant_ID: 1,
-      user_ID: 'QuirkyUsername1',
-      plant_ID: 1,
-      garden_ID: 1,
-      current_disease: null,
-      current_pest: null,
-      plant_qty: 1,
-      planting_date: {type: Date, default: Date.now()},
-      plant_difficulty: 1,
-      plant_quality: 1
-   },
-   {
-      user_plant_ID: 2,
-      user_ID: 'UnfunnyUsername',
-      plant_ID: 2,
-      garden_ID: 2,
-      current_disease: 4,
-      current_pest: 4,
-      plant_qty: 3,
-      planting_date: {type: Date, default: Date.now()},
-      plant_difficulty: 5,
-      plant_quality: 3
-   }
-];
 
 /** 
  * For displaying the user plants page
- * Reads from userPlantsList
+ * Reads from userplants table and retrieves all records
  * sends them to ejs for rendering
+ * If an error occurs, redirect to userPlants ejs page and output error on console
 */
-router.get('/', (req, res)=>{
-   //... db call using pool
-   const userPlants = [...userPlantsList];
-   res.render('userPlants', {userPlants});
+router.get('/', async(req, res)=>{
+   try {
+      const getAllUserPlants = await pool.query("SELECT * FROM userplant");
+      const userPlants = getAllUserPlants.rows;
+      res.render('userPlants', {userPlants});
+   } catch (error) {
+      console.log(error.message);
+      res.redirect('/ejs-testing/userPlants');
+   }
 });
 
 /** 
- * This route receives user_plant_ID via parameter in the get request and renders it in EJS 
+ * For displaying a single userplant based on user_plant_id
+ * Retrieves the row in userplant with the passed user_plant_id
+ * renders the ejs page userPlants with the retrieved row
+ * If an error occurs, redirect to userPlants ejs page and output error on console
  */
-router.get('/id', (req, res)=>{
-   const userPlants = userPlantsList.find(p =>{p.user_plant_id === parseInt(req.query.id)});
-
-   if(!userPlants) return res.status(404).send(`No User Plant with ID ${req.query.id} found`);
-
-   res.render('userPlants', {userPlants});
+router.get('/id', async(req, res)=>{
+   const user_plant_id = req.query.id;
+   try {
+      const getUserPlantById = await pool.query("SELECT * FROM userplant WHERE user_plant_id = $1", [user_plant_id]);
+      const userPlants = getUserPlantById.rows;
+      res.render('userPlants', {userPlants});
+   } catch (error) {
+      console.log(error.message);
+      res.redirect('/ejs-testing/userPlants');
+   }
 });
 
+/**
+ * for displaying a collection or a single garden based on garden_id
+ * the user plant(s) to retrieved are requested via garden_id
+ * queries the userplant table 
+ * renders the ejs page userPlants with the retrieved row(s)
+ * If an error occurs, redirect to userPlants ejs page and output error on console
+ */
+
+router.get('/getByGarden/id', async(req, res)=>{
+   const garden_id = req.query.id;
+   try {
+      const getUserPlantByGardenId = await pool.query("SELECT * FROM userplant WHERE garden_id = $1", [garden_id]);
+      const userPlants = getUserPlantByGardenId.rows;
+      res.render('userPlants', {userPlants});
+   } catch (error) {
+      console.log(error.message);
+      res.redirect('/ejs-testing/userPlants');
+   }
+});
+
+/**
+ * coming soon...
+ */
 router.get('/query', async(req,res)=>{
    //... db call using pool
    // not implemented yet
 });
 
+
+/**
+ * Inserts a record into the userplant table
+ * The body of the request is used to create the insert statement
+ * on success the page redirects
+ * on error the error is logged in the console and the page is redirected 
+ */
 router.post('/store', async(req,res)=>{
-   //... db call using pool
-   const userPlants = {
-      user_plant_ID: req.body.user_plant_ID || userPlantsList.length + 1,
-      user_ID: req.body.user_ID,
-      plant_ID: req.body.plant_ID,
-      garden_ID: req.body.garden_ID,
-      current_disease: req.body.current_disease,
-      current_pest: req.body.current_pest,
-      plant_qty: req.body.plant_qty,
-      planting_date: req.body.planting_date,
-      plant_difficulty: req.body.plant_difficulty,
-      plant_quality: req.body.plant_quality
+   const r = req.body;
+   try {
+      const userPlantToInsert = 
+      await pool.
+      query(
+         'INSERT INTO userplant(user_id, plant_id, garden_id, plant_disease_id, plant_pest_id, plant_qty, plant_difficulty, plant_quality) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+      [r.user_id, r.plant_id, r.garden_id, r.plant_disease_id, r.plant_pest_id, r.plant_qty, r.plant_difficulty, r.plant_quality]);
+   } catch (error) {
+      console.log(error.message);
    }
-   userPlantsList.push(userPlants);
    res.redirect('/ejs-testing/userPlants');
 });
-
+/**
+ * This route updates a record in the userplant table
+ * the user_plant_id is used to find the record
+ * req.body is used to update the record
+ * if successful the response is a redirect to userPlants
+ * if error the error is logged on the console and the response is a redirect to userPlants 
+ */
 router.put('/update/:id', async(req,res)=>{
-   //... db call using pool
-   const userPlants = userPlantsList.find(p => p.user_plant_ID === parseInt(req.params.id));
-   
-   if(!userPlants) return res.status(404).send(`No User Plant with the ID ${req.params.id} found`);
-
-   
-   for(let userPlant of userPlantsList){
-      // this assumes id uniqueness is strictly enforced!
-      if (userPlant.user_plant_ID === parseInt(req.params.id)){ 
-         userPlant.user_ID = req.body.user_ID,
-         userPlant.plant_ID = req.body.plant_ID,
-         userPlant.garden_ID = req.body.garden_ID,
-         userPlant.current_disease = req.body.current_disease,
-         userPlant.current_pest = req.body.current_pest,
-         userPlant.plant_qty = req.body.plant_qty,
-         userPlant.planting_date = req.body.planting_date,
-         userPlant.plant_difficulty = req.body.plant_difficulty,
-         userPlant.plant_quality = req.body.plant_quality
-      }  
+   const user_plant_id = req.query.id;
+   const r = req.body;
+   try {
+      const userPlantToUpdate = await pool.query("UPDATE userplant SET user_id = $1, plant_id = $2, garden_id = $3, plant_disease_id = $4, plant_pest_id = $5, plant_qty = $6, plant_difficulty = $7, plant_quality = $8 WHERE user_plant_id  = $9", 
+      [r.user_id, r.plant_id, r.garden_id, r.plant_disease_id, r.plant_pest_id, r.plant_qty, r.plant_difficulty, r.plant_quality]);
+   } catch (error) {
+      console.log(error.message);
    }
-   res.send(userPlants);
+   res.redirect('/ejs-testing/userPlants');
 });
-
+/**
+ * This route deletes a record from the userplant table
+ * the record to delete is given by the user_plant_id
+ * if successful the response is a redirect
+ * if error the error is logged on the console and the response is a redirect
+ */
 router.delete('/delete/:id', async(req,res)=>{
-   //... db call using pool
-   const userPlants = userPlantsList.find(p => p.user_plant_ID === parseInt(req.params.id));
-   
-   if(!userPlants) return res.status(404).send(`No plant with the ID ${req.params.id} found`);
-
-   const index = userPlantsList.indexOf(userPlants);
-   userPlantsList.splice(index, 1);
+   try {
+      const userPlantToDelete = await pool.query('DELETE FROM userplant WHERE user_plant_id = $1', [req.params.id]);
+   } catch (error) {
+      console.log(error.message);
+   }
    res.redirect('/ejs-testing/userPlants');
 });
 

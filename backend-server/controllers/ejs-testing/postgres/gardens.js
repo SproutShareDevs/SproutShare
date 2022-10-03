@@ -5,33 +5,46 @@ const pool = require('../../../models/postgresPool');
 
 /** 
  * For displaying the garden page
- * Reads from 
+ * Reads from garden table and retrieves all records
  * sends them to ejs for rendering
+ * if an error occurs, redirect to gardens ejs page and log the error on the console
 */
 router.get('/', async(req, res)=>{
-   const getAllGardens = await pool.query("SELECT * FROM garden");
-   gardens = getAllGardens.rows;
-   res.render('gardens', {gardens});
+   try {
+      const getAllGardens = await pool.query("SELECT * FROM garden");
+      gardens = getAllGardens.rows;
+      res.render('gardens', {gardens});
+   } catch (error) {
+      console.log(error.message);
+      res.redirect('/ejs-testing/gardens')
+   }
 });
 
 /** 
- * This route receives garden_id via parameter in the get request and renders it in EJS 
+ * For displaying a single garden based on garden_id
+ * Retrieves the row in garden with the passed garden_id
+ * renders the ejs page gardens with the retrieved row
+ * If an error occurs, redirect to gardens ejs page and output error on console
  */
 router.get('/id', async(req, res)=>{
    const id = req.query.id;
-   const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_id = $1", [id]);
-   const gardens = getGardenById.rows;
-   res.render('gardens', {gardens}); 
+   try {
+      const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_id = $1", [id]);
+      const gardens = getGardenById.rows;
+      res.render('gardens', {gardens});   
+   } catch (error) {
+      console.log(error.message);
+      res.redirect('/ejs-testing/gardens');
+   }
 });
 
 /**
- * this route retrieves either a collection or a single garden
+ * this route retrieves either a single garden or a collection of garden objects
  * the garden(s) to send are requested via the user_id
  * queries the garden table
  * renders the view with the found row
  * if there is an error, redirect to the garden page
  */
-
  router.get('/getByUser/id', async(req, res)=>{
    try {
       const user_id = req.query.id;
@@ -39,6 +52,7 @@ router.get('/id', async(req, res)=>{
       const gardens = getGardenByUser.rows;
       res.render('gardens', {gardens});
    } catch (error) {
+      console.log(error);
       res.redirect('/ejs-testing/gardens');
    }
 })
