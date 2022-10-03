@@ -14,13 +14,14 @@ import Exchange from './components/Exchange.js';
 import PlantWiki from './components/PlantWiki.js';
 import CommunityFeed from './components/CommunityFeed.js';
 import UserGarden from './components/UserGarden.js';
+import CreateAccount from './components/CreateAccount.js';
 
 
 // React Native Navigation Docs- https://reactnative.dev/docs/navigation
 const Tab = createBottomTabNavigator();
 
 // Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
-const nodeServer = 'https://seven-items-kiss-68-0-34-101.loca.lt';
+const nodeServer = 'https://mighty-drinks-listen-68-10-167-72.loca.lt';
 
 export default class App extends React.Component {
 
@@ -47,6 +48,8 @@ export default class App extends React.Component {
                   iconName = focused ? 'ios-information-circle' : 'ios-information-circle-outline';
                 } else if (route.name === 'Exchange') {
                   iconName = focused ? 'ios-pricetag' : 'ios-pricetag-outline';
+                } else if (route.name === 'CreateAccount') {
+                  iconName = focused ? 'ios-person-add' : 'ios-person-add-outline';
                 }
     
                 return <Ionicons name={iconName} size={size} color={color} />;
@@ -71,6 +74,10 @@ export default class App extends React.Component {
 
             <Tab.Screen name={'Exchange'}>
                   {props => <Exchange {...props} nodeServer={nodeServer}/>}
+            </Tab.Screen>
+
+            <Tab.Screen name={'CreateAccount'}>
+                  {props => <CreateAccount {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
             {/* Alt Syntax if addtional props dont need to be passed down: <Tab.Screen name="PlantWiki" component={PlantWiki} />*/} 
 
