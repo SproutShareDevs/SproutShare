@@ -25,6 +25,23 @@ router.get('/id', async(req, res)=>{
 });
 
 /**
+ * this route retrieves either a collection or a single garden
+ * the garden(s) to send are requested via the user_id
+ * queries the garden table
+ * renders the view with the found row
+ * if there is an error, redirect to the garden page
+ */
+
+ router.get('/getByUser/id', async(req, res)=>{
+   try {
+      const getGardenByUser = await pool.query("SELECT * FROM garden WHERE user_id = $1", [req.query.id]);
+      res.render('gardens', {getGardenByUser});
+   } catch (error) {
+      res.redirect('/ejs-testing/gardens');
+   }
+})
+
+/**
  * This route can be used to find a users garden by users first name (partial match too)
  * does not work, but also will not crash the ejs page
  * work in progresss
