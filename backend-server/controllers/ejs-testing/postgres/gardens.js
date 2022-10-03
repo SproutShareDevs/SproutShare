@@ -34,8 +34,10 @@ router.get('/id', async(req, res)=>{
 
  router.get('/getByUser/id', async(req, res)=>{
    try {
-      const getGardenByUser = await pool.query("SELECT * FROM garden WHERE user_id = $1", [req.query.id]);
-      res.render('gardens', {getGardenByUser});
+      const user_id = req.query.id;
+      const getGardenByUser = await pool.query("SELECT * FROM garden WHERE user_id = $1", [user_id]);
+      const gardens = getGardenByUser.rows;
+      res.render('gardens', {gardens});
    } catch (error) {
       res.redirect('/ejs-testing/gardens');
    }
