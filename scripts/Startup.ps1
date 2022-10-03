@@ -10,9 +10,13 @@ $cmdOutput = Get-Content ".\url.txt"
 echo $cmdOutput
 
 $content = Get-Content "..\sproutshare-client\App.js" 
-$content[22] = "const nodeServer = '$cmdOutput';" 
-echo $content[22]
+$content[23] = "const nodeServer = '$cmdOutput';" 
+echo $content[23]
 $content | Set-Content "..\sproutshare-client\App.js"
+ 
+#$content = "const nodeServer = '$cmdOutput'; export default NodeServer;" 
+#echo $content
+#$content | Set-Content ".\NodeServer.js"
 
 Remove-Item .\url.txt
 Remove-Item .\PID.txt

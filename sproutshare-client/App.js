@@ -21,7 +21,8 @@ import CreateAccount from './components/CreateAccount.js';
 const Tab = createBottomTabNavigator();
 
 // Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
-const nodeServer = 'https://mighty-drinks-listen-68-10-167-72.loca.lt';
+const nodeServer = 'https://old-aliens-leave-68-10-167-72.loca.lt';
+
 
 export default class App extends React.Component {
 
