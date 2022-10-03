@@ -1,4 +1,5 @@
-
+const nodeServer = 'https://famous-nails-switch-68-10-167-72.loca.lt';
+// Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
 // React / Expo Imports
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
@@ -10,7 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons'
 
 // Local Component Imports
-import { nodeServer } from './NewNodeServer.js';
+//import { nodeServer } from './NewNodeServer.js';
 import Exchange from "./components/Exchange.js";
 import PlantWiki from './components/PlantWiki.js';
 import CommunityFeed from './components/CommunityFeed.js';
