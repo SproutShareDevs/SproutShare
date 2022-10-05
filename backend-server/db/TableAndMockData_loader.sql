@@ -54,7 +54,8 @@ CREATE TYPE threat_level AS ENUM (
 );
 
 CREATE TABLE sproutshareuser(
-  user_id SERIAL PRIMARY KEY,
+  user_key SERIAL PRIMARY KEY,
+  username varchar,
   first_name varchar,
   last_name varchar,
   email_address varchar,
@@ -63,7 +64,7 @@ CREATE TABLE sproutshareuser(
 );
 
 CREATE TABLE plant(
-  plant_id SERIAL PRIMARY KEY,
+  plant_key SERIAL PRIMARY KEY,
   common_name varchar,
   latin_name varchar,
   light_level varchar,
@@ -77,7 +78,7 @@ CREATE TABLE plant(
 
 
 CREATE TABLE soil(
-  soil_id SERIAL PRIMARY KEY,
+  soil_key SERIAL PRIMARY KEY,
   soil_type soil_type,
   ph_level ph_level,
   nitrogen_level nutrient_level,
@@ -86,60 +87,60 @@ CREATE TABLE soil(
 );
 
 CREATE TABLE disease(
-  disease_id SERIAL PRIMARY KEY,
+  disease_key SERIAL PRIMARY KEY,
   disease_name varchar,
   threat_level threat_level,
   care_tips varchar
 );
 
 CREATE TABLE plantdisease(
-  plant_disease_id SERIAL PRIMARY KEY,
-  plant_id int, 
-  disease_id int,
-  CONSTRAINT fk_plant FOREIGN KEY(plant_id) REFERENCES plant(plant_id),
-  CONSTRAINT fk_disease FOREIGN KEY(disease_id) REFERENCES disease(disease_id)
+  plant_disease_key SERIAL PRIMARY KEY,
+  plant_key int, 
+  disease_key int,
+  CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),
+  CONSTRAINT fk_disease FOREIGN KEY(disease_key) REFERENCES disease(disease_key)
 );
 
 CREATE TABLE pest(
-  pest_id SERIAL PRIMARY KEY,
+  pest_key SERIAL PRIMARY KEY,
   pest_name varchar,
   threat_level threat_level,
   care_tips varchar
 );
 
 CREATE TABLE plantpest(
-  plant_pest_id SERIAL PRIMARY KEY,
-  plant_id int, 
-  pest_id int,
-  CONSTRAINT fk_plant FOREIGN KEY(plant_id) REFERENCES plant(plant_id),
-  CONSTRAINT fk_pest FOREIGN KEY(pest_id) REFERENCES pest(pest_id)
+  plant_pest_key SERIAL PRIMARY KEY,
+  plant_key int, 
+  pest_key int,
+  CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),
+  CONSTRAINT fk_pest FOREIGN KEY(pest_key) REFERENCES pest(pest_key)
 );
 
 CREATE TABLE garden(
-  garden_id SERIAL PRIMARY KEY,
-  user_id int,
-  soil_id int,
+  garden_key SERIAL PRIMARY KEY,
+  user_key int,
+  soil_key int,
   light_level varchar,
-  CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES sproutshareuser(user_id),
-  CONSTRAINT fk_soil FOREIGN KEY(soil_id) REFERENCES soil(soil_id)
+  CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
+  CONSTRAINT fk_soil FOREIGN KEY(soil_key) REFERENCES soil(soil_key)
 );
 
 CREATE TABLE userplant(
-  user_plant_id SERIAL PRIMARY KEY,
-  user_id int,
-  plant_id int,
-  garden_id int, 
-  plant_disease_id int, 
-  plant_pest_id int,
+  user_plant_key SERIAL PRIMARY KEY,
+  user_key int,
+  plant_key int,
+  garden_key int, 
+  plant_disease_key int, 
+  plant_pest_key int,
   plant_qty int,
   planting_date date NOT NULL DEFAULT CURRENT_DATE,
   plant_difficulty int,
   plant_quality int,
-  CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES sproutshareuser(user_id),
-  CONSTRAINT fk_plant FOREIGN KEY(plant_id) REFERENCES plant(plant_id),  
-  CONSTRAINT fk_garden FOREIGN KEY(garden_id) REFERENCES garden(garden_id),
-  CONSTRAINT fk_disease FOREIGN KEY(plant_disease_id) REFERENCES plantdisease(plant_disease_id),
-  CONSTRAINT fk_pest FOREIGN KEY(plant_pest_id) REFERENCES plantpest(plant_pest_id)
+  CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
+  CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),  
+  CONSTRAINT fk_garden FOREIGN KEY(garden_key) REFERENCES garden(garden_key),
+  CONSTRAINT fk_disease FOREIGN KEY(plant_disease_key) REFERENCES plantdisease(plant_disease_key),
+  CONSTRAINT fk_pest FOREIGN KEY(plant_pest_key) REFERENCES plantpest(plant_pest_key)
 );
 
 
@@ -172,25 +173,25 @@ INSERT INTO pest(pest_name, threat_level, care_tips)
 VALUES
    ('Mite', 'Threatened', 'Apply Chemical Spray');
 
-INSERT INTO plantdisease(plant_id, disease_id)
+INSERT INTO plantdisease(plant_key, disease_key)
 VALUES 
    (1,1), 
    (2,1), 
    (3,1);
 
-INSERT INTO plantpest(plant_id, pest_id)
+INSERT INTO plantpest(plant_key, pest_key)
 VALUES 
    (1,1), 
    (2,1), 
    (3,1);
 
-INSERT INTO garden (user_id, soil_id, light_level)
+INSERT INTO garden (user_key, soil_key, light_level)
 VALUES
    (1, 1, 10),
    (2, 1, 5);
 
-INSERT INTO userplant(user_id, plant_id, garden_id, plant_disease_id, 
-plant_pest_id, plant_qty, plant_difficulty, plant_quality)
+INSERT INTO userplant(user_key, plant_key, garden_key, plant_disease_key, 
+plant_pest_key, plant_qty, plant_difficulty, plant_quality)
 VALUES
    (1, 1, 1, null, null, 10, 5, 4),
    (2, 3, 2, 3, null, 1, 10, 10);
@@ -205,6 +206,6 @@ SELECT * FROM sproutshareuser;
 
 SELECT * FROM plant;
 
-SELECT * FROM userplant WHERE garden_id = 1;
+SELECT * FROM userplant WHERE garden_key = 1;
 
 SELECT * FROM disease WHERE disease_name LIKE 'lycan%';
