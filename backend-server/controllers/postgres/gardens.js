@@ -20,14 +20,14 @@ router.get('/', async(req, res)=>{
 
 /** 
  * This route sends a single garden
- * The garden to send is requested by the garden_id parameter in the request
+ * The garden to send is requested by the garden_key parameter in the request
  * queries the garden table
  * sends to prod as a JSON obj
  * if there is an error, the message is sent instead
  */
 router.get('/:id', async(req, res)=>{
    try {
-      const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_id = $1", [req.params.id]);
+      const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_key = $1", [req.params.id]);
       res.send(getGardenById.rows[0]); 
    } catch (error) {
       res.send(JSON.stringify(error.message));
@@ -36,7 +36,7 @@ router.get('/:id', async(req, res)=>{
 
 /**
  * this route gets either a collection or a single garden
- * the garden(s) to send are requested via the user_id
+ * the garden(s) to send are requested via the user_key
  * queries the garden table
  * sends to prod as a JSON obj
  * if there is an error, the message is sent instead
@@ -44,7 +44,7 @@ router.get('/:id', async(req, res)=>{
 
 router.get('/getByUser/:id', async(req, res)=>{
    try {
-      const getGardenByUser = await pool.query("SELECT * FROM garden WHERE user_id = $1", [req.params.id]);
+      const getGardenByUser = await pool.query("SELECT * FROM garden WHERE user_key = $1", [req.params.id]);
       res.send(getGardenByUser.rows);
    } catch (error) {
       res.send(JSON.stringify(error.message));
@@ -68,7 +68,7 @@ router.get('/search', async(req,res)=>{
    }
    res.send(JSON.stringify("Sorry, but I don't work yet"))
    /*const getGardenBySearch = await pool.query(
-      "SELECT * FROM garden WHERE user_id IN (SELECT user_id FROM sproutshareuser WHERE first_name LIKE '%$1%')", 
+      "SELECT * FROM garden WHERE user_key IN (SELECT user_key FROM sproutshareuser WHERE first_name LIKE '%$1%')", 
       [firstName]
    );*/
    //const gardens = getGardenBySearch.rows;
@@ -83,8 +83,8 @@ router.get('/search', async(req,res)=>{
 
 router.post('/store', async(req,res)=>{
    try {
-      const gardenToInsert = await pool.query("INSERT INTO garden(user_id, soil_id, light_level) VALUES ($1, $2, $3) RETURNING *", 
-      [req.body.user_id, req.body.soil_id, req.body.light_level]);
+      const gardenToInsert = await pool.query("INSERT INTO garden(user_key, soil_key, light_level) VALUES ($1, $2, $3) RETURNING *", 
+      [req.body.user_key, req.body.soil_key, req.body.light_level]);
       res.send(gardenToInsert.rows[0]);
    } catch (error) {
       res.send(JSON.stringify(error.message));
@@ -92,15 +92,15 @@ router.post('/store', async(req,res)=>{
 });
 
 /**
- * This route takes a garden_id as a route parameter (req.params.id) and updates that garden using information
+ * This route takes a garden_key as a route parameter (req.params.id) and updates that garden using information
  * passed in req.body
  * sends back the updated record
  * if there is an error, the message is sent instead
  */
 router.put('/update/:id', async(req,res)=>{
    try {
-      const gardenToUpdate = await pool.query("UPDATE garden SET user_id = $1, soil_id = $2, light_level = $3 WHERE garden_id = $4 RETURNING *", 
-      [req.body.user_id, req.body.soil_id, req.body.light_level, req.params.id]);
+      const gardenToUpdate = await pool.query("UPDATE garden SET user_key = $1, soil_key = $2, light_level = $3 WHERE garden_key = $4 RETURNING *", 
+      [req.body.user_key, req.body.soil_key, req.body.light_level, req.params.id]);
    res.send(gardenToUpdate.rows[0]);
    } catch (error) {
       res.send(JSON.stringify(error.message));
@@ -110,14 +110,14 @@ router.put('/update/:id', async(req,res)=>{
 
 /**
  * This route deletes a record in the garden table
- * the record to delete is found by the garden_id
+ * the record to delete is found by the garden_key
  * the deleted record is returned back to prod as a JSON object
  * if there is an error, the message is sent instead
  */
 
 router.delete('/delete/:id', async(req,res)=>{
    try {
-      const gardenToDelete = await pool.query("DELETE FROM garden WHERE garden_id = $1 RETURNING *", [req.params.id]);
+      const gardenToDelete = await pool.query("DELETE FROM garden WHERE garden_key = $1 RETURNING *", [req.params.id]);
       res.send(gardenToDelete.rows[0]);
    } catch (error) {
       res.send(JSON.stringify(error.message));
