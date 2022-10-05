@@ -29,8 +29,8 @@ router.get('/', async(req, res)=>{
 router.get('/id', async(req, res)=>{
    const user_plant_key = req.query.id;
    try {
-      const getUserPlantById = await pool.query("SELECT * FROM userplant WHERE user_plant_key = $1", [user_plant_key]);
-      const userPlants = getUserPlantById.rows;
+      const getUserPlantByKey = await pool.query("SELECT * FROM userplant WHERE user_plant_key = $1", [user_plant_key]);
+      const userPlants = getUserPlantByKey.rows;
       res.render('userPlants', {userPlants});
    } catch (error) {
       console.log(error.message);
@@ -49,8 +49,8 @@ router.get('/id', async(req, res)=>{
 router.get('/getByGarden/id', async(req, res)=>{
    const garden_key = req.query.id;
    try {
-      const getUserPlantByGardenId = await pool.query("SELECT * FROM userplant WHERE garden_key = $1", [garden_key]);
-      const userPlants = getUserPlantByGardenId.rows;
+      const getUserPlantByGardenKey = await pool.query("SELECT * FROM userplant WHERE garden_key = $1", [garden_key]);
+      const userPlants = getUserPlantByGardenKey.rows;
       res.render('userPlants', {userPlants});
    } catch (error) {
       console.log(error.message);
