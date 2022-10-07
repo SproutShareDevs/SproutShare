@@ -16,7 +16,7 @@ function PlantFullView(props) {
                 
                 <Image
                     style={styles.mediumImage}
-                    source={{uri: props.plant.image }}
+                    source={{uri: props.plant.img }}
                 />
 
                 <Text style={styles.title}>Hardiness Zone: {props.plant.hardiness_zone}</Text>

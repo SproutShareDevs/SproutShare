@@ -22,7 +22,7 @@ function ExchangePreview(props) {
             onPress={() => {console.log("Post pressed");}}
             >
 
-            <Text style={styles.title}>User: {props.listing.user_ID}</Text>
+            <Text style={styles.title}>User: {props.listing.user_key}</Text>
             <Text style={styles.title}>{props.listing.ex_post_title}</Text>
             <Text style={styles.title}>{props.listing.ex_post_body}</Text>
             <Text style={styles.title}>Plant: {props.listing.ex_plant}</Text>

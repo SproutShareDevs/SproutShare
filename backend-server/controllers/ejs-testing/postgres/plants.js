@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../../../models/postgresPool');
-
+/*
 // temporary data
 const plantList = [
    {
@@ -42,19 +42,52 @@ const plantList = [
    }
 ];
 
-router.get('/', (req,res)=>{
-   //... db call using pool
-   const plants = [...plantList];
-   res.render('plants', {plants});
+replaces the above temp data in the database
+run as a command when connected to the db psql
+INSERT INTO plant (common_name, latin_name, light_level, 
+min_temp, max_temp, rec_temp, hardiness_zone, soil_type, img)
+VALUES
+   ('some name', 'lorem', '5', 32, 70, 52, "ZONE_A", "TYPE_A", "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"),
+   ("a name", "ipsum", "10", 0, 120, 80, "ZONE_B", "TYPE_B", "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"),
+   ("Tomato", "Solanum lycopersicum", "5", 32, 85, 70, "ZONE_A", "TYPE_A", "https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80");
+*/
+
+
+/** 
+ * For displaying the plants page
+ * Reads from plant table and retrieves all records
+ * sends them to ejs for rendering
+ * If an error occurs, redirect to plants ejs page and output error on console
+*/
+
+router.get('/', async(req,res)=>{
+   try {
+      const getAllPlants = await pool.query("SELECT * FROM plant");
+      const plants = getAllPlants.rows;
+      res.render('plants', {plants});
+   } catch (error) {
+      console.log(error.message);
+      res.redirect('/ejs-testing/plants');
+   }
 });
 
+/** 
+ * For displaying a single plant based on plant_key
+ * Retrieves the row in plant with the passed plant_key
+ * renders the ejs page plants with the retrieved row
+ * If an error occurs, redirect to plants ejs page and output error on console
+ */
+
 router.get('/id', async(req,res)=>{
-   //... db call using pool
-   const plants = plantList.find(p => p.plant_id === parseInt(req.query.id));
-   
-   if(!plants) return res.status(404).send(`No plant with the ID ${req.query.id} found`);
-   console.log(plants);
-   res.render('plants', {plants});
+   const plant_key = req.query.id;
+   try {
+      const getPlantByKey = await pool.query("SELECT * FROM plant WHERE plant_key = $1", [plant_key]);
+      const plants = getPlantByKey.rows[0];
+      res.render('plants', {plants});
+   } catch (error) {
+      console.log(error.message);
+      res.redirect('/ejs-testing/plants');
+   }
 });
 
 router.get('/query', async(req,res)=>{
@@ -62,55 +95,58 @@ router.get('/query', async(req,res)=>{
    // not implemented yet
 });
 
+/**
+ * Inserts a record into the plant table
+ * The body of the request is used to create the insert statement
+ * on success the page redirects
+ * on error the error is logged in the console and the page is redirected 
+ */
 router.post('/store', async(req,res)=>{
-   //... db call using pool
-   const plants = {
-      plant_id: req.body.id || plantList.length + 1,
-      common_name: req.body.common_name,
-      latin_name: req.body.latin_name,
-      light_level: req.body.light_level, 
-      min_temp: req.body.min_temp, 
-      max_temp: req.body.max_temp, 
-      rec_temp: req.body.rec_temp, 
-      hardiness_zone: req.body.hardiness_zone, 
-      soil_type: req.body.soil_type,
-      image: req.body.image
+   const r = req.body;
+   try {
+      const plantToInsert = await pool.query(
+         'INSERT INTO plant (common_name, latin_name, light_level, min_temp, max_temp, rec_temp, hardiness_zone, soil_type, img) VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
+         [r.common_name, r.latin_name, r.light_level, r.min_temp, r.max_temp, r.rec_temp, r.hardiness_zone, r.soil_type, r.img]);
+   } catch (error) {
+      console.log(error.message);
    }
-   plantList.push(plants);
    res.redirect('/ejs-testing/plants');
 });
 
-router.put('/update/:id', async(req,res)=>{
-   //... db call using pool
-   const plants = plantList.find(p => p.plant_id === parseInt(req.params.id));
-   
-   if(!plants) return res.status(404).send(`No plant with the ID ${req.params.id} found`);
+/**
+ * This route updates a record in the plant table
+ * the plant_key is used to find the record
+ * req.body is used to update the record
+ * if successful the response is sent back as a JSON object
+ * if error the error is logged on the console and the response is returned as an empty JSON object 
+ */
 
-   for(let plants of plantList){
-      // this assumes id uniqueness is strictly enforced!
-      if (plants.plant_id === parseInt(req.params.id)){ 
-         plants.common_name = req.body.common_name,
-         plants.latin_name = req.body.latin_name,
-         plants.light_level = req.body.light_level, 
-         plants.min_temp = req.body.min_temp, 
-         plants.max_temp = req.body.max_temp, 
-         plants.rec_temp = req.body.rec_temp, 
-         plants.hardiness_zone = req.body.hardiness_zone, 
-         plants.soil_type = req.body.soil_type,
-         plants.image = req.body.image 
-      }  
+router.put('/update/:id', async(req,res)=>{
+   const plant_key = req.params.id;
+   const r = req.body;
+   try {
+      const plantToUpdate = await pool.query(
+      'UPDATE plant SET common_name= $1, latin_name = $2 , light_level = $3, min_temp = $4, max_temp =$5, rec_temp = $6, hardiness_zone = $7, soil_type = $8, img = $9) WHERE plant_key = $10',
+      [r.common_name, r.latin_name, r.light_level, r.min_temp, r.max_temp, r.rec_temp, r.hardiness_zone, r.soil_type, r.img]);
+   } catch (error) {
+      console.log(error.message);
    }
    res.send(plants);
 });
 
+/**
+ * This route deletes a record from the plant table
+ * the record to delete is given by the plant_key
+ * if successful the response is a redirect
+ * if error the error is logged on the console and the response is a redirect
+ */
 router.delete('/delete/:id', async(req,res)=>{
-   //... db call using pool
-   const plant = plantList.find(p => p.plant_id === parseInt(req.params.id));
-   
-   if(!plant) return res.status(404).send(`No plant with the ID ${req.params.id} found`);
-
-   const index = plantList.indexOf(plant);
-   plantList.splice(index, 1);
+   const plant_key = req.params.id;
+   try {
+      const plantToDelete = pool.query("DELETE FROM plant WHERE plant_key = $1", [plant_key]);
+   } catch (error) {
+      console.log(error.message);
+   }
    res.redirect('/ejs-testing/plants');
 });
 

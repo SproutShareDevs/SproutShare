@@ -25,7 +25,7 @@ class CommunityFeed extends React.Component {
                     
                     <View style={styles.item}>
                         <Pressable android_ripple={styles.rippleEffect} onLongPress={() => this.deletePost(item._id)}>
-                            <Text style={styles.title}>User: {item.user_ID}</Text>
+                            <Text style={styles.title}>User: {item.user_key}</Text>
                             <Text style={styles.title}>Post Title: {item.comm_post_title}</Text>
                             <Text style={styles.title}>Body: {item.comm_post_body}</Text>
                             <Text style={styles.title}>Post Date: {item.comm_post_date}</Text>

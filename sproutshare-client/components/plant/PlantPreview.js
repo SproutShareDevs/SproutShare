@@ -15,7 +15,7 @@ function PlantPreview(props) {
             <View style={styles.nameplate}>
             <Image
                 style={styles.tinyImage}
-                source={{uri: props.plant.image }}
+                source={{uri: props.plant.img }}
             />
             <View>
                 <Text style={styles.title}>Plant Name: {props.plant.common_name}</Text>

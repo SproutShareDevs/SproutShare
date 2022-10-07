@@ -21,15 +21,15 @@ router.get('/', async(req, res)=>{
 });
 
 /** 
- * For displaying a single garden based on garden_id
- * Retrieves the row in garden with the passed garden_id
+ * For displaying a single garden based on garden_key
+ * Retrieves the row in garden with the passed garden_key
  * renders the ejs page gardens with the retrieved row
  * If an error occurs, redirect to gardens ejs page and output error on console
  */
 router.get('/id', async(req, res)=>{
    const id = req.query.id;
    try {
-      const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_id = $1", [id]);
+      const getGardenById = await pool.query("SELECT * FROM garden WHERE garden_key = $1", [id]);
       const gardens = getGardenById.rows;
       res.render('gardens', {gardens});   
    } catch (error) {
@@ -40,15 +40,15 @@ router.get('/id', async(req, res)=>{
 
 /**
  * this route retrieves either a single garden or a collection of garden objects
- * the garden(s) to send are requested via the user_id
+ * the garden(s) to send are requested via the user_key
  * queries the garden table
  * renders the view with the found row
  * if there is an error, redirect to the garden page
  */
  router.get('/getByUser/id', async(req, res)=>{
    try {
-      const user_id = req.query.id;
-      const getGardenByUser = await pool.query("SELECT * FROM garden WHERE user_id = $1", [user_id]);
+      const user_key = req.query.id;
+      const getGardenByUser = await pool.query("SELECT * FROM garden WHERE user_key = $1", [user_key]);
       const gardens = getGardenByUser.rows;
       res.render('gardens', {gardens});
    } catch (error) {
@@ -73,7 +73,7 @@ router.get('/search', async(req,res)=>{
       console.log("in catch");
    }
    /*const getGardenBySearch = await pool.query(
-      "SELECT * FROM garden WHERE user_id IN (SELECT user_id FROM sproutshareuser WHERE first_name LIKE '%$1%')", 
+      "SELECT * FROM garden WHERE user_key IN (SELECT user_key FROM sproutshareuser WHERE first_name LIKE '%$1%')", 
       [firstName]
    );*/
    //const gardens = getGardenBySearch.rows;
@@ -86,8 +86,8 @@ router.get('/search', async(req,res)=>{
 
 router.post('/store', async(req,res)=>{
    try {
-      const gardenToInsert = await pool.query("INSERT INTO garden(user_id, soil_id, light_level) VALUES ($1, $2, $3) RETURNING *", 
-      [req.body.user_id, req.body.soil_id, req.body.light_level]);
+      const gardenToInsert = await pool.query("INSERT INTO garden(user_key, soil_key, light_level) VALUES ($1, $2, $3) RETURNING *", 
+      [req.body.user_key, req.body.soil_key, req.body.light_level]);
    } catch (error) {
       console.log(error.message);
    }
@@ -95,14 +95,14 @@ router.post('/store', async(req,res)=>{
 });
 
 /**
- * This route takes a garden_id as a route parameter (req.params.id) and updates that garden using information
+ * This route takes a garden_key as a route parameter (req.params.id) and updates that garden using information
  * passed in req.body
  * not functional in ejs at this time, to test use postman or similar
  */
 router.put('/update/:id', async(req,res)=>{
    try {
-      const gardenToUpdate = await pool.query("UPDATE garden SET user_id = $1, soil_id = $2, light_level = $3 WHERE garden_id = $4 RETURNING *", 
-      [req.body.user_id, req.body.soil_id, req.body.light_level, req.params.id]);
+      const gardenToUpdate = await pool.query("UPDATE garden SET user_key = $1, soil_key = $2, light_level = $3 WHERE garden_key = $4 RETURNING *", 
+      [req.body.user_key, req.body.soil_key, req.body.light_level, req.params.id]);
    return res.send(gardenToUpdate.rows);
    } catch (error) {
       console.log(error.message);
@@ -113,7 +113,7 @@ router.put('/update/:id', async(req,res)=>{
 
 router.delete('/delete/:id', async(req,res)=>{
    try {
-      const gardenToDelete = await pool.query("DELETE FROM garden WHERE garden_id = $1 RETURNING *", [req.params.id]);
+      const gardenToDelete = await pool.query("DELETE FROM garden WHERE garden_key = $1 RETURNING *", [req.params.id]);
    } catch (error) {
       console.log(error.message);
    }
