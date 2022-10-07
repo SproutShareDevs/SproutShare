@@ -29,11 +29,7 @@ class UserGarden extends React.Component {
               <FlatList
                 data = {this.state.data}
                 renderItem={this.renderItem}
-<<<<<<< HEAD
-                keyExtractor={item => item.garden_id}
-=======
                 keyExtractor={item => item.garden_key}
->>>>>>> 9f96813c5ba5872bc8c1454d4de909bb1b7298d2
               />
             </View>
           </View>
