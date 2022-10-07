@@ -21,7 +21,7 @@ function GardenFullView(props) {
     });
     
     renderItem = ({item}) => {
-        if(item.garden_ID == props.garden.garden_ID) {
+        if(item.garden_key == props.garden.garden_key) {
             return <UserPlantPreview nodeServer ={props.nodeServer} userPlant = {item}/>
         }
     }
@@ -34,7 +34,7 @@ function GardenFullView(props) {
                   <FlatList
                     data = {userPlantData}
                     renderItem={renderItem}
-                    keyExtractor={item => item.user_plant_ID}
+                    keyExtractor={item => item.user_plant_key}
                   />
                   <Button title='Close' onPress={props.onClose}/>
                 </View>

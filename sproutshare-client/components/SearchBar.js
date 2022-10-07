@@ -16,7 +16,7 @@ class SearchBar extends React.Component {
     render() {
         return(
                 <TextInput style={styles.searchBarContainer}
-                    placeholder='Search Here...'
+                    placeholder= {this.props.placeholder}
                     onChangeText={this.handleChange}
                 />
         );

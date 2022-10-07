@@ -29,7 +29,7 @@ class UserGarden extends React.Component {
               <FlatList
                 data = {this.state.data}
                 renderItem={this.renderItem}
-                keyExtractor={item => item.garden_ID}
+                keyExtractor={item => item.garden_key}
               />
             </View>
 
