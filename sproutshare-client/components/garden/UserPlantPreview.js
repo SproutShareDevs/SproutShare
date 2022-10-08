@@ -2,24 +2,36 @@ import { useState, useEffect } from "react";
 import { View, Text, Pressable, Image } from 'react-native'
 import UserPlantFullView from './UserPlantFullView';
 import styles from "../../styles/styles";
-import parseDate from 'postgres-date'
 import axios from 'axios';
 
 function UserPlantPreview(props) {
     const [subModalVisible, setSubModalIsVisible] = useState(false);
     const [plant, setPlant] = useState({});
+    const [plantingDate, setPlantingDate] = useState('');
+
 
     useEffect(() => {
         const fetchPlant = async () => {
             await axios.get(`${props.nodeServer}/plants/${props.userPlant.plant_key}`).then((response) => {
-                setPlant(response.data)
+                setPlant(response.data);
+                console.log(response.data);
             }).catch(err => {
                 console.log('Error: ', err);
             });
         }
+        const extractDate = () => {
+            const regexExtract = /^(\d{4})-\d{2}-(\d{2})/g;
+            const reorderDate = "$2 $1";
+            let result = props.userPlant.planting_date.match(regexExtract);
+            setPlantingDate(result);
+        }
 
         fetchPlant();
-    });
+        extractDate();
+
+    }, []);
+
+
 
     return (
         <View style={styles.item}>
@@ -37,7 +49,7 @@ function UserPlantPreview(props) {
             </View>
             </View>
             <Text style={styles.title}>Quantity: {props.userPlant.plant_qty}</Text>
-            <Text style={styles.title}>Planting Date: </Text>
+            <Text style={styles.title}>Planting Date: {plantingDate}</Text>
             </Pressable>
             <UserPlantFullView nodeServer ={props.nodeServer} visible={subModalVisible} userPlant={props.userPlant} plant={plant} onClose={() => setSubModalIsVisible(false)}/>
       </View>
