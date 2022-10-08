@@ -1,9 +1,9 @@
-const nodeServer = 'https://famous-nails-switch-68-10-167-72.loca.lt';
+const nodeServer = 'https://nine-shrimps-hide-68-10-167-72.loca.lt';
 // Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
 // React / Expo Imports
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { View } from 'react-native';
+import { View, Button, Text, TextInput } from 'react-native';
 
 // Navbar Imports
 import { NavigationContainer } from '@react-navigation/native';
@@ -27,10 +27,27 @@ const Tab = createBottomTabNavigator();
 
 
 export default class App extends React.Component {
+  state = {userType:"Guest", userName:false, user_ID:false, newUserButton: false};
+  
+  checkUser = (myUsername, myPassword) => {
+    if (myUsername === "default" && myPassword === "default")
+        return "User";
+    if (myUsername === "admin" && myPassword === "admin")
+        return "Admin";
+    return false;
+  }
+
+  logOut = () => {
+    this.setState({userType:"Guest"});
+    this.setState({userName:false});
+    this.setState({user_ID:false});
+    this.setState({newUserButton: false});
+  }
 
   render() {
-    return (
-      <>
+    if (this.state.userName != false){
+      return (
+        <>
         <NavigationContainer>
           {/* Bottom tab icon styling. More info on how to manipulate this specific navigator: https://reactnavigation.org/docs/bottom-tab-navigator/ */}
           <Tab.Navigator 
@@ -80,17 +97,178 @@ export default class App extends React.Component {
             </Tab.Screen>
 
             <Tab.Screen name={'CreateAccount'}>
-                  {props => <CreateAccount {...props} nodeServer={nodeServer}/>}
+                  {props => <CreateAccount {...props} nodeServer={nodeServer} 
+                    userName={this.state.userName} user_ID={this.state.user_ID} userType={this.state.userType}
+                    //logMeOut={this.logOut()}
+                    />}
             </Tab.Screen>
             {/* Alt Syntax if addtional props dont need to be passed down: <Tab.Screen name="PlantWiki" component={PlantWiki} />*/} 
-
           </Tab.Navigator>
           {/* Colors system status bar */}
           
         </NavigationContainer>
         </>
-    );
-  };
+        
+      );
+    } else {
+      if(this.state.userType === "Guest" && this.state.newUserButton === false){
+        return(
+            <View style = {{
+                flex: 1,
+                justifyContent: "center",
+                //alignItems: "center"
+            }}>
+            <Button
+                onPress={() => {
+                    this.setState({ newUserButton: "CreateAccount" });
+                }}
+                title={
+                    "Create Account"
+                }
+            />
+            <Button
+                onPress={() => {
+                    this.setState({ newUserButton: "LogIn" });
+                }}
+                title={
+                    "Log In"
+                }
+            />
+            <Button
+                onPress={() => {
+                    this.setState({ userType: "User", userName: "default_user" });
+                }}
+                title={
+                    "Skip login: User"
+                }
+            />
+            <Button
+                onPress={() => {
+                    this.setState({ userType: "Admin", userName: "default_admin" });
+                }}
+                title={
+                    "Skip login: Admin"
+                }
+            />
+            </View>
+        )
+    } else if(this.state.userType === "Guest" && this.state.newUserButton === "CreateAccount"){
+        let newUsername, newPassword;
+        return (
+
+            <View style = {{
+                flex: 1,
+                justifyContent: "center",
+                //alignItems: "center"
+            }}>
+            <Text>Create Account</Text>
+            <TextInput 
+                style = {{
+                height: 30,
+                borderColor: 'light-gray',
+                justifyContent: "center",
+                alignItems: "center",
+                borderWidth: 1
+                }}
+                placeholder = "Username:"
+                onChangeText={newText => newUsername = newText}
+            />
+                
+            <TextInput 
+                style = {{
+                height: 30,
+                borderColor: 'light-gray',
+                justifyContent: "center",
+                alignItems: "center",
+                borderWidth: 1
+                }}
+                placeholder = "Password:"
+                onChangeText={newText => newPassword = newText}
+            />
+            <Button
+                onPress={() => {
+                    this.setState({ userType: "User", userName: newUsername });
+                }}
+                title={
+                    "Create Account"
+                }
+            />
+            </View>
+            
+        )
+    } else if(this.state.userType === "Guest" && this.state.newUserButton === "LogIn"){
+        let newUsername, newPassword;
+        return (
+
+            <View style = {{
+                flex: 1,
+                justifyContent: "center",
+                //alignItems: "center"
+            }}>
+            <Text>Log In</Text>
+            <TextInput 
+                style = {{
+                height: 30,
+                borderColor: 'light-gray',
+                justifyContent: "center",
+                alignItems: "center",
+                borderWidth: 1
+                }}
+                placeholder = "Username:"
+                onChangeText={newText => newUsername = newText}
+            />
+                
+            <TextInput 
+                style = {{
+                height: 30,
+                borderColor: 'light-gray',
+                justifyContent: "center",
+                alignItems: "center",
+                borderWidth: 1
+                }}
+                placeholder = "Password:"
+                onChangeText={newText => newPassword = newText}
+            />
+            <Button
+                onPress={() => {
+                    if(this.checkUser(newUsername, newPassword) === "User"){
+                        this.setState({ userType: "User", userName: newUsername });
+                    } else if(this.checkUser(newUsername, newPassword) === "Admin"){
+                        this.setState({ userType: "Admin", userName: newUsername });
+                    }
+                }}
+                title={
+                    "Log In"
+                }
+            />
+            </View>
+            
+        )
+    } else if(this.state.userType === "User" || this.state.userType === "Admin"){
+        return (
+            <View style = {{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+            <Text>Wow, you're a user!
+                Your username is {this.state.userName}, and you are a {this.state.userType}!
+            </Text>
+            <Button
+                onPress={() => {
+                    this.setState({ userType: "Guest", userName: false, newUserButton: false });
+                }}
+                title={
+                    "Log Out"
+                }
+            />
+            </View>
+        )
+        
+}
+    }
+    }
+    
 };
 
 
