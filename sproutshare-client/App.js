@@ -1,9 +1,9 @@
-const nodeServer = 'https://famous-nails-switch-68-10-167-72.loca.lt';
-// Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
+
 // React / Expo Imports
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { View } from 'react-native';
+import axios from 'axios';
 
 // Navbar Imports
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,16 +18,25 @@ import CommunityFeed from './components/CommunityFeed.js';
 import UserGarden from './components/UserGarden.js';
 import CreateAccount from './components/CreateAccount.js';
 
+// Dotenv
+import {NODE_SERVER} from "@env"
+
+
+// Define a .env file in the root directory of SproutShare consisting of one environment variable:
+// NODE_SERVER="YourNodeServer"
+const nodeServer = NODE_SERVER;
+console.log(NODE_SERVER);
+
 
 // React Native Navigation Docs- https://reactnative.dev/docs/navigation
 const Tab = createBottomTabNavigator();
 
-// Everytime a new localtunnel session is started, this link MUST be changed to match where the https server is located
-//const nodeServer = 'https://old-aliens-leave-68-10-167-72.loca.lt';
-
 
 export default class App extends React.Component {
 
+
+
+  
   render() {
     return (
       <>

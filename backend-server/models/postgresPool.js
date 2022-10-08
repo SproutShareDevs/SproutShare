@@ -9,11 +9,16 @@ const pool = new Pool({
    // use the following script when logged into psql to do this
    // ALTER ROLE postgres WITH PASSWORD '1234';
    // you can also use $env:PGPASSWORD='1234' in powershell to avoid entering your password everytime you use psql
-   password: "1234",
+
+   // *UPDATE* in order to use process.env you must declare a .env file in the root backend-server and declare your environment variables there
+   // My .env file is 2 lines:
+   // DATABASE_NAME="SproutShare"
+   // DB_PASSWORD="password"
+   password: process.env.DB_PASSWORD || "1234",
    host: "localhost",
    port: 5432,
    // this is your db name!
-   database: "SproutShare-dev-1"
+   database: process.env.DATABASE_NAME || "SproutShare-dev-1"
 });
 
 module.exports = pool;

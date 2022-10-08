@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const ejs = require('ejs');
 const cors = require('cors');
+console.log(require('dotenv').config());
 
 /** seed db */
 const seedDB = require("./db/seed.js");
