@@ -15,7 +15,7 @@ function GardenPreview(props) {
                 <View>
                     <Text style={styles.title}>Garden ID: {props.garden.garden_key}</Text>
                     <Text style={styles.title}>Light Level: {props.garden.light_level}</Text>
-                    <Text style={styles.title}>Soil Type: {props.garden.soil_id}</Text>
+                    <Text style={styles.title}>Soil Type: {props.garden.soil_key}</Text>
                 </View>
                 </View>
             </Pressable>
