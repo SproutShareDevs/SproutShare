@@ -25,7 +25,7 @@ import {NODE_SERVER} from "@env"
 // Define a .env file in the root directory of SproutShare consisting of one environment variable:
 // NODE_SERVER="YourNodeServer"
 const nodeServer = NODE_SERVER;
-console.log(NODE_SERVER);
+console.log("NODE_SERVER: " + NODE_SERVER);
 
 
 // React Native Navigation Docs- https://reactnative.dev/docs/navigation
