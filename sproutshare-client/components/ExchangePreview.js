@@ -2,6 +2,8 @@ import { useState } from "react";
 import {StyleSheet, View, Text, Pressable, Image } from 'react-native'
 import PlantFullView from './plant/PlantFullView';
 import styles from "../styles/styles";
+import axios from "axios";
+import Exchange from "./Exchange";
 
 function ExchangePreview(props) {
     const [modalVisible, setModalIsVisible] = useState(false);
