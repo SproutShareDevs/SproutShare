@@ -43,6 +43,10 @@ class Exchange extends React.Component {
         }
       }
 
+    renderNewLisitng(){
+        console.log("form rendered")
+    }
+
     render() {
         return(
             <View styles={styles.container}>
@@ -52,6 +56,12 @@ class Exchange extends React.Component {
                         updateSearch={this.updateSearch}
                     />
                 </View>
+                <View styles={styles.buttonContainer}>
+                    <Button
+                    title = "ADD NEW LISTING"
+                    onPress={() => this.renderNewLisitng()}
+                     />
+                 </View>
 
                 <View style={styles.listBottomMargin}>
                     <FlatList 
