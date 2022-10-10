@@ -1,9 +1,9 @@
 import { useState } from "react";
-import {StyleSheet, View, Text, Pressable, Image } from 'react-native'
+import {StyleSheet, View, Text, Pressable, Image, Button } from 'react-native'
 import PlantFullView from './plant/PlantFullView';
 import styles from "../styles/styles";
 import axios from "axios";
-import Exchange from "./Exchange";
+
 
 function ExchangePreview(props) {
     const [modalVisible, setModalIsVisible] = useState(false);
@@ -15,6 +15,16 @@ function ExchangePreview(props) {
     function closeModal() {
         setModalIsVisible(false);
     }
+
+    async function onDelete  (id)  {
+        await axios.delete(`${props.nodeServer}/exchangeListings/delete/${id}`)
+       .then((Response) => {
+        console.log(Response);
+       }).catch(err => {
+        console.log('Error: ', err);  
+    
+    }); 
+}
 
 
 
@@ -29,6 +39,11 @@ function ExchangePreview(props) {
             <Text style={styles.title}>{props.listing.ex_post_body}</Text>
             <Text style={styles.title}>Plant: {props.listing.ex_plant}</Text>
             <Text style={styles.title}>Posted: {props.listing.ex_post_date}</Text>
+            <Button 
+            title = "Delete Listing"
+            onPress={() => onDelete(props.listing._id)}
+            />
+
             
             </Pressable>
       </View>
