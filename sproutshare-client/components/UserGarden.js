@@ -39,10 +39,12 @@ class UserGarden extends React.Component {
 
     componentDidMount = async() => {
       await axios.get(`${this.props.nodeServer}/gardens`).then((response) => {
+        console.log(`${this.props.nodeServer}/gardens`);
           this.setState(state => {
               return {data: response.data}
           });
         }).catch(err => {
+          console.log(`${this.props.nodeServer}/gardens`);
           console.log('Error: ', err);
       });
   }
