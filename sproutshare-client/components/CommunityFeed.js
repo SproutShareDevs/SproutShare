@@ -19,6 +19,7 @@ class CommunityFeed extends React.Component {
         return(
             <View styles={styles.container}>
                 <NewPost nodeServer={this.props.nodeServer} onNewPost={this.rerender}/>
+                <View style={styles.listBottomMargin}>
                 <FlatList 
                     data={this.state.data}
                     renderItem={({ item }) => 
@@ -35,6 +36,7 @@ class CommunityFeed extends React.Component {
                     }
                     keyExtractor={item => item._id}
                 />
+                </View>
             </View>
         );
     }
