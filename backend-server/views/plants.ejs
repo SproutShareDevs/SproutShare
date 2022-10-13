@@ -11,8 +11,8 @@
       <br/>
       <br/>
       <form action="/ejs-testing/plants/store" method="post" enctype="application/x-www-form-urlencoded">
-         <label for="plant_id">Plant Id</label>
-         <input type="text" name="plant_id">
+         <label for="plant_key">Plant key</label>
+         <input type="text" name="plant_key">
 
          <label for="common_name">Common Name</label>
          <input type="text" name="common_name">
@@ -42,7 +42,7 @@
       </form>
       <br/>
       <form action="/ejs-testing/plants/id" method="get">
-         <input type="text" name="id"  placeholder = "Search by id..." >
+         <input type="text" name="key"  placeholder = "Search by key..." >
          <button type="submit">Submit</button>
       </form>
       <br/>
@@ -55,7 +55,7 @@
          <div>
             <% plants.forEach(plant => { %>
                <%= "{" %> 
-               <div>ID: <%=plant.plant_id%></div>
+               <div>key: <%=plant.plant_key%></div>
                <div>Common Name: <%=plant.common_name%></div> 
                <div>Latin Name: <%=plant.latin_name%></div>
                <div>Light Level: <%=plant.light_level%></div>
@@ -64,13 +64,13 @@
                <div>Rec. Temp: <%=plant.max_temp%></div>
                <div>Hardiness Zone: <%=plant.hardiness_zone%></div>
                <div>Soil Type: <%=plant.soil_type%></div>
-               <div><img src="<%=plant.image %>" width="50px" height="50px"/></div>
+               <div><img src="<%=plant.img %>" width="50px" height="50px"/></div>
                
                <%= "}" %> 
                <br/>
-               <button class = "edit-record" value="<%=plant.plant_id%>">Edit</button>
+               <button class = "edit-record" value="<%=plant.plant_key%>">Edit</button>
                &emsp;
-               <button class = "delete-record" value="<%=plant.plant_id%>">Delete</button>
+               <button class = "delete-record" value="<%=plant.plant_key%>">Delete</button>
                <br/>
             <% }) %>
          </div>

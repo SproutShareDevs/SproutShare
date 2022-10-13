@@ -11,13 +11,13 @@
       <br/>
       <br/>
       <form action="/ejs-testing/userPlants/store" method="post" enctype="application/x-www-form-urlencoded">
-         <label for="user_id">User Id</label>
-         <input type="text" name="user_id">
+         <label for="user_key">User key</label>
+         <input type="text" name="user_key">
 
-         <label for="plant_id">Plant id</label>
-         <input type="text" name="plant_id">
+         <label for="plant_key">Plant key</label>
+         <input type="text" name="plant_key">
 
-         <label for="garden_id">Garden id</label>
+         <label for="garden_key">Garden key</label>
          <input type="text" name="latin_name">
 
          <label for="current_disease">Curr. Disease</label>
@@ -39,12 +39,12 @@
       </form>
       <br/>
       <form action="/ejs-testing/userPlants/id" method="get">
-         <input type="text" name="id"  placeholder = "Search by id..." >
+         <input type="text" name="key"  placeholder = "Search by key..." >
          <button type="submit">Submit</button>
       </form>
       <br/>
       <form action="/ejs-testing/userPlants/getByGarden/id" method="get">
-         <input type="text" name="id"  placeholder = "Search by garden id..." >
+         <input type="text" name="key"  placeholder = "Search by garden key..." >
          <button type="submit">Submit</button>
       </form>
       <br/>
@@ -57,10 +57,10 @@
          <div>
             <% userPlants.forEach(plant => { %>
                <%= "{" %> 
-               <div>User Plant id: <%=plant.user_plant_id%></div>
-               <div>id: <%=plant.user_id%></div>
-               <div>plant id: <%=plant.plant_id%></div> 
-               <div>garden id: <%=plant.garden_id%></div>
+               <div>User Plant Key: <%=plant.user_plant_key%></div>
+               <div>User Key: <%=plant.user_key%></div>
+               <div>plant key: <%=plant.plant_key%></div> 
+               <div>garden key: <%=plant.garden_key%></div>
                <div>Curr. Disease: <%=plant.current_disease%></div>
                <div>Curr. Pest: <%=plant.current_pest%></div>
                <div>Plant Qty: <%=plant.plant_qty%></div>
@@ -68,9 +68,9 @@
                <div>Plant Quality: <%=plant.plant_quality%></div>
                <%= "}" %> 
                <br/>
-               <button class = "edit-record" value="<%=plant.user_id%>">Edit</button>
+               <button class = "edit-record" value="<%=plant.user_key%>">Edit</button>
                &emsp;
-               <button class = "delete-record" value="<%=plant.user_id%>">Delete</button>
+               <button class = "delete-record" value="<%=plant.user_key%>">Delete</button>
                <br/>
             <% }) %>
          </div>
