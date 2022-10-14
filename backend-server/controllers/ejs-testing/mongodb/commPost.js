@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const CommunityPosts = require('../../../models/CommunityPost');
+const commPostServices = require('../../../services/commPostServices');
 
 /** 
  * For displaying the community post page
@@ -9,16 +9,25 @@ const CommunityPosts = require('../../../models/CommunityPost');
  * sends them to ejs for rendering
 */
 router.get('/', async(req, res) => {
-   const commPosts = await CommunityPosts.find({});
-   res.render('communityPosts', {commPosts});
+   try {
+      const commPosts = await commPostServices.getAllPosts();
+      res.render('communityPosts', {commPosts});
+   } catch (error) {
+      console.error(error);
+   }
 })
 
 /** 
  * This route gets a community post ID via parameter in the get request and renders it in EJS 
  */
 router.get('/id', async(req, res) => {
-   const commPosts = [await CommunityPosts.findById(req.query.id)];
-   res.render('communityPosts', {commPosts});
+   const postId = req.query.id;
+   try {
+      const commPosts = [await commPostServices.getPostById(postId)];
+      res.render('communityPosts', {commPosts});
+   } catch (error) {
+      console.error(error);   
+   }
 }) 
 
 /** 
@@ -28,31 +37,39 @@ router.get('/id', async(req, res) => {
  * Can return multiple records as a collection
  */
 router.get('/search', async(req, res) =>{
-    const commPosts = await CommunityPosts.find()
-    .or(
-          [
-             {comm_post_title: {$regex:req.query.string}}, 
-             {comm_post_body: {$regex:req.query.string}}
-          ]
-    );
-    res.render('communityPosts', {commPosts});
+   
+   const query = {$regex:req.query.string};
+   try {
+      const commPosts = await commPostServices.getPostByQuery(query);
+      res.render('communityPosts', {commPosts});
+   } catch (error) {
+      console.error(error);
+   }
 })
 
 /** Handler for creating a community post */
-router.post('/store', (req,res) =>{
-   CommunityPosts.create(req.body, (error, communityPost)=>{
-      console.log(req.body);
-      if(error){
-         console.error(error);
-      }
-   });
-   res.redirect('/ejs-testing/communityPosts');
+router.post('/store', async(req,res) =>{
+   const post = req.body;
+   try {
+      await commPostServices.storePost(post);
+      res.redirect('/ejs-testing/communityPosts');
+   } catch (error) {
+      console.error(error);
+   }
 })
 /**
  *  Updates a document in the communityposts collection in mongodb
  */
 router.put('/update/:id', async(req,res)=>{
-   const communityPost = await CommunityPosts.findByIdAndUpdate(req.params.id, {...req.body});
+   //const communityPost = await CommunityPosts.findByIdAndUpdate(req.params.id, {...req.body});
+   const postBody = req.body;
+   const postKey = req.params.id;
+   try {
+      await commPostServices.updatePost(postKey, postBody);
+      return res.status(200).send(`${postKey} Successfully Updated`);
+   } catch (error) {
+      console.error(error);
+   }
    res.redirect('/ejs-testing/communityPosts');
 })
 
@@ -62,8 +79,14 @@ router.put('/update/:id', async(req,res)=>{
  * console logs the deleted record and redirects to communityPosts page
  */
 router.delete('/delete/:id', async(req, res)=>{
-    const communityPost = await CommunityPosts.findByIdAndDelete(req.params.id);  
-    res.redirect('/ejs-testing/communityPosts');
+   const postKey = req.params.id;
+   try {
+      await commPostServices.deletePost(postKey);
+      res.redirect('/ejs-testing/communityPosts');
+   } catch (error) {
+      console.error(error);
+   }
+   //res.redirect('/ejs-testing/communityPosts');
 })
 
 module.exports = router;
