@@ -14,8 +14,10 @@ class Exchange extends React.Component {
             data: [],
             modalIsVisible: false,
             search: '',
-            success: 'No search yet'
+            success: 'No search yet',
+            NewListing: false
         }
+       
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
     }
@@ -45,7 +47,13 @@ class Exchange extends React.Component {
 
     renderNewLisitng(){
         console.log("form rendered")
+
+
     }
+
+    /*setNewListingState(){
+        this.setState({NewListing:true})
+    }*/
 
     render() {
         return(
@@ -56,13 +64,28 @@ class Exchange extends React.Component {
                         updateSearch={this.updateSearch}
                     />
                 </View>
+
+                
+
                 <View styles={styles.buttonContainer}>
                     <Button
                     title = "ADD NEW LISTING"
-                    onPress={() => this.renderNewLisitng()}
+                    onPress = {() => this.setState({NewListing:true})}
                      />
+                    <Modal
+                    transparent = {false}
+                    visible = {this.state.NewListing}
+                    >
+                    <View style={styles.containerCenter}>
+                    <View style= {{backgroundColor:"#ffffff"}}>
+                    <Text>Create a New Exchange Listing</Text>
+                    </View>
+                    </View>
+                    <Button title = "Close" onPress={() => this.setState({NewListing:false})} />
+                    </Modal>
                  </View>
 
+                
                 <View style={styles.listBottomMargin}>
                     <FlatList 
                         data={this.state.data}
