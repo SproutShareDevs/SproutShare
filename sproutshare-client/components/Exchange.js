@@ -15,7 +15,10 @@ class Exchange extends React.Component {
             modalIsVisible: false,
             search: '',
             success: 'No search yet',
-            NewListing: false
+            NewListing: false,
+            ExchangeTitle:'',
+            ExchangeDescription:'',
+            ExchangeDate:' '
         }
        
         this.updateSearch = this.updateSearch.bind(this);
@@ -45,12 +48,7 @@ class Exchange extends React.Component {
         }
       }
 
-    renderNewLisitng(){
-        console.log("form rendered")
-
-
-    }
-
+   
     /*setNewListingState(){
         this.setState({NewListing:true})
     }*/
@@ -81,13 +79,18 @@ class Exchange extends React.Component {
                         
                     <View style={styles.containerCenter}>
                     <Text>Create a New Exchange Listing</Text>
-                    <TextInput style={styles.textInput} 
-                    placeholder ="Listing Title"/>
 
-                    <TextInput style={styles.textInput} 
-                    placeholder ="Listing Description"/>
+                    <TextInput style={styles.textInput} placeholder ="Listing Title"
+                    onChangeText={() => {this.setState({name:''})}}
+                    />
 
-                    <TextInput style={styles.textInput} placeholder ="Date"/>
+                    <TextInput style={styles.textInput} placeholder ="Date"
+                    onChangeText={() => {this.setState({Date:''})}}
+                    />
+
+                    <TextInput style={styles.textInput}  placeholder ="Listing Description"
+                    onChangeText={() => {this.setState({listing:''})}}         
+                    />          
                     </View>
                     </View>
                     </View>
