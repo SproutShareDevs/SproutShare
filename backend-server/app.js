@@ -6,13 +6,7 @@ const path = require('path');
 const ejs = require('ejs');
 const cors = require('cors');
 console.log(require('dotenv').config());
-
-const LocalStrategy = require("passport-local");
-const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
-const flash = require("connect-flash");
-
-const User = require("./models/User");
+const jwt = require('jsonwebtoken');
 
 /** seed db */
 const seedDB = require("./db/seed.js");
@@ -29,27 +23,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 app.use(cors());
-
-/** auth */
-app.use(flash());
-app.use(require("express-session")({
-    secret: "Sproutshare rules!",
-    resave: false,
-    saveUninitialized: false
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-app.use(function(req, res, next) {
-	res.locals.currentUser = req.user;
-	res.locals.error = req.flash("error");
-	res.locals.success = req.flash("success");
-	next();
-});
-
 
 /** custom middleware */
 
@@ -70,14 +43,14 @@ const commPostController = require('./controllers/mongodb/commPost');
 const exchangeListingController = require('./controllers/mongodb/exListing');
 const notificationsController = require('./controllers/mongodb/notification');
 const forumPostController = require('./controllers/mongodb/forumPost');
-
-
+const loginController = require('./controllers/ejs-testing/login.js');
 
 app.get('/', homePageController);
 app.use('/communityPosts', commPostController);
 app.use('/exchangeListings', exchangeListingController);
 app.use('/notifications', notificationsController);
 app.use('/forumPosts', forumPostController);
+app.use('/login', loginController);
 
 
 /** ejs */
@@ -97,22 +70,12 @@ const ejsCommPostController = require('./controllers/ejs-testing/mongodb/commPos
 const ejsExchangeListingController = require('./controllers/ejs-testing/mongodb/exListing');
 const ejsNotificationController = require('./controllers/ejs-testing/mongodb/notification');
 const ejsForumPostController = require('./controllers/ejs-testing/mongodb/forumPost');
-const ejsUserController = require('./controllers/ejs-testing/mongodb/User');
-const ejsLoginController = require('./controllers/ejs-testing/login');
-const ejsRegisterController = require('./controllers/ejs-testing/register');
-const ejsLogoutController = require('./controllers/ejs-testing/logout');
 
 app.get('/ejs-testing', ejsTestPageController);
 app.use('/ejs-testing/communityPosts', ejsCommPostController);
 app.use('/ejs-testing/exchangeListings', ejsExchangeListingController);
 app.use('/ejs-testing/notifications', ejsNotificationController);
 app.use('/ejs-testing/forumPosts', ejsForumPostController);
-app.use('/ejs-testing/users', ejsUserController);
-
-app.use('/ejs-testing/login', ejsLoginController);
-app.use('/ejs-testing/register', ejsRegisterController);
-app.use('/ejs-testing/logout', ejsLogoutController);
-
 
 // seed database, comment out unless you want to reseed database
 //seedDB();

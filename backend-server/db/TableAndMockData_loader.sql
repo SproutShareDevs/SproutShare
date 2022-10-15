@@ -56,6 +56,8 @@ CREATE TYPE threat_level AS ENUM (
 CREATE TABLE sproutshareuser(
   user_key SERIAL PRIMARY KEY,
   username varchar,
+  password varchar,
+  accesstoken varchar,
   first_name varchar,
   last_name varchar,
   email_address varchar,
@@ -148,10 +150,10 @@ CREATE TABLE userplant(
 Script to create tables in database
 */
 
-INSERT INTO sproutshareuser(first_name, last_name, email_address, lang, zip_code)
+INSERT INTO sproutshareuser(first_name, last_name, email_address, username, password, accessToken, lang, zip_code)
 VALUES
-   ('George', 'Romero', 'george.romero@dotld.com', 'en', '90710'),
-   ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'en', '24061');
+   ('George', 'Romero', 'george.romero@dotld.com', 'george123', 'password', '0', 'en', '90710'),
+   ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'thecricket', 'password', '0', 'en', '24061');
 
 INSERT INTO plant (common_name, latin_name, light_level, 
 min_temp, max_temp, rec_temp, hardiness_zone, soil_type, img)
