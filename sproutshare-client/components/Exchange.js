@@ -78,7 +78,17 @@ class Exchange extends React.Component {
                     >
                     <View style={styles.containerCenter}>
                     <View style= {{backgroundColor:"#ffffff"}}>
+                        
+                    <View style={styles.containerCenter}>
                     <Text>Create a New Exchange Listing</Text>
+                    <TextInput style={styles.textInput} 
+                    placeholder ="Listing Title"/>
+
+                    <TextInput style={styles.textInput} 
+                    placeholder ="Listing Description"/>
+
+                    <TextInput style={styles.textInput} placeholder ="Date"/>
+                    </View>
                     </View>
                     </View>
                     <Button title = "Close" onPress={() => this.setState({NewListing:false})} />
