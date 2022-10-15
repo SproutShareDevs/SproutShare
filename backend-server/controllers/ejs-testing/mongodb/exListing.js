@@ -1,71 +1,67 @@
 const express = require('express');
 const router = express.Router();
-const ExchangeListings = require('../../../models/ExchangeListing');
+const exListingServices = require('../../../services/exListingServices');
 
-/** 
- * For displaying the community post page
- * Queries the CommunityPost collection
- * retrieves all documents
- * sends them to ejs for rendering
-*/
 router.get('/', async(req, res) => {
-   const exchangeListings = await ExchangeListings.find({});
-   res.render('exchangeListings', {exchangeListings});
+   try {
+      const exListings = await exListingServices.getAllListings();
+      res.render('exchangeListings', {exListings});
+   } catch (error) {
+      console.error(error);
+   }
 })
 
-/** 
- * This route gets a community post ID via parameter in the get request and renders it in EJS 
- */
 router.get('/id', async(req, res) => {
-   const exchangeListings = [await ExchangeListings.findById(req.query.id)];
-   res.render('exchangeListings', {exchangeListings});
+   const listingId = req.query.id;
+   try {
+      const exListings = [await exListingServices.getListingById(listingId)];
+      res.render('exchangeListings', {exListings});
+   } catch (error) {
+      console.error(error);   
+   }
 }) 
 
-/** 
- * Searches the ExchangeListings collection for strings matching the regex query string in...
- * ex_plant
- * ex_post_title
- * ex_post_body
- * Can return multiple records as a collection
- */
-router.get('/query', async(req, res) =>{
-    const exchangeListings = await ExchangeListings.find()
-    .or(
-          [
-            {ex_plant: {$regex:req.query.string}}, 
-            {ex_post_title: {$regex:req.query.string}}, 
-            {ex_post_body: {$regex:req.query.string}}
-          ]
-    );
-    res.render('exchangeListings', {exchangeListings});
+router.get('/search', async(req, res) =>{   
+   const query = {$regex:req.query.string};
+   try {
+      const exListings = await exListingServices.getListingsByQuery(query);
+      res.render('exchangeListings', {exListings});
+   } catch (error) {
+      console.error(error);
+   }
 })
 
-/** Handler for creating a community post */
-router.post('/store', (req,res) =>{
-   ExchangeListings.create(req.body, (error, exchangeListings)=>{
-      console.log(req.body);
-      if(error){
-         console.error(error);
-      }
-   });
-   res.redirect('/ejs-testing/exchangeListings');
+router.post('/store', async(req,res) =>{
+   const listing = req.body;
+   try {
+      await exListingServices.storeListing(listing);
+      res.redirect('/ejs-testing/exchangeListings');
+   } catch (error) {
+      console.error(error);
+   }
 })
-/**
- *  Updates a document in the ExchangeListings collection in mongodb
- */
+
 router.put('/update/:id', async(req,res)=>{
-   const exchangeListings = await ExchangeListings.findByIdAndUpdate(req.params.id, {...req.body});
-   res.redirect('/ejs-testing/exchangeListings');
+   const listingBody = req.body;
+   const listingId = req.params.id;
+   try {
+      await exListingServices.updateListing(listingId, listingBody);
+      return res.status(200).send(`${listingId} Successfully Updated`);
+   } catch (error) {
+      console.error(error);
+   }
+   //res.redirect('/ejs-testing/exchangeListings');
 })
 
-/**
- * Deletes a document in the ExchangeListings collection
- * based on _id passed from req.params
- * console logs the deleted record and redirects to ExchangeListings page
- */
 router.delete('/delete/:id', async(req, res)=>{
-    const exchangeListings = await ExchangeListings.findByIdAndDelete(req.params.id);  
-    res.redirect('/ejs-testing/exchangeListings');
+   const listingId = req.params.id;
+   try {
+      await exListingServices.deleteListing(listingId);
+      res.redirect('/ejs-testing/exchangeListings');
+   } catch (error) {
+      console.error(error);
+   }
+   //res.redirect('/ejs-testing/exchangeListings');
 })
 
 module.exports = router;

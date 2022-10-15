@@ -1,71 +1,67 @@
 const express = require('express');
 const router = express.Router();
-const ForumPosts = require('../../../models/ForumPost');
+const forumPostServices = require('../../../services/forumPostServices');
 
-/** 
- * For displaying the community post page
- * Queries the CommunityPost collection
- * retrieves all documents
- * sends them to ejs for rendering
-*/
 router.get('/', async(req, res) => {
-   const forumPosts = await ForumPosts.find({});
-   res.render('forumPosts', {forumPosts});
+   try {
+      const forumPosts = await forumPostServices.getAllPosts();
+      res.render('forumPosts', {forumPosts});
+   } catch (error) {
+      console.error(error);
+   }
 })
 
-/** 
- * This route gets a community post ID via parameter in the get request and renders it in EJS 
- */
 router.get('/id', async(req, res) => {
-   const forumPosts = [await ForumPosts.findById(req.query.id)];
-   res.render('forumPosts', {forumPosts});
+   const postId = req.query.id;
+   try {
+      const forumPosts = [await forumPostServices.getPostById(postId)];
+      res.render('forumPosts', {forumPosts});
+   } catch (error) {
+      console.error(error);   
+   }
 }) 
 
-/** 
- * Searches the ForumPosts collection for strings matching the regex query string in...
- * user_plant
- * forum_post_title
- * forum_post_body
- * Can return multiple records as a collection
- */
 router.get('/search', async(req, res) =>{
-    const forumPosts = await ForumPosts.find()
-    .or(
-          [
-            {user_plant: {$regex:req.query.string}}, 
-            {forum_post_title: {$regex:req.query.string}}, 
-            {forum_post_body: {$regex:req.query.string}}
-          ]
-    );
-    res.render('forumPosts', {forumPosts});
+   
+   const query = {$regex:req.query.string};
+   try {
+      const forumPosts = await forumPostServices.getPostByQuery(query);
+      res.render('forumPosts', {forumPosts});
+   } catch (error) {
+      console.error(error);
+   }
 })
 
-/** Handler for creating a community post */
-router.post('/store', (req,res) =>{
-   ForumPosts.create(req.body, (error, forumPosts)=>{
-      console.log(req.body);
-      if(error){
-         console.error(error);
-      }
-   });
-   res.redirect('/ejs-testing/forumPosts');
+router.post('/store', async(req,res) =>{
+   const post = req.body;
+   try {
+      await forumPostServices.storePost(post);
+      res.redirect('/ejs-testing/forumPosts');
+   } catch (error) {
+      console.error(error);
+   }
 })
-/**
- *  Updates a document in the ForumPosts collection in mongodb
- */
+
 router.put('/update/:id', async(req,res)=>{
-   const forumPosts = await ForumPosts.findByIdAndUpdate(req.params.id, {...req.body});
-   res.redirect('/ejs-testing/forumPosts');
+   const postBody = req.body;
+   const postId = req.params.id;
+   try {
+      await forumPostServices.updatePost(postId, postBody);
+      return res.status(200).send(`${postId} Successfully Updated`);
+   } catch (error) {
+      console.error(error);
+   }
+   //res.redirect('/ejs-testing/forumPosts');
 })
 
-/**
- * Deletes a document in the ForumPosts collection
- * based on _id passed from req.params
- * console logs the deleted record and redirects to ForumPosts page
- */
 router.delete('/delete/:id', async(req, res)=>{
-    const forumPosts = await ForumPosts.findByIdAndDelete(req.params.id);  
-    res.redirect('/ejs-testing/forumPosts');
+   const postId = req.params.id;
+   try {
+      await forumPostServices.deletePost(postId);
+      res.redirect('/ejs-testing/forumPosts');
+   } catch (error) {
+      console.error(error);
+   }
+   //res.redirect('/ejs-testing/forumPosts');
 })
-
 module.exports = router;

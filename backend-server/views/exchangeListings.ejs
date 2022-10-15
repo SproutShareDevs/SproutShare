@@ -31,15 +31,15 @@
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <form action="/ejs-testing/exchangeListings/query" method="get">
+      <form action="/ejs-testing/exchangeListings/search" method="get">
          <input type="text" name="string"  placeholder = "Search by description..." >
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <% if (typeof exchangeListings !== 'undefined') { %>
-         <span id="exchangeListings-selectable" hidden><%=JSON.stringify(exchangeListings);%></span>
+      <% if (typeof exListings !== 'undefined') { %>
+         <span id="exchangeListings-selectable" hidden><%=JSON.stringify(exListings);%></span>
          <div>
-            <% exchangeListings.forEach(listing => { %>
+            <% exListings.forEach(listing => { %>
                <%= "{" %> 
                <div>ID: <%=listing._id%></div> 
                <div>User ID: <%=listing.user_ID%></div>
