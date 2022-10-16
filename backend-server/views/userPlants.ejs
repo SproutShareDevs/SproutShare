@@ -18,13 +18,13 @@
          <input type="text" name="plant_key">
 
          <label for="garden_key">Garden key</label>
-         <input type="text" name="latin_name">
+         <input type="text" name="garden_key">
 
-         <label for="current_disease">Curr. Disease</label>
-         <input type="text" name="current_disease">
+         <label for="plant_disease">Curr. Disease</label>
+         <input type="text" name="plant_disease">
 
-         <label for="current_pest">Curr. Pest</label>
-         <input type="text" name="current_pest">
+         <label for="plant_pest">Curr. Pest</label>
+         <input type="text" name="plant_pest">
 
          <label for="plant_qty">Plant Qty</label>
          <input type="text" name="plant_qty">
@@ -38,12 +38,12 @@
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <form action="/ejs-testing/userPlants/id" method="get">
+      <form action="/ejs-testing/userPlants/key" method="get">
          <input type="text" name="key"  placeholder = "Search by key..." >
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <form action="/ejs-testing/userPlants/getByGarden/id" method="get">
+      <form action="/ejs-testing/userPlants/getByGarden/key" method="get">
          <input type="text" name="key"  placeholder = "Search by garden key..." >
          <button type="submit">Submit</button>
       </form>
@@ -61,16 +61,16 @@
                <div>User Key: <%=plant.user_key%></div>
                <div>plant key: <%=plant.plant_key%></div> 
                <div>garden key: <%=plant.garden_key%></div>
-               <div>Curr. Disease: <%=plant.current_disease%></div>
-               <div>Curr. Pest: <%=plant.current_pest%></div>
+               <div>Curr. Disease: <%=plant.plant_disease_key%></div>
+               <div>Curr. Pest: <%=plant.plant_pest_key%></div>
                <div>Plant Qty: <%=plant.plant_qty%></div>
                <div>Plant Difficulty: <%=plant.plant_difficulty%></div>
                <div>Plant Quality: <%=plant.plant_quality%></div>
                <%= "}" %> 
                <br/>
-               <button class = "edit-record" value="<%=plant.user_key%>">Edit</button>
+               <button class = "edit-record" value="<%=plant.user_plant_key%>">Edit</button>
                &emsp;
-               <button class = "delete-record" value="<%=plant.user_key%>">Delete</button>
+               <button class = "delete-record" value="<%=plant.user_plant_key%>">Delete</button>
                <br/>
             <% }) %>
          </div>
