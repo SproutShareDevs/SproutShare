@@ -44,6 +44,7 @@ const exchangeListingController = require('./controllers/mongodb/exListing');
 const notificationsController = require('./controllers/mongodb/notification');
 const forumPostController = require('./controllers/mongodb/forumPost');
 const loginController = require('./controllers/ejs-testing/login.js');
+const registerController = require('./controllers/ejs-testing/register');
 
 app.get('/', homePageController);
 app.use('/communityPosts', commPostController);
@@ -51,6 +52,7 @@ app.use('/exchangeListings', exchangeListingController);
 app.use('/notifications', notificationsController);
 app.use('/forumPosts', forumPostController);
 app.use('/login', loginController);
+app.use('/register', registerController);
 
 
 /** ejs */
