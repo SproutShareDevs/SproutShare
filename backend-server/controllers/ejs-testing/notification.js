@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const notificationServices = require('../../../services/notificationServices');
+const notificationServices = require('../../services/notificationServices');
 
 router.get('/', async(req, res) => {
    try {

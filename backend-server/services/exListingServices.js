@@ -6,48 +6,57 @@ async function getAllListings() {
       return allListings;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function getListingById(listingId){
    try {
-      const singleListing = await exListingDatabase.getListingById(listingId);
-      return singleListing;
+      const exListing = await exListingDatabase.getListingById(listingId);
+      return exListing;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function getListingsByQuery(query){
    try {
-      const listings = await exListingDatabase.getListingsByQuery(query);
-      return listings;
+      const exListings = await exListingDatabase.getListingsByQuery(query);
+      return exListings;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function storeListing(listing){
    try {
-      await exListingDatabase.storeListing(listing);
+      const storedListing = await exListingDatabase.storeListing(listing);
+      return storedListing;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function updateListing(listingId, listingBody){
    try {
-      await exListingDatabase.updateListing(listingId, listingBody); 
+      const updatedListing = await exListingDatabase.updateListing(listingId, listingBody); 
+      return updatedListing;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function deleteListing(listingId){
    try {
-      await exListingDatabase.deleteListing(listingId);
+      const deletedListing = await exListingDatabase.deleteListing(listingId);
+      return deletedListing;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 

@@ -28,9 +28,9 @@ app.use(cors());
 /** production */
 
 /* postgres */
-const plantController = require('./controllers/postgres/plants');
-const userPlantsController = require('./controllers/postgres/userPlants');
-const gardensController = require('./controllers/postgres/gardens');
+const plantController = require('./controllers/plants');
+const userPlantsController = require('./controllers/userPlants');
+const gardensController = require('./controllers/gardens');
 
 app.use('/plants', plantController);
 app.use('/userPlants', userPlantsController);
@@ -38,10 +38,10 @@ app.use('/gardens', gardensController);
 
 /* mongodb */
 const homePageController = require('./controllers/homePage');
-const commPostController = require('./controllers/mongodb/commPost');
-const exchangeListingController = require('./controllers/mongodb/exListing');
-const notificationsController = require('./controllers/mongodb/notification');
-const forumPostController = require('./controllers/mongodb/forumPost');
+const commPostController = require('./controllers/commPost');
+const exchangeListingController = require('./controllers/exListing');
+const notificationsController = require('./controllers/notification');
+const forumPostController = require('./controllers/forumPost');
 
 
 app.get('/', homePageController);
@@ -54,9 +54,9 @@ app.use('/forumPosts', forumPostController);
 /** ejs */
 
 /** postgres */
-const ejsPlantController = require('./controllers/ejs-testing/postgres/plants');
-const ejsUserPlantController = require('./controllers/ejs-testing/postgres/userPlants');
-const ejsGardensController = require('./controllers/ejs-testing/postgres/gardens');
+const ejsPlantController = require('./controllers/ejs-testing/plants');
+const ejsUserPlantController = require('./controllers/ejs-testing/userPlants');
+const ejsGardensController = require('./controllers/ejs-testing/gardens');
 
 app.use('/ejs-testing/plants', ejsPlantController);
 app.use('/ejs-testing/userPlants', ejsUserPlantController);
@@ -64,10 +64,10 @@ app.use('/ejs-testing/gardens', ejsGardensController);
 
 /** mongodb */
 const ejsTestPageController = require('./controllers/ejs-testing/testPageController');
-const ejsCommPostController = require('./controllers/ejs-testing/mongodb/commPost');
-const ejsExchangeListingController = require('./controllers/ejs-testing/mongodb/exListing');
-const ejsNotificationController = require('./controllers/ejs-testing/mongodb/notification');
-const ejsForumPostController = require('./controllers/ejs-testing/mongodb/forumPost');
+const ejsCommPostController = require('./controllers/ejs-testing/commPost');
+const ejsExchangeListingController = require('./controllers/ejs-testing/exListing');
+const ejsNotificationController = require('./controllers/ejs-testing/notification');
+const ejsForumPostController = require('./controllers/ejs-testing/forumPost');
 
 app.get('/ejs-testing', ejsTestPageController);
 app.use('/ejs-testing/communityPosts', ejsCommPostController);

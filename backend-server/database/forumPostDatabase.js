@@ -11,6 +11,7 @@ async function getAllPosts() {
       return allPosts;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -22,10 +23,11 @@ async function getAllPosts() {
 
 async function getPostById(postId){
    try {
-      const singlePost = await ForumPosts.findById(postId);
-      return singlePost;
+      const forumPost = await ForumPosts.findById(postId);
+      return forumPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -37,7 +39,7 @@ async function getPostById(postId){
 
 async function getPostByQuery(query){
    try {
-      const posts = await ForumPosts.find()
+      const forumPosts = await ForumPosts.find()
       .or(
             [
                {user_plant: query},
@@ -45,9 +47,10 @@ async function getPostByQuery(query){
                {forum_post_body: query}
             ]
       );
-      return posts;
+      return forumPosts;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -58,9 +61,11 @@ async function getPostByQuery(query){
 
 async function storePost(post){
    try {
-      await ForumPosts.create(post);
+      const storedPost = await ForumPosts.create(post);
+      return storedPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -72,9 +77,11 @@ async function storePost(post){
 
 async function updatePost(postId, postBody){
    try {
-      await ForumPosts.findByIdAndUpdate(postId, postBody); 
+      const updatedPost = await ForumPosts.findByIdAndUpdate(postId, postBody); 
+      return updatedPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -85,9 +92,11 @@ async function updatePost(postId, postBody){
 
 async function deletePost(postId){
    try {
-      await ForumPosts.findByIdAndDelete(postId);
+      const deletedPost = await ForumPosts.findByIdAndDelete(postId);
+      return deletedPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 

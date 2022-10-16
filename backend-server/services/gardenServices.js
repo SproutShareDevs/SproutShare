@@ -6,15 +6,17 @@ const gardenDatabase = require('../database/gardenDatabase');
       return allGardens;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function getGardenByKey(gardenKey){
    try {
-      const singleGarden = await gardenDatabase.getGardenByKey(gardenKey);
-      return singleGarden;
+      const garden = await gardenDatabase.getGardenByKey(gardenKey);
+      return garden;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -37,43 +39,50 @@ async function getPostByQuery(query){
 }
 */
 
-async function getGardenByUserKey(userKey){
+async function getGardensByUserKey(userKey){
    try {
-      const gardens = await gardenDatabase.getGardenByUserKey(userKey);
+      const gardens = await gardenDatabase.getGardensByUserKey(userKey);
       return gardens;
    } catch (error) {
       console.log(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function storeGarden(garden){
    try {
-      await gardenDatabase.storeGarden(garden);
+      const storedGarden = await gardenDatabase.storeGarden(garden);
+      return storedGarden;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function updateGarden(gardenKey, garden){
    try {
-      await gardenDatabase.updateGarden(gardenKey, garden);
+      const updatedGarden = await gardenDatabase.updateGarden(gardenKey, garden);
+      return updatedGarden;
    }catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function deleteGarden(gardenKey){
    try {
-      await gardenDatabase.deleteGarden(gardenKey);
+      const deletedGarden = await gardenDatabase.deleteGarden(gardenKey);
+      return deletedGarden;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 module.exports = {
    getAllGardens,
    getGardenByKey,
-   getGardenByUserKey,
+   getGardensByUserKey,
    //getPostByQuery,
    storeGarden,
    updateGarden,

@@ -10,6 +10,7 @@ const pool = require('../models/postgresPool');
       return allUserPlants.rows;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -21,10 +22,11 @@ const pool = require('../models/postgresPool');
 
 async function getUserPlantByKey(userPlantKey){
    try {
-      const singleUserPlant = await pool.query("SELECT * FROM userplant WHERE user_plant_key = $1", [userPlantKey]);
-      return singleUserPlant.rows[0];
+      const userPlant = await pool.query("SELECT * FROM userplant WHERE user_plant_key = $1", [userPlantKey]);
+      return userPlant.rows[0];
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -52,12 +54,13 @@ async function getPostByQuery(query){
  * @param {*} gardenKey The garden key for a given userPlant
  * @returns The userPlant with the gardenKey parameter as a foreign key 
  */
-async function getUserPlantByGardenKey(gardenKey){
+async function getUserPlantsByGardenKey(gardenKey){
    try {
       const userPlants = await pool.query("SELECT * FROM userplant WHERE garden_key = $1", [gardenKey]);
       return userPlants.rows;
    } catch (error) {
       console.log(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -65,12 +68,13 @@ async function getUserPlantByGardenKey(gardenKey){
 /**
  * 
  * @param {*} userPlant A new userPlant to store in the database
+ * @return the stored usedplant or an error as a JSON object
  */
 
 async function storeUserPlant(userPlant){
    try {
-      await pool.
-      query('INSERT INTO userplant(user_key, plant_key, garden_key, plant_disease_key, plant_pest_key, plant_qty, plant_difficulty, plant_quality) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+      const storedUserPlant = await pool.
+      query('INSERT INTO userplant(user_key, plant_key, garden_key, plant_disease_key, plant_pest_key, plant_qty, plant_difficulty, plant_quality) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
       [
          userPlant.user_key, 
          userPlant.plant_key, 
@@ -81,8 +85,10 @@ async function storeUserPlant(userPlant){
          userPlant.plant_difficulty, 
          userPlant.plant_quality
       ]);
+      return storedUserPlant.rows[0];
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -90,11 +96,12 @@ async function storeUserPlant(userPlant){
  * 
  * @param {*} userPlantKey The userPlant to edit 
  * @param {*} userPlant The edit for the userPlant
+ * @return the edited userplant or an error as a JSON object
  */
 
 async function updateUserPlant(userPlantKey, userPlant){
    try {
-      await pool.query("UPDATE userplant SET user_key=$1, plant_key=$2, garden_key=$3, plant_disease_key=$4, plant_pest_key=$5, plant_qty=$6, plant_difficulty=$7, plant_quality=$8 WHERE user_plant_key=$9", 
+      const updatedUserPlant = await pool.query("UPDATE userplant SET user_key=$1, plant_key=$2, garden_key=$3, plant_disease_key=$4, plant_pest_key=$5, plant_qty=$6, plant_difficulty=$7, plant_quality=$8 WHERE user_plant_key=$9 RETURNING *", 
       [
          userPlant.user_key, 
          userPlant.plant_key, 
@@ -105,29 +112,34 @@ async function updateUserPlant(userPlantKey, userPlant){
          userPlant.plant_difficulty, 
          userPlant.plant_quality,
          userPlantKey      
-      ]);   
+      ]);
+      return updatedUserPlant.rows[0];   
    }catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 /**
  * 
  * @param {*} userPlantKey The id of the ForumPost to delete 
+ * @return the deleted userplant or an error as a JSON object
  */
 
 async function deleteUserPlant(userPlantKey){
    try {
-      await pool.query('DELETE FROM userplant WHERE user_plant_key = $1', [userPlantKey]);
+      const deletedUserPlant = await pool.query('DELETE FROM userplant WHERE user_plant_key = $1 RETURNING *', [userPlantKey]);
+      return deletedUserPlant.rows[0];
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 module.exports = {
    getAllUserPlants,
    getUserPlantByKey,
-   getUserPlantByGardenKey,
+   getUserPlantsByGardenKey,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,

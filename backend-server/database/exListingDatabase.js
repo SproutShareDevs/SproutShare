@@ -10,6 +10,7 @@ async function getAllListings() {
       return allListings;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -21,10 +22,11 @@ async function getAllListings() {
 
 async function getListingById(listingId){
    try {
-      const singleListing = await ExchangeListings.findById(listingId);
-      return singleListing;
+      const exListing = await ExchangeListings.findById(listingId);
+      return exListing;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -36,7 +38,7 @@ async function getListingById(listingId){
 
 async function getListingsByQuery(query){
    try {
-      const listings = await ExchangeListings.find()
+      const exListings = await ExchangeListings.find()
       .or(
             [
                {ex_plant: query}, 
@@ -44,9 +46,10 @@ async function getListingsByQuery(query){
                {ex_post_body: query}
             ]
       );
-      return listings;
+      return exListings;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -57,25 +60,31 @@ async function getListingsByQuery(query){
 
 async function storeListing(listing){
    try {
-      await ExchangeListings.create(listing);
+      const storedListing = await ExchangeListings.create(listing);
+      return storedListing
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function updateListing(listingId, listingBody){
    try {
-      await ExchangeListings.findByIdAndUpdate(listingId, listingBody); 
+      const updatedListing = await ExchangeListings.findByIdAndUpdate(listingId, listingBody); 
+      return updatedListing;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function deleteListing(listingId){
    try {
-      await ExchangeListings.findByIdAndDelete(listingId);
+      const deletedListing = await ExchangeListings.findByIdAndDelete(listingId);
+      return deletedListing;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 

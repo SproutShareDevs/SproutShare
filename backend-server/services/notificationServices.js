@@ -6,15 +6,17 @@ async function getAllNotifications() {
       return allNotifications;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function getNotificationById(notificationId){
    try {
-      const singleNotification = await notificationDatabse.getNotificationById(notificationId);
-      return singleNotification;
+      const notification = await notificationDatabse.getNotificationById(notificationId);
+      return notification;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -24,30 +26,37 @@ async function getNotificationByQuery(query){
       return notifications;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function storeNotification(notification){
    try {
-      await notificationDatabse.storeNotification(notification);
+      const storedNotification = await notificationDatabse.storeNotification(notification);
+      return storedNotification;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function updateNotification(notificationId, notificationBody){
    try {
-      await notificationDatabse.updateNotification(notificationId, notificationBody); 
+      const updatedNotification = await notificationDatabse.updateNotification(notificationId, notificationBody); 
+      return updatedNotification;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function deleteNotification(notificationId){
    try {
-      await notificationDatabse.deleteNotification(notificationId);
+      const deletedNotification = await notificationDatabse.deleteNotification(notificationId);
+      return deletedNotification;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 

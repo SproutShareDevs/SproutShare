@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const commPostServices = require('../../../services/commPostServices');
+const commPostServices = require('../../services/commPostServices');
 
 router.get('/', async(req, res) => {
    try {

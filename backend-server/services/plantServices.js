@@ -7,23 +7,21 @@ const plantDatabase = require('../database/plantDatabase');
       return allPlants;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function getPlantByKey(plantKey){
    try {
-      const singlePlant = await plantDatabase.getPlantByKey(plantKey);
-      return singlePlant;
+      const plant = await plantDatabase.getPlantByKey(plantKey);
+      return plant;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 /**
- * 
- * @param {*} query the search string for matching in the title and body of a ForumPost 
- * @returns a collection of ForumPosts
-
 
 async function getPostByQuery(query){
    try {
@@ -44,25 +42,31 @@ async function getPostByQuery(query){
 
 async function storePlant(plant){
    try {
-      await plantDatabase.storePlant(plant);
+      const storedPlant = await plantDatabase.storePlant(plant);
+      return storedPlant;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function updatePlant(plantKey, plant){
    try {
-      await plantDatabase.updatePlant(plantKey, plant);
+      const updatedPlant = await plantDatabase.updatePlant(plantKey, plant);
+      return updatedPlant;
    }catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function deletePlant(plantKey){
    try {
-      await plantDatabase.deletePlant(plantKey);
+      const deletedPlant = await plantDatabase.deletePlant(plantKey);
+      return deletedPlant;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 

@@ -6,15 +6,17 @@ const userPlantDatabase = require('../database/userPlantDatabase');
       return allUserPlants;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function getUserPlantByKey(userPlantKey){
    try {
-      const singleUserPlant = await userPlantDatabase.getUserPlantByKey(userPlantKey);
-      return singleUserPlant;
+      const userPlant = await userPlantDatabase.getUserPlantByKey(userPlantKey);
+      return userPlant;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -37,43 +39,50 @@ async function getPostByQuery(query){
 }
 */
 
-async function getUserPlantByGardenKey(gardenKey){
+async function getUserPlantsByGardenKey(gardenKey){
    try {
-      const userPlants = userPlantDatabase.getUserPlantByGardenKey(gardenKey);
+      const userPlants = userPlantDatabase.getUserPlantsByGardenKey(gardenKey);
       return userPlants;
    } catch (error) {
       console.log(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function storeUserPlant(userPlant){
    try {
-      await userPlantDatabase.storeUserPlant(userPlant);
+      const storedUserPlant = await userPlantDatabase.storeUserPlant(userPlant);
+      return storedUserPlant;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function updateUserPlant(userPlantKey, userPlant){
    try {
-      await userPlantDatabase.updateUserPlant(userPlantKey, userPlant);
+      const updatedUserPlant = await userPlantDatabase.updateUserPlant(userPlantKey, userPlant);
+      return updatedUserPlant;
    }catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function deleteUserPlant(userPlantKey){
    try {
-      await userPlantDatabase.deleteUserPlant(userPlantKey);
+      const deletedUserPlant = await userPlantDatabase.deleteUserPlant(userPlantKey);
+      return deletedUserPlant;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 module.exports = {
    getAllUserPlants,
    getUserPlantByKey,
-   getUserPlantByGardenKey,
+   getUserPlantsByGardenKey,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,

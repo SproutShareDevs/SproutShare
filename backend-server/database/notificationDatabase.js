@@ -10,6 +10,7 @@ async function getAllNotifications() {
       return allNotifications;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -20,10 +21,11 @@ async function getAllNotifications() {
  */
 async function getNotificationById(notificationId){
    try {
-      const singleNotification = await Notifications.findById(notificationId);
-      return singleNotification;
+      const notification = await Notifications.findById(notificationId);
+      return notification;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -45,6 +47,7 @@ async function getNotificationByQuery(query){
       return notifications;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -54,9 +57,11 @@ async function getNotificationByQuery(query){
  */
 async function storeNotification(notification){
    try {
-      await Notifications.create(notification);
+      const storedNotification = await Notifications.create(notification);
+      return storedNotification;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 /**
@@ -66,9 +71,11 @@ async function storeNotification(notification){
  */
 async function updateNotification(notificationId, notificationBody){
    try {
-      await Notifications.findByIdAndUpdate(notificationId, notificationBody); 
+      const updatedNotification = await Notifications.findByIdAndUpdate(notificationId, notificationBody); 
+      return updatedNotification;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 /**
@@ -77,9 +84,11 @@ async function updateNotification(notificationId, notificationBody){
  */
 async function deleteNotification(notificationId){
    try {
-      await Notifications.findByIdAndDelete(notificationId);
+      const deletedNotification = await Notifications.findByIdAndDelete(notificationId);
+      return deletedNotification;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 

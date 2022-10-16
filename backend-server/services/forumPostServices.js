@@ -6,49 +6,58 @@ async function getAllPosts() {
       return allPosts;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
    
 };
 
 async function getPostById(postId){
    try {
-      const singlePost = await forumPostDatabase.getPostById(postId);
-      return singlePost;
+      const forumPost = await forumPostDatabase.getPostById(postId);
+      return forumPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function getPostByQuery(query){
    try {
-      const posts = await forumPostDatabase.getPostByQuery(query);
-      return posts;
+      const forumPosts = await forumPostDatabase.getPostByQuery(query);
+      return forumPosts;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function storePost(post){
    try {
-      await forumPostDatabase.storePost(post);
+      const storedPost = await forumPostDatabase.storePost(post);
+      return storedPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function updatePost(postId, postBody){
    try {
-      await forumPostDatabase.updatePost(postId, postBody);
+      const updatedPost = await forumPostDatabase.updatePost(postId, postBody);
+      return updatedPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function deletePost(postId){
    try {
-      await forumPostDatabase.deletePost(postId);
+      const deletedPost = await forumPostDatabase.deletePost(postId);
+      return deletedPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 module.exports = {

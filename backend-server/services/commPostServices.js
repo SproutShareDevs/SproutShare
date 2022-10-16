@@ -6,49 +6,58 @@ async function getAllPosts() {
       return allPosts;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
    
 };
 
 async function getPostById(postId){
    try {
-      const singlePost = await commPostDatabase.getPostById(postId);
-      return singlePost;
+      const commPost = await commPostDatabase.getPostById(postId);
+      return commPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function getPostByQuery(query){
    try {
-      const posts = await commPostDatabase.getPostByQuery(query);
-      return posts;
+      const commPosts = await commPostDatabase.getPostByQuery(query);
+      return commPosts;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function storePost(post){
    try {
-      await commPostDatabase.storePost(post);
+      const storedPost = await commPostDatabase.storePost(post);
+      return storedPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function updatePost(postId, postBody){
    try {
-      await commPostDatabase.updatePost(postId, postBody);
+      const updatedCommPost = await commPostDatabase.updatePost(postId, postBody);
+      return updatedCommPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
 async function deletePost(postId){
    try {
-      await commPostDatabase.deletePost(postId);
+      const deletedCommPost = await commPostDatabase.deletePost(postId);
+      return deletedCommPost;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 module.exports = {
