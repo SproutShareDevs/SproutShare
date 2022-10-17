@@ -3,6 +3,7 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { View, Button, Text, TextInput } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 
 // Navbar Imports
@@ -16,6 +17,7 @@ import PlantWiki from './components/PlantWiki.js';
 import CommunityFeed from './components/CommunityFeed.js';
 import UserGarden from './components/UserGarden.js';
 import CreateAccount from './components/CreateAccount.js';
+import LogInScreen from './components/account/LogInScreen.js';
 
 // Dotenv
 import {NODE_SERVER} from "@env"
@@ -31,7 +33,29 @@ console.log("NODE_SERVER: " + NODE_SERVER);
 const Tab = createBottomTabNavigator();
 
 
+async function saveAccessToken(value) {
+    await SecureStore.setItemAsync('AccessToken', value);
+}
+
+async function deleteAccessToken() {
+    await SecureStore.deleteItemAsync('AccessToken');
+    console.log("Deleted access token");
+}
+  
+async function getCurrentAccessToken() {
+    let result = await SecureStore.getItemAsync('AccessToken');
+    if (result) {
+      alert("🔐 Here's your access token 🔐 \n" + result);
+    } else {
+      alert('No access token in storage');
+    }
+}
+
 export default class App extends React.Component {
+    componentDidMount() {
+        deleteAccessToken();
+    }
+
   render() {
       return (
         <NavigationContainer>
@@ -39,7 +63,9 @@ export default class App extends React.Component {
                 screenOptions={{tabBarShowLabel: false, headerShown: false}}  >
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="Home" component={HomeView} />
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="LogInTop" component={LogInTop} />
-                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="LogInScreen" component={LogInScreen} />
+                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'LogInScreen'}>
+                    {props => <LogInScreen {...props} saveToken={saveAccessToken} nodeServer={nodeServer}/>}
+                </Tab.Screen>
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="CreateAccountScreen" component={CreateAccountScreen} />
             </Tab.Navigator>
         </NavigationContainer>
@@ -49,69 +75,10 @@ export default class App extends React.Component {
 
 // The below functions need to be changed to work with the databases.
 
-// The screen where users can input their username and password to log into an existing account
-function LogInScreen({ navigation }) {
-    let newUsername, newPassword;
-    return (
 
-        <View style = {{
-            flex: 1,
-            justifyContent: "center",
-            //alignItems: "center"
-        }}>
-        <Text>Log In</Text>
-        <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1
-            }}
-            placeholder = "Username:"
-            onChangeText={newText => newUsername = newText}
-        />
-            
-        <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1
-            }}
-            placeholder = "Password:"
-            onChangeText={newText => newPassword = newText}
-        />
-        <Button
-            onPress={() => {
-                if(checkUser(newUsername, newPassword) === "User"){
-                    navigation.navigate('Home', {
-                        userName: newUsername, userType: 'User'
-                    });
-                } else if(checkUser(newUsername, newPassword) === "Admin"){
-                    navigation.navigate('Home', {
-                        userName: newUsername, userType: 'Admin'
-                    });
-                }
-            }}
-            title={
-                "Log In"
-            }
-        />
-        </View>
-        
-    )
-}
 
 // A function that checks if a user is one of two hardcoded accounts
-checkUser = (myUsername, myPassword) => {
-    if (myUsername === "default" && myPassword === "default")
-        return "User";
-    if (myUsername === "admin" && myPassword === "admin")
-        return "Admin";
-    return false;
-}
+
 
 // The screen where users can input their own username and password to make a new account
 function CreateAccountScreen({ navigation }) {
@@ -265,6 +232,10 @@ function LogInTop({ navigation }) {
             title={
                 "Skip login: Admin"
             }
+        />
+        <Button
+        title={"Retrieve Token"}
+            onPress={getCurrentAccessToken}
         />
         </View>
     )

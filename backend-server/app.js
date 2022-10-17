@@ -43,7 +43,7 @@ const commPostController = require('./controllers/commPost');
 const exchangeListingController = require('./controllers/exListing');
 const notificationsController = require('./controllers/notification');
 const forumPostController = require('./controllers/forumPost');
-const loginController = require('./controllers/ejs-testing/login.js');
+const loginController = require('./controllers/login');
 const registerController = require('./controllers/ejs-testing/register');
 
 app.get('/', homePageController);
