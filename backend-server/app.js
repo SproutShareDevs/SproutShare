@@ -6,7 +6,7 @@ const path = require('path');
 const ejs = require('ejs');
 const cors = require('cors');
 console.log(require('dotenv').config());
-const jwt = require('jsonwebtoken');
+//const jwt = require('jsonwebtoken');
 
 /** seed db */
 const seedDB = require("./db/seed.js");
@@ -57,14 +57,18 @@ app.use('/register', registerController);
 
 /** ejs */
 
+const ejsLoginController = require('./controllers/ejs-testing/login');
+app.use('/ejs-testing/login', ejsLoginController);
+
 /** postgres */
 const ejsPlantController = require('./controllers/ejs-testing/postgres/plants');
 const ejsUserPlantController = require('./controllers/ejs-testing/postgres/userPlants');
 const ejsGardensController = require('./controllers/ejs-testing/postgres/gardens');
-
+const ejsSproutShareUserController = require('./controllers/ejs-testing/postgres/sproutShareUsers');
 app.use('/ejs-testing/plants', ejsPlantController);
 app.use('/ejs-testing/userPlants', ejsUserPlantController);
 app.use('/ejs-testing/gardens', ejsGardensController);
+app.use('/ejs-testing/sproutShareUsers', ejsSproutShareUserController);
 
 /** mongodb */
 const ejsTestPageController = require('./controllers/ejs-testing/testPageController');

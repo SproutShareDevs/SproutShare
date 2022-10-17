@@ -1,0 +1,33 @@
+<nav>
+   <ul>
+      <a href="/ejs-testing">Test Home</a>
+      <a href="/ejs-testing/communityPosts">Comm. Posts</a>
+      <a href="/ejs-testing/exchangeListings">Ex. Listing</a>
+      <a href="/ejs-testing/notifications">Notifications</a>
+      <a href="/ejs-testing/forumPosts">Forum Posts</a>
+      <a href="/ejs-testing/plants">Plants</a>
+      <a href="/ejs-testing/userPlants">User Plants</a>
+      <a href="/ejs-testing/gardens">Gardens</a>
+      <a href="/ejs-testing/users">Users</a>
+      <% if(!currentUser) { %>
+         <a class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>" href="/ejs-testing/login">Log In</a>
+         <a class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>" href="/ejs-testing/register">Sign Up</a>
+         <% } else { %>
+         <a>Signed in as <%= currentUser.username %></a>
+         <a href="/ejs-testing/logout">Log Out</a>
+      <% } %>
+   </ul>
+</nav>
+
+<div class="container">
+   <% if(error && error.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+         <%= error %>
+      </div>
+   <% } %>
+   <% if(success && success.length > 0) { %>
+      <div class="alert alert-success" role="alert">
+         <%= success %>
+      </div>
+   <% } %>
+</div>
