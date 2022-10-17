@@ -5,7 +5,6 @@ import { TextInput, View, Text, Button } from 'react-native';
 
 // The screen where users can input their username and password to log into an existing account
 function LogInScreen(props) {
-    let newUsername, newPassword;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [accessToken, setAccessToken] = useState('');
@@ -25,7 +24,6 @@ function LogInScreen(props) {
             password: password
         }).then((response) => {
             console.log("Access token retrieved");
-            setAccessToken(response.data.accessToken);
             props.saveToken(response.data.accessToken);
         }).catch(err => {
             if(err.response.status == 400) {
@@ -75,7 +73,7 @@ function LogInScreen(props) {
         <Button
             onPress={() => {
                 checkUser(username, password);
-                props.navigation.navigate('LogInTop', {
+                props.navigation.navigate('Home', {
                     userName: username, userType: 'User'
                 })
             }}

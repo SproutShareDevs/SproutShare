@@ -108,6 +108,21 @@ async function updateAccessToken(userKey, accessToken){
       return JSON.stringify(error.message);
    }
 }
+
+/**
+ * Update access token by user key
+ */
+ async function deleteAccessToken(userKey){
+   try {
+      const updatedUser = await pool.query('UPDATE sproutshareuser SET accesstoken = NULL WHERE user_key = $1 RETURNING *', [userKey]);
+      console.log("Deleted previous access token");
+      return updatedUser.rows[0];
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 /**
  * Delete user by key
  */
@@ -129,5 +144,6 @@ module.exports = {
    storeUser,
    updateUser,
    updateAccessToken,
+   deleteAccessToken,
    deleteUser
 };

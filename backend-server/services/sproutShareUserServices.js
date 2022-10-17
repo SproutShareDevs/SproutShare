@@ -88,9 +88,20 @@ async function updateUser(userKey, userBody){
  */
 async function updateAccessToken(userKey, accessToken){
    try {
-      console.log(userKey);
-      console.log(accessToken);
       const updatedUser = await sproutShareUserDatabase.updateAccessToken(userKey, accessToken);
+      return updatedUser;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
+ * Delete access token
+ */
+ async function deleteAccessToken(userKey){
+   try {
+      const updatedUser = await sproutShareUserDatabase.deleteAccessToken(userKey);
       return updatedUser;
    } catch (error) {
       console.error(error);
@@ -130,5 +141,6 @@ module.exports = {
    storeUser,
    updateUser,
    updateAccessToken,
+   deleteAccessToken,
    deleteUser
 };

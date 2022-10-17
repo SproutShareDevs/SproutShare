@@ -53,16 +53,14 @@ async function getCurrentAccessToken() {
 
 export default class App extends React.Component {
 
-    componentDidMount() {
-        deleteAccessToken();
-    }
-
   render() {
       return (
         <NavigationContainer>
             <Tab.Navigator initialRouteName='LogInTop'
                 screenOptions={{tabBarShowLabel: false, headerShown: false}}  >
-                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="Home" component={HomeView} />
+                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'Home'}>
+                    {props => <HomeView {...props} getCurrentAccessToken={getCurrentAccessToken}/>}
+                </Tab.Screen>
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="LogInTop" component={LogInTop} />
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'LogInScreen'}>
                     {props => <LogInScreen {...props} saveToken={saveAccessToken} nodeServer={nodeServer}/>}
@@ -186,7 +184,9 @@ function HomeView({ navigation, route }) {
 
             <Tab.Screen name={'CreateAccount'}>
                 {props => <CreateAccount {...props} nodeServer={nodeServer} 
-                    userName={userName} user_ID={user_ID} userType={userType}
+                    userName={userName} user_ID={user_ID} userType={userType} 
+                    getCurrentAccessToken={getCurrentAccessToken}
+                    deleteAccessToken={deleteAccessToken}
                     />}
             </Tab.Screen>
             {/* Alt Syntax if addtional props dont need to be passed down: <Tab.Screen name="PlantWiki" component={PlantWiki} />*/} 
@@ -233,10 +233,6 @@ function LogInTop({ navigation }) {
             title={
                 "Skip login: Admin"
             }
-        />
-        <Button
-        title={"Retrieve Token"}
-            onPress={getCurrentAccessToken}
         />
         </View>
     )
