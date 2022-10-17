@@ -64,7 +64,7 @@ app.use('/ejs-testing/login', ejsLoginController);
 const ejsPlantController = require('./controllers/ejs-testing/plants');
 const ejsUserPlantController = require('./controllers/ejs-testing/userPlants');
 const ejsGardensController = require('./controllers/ejs-testing/gardens');
-const ejsSproutShareUserController = require('./controllers/ejs-testing/postgres/sproutShareUsers');
+const ejsSproutShareUserController = require('./controllers/ejs-testing/sproutShareUsers');
 app.use('/ejs-testing/plants', ejsPlantController);
 app.use('/ejs-testing/userPlants', ejsUserPlantController);
 app.use('/ejs-testing/gardens', ejsGardensController);

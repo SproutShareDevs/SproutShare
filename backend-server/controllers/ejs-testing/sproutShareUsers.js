@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const sproutShareUserServices = require('../../../services/sproutShareUserServices');
+const sproutShareUserServices = require('../../services/sproutShareUserServices');
 
 /**
  * Get all users
