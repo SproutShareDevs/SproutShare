@@ -8,6 +8,7 @@ router.get('/', async(req, res) => {
       res.render('communityPosts', {commPosts});
    } catch (error) {
       console.error(error);
+      res.json("check logs");
    }
 })
 
