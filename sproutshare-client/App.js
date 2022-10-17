@@ -11,7 +11,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons'
 
 // Local Component Imports
-//import { nodeServer } from './NewNodeServer.js';
 import Exchange from "./components/Exchange.js";
 import PlantWiki from './components/PlantWiki.js';
 import CommunityFeed from './components/CommunityFeed.js';
@@ -33,249 +32,241 @@ const Tab = createBottomTabNavigator();
 
 
 export default class App extends React.Component {
-  state = {userType:"Guest", userName:false, user_ID:false, newUserButton: false};
-  
-  checkUser = (myUsername, myPassword) => {
+  render() {
+      return (
+        <NavigationContainer>
+            <Tab.Navigator initialRouteName='LogInTop'
+                screenOptions={{tabBarShowLabel: false, headerShown: false}}  >
+                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="Home" component={HomeView} />
+                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="LogInTop" component={LogInTop} />
+                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="LogInScreen" component={LogInScreen} />
+                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="CreateAccountScreen" component={CreateAccountScreen} />
+            </Tab.Navigator>
+        </NavigationContainer>
+      );
+    };
+};
+
+// The below functions need to be changed to work with the databases.
+
+// The screen where users can input their username and password to log into an existing account
+function LogInScreen({ navigation }) {
+    let newUsername, newPassword;
+    return (
+
+        <View style = {{
+            flex: 1,
+            justifyContent: "center",
+            //alignItems: "center"
+        }}>
+        <Text>Log In</Text>
+        <TextInput 
+            style = {{
+            height: 30,
+            borderColor: 'light-gray',
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 1
+            }}
+            placeholder = "Username:"
+            onChangeText={newText => newUsername = newText}
+        />
+            
+        <TextInput 
+            style = {{
+            height: 30,
+            borderColor: 'light-gray',
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 1
+            }}
+            placeholder = "Password:"
+            onChangeText={newText => newPassword = newText}
+        />
+        <Button
+            onPress={() => {
+                if(checkUser(newUsername, newPassword) === "User"){
+                    navigation.navigate('Home', {
+                        userName: newUsername, userType: 'User'
+                    });
+                } else if(checkUser(newUsername, newPassword) === "Admin"){
+                    navigation.navigate('Home', {
+                        userName: newUsername, userType: 'Admin'
+                    });
+                }
+            }}
+            title={
+                "Log In"
+            }
+        />
+        </View>
+        
+    )
+}
+
+// A function that checks if a user is one of two hardcoded accounts
+checkUser = (myUsername, myPassword) => {
     if (myUsername === "default" && myPassword === "default")
         return "User";
     if (myUsername === "admin" && myPassword === "admin")
         return "Admin";
     return false;
-  }
+}
 
-  logOut = () => {
-    this.setState({userType:"Guest"});
-    this.setState({userName:false});
-    this.setState({user_ID:false});
-    this.setState({newUserButton: false});
-  }
+// The screen where users can input their own username and password to make a new account
+function CreateAccountScreen({ navigation }) {
+    let newUsername, newPassword;
+    return (
 
-  render() {
-    if (this.state.userName != false){
-      return (
-        <>
-        <NavigationContainer>
-          {/* Bottom tab icon styling. More info on how to manipulate this specific navigator: https://reactnavigation.org/docs/bottom-tab-navigator/ */}
-          <Tab.Navigator 
+        <View style = {{
+            flex: 1,
+            justifyContent: "center",
+            //alignItems: "center"
+        }}>
+        <Text>Create Account</Text>
+        <TextInput 
+            style = {{
+            height: 30,
+            borderColor: 'light-gray',
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 1
+            }}
+            placeholder = "Username:"
+            onChangeText={newText => newUsername = newText}
+        />
+            
+        <TextInput 
+            style = {{
+            height: 30,
+            borderColor: 'light-gray',
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 1
+            }}
+            placeholder = "Password:"
+            onChangeText={newText => newPassword = newText}
+        />
+        <Button
+            onPress={() => navigation.navigate('Home', {
+                userName: newUsername, userType: 'User'
+            })}
+            title={
+                "Create Account"
+            }
+        />
+        </View>
+        
+    )
+}
+
+// The main view of the app as it was before, showing the tabs on the bottom
+function HomeView({ navigation, route }) {
+    const { userName, userType, user_ID } = route.params;
+
+    return(
+        <View style = {{
+            flex: 1,
+            justifyContent: "center"
+        }}>
+        {/* Bottom tab icon styling. More info on how to manipulate this specific navigator: https://reactnavigation.org/docs/bottom-tab-navigator/ */}
+        <Tab.Navigator 
             initialRouteName='UserGarden'
 
             
             
             screenOptions={({ route }) => ({
-              
-              tabBarIcon: ({ focused, color, size }) => {
+            
+            tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
     
                 if (route.name === 'UserGarden') {
-                  iconName = focused ? 'ios-leaf' : 'ios-leaf-outline';
+                iconName = focused ? 'ios-leaf' : 'ios-leaf-outline';
                 } else if (route.name === 'CommunityFeed') {
-                  iconName = focused ? 'ios-people' : 'ios-people-outline';
+                iconName = focused ? 'ios-people' : 'ios-people-outline';
                 } else if (route.name === 'PlantWiki') {
-                  iconName = focused ? 'ios-information-circle' : 'ios-information-circle-outline';
+                iconName = focused ? 'ios-information-circle' : 'ios-information-circle-outline';
                 } else if (route.name === 'Exchange') {
-                  iconName = focused ? 'ios-pricetag' : 'ios-pricetag-outline';
+                iconName = focused ? 'ios-pricetag' : 'ios-pricetag-outline';
                 } else if (route.name === 'CreateAccount') {
-                  iconName = focused ? 'ios-person-add' : 'ios-person-add-outline';
+                iconName = focused ? 'ios-person-add' : 'ios-person-add-outline';
                 }
     
                 return <Ionicons name={iconName} size={size} color={color} />;
-              },
-              tabBarActiveTintColor: '#228b22',
-              tabBarInactiveTintColor: 'gray',
+            },
+            tabBarActiveTintColor: '#228b22',
+            tabBarInactiveTintColor: 'gray',
             })}
-          >
+        >
             
             {/* In order for this navigation to work, the node server url must be passed down to all child screens to utilize the server calls in all of them */}
             <Tab.Screen name={'UserGarden'}>
-                  {props => <UserGarden {...props} nodeServer={nodeServer}/>}
+                {props => <UserGarden {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
             <Tab.Screen name={'CommunityFeed'}>
-                  {props => <CommunityFeed {...props} nodeServer={nodeServer}/>}
+                {props => <CommunityFeed {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
             <Tab.Screen name={'PlantWiki'}>
-                  {props => <PlantWiki {...props} nodeServer={nodeServer}/>}
+                {props => <PlantWiki {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
             <Tab.Screen name={'Exchange'}>
-                  {props => <Exchange {...props} nodeServer={nodeServer}/>}
+                {props => <Exchange {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
             <Tab.Screen name={'CreateAccount'}>
-                  {props => <CreateAccount {...props} nodeServer={nodeServer} 
-                    userName={this.state.userName} user_ID={this.state.user_ID} userType={this.state.userType}
-                    //logMeOut={this.logOut()}
+                {props => <CreateAccount {...props} nodeServer={nodeServer} 
+                    userName={userName} user_ID={user_ID} userType={userType}
                     />}
             </Tab.Screen>
             {/* Alt Syntax if addtional props dont need to be passed down: <Tab.Screen name="PlantWiki" component={PlantWiki} />*/} 
-          </Tab.Navigator>
-          {/* Colors system status bar */}
-          
-        </NavigationContainer>
-        </>
-        
-      );
-    } else {
-      if(this.state.userType === "Guest" && this.state.newUserButton === false){
-        return(
-            <View style = {{
-                flex: 1,
-                justifyContent: "center",
-                //alignItems: "center"
-            }}>
-            <Button
-                onPress={() => {
-                    this.setState({ newUserButton: "CreateAccount" });
-                }}
-                title={
-                    "Create Account"
-                }
-            />
-            <Button
-                onPress={() => {
-                    this.setState({ newUserButton: "LogIn" });
-                }}
-                title={
-                    "Log In"
-                }
-            />
-            <Button
-                onPress={() => {
-                    this.setState({ userType: "User", userName: "default_user" });
-                }}
-                title={
-                    "Skip login: User"
-                }
-            />
-            <Button
-                onPress={() => {
-                    this.setState({ userType: "Admin", userName: "default_admin" });
-                }}
-                title={
-                    "Skip login: Admin"
-                }
-            />
-            </View>
-        )
-    } else if(this.state.userType === "Guest" && this.state.newUserButton === "CreateAccount"){
-        let newUsername, newPassword;
-        return (
+        </Tab.Navigator>
+        {/* Colors system status bar */}
+        </View>
+    )
 
-            <View style = {{
-                flex: 1,
-                justifyContent: "center",
-                //alignItems: "center"
-            }}>
-            <Text>Create Account</Text>
-            <TextInput 
-                style = {{
-                height: 30,
-                borderColor: 'light-gray',
-                justifyContent: "center",
-                alignItems: "center",
-                borderWidth: 1
-                }}
-                placeholder = "Username:"
-                onChangeText={newText => newUsername = newText}
-            />
-                
-            <TextInput 
-                style = {{
-                height: 30,
-                borderColor: 'light-gray',
-                justifyContent: "center",
-                alignItems: "center",
-                borderWidth: 1
-                }}
-                placeholder = "Password:"
-                onChangeText={newText => newPassword = newText}
-            />
-            <Button
-                onPress={() => {
-                    this.setState({ userType: "User", userName: newUsername });
-                }}
-                title={
-                    "Create Account"
-                }
-            />
-            </View>
-            
-        )
-    } else if(this.state.userType === "Guest" && this.state.newUserButton === "LogIn"){
-        let newUsername, newPassword;
-        return (
-
-            <View style = {{
-                flex: 1,
-                justifyContent: "center",
-                //alignItems: "center"
-            }}>
-            <Text>Log In</Text>
-            <TextInput 
-                style = {{
-                height: 30,
-                borderColor: 'light-gray',
-                justifyContent: "center",
-                alignItems: "center",
-                borderWidth: 1
-                }}
-                placeholder = "Username:"
-                onChangeText={newText => newUsername = newText}
-            />
-                
-            <TextInput 
-                style = {{
-                height: 30,
-                borderColor: 'light-gray',
-                justifyContent: "center",
-                alignItems: "center",
-                borderWidth: 1
-                }}
-                placeholder = "Password:"
-                onChangeText={newText => newPassword = newText}
-            />
-            <Button
-                onPress={() => {
-                    if(this.checkUser(newUsername, newPassword) === "User"){
-                        this.setState({ userType: "User", userName: newUsername });
-                    } else if(this.checkUser(newUsername, newPassword) === "Admin"){
-                        this.setState({ userType: "Admin", userName: newUsername });
-                    }
-                }}
-                title={
-                    "Log In"
-                }
-            />
-            </View>
-            
-        )
-    } else if(this.state.userType === "User" || this.state.userType === "Admin"){
-        return (
-            <View style = {{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center"
-            }}>
-            <Text>Wow, you're a user!
-                Your username is {this.state.userName}, and you are a {this.state.userType}!
-            </Text>
-            <Button
-                onPress={() => {
-                    this.setState({ userType: "Guest", userName: false, newUserButton: false });
-                }}
-                title={
-                    "Log Out"
-                }
-            />
-            </View>
-        )
-        
 }
-    }
-    }
-    
-};
 
-
+// The screen with buttons for creating an account, logging in, and bypassing them
+function LogInTop({ navigation }) {
+    return(
+        <View style = {{
+            flex: 1,
+            justifyContent: "center",
+        }}>
+        <Button
+            onPress={() => navigation.navigate('CreateAccountScreen')}
+            title={
+                "Create Account"
+            }
+        />
+        <Button
+            onPress={() => navigation.navigate('LogInScreen')}
+            title={
+                "Log In"
+            }
+        />
+        {/* Skips the login process */}
+        <Button
+            onPress={() => navigation.navigate('Home', {
+                userName: 'default_user', userType: 'User'
+            })}
+            title={
+                "Skip login: User"
+            }
+        />
+        {/* Skips the login process */}
+        <Button
+            onPress={() => navigation.navigate('Home', {
+                userName: 'default_admin', userType: 'Admin'
+            })}
+            title={
+                "Skip login: Admin"
+            }
+        />
+        </View>
+    )
+}
 
