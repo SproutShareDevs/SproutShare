@@ -2,11 +2,11 @@
 
 ## Recent Postgres Updates
 
-### The Postgres Sproutshareuser table was updated, and 'AlterTables.sql' must be ran to update the changes to the table
+#### *The Postgres Sproutshareuser table was updated, and 'AlterTables.sql' must be ran to update the changes to the table*
 
-### If you are in the project root directory, the command to run it is 'psql -U $username -d $dbname -a -f backend-server\db\AlterTables.sql'
-### Then TableAndMockData_loader.sql can be ran to repopulate the tables if you wish via 'psql -U $username -d $dbname -a -f backend-server\db\AlterTables.sql'
-### Note that $username is equal to your Postgres username, and $dbname is equal to your Postgres database name
+#### *If you are in the project root directory, the command to run it is:* 'psql -U $username -d $dbname -a -f backend-server\db\AlterTables.sql'
+#### *Then TableAndMockData_loader.sql can be ran to repopulate the tables if you wish via:* 'psql -U $username -d $dbname -a -f backend-server\db\AlterTables.sql'
+#### *Note that $username is equal to your Postgres username, and $dbname is equal to your Postgres database name*
 
 ## Environment Variable Updates (.env Files)
 
@@ -14,13 +14,13 @@
 
 ### *In /backend-server's root directory, create a file called '.env', and define the following variables within it*
 
-#### 1. DATABASE_NAME - Set this equal to the name of your Postgres Database
-#### 2. DB_PASSWORD - set this equal to your Postgres Database Password
-#### 3. ACCESS_TOKEN_SECRET - Open a terminal window. Run 'node'. Run the command 'require('crypto').randomBytes(16).toString('hex')' This will generate a random varchar string, set the variable equal to it
-##### Example of what will be spit out: '7495d5b97b5cd77794d08cfdf0e2c238'
-#### 4. REFRESH_TOKEN_SECRET - Repeat the same process, run 'node', then the command 'require('crypto').randomBytes(16).toString('hex')', and set the variable equal to it
+#### 1. DATABASE_NAME - *Set this equal to the name of your Postgres Database*
+#### 2. DB_PASSWORD - *set this equal to your Postgres Database Password*
+#### 3. ACCESS_TOKEN_SECRET - *Open a terminal window. Run 'node'. Run the command:* 'require('crypto').randomBytes(16).toString('hex')' *This will generate a random varchar string, set the variable equal to it*
+##### *Example of what will be spit out:* '7495d5b97b5cd77794d08cfdf0e2c238'
+#### 4. REFRESH_TOKEN_SECRET - *Repeat the same process, run 'node', then the command:* 'require('crypto').randomBytes(16).toString('hex')' *and set the variable equal to it*
 
-### Example backend .env
+### *Example backend .env*
 #### DATABASE_NAME="SproutShare"
 #### DB_PASSWORD="password"
 #### ACCESS_TOKEN_SECRET='4c0cc0b025a29d60032abf0730d8fe1c'
@@ -30,9 +30,9 @@
 
 ### *In /sproutshare-client's root directory, create a file called '.env', and define the following variables within it*
 
-#### 1. NODE_SERVER - Set this equal to your local IPV4 IP Address. You can get this by running 'ipconfig' in a terminal
+#### 1. NODE_SERVER - *Set this equal to your local IPV4 IP Address. You can get this by running 'ipconfig' in a terminal*
 
-### Example frontend .env
+### *Example frontend .env*
 #### NODE_SERVER = 'http://192.168.3.7:3000'
 
 
