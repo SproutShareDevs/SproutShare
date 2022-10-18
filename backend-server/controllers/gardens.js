@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const gardenServices = require('../services/gardenServices');
+const sproutShareUserServices = require('../services/sproutShareUserServices');
 
 router.get('/', async(req, res) => {
    try {
@@ -34,6 +35,25 @@ router.get('/:key', async(req, res) => {
       res.send(JSON.stringify(error.message));
    }
 }) 
+
+/**
+ * Parameter provides access token
+ * Retrieves user from database with same token
+ * Retrieves all gardens that user has
+ */
+router.get('/getByToken/:token', async(req, res) => {
+   try {
+      // find user with current access token
+      const user = await sproutShareUserServices.getUserByToken(req.params.token);
+      const userGardens = await gardenServices.getGardensByUserKey(user.user_key);
+
+      //if there is a user with that access token, display their gardens
+      res.send(userGardens);
+   } catch (error) {
+      console.error(error);
+      res.send(JSON.stringify(error.message));
+   }
+})
 
 router.get('/getByUser/:key', async(req, res)=>{
    try {

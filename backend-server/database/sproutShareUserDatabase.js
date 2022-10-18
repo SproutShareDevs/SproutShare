@@ -40,6 +40,22 @@ async function getUserByQuery(query){
    }
 }
 
+/**
+ * Get user by token
+ */
+async function getUserByToken(accessToken){
+   try {
+      const user = await pool.query('SELECT * FROM sproutshareuser WHERE accesstoken = $1',[accessToken]);
+      return user.rows[0];
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
+ * Get user by username
+ */
 async function getUserByUsername(username){
    try {
       const user = await pool.query('SELECT * FROM sproutshareuser WHERE username = $1', [username]);
@@ -140,6 +156,7 @@ module.exports = {
    getAllUsers,
    getUserByKey,
    getUserByQuery,
+   getUserByToken,
    getUserByUsername,
    storeUser,
    updateUser,

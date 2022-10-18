@@ -5,6 +5,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
 import GardenPreview from './garden/GardenPreview'
 
+import * as SecureStore from 'expo-secure-store';
+
 class UserGarden extends React.Component {
 
     constructor(props) {
@@ -14,6 +16,7 @@ class UserGarden extends React.Component {
           data : []
         };
         this.componentDidMount = this.componentDidMount.bind(this);
+
     }
 
     renderItem = ({ item }) => {
@@ -38,16 +41,33 @@ class UserGarden extends React.Component {
 
 
     componentDidMount = async() => {
-      await axios.get(`${this.props.nodeServer}/gardens`).then((response) => {
-        console.log(`${this.props.nodeServer}/gardens`);
+      // if current user is admin, display all gardens
+      if(this.props.userType == 'Admin') {
+        await axios.get(`${this.props.nodeServer}/gardens`).then((response) => {
           this.setState(state => {
               return {data: response.data}
           });
         }).catch(err => {
           console.log(`${this.props.nodeServer}/gardens`);
           console.log('Error: ', err);
-      });
-  }
+        });
+      // else, normal user view
+      } else {
+        let accessToken = await SecureStore.getItemAsync('AccessToken');
+        await axios.get(`${this.props.nodeServer}/gardens/getByToken/${accessToken}`).then((response) => {
+            this.setState(state => {
+                return {data: response.data}
+            });
+          }).catch(err => {
+            console.log(`${this.props.nodeServer}/gardens/getByToken/${accessToken}`);
+            console.log('Error: ', err);
+        });
+      }
+
+
+
+      
+    }
     
 }
 

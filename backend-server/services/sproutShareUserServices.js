@@ -40,6 +40,20 @@ async function getUserByQuery(query){
    }
 }
 
+
+/**
+ * Get user by token
+ */
+async function getUserByToken(accessToken){
+   try {
+      const user = await sproutShareUserDatabase.getUserByToken(accessToken);
+      return user;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 /**
  * Get user by username
  */
@@ -137,6 +151,7 @@ module.exports = {
    getAllUsers,
    getUserByKey,
    getUserByQuery,
+   getUserByToken,
    getUserByUsername,
    storeUser,
    updateUser,

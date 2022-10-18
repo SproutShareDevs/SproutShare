@@ -16,7 +16,7 @@ import Exchange from "./components/Exchange.js";
 import PlantWiki from './components/PlantWiki.js';
 import CommunityFeed from './components/CommunityFeed.js';
 import UserGarden from './components/UserGarden.js';
-import CreateAccount from './components/CreateAccount.js';
+import AccountManagement from './components/AccountManagement.js';
 import LogInScreen from './components/account/LogInScreen.js';
 
 // Dotenv
@@ -37,15 +37,13 @@ async function saveAccessToken(value) {
     await SecureStore.setItemAsync('AccessToken', value);
 }
 
-async function deleteAccessToken() {
-    await SecureStore.deleteItemAsync('AccessToken');
-    console.log("Deleted access token");
-}
-  
+
+
 async function getCurrentAccessToken() {
     let result = await SecureStore.getItemAsync('AccessToken');
     if (result) {
-      alert("🔐 Here's your access token 🔐 \n" + result);
+        console.log(result);
+        return result;
     } else {
       alert('No access token in storage');
     }
@@ -139,7 +137,7 @@ function HomeView({ navigation, route }) {
         <Tab.Navigator 
             initialRouteName='UserGarden'
 
-            
+            backBehavior='history'
             
             screenOptions={({ route }) => ({
             
@@ -154,7 +152,7 @@ function HomeView({ navigation, route }) {
                 iconName = focused ? 'ios-information-circle' : 'ios-information-circle-outline';
                 } else if (route.name === 'Exchange') {
                 iconName = focused ? 'ios-pricetag' : 'ios-pricetag-outline';
-                } else if (route.name === 'CreateAccount') {
+                } else if (route.name === 'AccountManagement') {
                 iconName = focused ? 'ios-person-add' : 'ios-person-add-outline';
                 }
     
@@ -167,7 +165,7 @@ function HomeView({ navigation, route }) {
             
             {/* In order for this navigation to work, the node server url must be passed down to all child screens to utilize the server calls in all of them */}
             <Tab.Screen name={'UserGarden'}>
-                {props => <UserGarden {...props} nodeServer={nodeServer}/>}
+                {props => <UserGarden {...props} userType={userType} getCurrentAccessToken={getCurrentAccessToken} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
             <Tab.Screen name={'CommunityFeed'}>
@@ -182,12 +180,10 @@ function HomeView({ navigation, route }) {
                 {props => <Exchange {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'CreateAccount'}>
-                {props => <CreateAccount {...props} nodeServer={nodeServer} 
+            <Tab.Screen name={'AccountManagement'}>
+                {props => <AccountManagement {...props} nodeServer={nodeServer} 
                     userName={userName} user_ID={user_ID} userType={userType} 
-                    getCurrentAccessToken={getCurrentAccessToken}
-                    deleteAccessToken={deleteAccessToken}
-                    />}
+                />}
             </Tab.Screen>
             {/* Alt Syntax if addtional props dont need to be passed down: <Tab.Screen name="PlantWiki" component={PlantWiki} />*/} 
         </Tab.Navigator>
