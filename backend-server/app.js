@@ -89,6 +89,7 @@ const constants = require('./config');
 app.get('/weather', async (req, res) => {
     weather.setCity('Virginia Beach');
     weather.setAPPID(constants.openWeatherMap.SECRET_KEY);
+    weather.setUnits('imperial')
     weather.getAllWeather(function(err,temp){
         console.log(temp);
         res.render('weather.ejs',{temp:temp});
