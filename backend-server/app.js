@@ -7,7 +7,7 @@ const ejs = require('ejs');
 const cors = require('cors');
 console.log(require('dotenv').config());
 //const jwt = require('jsonwebtoken');
-
+const weather = require('openweather-apis');
 /** seed db */
 const seedDB = require("./db/seed.js");
 
@@ -83,6 +83,17 @@ app.use('/ejs-testing/exchangeListings', ejsExchangeListingController);
 app.use('/ejs-testing/notifications', ejsNotificationController);
 app.use('/ejs-testing/forumPosts', ejsForumPostController);
 
+/** weather api */
+const constants = require('./config');
+
+app.get('/weather', async (req, res) => {
+    weather.setCity('Virginia Beach');
+    weather.setAPPID(constants.openWeatherMap.SECRET_KEY);
+    weather.getAllWeather(function(err,temp){
+        console.log(temp);
+        res.render('weather.ejs',{temp:temp});
+    })
+})
 // seed database, comment out unless you want to reseed database
 //seedDB();
 

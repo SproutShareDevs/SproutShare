@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <title>Weather</title>
+      <%-include('layouts/header');-%>
+   </head>
+   <body>
+      <%-include('layouts/navbar');-%>
+      <h1>Weather</h1>
+      <br/>
+      <br/>
+      <br/>
+      <div class="table">
+        <center>
+            <table class = 'table is-bordered is-striped is-narrow is-hoverable is-borederd'>
+                <tbody>
+                    <tr><td>City</td><td><%=temp.name%></td></tr>
+                    <tr><td>Weather</td><td><%=temp.weather[0].main%></td></tr>
+                    <tr><td>Temperature</td><td><%=temp.main.temp%></td></tr>
+                </tbody>
+            </table>
+      </center>
+    </div>
