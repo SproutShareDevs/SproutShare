@@ -43,7 +43,7 @@ const exchangeListingController = require('./controllers/exListing');
 const notificationsController = require('./controllers/notification');
 const forumPostController = require('./controllers/forumPost');
 const loginController = require('./controllers/login');
-const registerController = require('./controllers/ejs-testing/register');
+const registerController = require('./controllers/register');
 
 app.get('/', homePageController);
 app.use('/communityPosts', commPostController);
@@ -58,6 +58,9 @@ app.use('/register', registerController);
 
 const ejsLoginController = require('./controllers/ejs-testing/login');
 app.use('/ejs-testing/login', ejsLoginController);
+
+const ejsRegisterController = require('./controllers/ejs-testing/register');
+app.use('/ejs-testing/register', registerController);
 
 const ejsWeatherController = require('./controllers/ejs-testing/weather');
 app.use('/ejs-testing/weather', ejsWeatherController);

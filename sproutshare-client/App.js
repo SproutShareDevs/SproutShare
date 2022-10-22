@@ -18,6 +18,7 @@ import CommunityFeed from './components/CommunityFeed.js';
 import UserGarden from './components/UserGarden.js';
 import AccountManagement from './components/AccountManagement.js';
 import LogInScreen from './components/account/LogInScreen.js';
+import CreateAccountScreen from './components/account/CreateAccountScreen.js';
 
 // Dotenv
 import {NODE_SERVER} from "@env"
@@ -57,13 +58,15 @@ export default class App extends React.Component {
             <Tab.Navigator initialRouteName='LogInTop'
                 screenOptions={{tabBarShowLabel: false, headerShown: false}}  >
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'Home'}>
-                    {props => <HomeView {...props} getCurrentAccessToken={getCurrentAccessToken}/>}
+                    {props => <HomeView {...props}/>}
                 </Tab.Screen>
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="LogInTop" component={LogInTop} />
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'LogInScreen'}>
                     {props => <LogInScreen {...props} saveToken={saveAccessToken} nodeServer={nodeServer}/>}
                 </Tab.Screen>
-                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="CreateAccountScreen" component={CreateAccountScreen} />
+                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'CreateAccountScreen'}>
+                    {props => <CreateAccountScreen {...props} saveToken={saveAccessToken} nodeServer={nodeServer}/>}
+                </Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>
       );
@@ -78,51 +81,6 @@ export default class App extends React.Component {
 
 
 // The screen where users can input their own username and password to make a new account
-function CreateAccountScreen({ navigation }) {
-    let newUsername, newPassword;
-    return (
-
-        <View style = {{
-            flex: 1,
-            justifyContent: "center",
-            //alignItems: "center"
-        }}>
-        <Text>Create Account</Text>
-        <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1
-            }}
-            placeholder = "Username:"
-            onChangeText={newText => newUsername = newText}
-        />
-            
-        <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1
-            }}
-            placeholder = "Password:"
-            onChangeText={newText => newPassword = newText}
-        />
-        <Button
-            onPress={() => navigation.navigate('Home', {
-                userName: newUsername, userType: 'User'
-            })}
-            title={
-                "Create Account"
-            }
-        />
-        </View>
-        
-    )
-}
 
 // The main view of the app as it was before, showing the tabs on the bottom
 function HomeView({ navigation, route }) {
@@ -164,23 +122,23 @@ function HomeView({ navigation, route }) {
         >
             
             {/* In order for this navigation to work, the node server url must be passed down to all child screens to utilize the server calls in all of them */}
-            <Tab.Screen name={'UserGarden'}>
-                {props => <UserGarden {...props} userType={userType} getCurrentAccessToken={getCurrentAccessToken} nodeServer={nodeServer}/>}
+            <Tab.Screen name={'UserGarden'} options={{unmountOnBlur: true}}>
+                {props => <UserGarden {...props} userType={userType}  nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'CommunityFeed'}>
+            <Tab.Screen  name={'CommunityFeed'} options={{unmountOnBlur: true}}>
                 {props => <CommunityFeed {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'PlantWiki'}>
+            <Tab.Screen name={'PlantWiki'} options={{unmountOnBlur: true}}>
                 {props => <PlantWiki {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'Exchange'}>
+            <Tab.Screen name={'Exchange'} options={{unmountOnBlur: true}}>
                 {props => <Exchange {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'AccountManagement'}>
+            <Tab.Screen name={'AccountManagement'} options={{unmountOnBlur: true}}>
                 {props => <AccountManagement {...props} nodeServer={nodeServer} 
                     userName={userName} user_ID={user_ID} userType={userType} 
                 />}
@@ -210,15 +168,6 @@ function LogInTop({ navigation }) {
             onPress={() => navigation.navigate('LogInScreen')}
             title={
                 "Log In"
-            }
-        />
-        {/* Skips the login process */}
-        <Button
-            onPress={() => navigation.navigate('Home', {
-                userName: 'default_user', userType: 'User'
-            })}
-            title={
-                "Skip login: User"
             }
         />
         {/* Skips the login process */}
