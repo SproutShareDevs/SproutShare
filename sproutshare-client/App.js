@@ -57,7 +57,7 @@ export default class App extends React.Component {
             <Tab.Navigator initialRouteName='LogInTop'
                 screenOptions={{tabBarShowLabel: false, headerShown: false}}  >
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'Home'}>
-                    {props => <HomeView {...props} getCurrentAccessToken={getCurrentAccessToken}/>}
+                    {props => <HomeView {...props}/>}
                 </Tab.Screen>
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="LogInTop" component={LogInTop} />
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'LogInScreen'}>
@@ -164,23 +164,23 @@ function HomeView({ navigation, route }) {
         >
             
             {/* In order for this navigation to work, the node server url must be passed down to all child screens to utilize the server calls in all of them */}
-            <Tab.Screen name={'UserGarden'}>
-                {props => <UserGarden {...props} userType={userType} getCurrentAccessToken={getCurrentAccessToken} nodeServer={nodeServer}/>}
+            <Tab.Screen name={'UserGarden'} options={{unmountOnBlur: true}}>
+                {props => <UserGarden {...props} userType={userType}  nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'CommunityFeed'}>
+            <Tab.Screen  name={'CommunityFeed'} options={{unmountOnBlur: true}}>
                 {props => <CommunityFeed {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'PlantWiki'}>
+            <Tab.Screen name={'PlantWiki'} options={{unmountOnBlur: true}}>
                 {props => <PlantWiki {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'Exchange'}>
+            <Tab.Screen name={'Exchange'} options={{unmountOnBlur: true}}>
                 {props => <Exchange {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'AccountManagement'}>
+            <Tab.Screen name={'AccountManagement'} options={{unmountOnBlur: true}}>
                 {props => <AccountManagement {...props} nodeServer={nodeServer} 
                     userName={userName} user_ID={user_ID} userType={userType} 
                 />}
@@ -210,15 +210,6 @@ function LogInTop({ navigation }) {
             onPress={() => navigation.navigate('LogInScreen')}
             title={
                 "Log In"
-            }
-        />
-        {/* Skips the login process */}
-        <Button
-            onPress={() => navigation.navigate('Home', {
-                userName: 'default_user', userType: 'User'
-            })}
-            title={
-                "Skip login: User"
             }
         />
         {/* Skips the login process */}
