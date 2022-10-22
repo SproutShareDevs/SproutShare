@@ -11,13 +11,18 @@
       <br/>
       <br/>
       <br/>
+      <form action="/ejs-testing/weather/zipcode" method = "get">
+         <input type="text" name="zipcode"  placeholder = "Set Zipcode..." >
+         <button type="submit">Submit</button>
+      </form>
+
       <div class="table">
         <center>
             <table class = 'table is-bordered is-striped is-narrow is-hoverable is-borederd'>
                 <tbody>
-                    <tr><td>City</td><td><%=temp.name%></td></tr>
-                    <tr><td>Weather</td><td><%=temp.weather[0].main%></td></tr>
-                    <tr><td>Temperature</td><td><%=temp.main.temp%></td></tr>
+                    <tr><td>City</td><td><%=weather.name%></td></tr>
+                    <tr><td>Weather</td><td><%=weather.weather[0].main%></td></tr>
+                    <tr><td>Temperature</td><td><%=weather.main.temp%></td></tr>
                 </tbody>
             </table>
       </center>
