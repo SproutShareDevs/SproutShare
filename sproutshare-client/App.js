@@ -18,6 +18,7 @@ import CommunityFeed from './components/CommunityFeed.js';
 import UserGarden from './components/UserGarden.js';
 import AccountManagement from './components/AccountManagement.js';
 import LogInScreen from './components/account/LogInScreen.js';
+import CreateAccountScreen from './components/account/CreateAccountScreen.js';
 
 // Dotenv
 import {NODE_SERVER} from "@env"
@@ -63,7 +64,9 @@ export default class App extends React.Component {
                 <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'LogInScreen'}>
                     {props => <LogInScreen {...props} saveToken={saveAccessToken} nodeServer={nodeServer}/>}
                 </Tab.Screen>
-                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name="CreateAccountScreen" component={CreateAccountScreen} />
+                <Tab.Screen options={{tabBarStyle:{display:'none'}}} name={'CreateAccountScreen'}>
+                    {props => <CreateAccountScreen {...props} saveToken={saveAccessToken} nodeServer={nodeServer}/>}
+                </Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>
       );
@@ -78,51 +81,6 @@ export default class App extends React.Component {
 
 
 // The screen where users can input their own username and password to make a new account
-function CreateAccountScreen({ navigation }) {
-    let newUsername, newPassword;
-    return (
-
-        <View style = {{
-            flex: 1,
-            justifyContent: "center",
-            //alignItems: "center"
-        }}>
-        <Text>Create Account</Text>
-        <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1
-            }}
-            placeholder = "Username:"
-            onChangeText={newText => newUsername = newText}
-        />
-            
-        <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1
-            }}
-            placeholder = "Password:"
-            onChangeText={newText => newPassword = newText}
-        />
-        <Button
-            onPress={() => navigation.navigate('Home', {
-                userName: newUsername, userType: 'User'
-            })}
-            title={
-                "Create Account"
-            }
-        />
-        </View>
-        
-    )
-}
 
 // The main view of the app as it was before, showing the tabs on the bottom
 function HomeView({ navigation, route }) {

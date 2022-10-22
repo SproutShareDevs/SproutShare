@@ -4,10 +4,9 @@ import { TextInput, View, Text, Button } from 'react-native';
 
 
 // The screen where users can input their username and password to log into an existing account
-function LogInScreen(props) {
+function CreateAccountScreen(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginStatus, setLoginStatus] = useState('');
     const [accessToken, setAccessToken] = useState('');
 
     function usernameInputHandler(username) {
@@ -19,25 +18,18 @@ function LogInScreen(props) {
     }
 
 
-    async function checkUser(myUsername, myPassword) {
-        await axios.post(`${props.nodeServer}/login`, {
+    async function createUser(username, password) {
+        await axios.post(`${props.nodeServer}/register`, {
             username: username,
             password: password
-        }).then((response) => {
-            setLoginStatus("true");
-            props.saveToken(response.data.accessToken);
-            console.log("Access token retrieved");
         }).catch(err => {
             if(err.response.status == 400) {
-                setLoginStatus("Invalid username");
-                console.log('Invalid username');
-            } else if (err.response.status == 401) {
-                setLoginStatus("Username and password do not match");
-                console.log('Username and password do not match');
+                {/** To be implemented on backend */}
+                console.log('User already exists');
             } else {
                 console.log(err.message);
             }
-        })
+        });
     }
 
     return (
@@ -75,17 +67,12 @@ function LogInScreen(props) {
             value={password}
         />
         <Button
-            onPress={async() => {
-                await checkUser(username, password);
-                console.log(loginStatus);
-                if(loginStatus == "true") {
-                    props.navigation.navigate('Home', {
-                        userName: username, userType: 'User'
-                    }) 
-                    {/* For some reason, this alert is blank, even though the function is async */}
-                } else {
-                    alert(loginStatus);
-                }
+            onPress={() => {
+                createUser(username, password);
+                console.log("Account created: " + username);
+                props.navigation.navigate('LogInScreen', {
+                    userName: username, userType: 'User'
+                })
             }}
             title={
                 "Log In"
@@ -96,4 +83,4 @@ function LogInScreen(props) {
     )
 }
 
-export default LogInScreen;
+export default CreateAccountScreen;
