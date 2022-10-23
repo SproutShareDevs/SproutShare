@@ -16,9 +16,9 @@ class Exchange extends React.Component {
             search: '',
             success: 'No search yet',
             NewListing: false,
-            ExchangeTitle:'',
-            ExchangeDescription:'',
-            ExchangeDate:' '
+            ExchangePlant:'',
+            ExchangeName:'',
+            ExchangeDescription:' '
         }
        
         this.updateSearch = this.updateSearch.bind(this);
@@ -81,20 +81,23 @@ class Exchange extends React.Component {
                     <Text>Create a New Exchange Listing</Text>
 
                     <TextInput style={styles.textInput} placeholder ="Listing Title"
-                    onChangeText={() => {this.setState({name:''})}}
+                    onChangeText={() => {this.setState({ExchangePlant:''})}}
                     />
 
-                    <TextInput style={styles.textInput} placeholder ="Date"
-                    onChangeText={() => {this.setState({Date:''})}}
-                    />
+                    <TextInput style={styles.textInput} placeholder ="Listing Title"
+                    onChangeText={() => {this.setState({ExchangeTitle:''})}} />
 
                     <TextInput style={styles.textInput}  placeholder ="Listing Description"
-                    onChangeText={() => {this.setState({listing:''})}}         
-                    />          
+                    onChangeText={() => {this.setState({ExchangeDescription:''})}}         
+                    />    
+                    <View style={styles.buttonContainer}>
+                     <Button color ="red" title = "Close" onPress={() => this.setState({NewListing:false})} />
+                     <Button title = "Submit Listing" onPress={()=> this.submitListing}/>
+                    </View>      
                     </View>
                     </View>
                     </View>
-                    <Button title = "Close" onPress={() => this.setState({NewListing:false})} />
+                    
                     </Modal>
                  </View>
 
@@ -109,6 +112,22 @@ class Exchange extends React.Component {
             </View>
         );
     }
+
+    submitListing = async() =>{
+        console.log("in function")
+        await axios.post(`${this.props.nodeServer}exchangeListings/store`,{
+        ex_plant: ExchangePlant,
+        ex_post_title: ExchangeTitle, 
+        ex_post_body: ExchangeDescription,
+        user_ID: 'Christian'
+
+    }).then((response) => {
+        console.log(response.data);
+        console.log("Listing Posted");
+    }).catch(err => {
+        console.log('Error: ', err);
+    })
+}
 
     componentDidMount = async() => {
         await axios.get(`${this.props.nodeServer}/exchangeListings`).then((response) => {
