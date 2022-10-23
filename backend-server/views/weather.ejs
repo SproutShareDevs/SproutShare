@@ -15,15 +15,33 @@
          <input type="text" name="zipcode"  placeholder = "Set Zipcode..." >
          <button type="submit">Submit</button>
       </form>
-
-      <div class="table">
-        <center>
-            <table class = 'table is-bordered is-striped is-narrow is-hoverable is-borederd'>
-                <tbody>
-                    <tr><td>City</td><td><%=weather.name%></td></tr>
-                    <tr><td>Weather</td><td><%=weather.weather[0].main%></td></tr>
-                    <tr><td>Temperature</td><td><%=weather.main.temp%></td></tr>
-                </tbody>
-            </table>
+      <% if (typeof weather !== 'undefined') { %>
+         <div class="table">
+            <center>
+                <table class = 'table is-bordered is-striped is-narrow is-hoverable is-borederd'>
+                    <tbody>
+                        <tr><td>City</td><td><%=weather.name%></td></tr>
+                        <tr><td>Weather</td><td><%=weather.weather[0].main%></td></tr>
+                        <tr><td>Temperature</td><td><%=weather.main.temp%></td></tr>
+                    </tbody>
+                </table>
+          </center> 
+      <% } %>
+      
+      <% if (typeof weatherByZip !== 'undefined') { %>
+      <center>
+         <div class="zipDisplay">
+            <div>City Name: <%=weatherByZip.cityName%></div>
+            <div>Date: <%=weatherByZip.clientDate%></div>
+            <div>Curr. Temp: <%=weatherByZip.currentTemp%></div>
+            <div>Low Temp: <%=weatherByZip.lowTemp%></div>
+            <div>Max Temp:<%=weatherByZip.maxTemp%></div>
+            <div>Weather ID: <%=weatherByZip.weatherId%></div>
+            <div>Weather Param: <%=weatherByZip.weatherMain%></div>
+            <div>Param Description: <%=weatherByZip.weatherDescription%></div>
+            <div>Icon Code: <%=weatherByZip.weatherIcon%></div>
+         </div>
       </center>
+      <% } %>
+      
     </div>

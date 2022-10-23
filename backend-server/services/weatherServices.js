@@ -1,37 +1,48 @@
-/**
- * OpenWeatherMap API configuration values
- */
-const weather = require('openweather-apis');
 
-const constants = {
-   openWeatherMap: {
-       BASE_URL: "https://api.openweathermap.org/data/2.5/weather?q=",
-       SECRET_KEY: "3b1edd015f0c1b3bdcb31a052224b547"
-   }
-}
+const weatherAPI = require('../openweather/openweatherapi');
 
-function getWeather(callback){
-   weather.setCity('Virginia Beach');
-   weather.setAPPID(constants.openWeatherMap.SECRET_KEY);
-   weather.setUnits('imperial');
-   weather.getAllWeather(function(err, rtn){
-      if(err) callback(err);
-
-      callback(rtn);
-   });
-}
-
-function getWeatherByZip(zipcode, callback){
-   weather.setZipCode(zipcode);
-   weather.setAPPID(constants.openWeatherMap.SECRET_KEY);
-   weather.setUnits('imperial');
-   weather.getAllWeather(function(err, rtn){
-      if(err) callback(err);
-      callback(rtn);
+function getWeatherDefault(callback){
+   weatherAPI.getWeatherDefault((weatherObj)=>{
+      callback(weatherObj)
    })
 }
 
+function getWeatherByZip(zipcode, callback){
+   let weatherByZip;
+   weatherAPI.getWeatherByZip(zipcode, (weatherObj)=>{
+      const formattedDate = formatDate(weatherObj.dt);
+      weatherByZip = {
+         cityName:weatherObj.name,
+         clientDate:formattedDate,
+         currentTemp:weatherObj.main.temp,
+         lowTemp:weatherObj.main.temp_min,
+         maxTemp:weatherObj.main.temp_max,
+         weatherId:weatherObj.weather[0].id,
+         weatherMain:weatherObj.weather[0].main,
+         weatherDescription:weatherObj.weather[0].description,
+         weatherIcon:weatherObj.weather[0].icon
+      }
+      callback(weatherByZip);
+   })
+}
+
+/**
+ * 
+ * @param {*} date The OpenWeatherAPI datetime parameter 
+ * @returns A date string as a Template string formatted to Month dd, yyyy
+ */
+function formatDate(date){
+   const UTC_TO_JS_TIME = 1000; // constant to convert unix time to JS time (milliseconds)
+   newDate = new Date(date * UTC_TO_JS_TIME);
+      const [month, day, year] = [
+         newDate.toLocaleString('default', {month:'long'}), 
+         newDate.getDate(), 
+         newDate.getFullYear()
+      ];
+   return `${month} ${day}, ${year}`; 
+}
+
 module.exports = {
-   getWeather,
+   getWeatherDefault,
    getWeatherByZip
 }

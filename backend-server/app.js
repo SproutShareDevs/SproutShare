@@ -12,7 +12,6 @@ const seedDB = require("./db/seed.js");
 
 /** database connection(s) */
 mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
-//const pool = require('./models/postgresPool');
 
 /** npm package middleware */
 const app = express();
@@ -26,6 +25,9 @@ app.use(cors());
 /** custom middleware */
 
 /** production */
+
+const weatherController = require('./controllers/weather');
+app.use('/weather', weatherController);
 
 /* postgres */
 const plantController = require('./controllers/plants');
