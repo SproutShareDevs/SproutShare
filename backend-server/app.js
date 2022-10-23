@@ -33,11 +33,12 @@ app.use('/weather', weatherController);
 const plantController = require('./controllers/plants');
 const userPlantsController = require('./controllers/userPlants');
 const gardensController = require('./controllers/gardens');
+const userController = require("./controllers/sproutShareUser");
 
 app.use('/plants', plantController);
 app.use('/userPlants', userPlantsController);
 app.use('/gardens', gardensController);
-
+app.use('/user', userController);
 /* mongodb */
 const homePageController = require('./controllers/homePage');
 const commPostController = require('./controllers/commPost');
