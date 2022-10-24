@@ -78,16 +78,16 @@ function LogInScreen(props) {
         />
         <Button
             onPress={async() => {
-                await checkUser(username, password);
-                console.log(loginStatus);
-                if(loginStatus == "true") {
-                    props.navigation.navigate('Home', {
-                        userName: username, userType: 'User'
-                    }) 
-                    {/* For some reason, this alert is blank, even though the function is async */}
-                } else {
-                    alert(loginStatus);
-                }
+                await checkUser(username, password).then(() =>{
+                    if(loginStatus == "true") {
+                        props.navigation.navigate('Home', {
+                            userName: username, userType: 'User'
+                        }) 
+                        {/* For some reason, this alert is blank, even though the function is async */}
+                    } else {
+                        alert(loginStatus);
+                    }
+                });
             }}
             title={
                 "Log In"
