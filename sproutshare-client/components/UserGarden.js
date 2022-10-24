@@ -4,8 +4,11 @@ import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
 import GardenPreview from './garden/GardenPreview'
+import WeatherView from './garden/weather/WeatherView';
+import AddGarden from './garden/AddGarden';
 
 import * as SecureStore from 'expo-secure-store';
+
 
 class UserGarden extends React.Component {
 
@@ -28,12 +31,16 @@ class UserGarden extends React.Component {
     render() {
         return (
           <View style={styles.container}>
-            <View style={styles.listBottomMargin}>
-              <FlatList
-                data = {this.state.data}
-                renderItem={this.renderItem}
-                keyExtractor={item => item.garden_key}
-              />
+            <WeatherView nodeServer ={this.props.nodeServer}/>
+            <View style={styles.container}>
+              <AddGarden nodeServer={this.props.nodeServer}/>
+              <View style={styles.listBottomMargin} >
+                <FlatList
+                  data = {this.state.data}
+                  renderItem={this.renderItem}
+                  keyExtractor={item => item.garden_key}
+                />
+              </View>
             </View>
           </View>
           );
@@ -63,10 +70,6 @@ class UserGarden extends React.Component {
             console.log('Error: ', err);
         });
       }
-
-
-
-      
     }
     
 }

@@ -8,7 +8,6 @@ import AddPlant from './AddPlant';
 
 function GardenFullView(props) {
     const [userPlantData, setUserPlantData] = useState([]);
-    const [addPlantVisible, setAddPlantVisible] = useState([]);
 
     useEffect(() => {
         const fetchUserPlants = async () => {
@@ -31,16 +30,15 @@ function GardenFullView(props) {
     return (
         <>
         <Modal visible={props.visible} animationType="slide">
-            <View style={styles.containerCenter}>
+            <View style={styles.container}>
+                <Button title='Close' onPress={props.onClose}/>
+                <AddPlant nodeServer = {props.nodeServer} garden ={props.garden}/>
                 <View style={styles.listBottomMargin}>
                   <FlatList
                     data = {userPlantData}
                     renderItem={renderItem}
                     keyExtractor={item => item.user_plant_key}
                   />
-                  <Button title='Add plant' onPress={() => setAddPlantVisible(true)}/>
-                  <Button title='Close' onPress={props.onClose}/>
-                  <AddPlant nodeServer = {props.nodeServer} visible = {addPlantVisible} garden ={props.garden} onClose = {() => setAddPlantVisible(false)}/>
                 </View>
             </View>
         </Modal>

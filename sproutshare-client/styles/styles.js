@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     /* container styling */
     container: {
-        flex: 1,
+        flex: 4,
     },
     containerCenter: {
         flex: 1,

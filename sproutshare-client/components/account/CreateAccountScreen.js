@@ -7,6 +7,7 @@ import { TextInput, View, Text, Button } from 'react-native';
 function CreateAccountScreen(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [zipCode, setZipCode] = useState(0);
     const [accessToken, setAccessToken] = useState('');
 
     function usernameInputHandler(username) {
@@ -17,11 +18,16 @@ function CreateAccountScreen(props) {
         setPassword(password);
     }
 
+    function zipCodeInputHandler(zipCode) {
+        setZipCode(zipCode);
+    }
+
 
     async function createUser(username, password) {
         await axios.post(`${props.nodeServer}/register`, {
             username: username,
-            password: password
+            password: password,
+            zip_code: zipCode
         }).catch(err => {
             if(err.response.status == 400) {
                 {/** To be implemented on backend */}
@@ -39,14 +45,15 @@ function CreateAccountScreen(props) {
             justifyContent: "center",
             //alignItems: "center"
         }}>
-        <Text>Log In</Text>
+        <Text>Create Account</Text>
         <TextInput 
             style = {{
             height: 30,
             borderColor: 'light-gray',
             justifyContent: "center",
             alignItems: "center",
-            borderWidth: 1
+            borderWidth: 1,
+            marginLeft: 15
             }}
             placeholder = "Username:"
             onChangeText={usernameInputHandler}
@@ -59,12 +66,27 @@ function CreateAccountScreen(props) {
             borderColor: 'light-gray',
             justifyContent: "center",
             alignItems: "center",
-            borderWidth: 1
+            borderWidth: 1,
+            marginLeft: 10
             }}
             secureTextEntry={true}
             placeholder = "Password:"
             onChangeText={passwordInputHandler}
             value={password}
+        />
+
+        <TextInput 
+            style = {{
+            height: 30,
+            borderColor: 'light-gray',
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 1,
+            marginLeft: 10
+            }}
+            placeholder = "Zip Code:"
+            onChangeText={zipCodeInputHandler}
+            value={zipCode}
         />
         <Button
             onPress={() => {

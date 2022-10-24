@@ -54,7 +54,8 @@ function LogInScreen(props) {
             borderColor: 'light-gray',
             justifyContent: "center",
             alignItems: "center",
-            borderWidth: 1
+            borderWidth: 1,
+            marginLeft: 10
             }}
             placeholder = "Username:"
             onChangeText={usernameInputHandler}
@@ -67,7 +68,8 @@ function LogInScreen(props) {
             borderColor: 'light-gray',
             justifyContent: "center",
             alignItems: "center",
-            borderWidth: 1
+            borderWidth: 1,
+            marginLeft: 10
             }}
             secureTextEntry={true}
             placeholder = "Password:"
