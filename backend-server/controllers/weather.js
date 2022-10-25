@@ -16,5 +16,14 @@ const weatherServices = require('../services/weatherServices');
    }
    
 });
+router.get('/:3dayforcast', (req, res)=>{
+   try {
+      weatherServices.getWeather3DayForcast(req.params.zipcode, (curr3DayForcast)=>{
+         res.send(curr3DayForcast);
+      });
+   } catch (error) {
+      console.error(error);
+   }
+})
 
 module.exports = router;

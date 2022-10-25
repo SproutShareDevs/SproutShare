@@ -25,7 +25,27 @@ function getWeatherByZip(zipcode, callback){
       callback(weatherByZip);
    })
 }
-
+function getWeather3DayForcast(zipcode, callback){
+   let curr3DayForcast;
+   weatherAPI.getWeather3DayForcast(zipcode, (weatherObj)=>{
+      const formattedDate1 = formatDate(weatherObj.list[0].dt);
+      const formattedDate2 = formatDate(weatherObj.list[1].dt);
+      const formattedDate3 = formatDate(weatherObj.list[2].dt);
+      const test = weatherObj.list[0].weather[0].main;
+      curr3DayForcast = {
+         forcast1main:weatherObj.list[0].weather[0].main,
+         forcast1icon:weatherObj.list[0].weather[0].icon,
+         forcast1Date:formattedDate1,
+         forcast2main:weatherObj.list[1].weather[0].main,
+         forcast2icon:weatherObj.list[1].weather[0].icon,
+         forcast2Date:formattedDate2,
+         forcast3main:weatherObj.list[2].weather[0].main,
+         forcast3icon:weatherObj.list[2].weather[0].icon,
+         forcast3Date:formattedDate3
+      }
+      callback(curr3DayForcast);
+   })
+}
 /**
  * 
  * @param {*} date The OpenWeatherAPI datetime parameter 
@@ -44,5 +64,6 @@ function formatDate(date){
 
 module.exports = {
    getWeatherDefault,
-   getWeatherByZip
+   getWeatherByZip,
+   getWeather3DayForcast
 }
