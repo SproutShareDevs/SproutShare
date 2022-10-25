@@ -52,6 +52,9 @@
 
 #### *In /sproutshare-client run:* "npm install"
 
+### *click this link to make expo account:* [Expo Account](https://expo.dev/).
+### *In /sproutshare-client run:* "npx expo login" and login with credentatials created above
+
 ### Node Server 
 
 ### *Ensure Node.Js is installed*: [Node.js](https://nodejs.org/en/download/)
