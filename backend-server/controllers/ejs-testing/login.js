@@ -34,8 +34,6 @@ router.post("/", async(req, res) => {
 		const updatedUser = await sproutShareUserServices.updateAccessToken(user.user_key, userAccessToken);
 		if(updatedUser) return res.redirect('/ejs-testing/sproutShareUsers/');
 
-		
-
 	
 	} catch (error) {
 		console.error(error);
