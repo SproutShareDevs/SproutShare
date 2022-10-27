@@ -12,7 +12,7 @@ async function authenticateUser(username){
 
 }
 
-async function verifyUserPassword(savedPassword, password){
+async function verifyUserPassword(password, savedPassword){
    // we can do other authentication here
    const result = await bcrypt.compare(password, savedPassword); 
    if(result) return true;
