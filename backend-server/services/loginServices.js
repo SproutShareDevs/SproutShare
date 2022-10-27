@@ -1,8 +1,16 @@
 const loginDatabase = require('../database/loginDatabase');
 const sproutShareUserServices = require('../services/sproutShareUserServices');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
+async function authenticateUser(username){
+   // verify user exists in DB
+   const user = await sproutShareUserServices.getUserByUsername(username);
+   if(!user) return false;
 
+   return user;
+
+}
 
 async function verifyUserPassword(savedPassword, password){
    // we can do other authentication here
@@ -11,9 +19,14 @@ async function verifyUserPassword(savedPassword, password){
    return false;
 }
 
+function createUserAccessToken(userKey, accessToken){
+   return jwt.sign(userKey, accessToken);
+}
+
+
 
 module.exports = {
-   verifyUserPassword
-   //storeJWT,
-   //getJWT
+   authenticateUser,
+   verifyUserPassword,
+   createUserAccessToken
 }

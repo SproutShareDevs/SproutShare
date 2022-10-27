@@ -6,7 +6,6 @@ const path = require('path');
 const ejs = require('ejs');
 const cors = require('cors');
 console.log(require('dotenv').config());
-//const jwt = require('jsonwebtoken');
 /** seed db */
 const seedDB = require("./db/seed.js");
 
@@ -21,8 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 app.use(cors());
-
-/** custom middleware */
 
 /** production */
 
@@ -39,6 +36,7 @@ app.use('/plants', plantController);
 app.use('/userPlants', userPlantsController);
 app.use('/gardens', gardensController);
 app.use('/user', userController);
+
 /* mongodb */
 const homePageController = require('./controllers/homePage');
 const commPostController = require('./controllers/commPost');
@@ -63,7 +61,7 @@ const ejsLoginController = require('./controllers/ejs-testing/login');
 app.use('/ejs-testing/login', ejsLoginController);
 
 const ejsRegisterController = require('./controllers/ejs-testing/register');
-app.use('/ejs-testing/register', registerController);
+app.use('/ejs-testing/register', ejsRegisterController);
 
 const ejsWeatherController = require('./controllers/ejs-testing/weather');
 app.use('/ejs-testing/weather', ejsWeatherController);
