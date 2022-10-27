@@ -4,7 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import styles from '../../styles/styles';
 import UserPlantPreview from './UserPlantPreview';
 import axios from 'axios';
-import AddPlant from './AddPlant';
+import AddPlant from './editPlants/AddPlant';
 
 function GardenFullView(props) {
     const [userPlantData, setUserPlantData] = useState([]);
@@ -19,7 +19,7 @@ function GardenFullView(props) {
         }
 
         fetchUserPlants();
-    },[]);
+    },[props.visible]);
     
     renderItem = ({item}) => {
         if(item.garden_key == props.garden.garden_key) {

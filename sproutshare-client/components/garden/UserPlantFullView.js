@@ -20,7 +20,7 @@ function UserPlantFullView(props) {
                     style={styles.mediumImage}
                     source={{uri: props.plant.img }}
                 />
-                <Text style={styles.title}> Quantity Planted: {props.userPlant.quantity} </Text>
+                <Text style={styles.title}> Quantity Planted: {props.userPlant.plant_qty} </Text>
                 <Text style={styles.title}> Date Planted: </Text>
                   <Button title='Close' onPress={props.onClose}/>
             </View>

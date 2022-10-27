@@ -53,7 +53,7 @@ function CreateAccountScreen(props) {
             justifyContent: "center",
             alignItems: "center",
             borderWidth: 1,
-            marginLeft: 15
+            marginLeft: 10
             }}
             placeholder = "Username:"
             onChangeText={usernameInputHandler}

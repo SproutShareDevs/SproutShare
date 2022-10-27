@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { TextInput, View, Text, Button } from 'react-native';
+import { TextInput, View, Text, Button, Alert } from 'react-native';
 
 
 // The screen where users can input their username and password to log into an existing account
@@ -25,7 +25,7 @@ function LogInScreen(props) {
             password: password
         }).then((response) => {
             setLoginStatus("true");
-            props.saveToken(response.data.accessToken);
+            props.saveToken(response.data.userAccessToken);
             console.log("Access token retrieved");
         }).catch(err => {
             if(err.response.status == 400) {
