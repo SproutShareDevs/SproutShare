@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, Pressable, Image } from 'react-native'
+import { View, Text, Pressable, Image, Button } from 'react-native'
 import UserPlantFullView from './UserPlantFullView';
 import styles from "../../styles/styles";
 import axios from 'axios';
@@ -30,8 +30,6 @@ function UserPlantPreview(props) {
         extractDate();
 
     }, []);
-
-
 
     return (
         <View style={styles.item}>

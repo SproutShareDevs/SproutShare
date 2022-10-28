@@ -69,6 +69,26 @@ async function updateUserPlant(userPlantKey, userPlant){
    }
 }
 
+async function updateUserPlantDifficulty(userPlantKey, userPlant){
+   try {
+      const updatedUserPlant = await userPlantDatabase.updateUserPlantDifficulty(userPlantKey, userPlant);
+      return updatedUserPlant;
+   }catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+async function updateUserPlantQuality(userPlantKey, userPlant){
+   try {
+      const updatedUserPlant = await userPlantDatabase.updateUserPlantQuality(userPlantKey, userPlant);
+      return updatedUserPlant;
+   }catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 async function deleteUserPlant(userPlantKey){
    try {
       const deletedUserPlant = await userPlantDatabase.deleteUserPlant(userPlantKey);
@@ -86,5 +106,7 @@ module.exports = {
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,
+   updateUserPlantDifficulty,
+   updateUserPlantQuality,
    deleteUserPlant
 };

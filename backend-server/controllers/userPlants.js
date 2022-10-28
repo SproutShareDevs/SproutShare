@@ -64,6 +64,26 @@ router.put('/update/:key', async(req,res)=>{
    }
 })
 
+router.put('/updatedifficulty/:key', async(req,res)=>{
+   try {
+      const updatedUserPlant = await userPlantServices.updateUserPlantDifficulty(req.params.key, req.body);
+      res.send(updatedUserPlant);
+   } catch (error) {
+      console.error(error);
+      res.send(JSON.stringify(error.message));   
+   }
+})
+
+router.put('/updatequality/:key', async(req,res)=>{
+   try {
+      const updatedUserPlant = await userPlantServices.updateUserPlantQuality(req.params.key, req.body);
+      res.send(updatedUserPlant);
+   } catch (error) {
+      console.error(error);
+      res.send(JSON.stringify(error.message));   
+   }
+})
+
 router.delete('/delete/:key', async(req, res)=>{
    try {
       const deletedUserPlant = await userPlantServices.deleteUserPlant(req.params.key);

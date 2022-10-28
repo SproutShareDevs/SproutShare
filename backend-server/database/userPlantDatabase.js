@@ -122,6 +122,46 @@ async function updateUserPlant(userPlantKey, userPlant){
 
 /**
  * 
+ * @param {*} userPlantKey The userPlant to edit 
+ * @param {*} userPlant The edited difficulty for the userPlant
+ * @return the edited userplant or an error as a JSON object
+ */
+async function updateUserPlantDifficulty(userPlantKey, userPlant){
+   try {
+      const updatedUserPlant = await pool.query("UPDATE userplant SET plant_difficulty=$1 WHERE user_plant_key=$2 RETURNING *", 
+      [
+         userPlant.plant_difficulty, 
+         userPlantKey      
+      ]);
+      return updatedUserPlant.rows[0];   
+   }catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
+ * 
+ * @param {*} userPlantKey The userPlant to edit 
+ * @param {*} userPlant The edited quality for the userPlant
+ * @return the edited userplant or an error as a JSON object
+ */
+async function updateUserPlantQuality(userPlantKey, userPlant){
+   try {
+      const updatedUserPlant = await pool.query("UPDATE userplant SET plant_quality=$1 WHERE user_plant_key=$2 RETURNING *", 
+      [
+         userPlant.plant_quality, 
+         userPlantKey      
+      ]);
+      return updatedUserPlant.rows[0];   
+   }catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
+ * 
  * @param {*} userPlantKey The id of the ForumPost to delete 
  * @return the deleted userplant or an error as a JSON object
  */
@@ -143,5 +183,7 @@ module.exports = {
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,
+   updateUserPlantDifficulty,
+   updateUserPlantQuality,
    deleteUserPlant
 };
