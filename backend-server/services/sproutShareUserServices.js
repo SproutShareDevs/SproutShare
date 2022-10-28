@@ -82,8 +82,6 @@ async function storeUser(user){
    }
 }
 
-
-
 /**
  * Update user by key
  */
@@ -111,11 +109,37 @@ async function updateAccessToken(userKey, accessToken){
 }
 
 /**
+ * Update refresh token
+ */
+ async function updateRefreshToken(userKey, refreshToken){
+   try {
+      const updatedUser = await sproutShareUserDatabase.updateRefreshToken(userKey, refreshToken);
+      return updatedUser;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
  * Delete access token
  */
  async function deleteAccessToken(userKey){
    try {
       const updatedUser = await sproutShareUserDatabase.deleteAccessToken(userKey);
+      return updatedUser;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
+ * Delete access token
+ */
+ async function deleteRefreshToken(userKey){
+   try {
+      const updatedUser = await sproutShareUserDatabase.deleteRefreshToken(userKey);
       return updatedUser;
    } catch (error) {
       console.error(error);
@@ -156,6 +180,8 @@ module.exports = {
    storeUser,
    updateUser,
    updateAccessToken,
+   updateRefreshToken,
    deleteAccessToken,
+   deleteRefreshToken,
    deleteUser
 };

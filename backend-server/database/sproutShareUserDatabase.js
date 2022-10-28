@@ -126,12 +126,39 @@ async function updateAccessToken(userKey, accessToken){
 }
 
 /**
+ * Update refresh token by user key
+ */
+ async function updateRefreshToken(userKey, refreshToken){
+   try {
+      const updatedUser = await pool.query('UPDATE sproutshareuser SET refreshtoken = $2 WHERE user_key = $1 RETURNING *', [userKey, refreshToken]);
+      return updatedUser.rows[0];
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
  * Update access token by user key
  */
  async function deleteAccessToken(userKey){
    try {
       const updatedUser = await pool.query('UPDATE sproutshareuser SET accesstoken = NULL WHERE user_key = $1 RETURNING *', [userKey]);
       console.log("Deleted previous access token");
+      return updatedUser.rows[0];
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
+ * Update refresh token by user key
+ */
+ async function deleteRefreshToken(userKey){
+   try {
+      const updatedUser = await pool.query('UPDATE sproutshareuser SET refreshtoken = NULL WHERE user_key = $1 RETURNING *', [userKey]);
+      console.log("Deleted previous refresh token");
       return updatedUser.rows[0];
    } catch (error) {
       console.error(error);
@@ -161,6 +188,8 @@ module.exports = {
    storeUser,
    updateUser,
    updateAccessToken,
+   updateRefreshToken,
    deleteAccessToken,
+   deleteRefreshToken,
    deleteUser
 };

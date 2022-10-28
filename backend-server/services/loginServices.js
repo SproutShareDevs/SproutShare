@@ -9,7 +9,6 @@ async function authenticateUser(username){
    if(!user) return false;
 
    return user;
-
 }
 
 async function verifyUserPassword(password, savedPassword){
@@ -23,10 +22,14 @@ function createUserAccessToken(userKey, accessToken){
    return jwt.sign(userKey, accessToken);
 }
 
+function createUserRefreshToken(userKey, refreshToken){
+   return jwt.sign(userKey, refreshToken);
+}
 
 
 module.exports = {
    authenticateUser,
    verifyUserPassword,
-   createUserAccessToken
+   createUserAccessToken,
+   createUserRefreshToken
 }
