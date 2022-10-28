@@ -115,7 +115,7 @@ class Exchange extends React.Component {
 
     submitListing = async() =>{
         console.log("in function")
-        await axios.post(`${this.props.nodeServer}exchangeListings/store`,{
+        await axios.post(`${this.props.nodeServe}/exchangeListings/store`,{
         ex_plant: ExchangePlant,
         ex_post_title: ExchangeTitle, 
         ex_post_body: ExchangeDescription,
