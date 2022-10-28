@@ -27,11 +27,13 @@ router.post("/", async(req, res) => {
 		const isPasswordCorrect = await loginServices.verifyUserPassword(req.body.password, user.password);
 		if(!isPasswordCorrect) return res.status(401).send('Invalid Password');
 		
-		// Create access token for user
+		// Create access token and refresh token for user
 		const userAccessToken = loginServices.createUserAccessToken(user.user_key, process.env.ACCESS_TOKEN_SECRET);
+		const userRefreshToken = loginServices.createUserRefreshToken(user.user_key, process.env.REFRESH_TOKEN_SECRET);
 
-		// update the user with new access token
+		// update the users tokens
 		const updatedUser = await sproutShareUserServices.updateAccessToken(user.user_key, userAccessToken);
+		updatedUser = await sproutShareUserServices.updateRefreshToken(user.user_key, process.env.REFRESH_TOKEN_SECRET);
 		if(updatedUser) return res.redirect('/ejs-testing/sproutShareUsers/');
 
 	
