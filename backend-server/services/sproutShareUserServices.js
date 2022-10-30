@@ -87,6 +87,7 @@ async function storeUser(user){
  */
 async function updateUser(userKey, userBody){
    try {
+      userBody.password = await encryptPassword(userBody.password);
       const updatedUser = await sproutShareUserDatabase.updateUser(userKey, userBody);
       return updatedUser;
    } catch (error) {

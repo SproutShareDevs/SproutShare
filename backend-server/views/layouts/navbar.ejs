@@ -1,7 +1,9 @@
+<%-include('header');-%>
 <nav>
    <ul>
-      <a href="/ejs-testing/login">Login</a>
-      <a href="/ejs-testing/register">Register</a>
+      <a href="/ejs-testing/login" style="display:inline" class="loginLink">Login</a>
+      <a href="/ejs-testing/logout" style="display:none" class="logoutLink">Logout</a>
+      <a href="/ejs-testing/register" style="display:inline" class="registerLink">Register</a>
       <a href="/ejs-testing">Test Home</a>
       <a href="/ejs-testing/communityPosts">Comm. Posts</a>
       <a href="/ejs-testing/exchangeListings">Ex. Listing</a>
@@ -13,4 +15,54 @@
       <a href="/ejs-testing/sproutShareUsers">Users</a>
       <a href="/ejs-testing/weather">Weather</a>
    </ul>
+   <div class="username-placeholder" style="display: none;"></div>
 </nav>
+
+<script>
+   console.log(localStorage);
+   const usernameDisplay = document.querySelector('.username-placeholder');
+   const username = localStorage.getItem('username');
+   const loginLink = document.querySelector('.loginLink');
+   const logoutLink = document.querySelector('.logoutLink');
+   const registerLink = document.querySelector('.registerLink');
+   
+   logoutLink.addEventListener('click', async function(event){
+      event.preventDefault();
+      await logoutHandler();
+      logoutHandler().then(()=>{
+      window.location.href = 'http://localhost:3000/ejs-testing/login/';
+      localStorage.clear();
+   })
+   });
+
+   async function logoutHandler(){
+      const response = await fetch('http://localhost:3000/ejs-testing/logout/', {
+				method:'POST',
+				headers:{
+					'Content-type':'application/json'
+				},
+				body: JSON.stringify({username:username})
+			})
+   }
+   
+   if(localStorage.getItem('refreshToken') !== null && username !== null){
+      // user is already logged in, so remove the login button and register button
+      loginLink.style.display = 'none';
+      registerLink.style.display = 'none';
+      // display the logout button
+      logoutLink.style.display = 'inline';
+      usernameDisplay.style.display = 'block';
+      usernameDisplay.innerText = `user: ${username}`;
+   }  
+   else{
+      loginLink.style.display = 'inline';
+      logoutLink.style.display = 'none';
+      registerLink.style.display = 'inline';
+      usernameDisplay.innerText = '';
+      usernameDisplay.style.display = 'none';
+   }
+   
+   
+
+</script>
+

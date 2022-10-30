@@ -60,6 +60,9 @@ app.use('/register', registerController);
 const ejsLoginController = require('./controllers/ejs-testing/login');
 app.use('/ejs-testing/login', ejsLoginController);
 
+const ejsLogoutController = require('./controllers/ejs-testing/logout');
+app.use('/ejs-testing/logout', ejsLogoutController);
+
 const ejsRegisterController = require('./controllers/ejs-testing/register');
 app.use('/ejs-testing/register', ejsRegisterController);
 

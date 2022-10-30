@@ -1,13 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../../models/User");
-const passport = require("passport");
+const sproutShareUserServices = require('../../services/sproutShareUserServices');
 
-router.get("/", (req, res, next) => {
-    req.logout(function(err) {
-        if(err) { return next(err); }
-        res.redirect('/ejs-testing');
-    });
+router.post("/", async(req, res) => {
+    try {
+        console.log(req.body);
+        const username = req.body.username;
+        console.log(username);
+        const user = await sproutShareUserServices.getUserByUsername(username);
+        console.log(user);
+        const deletedRefToken = await sproutShareUserServices.deleteRefreshToken(user.user_key);
+        if(deletedRefToken)
+            res.json({status:'ok'});
+    } catch (error) {
+        console.error(error);
+        res.send(JSON.stringify(error.message));
+    }
 });
 
 module.exports = router;
