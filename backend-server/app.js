@@ -6,6 +6,7 @@ const path = require('path');
 const ejs = require('ejs');
 const cors = require('cors');
 console.log(require('dotenv').config());
+const auth = require('./custom-middleware/auth');
 /** seed db */
 const seedDB = require("./db/seed.js");
 
@@ -20,7 +21,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 app.use(cors());
-
 /** production */
 
 const weatherController = require('./controllers/weather');
@@ -56,6 +56,8 @@ app.use('/register', registerController);
 
 
 /** ejs */
+const ejsTestPageController = require('./controllers/ejs-testing/testPageController');
+app.get('/ejs-testing', ejsTestPageController);
 
 const ejsLoginController = require('./controllers/ejs-testing/login');
 app.use('/ejs-testing/login', ejsLoginController);
@@ -75,23 +77,22 @@ const ejsUserPlantController = require('./controllers/ejs-testing/userPlants');
 const ejsGardensController = require('./controllers/ejs-testing/gardens');
 const ejsSproutShareUserController = require('./controllers/ejs-testing/sproutShareUsers');
 app.use('/ejs-testing/plants', ejsPlantController);
-app.use('/ejs-testing/userPlants', ejsUserPlantController);
 app.use('/ejs-testing/gardens', ejsGardensController);
 app.use('/ejs-testing/sproutShareUsers', ejsSproutShareUserController);
 
 /** mongodb */
-const ejsTestPageController = require('./controllers/ejs-testing/testPageController');
 const ejsCommPostController = require('./controllers/ejs-testing/commPost');
 const ejsExchangeListingController = require('./controllers/ejs-testing/exListing');
 const ejsNotificationController = require('./controllers/ejs-testing/notification');
 const ejsForumPostController = require('./controllers/ejs-testing/forumPost');
 
-app.get('/ejs-testing', ejsTestPageController);
 app.use('/ejs-testing/communityPosts', ejsCommPostController);
 app.use('/ejs-testing/exchangeListings', ejsExchangeListingController);
 app.use('/ejs-testing/notifications', ejsNotificationController);
 app.use('/ejs-testing/forumPosts', ejsForumPostController);
 
+app.use(auth.authorizeUser);
+app.use('/ejs-testing/userPlants', ejsUserPlantController);
 // seed database, comment out unless you want to reseed database
 //seedDB();
 

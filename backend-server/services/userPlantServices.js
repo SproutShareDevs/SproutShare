@@ -20,6 +20,15 @@ async function getUserPlantByKey(userPlantKey){
    }
 }
 
+async function getUserPlantsByUserKey(userKey){
+   try {
+      const userPlants = await userPlantDatabase.getUserPlantsByUserKey(userKey);
+      return userPlants;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
 
 /**
 async function getPostByQuery(query){
@@ -103,6 +112,7 @@ module.exports = {
    getAllUserPlants,
    getUserPlantByKey,
    getUserPlantsByGardenKey,
+   getUserPlantsByUserKey,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,
