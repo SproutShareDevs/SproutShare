@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { TextInput, View, Text, Button } from 'react-native';
+import { TextInput, View, Text, Button, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import styles from '../../styles/styles'
 
 
 // The screen where users can input their username and password to log into an existing account
@@ -42,33 +43,28 @@ function CreateAccountScreen(props) {
 
         <View style = {{
             flex: 1,
-            justifyContent: "center",
-            //alignItems: "center"
+            justifyContent: "center"
         }}>
-        <Text>Create Account</Text>
+        <ImageBackground source={require("../../assets/Newlogin.png")} style={styles.backgroundImage}>
+        <View style = {{flexDirection: 'row', marginTop: 35, marginBottom: 80}}>
+        <Text style = {styles.titleText}>Create Account</Text>
+        <Image source={require("../../assets/PFPicon.png")} style ={styles.mediumImage}></Image>
+        </View>
         <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            marginLeft: 10
-            }}
+            style = {[
+            styles.accountInput,
+            {backgroundColor: "#e0e8d0"}]
+            }
             placeholder = "Username:"
             onChangeText={usernameInputHandler}
             value={username}
         />
-            
+        
         <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            marginLeft: 10
-            }}
+            style = {[
+                styles.accountInput,
+                {backgroundColor: "#c1d9bc"}]
+                }
             secureTextEntry={true}
             placeholder = "Password:"
             onChangeText={passwordInputHandler}
@@ -76,19 +72,15 @@ function CreateAccountScreen(props) {
         />
 
         <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            marginLeft: 10
-            }}
+            style = {[
+                styles.accountInput,
+                {backgroundColor: "#5ab07d"}]
+                }
             placeholder = "Zip Code:"
             onChangeText={zipCodeInputHandler}
             value={zipCode}
         />
-        <Button
+        <TouchableOpacity
             onPress={() => {
                 createUser(username, password);
                 console.log("Account created: " + username);
@@ -96,10 +88,10 @@ function CreateAccountScreen(props) {
                     userName: username, userType: 'User'
                 })
             }}
-            title={
-                "Log In"
-            }
-        />
+            style={[styles.roundButton2, {marginTop: 30}]}>
+            <Text style={styles.buttonText}>Log In</Text>
+            </TouchableOpacity>
+        </ImageBackground>
         </View>
         
     )

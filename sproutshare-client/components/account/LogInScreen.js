@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { TextInput, View, Text, Button, Alert } from 'react-native';
-
+import { TextInput, View, Text, Button, Alert, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import styles from '../../styles/styles'
 
 // The screen where users can input their username and password to log into an existing account
 function LogInScreen(props) {
@@ -45,38 +45,37 @@ function LogInScreen(props) {
         <View style = {{
             flex: 1,
             justifyContent: "center",
-            //alignItems: "center"
         }}>
-        <Text>Log In</Text>
+        <ImageBackground source = {require("../../assets/Newlogin.png")} style={styles.backgroundImage}>
+        <View style = {{flexDirection: 'row'}}>
+        <View style = {{marginTop: 75, marginBottom: 80, marginLeft: 20}}>
+        <Text style = {styles.titleText}>Sign In</Text>
+        </View>
+        <View style = {{marginTop: 40, marginBottom: 80, marginLeft: 15}}>
+        <Image source={require("../../assets/signIn.png")} style = {styles.tinyImage}></Image>
+        </View></View>
         <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            marginLeft: 10
-            }}
+            style = {[
+            styles.accountInput,
+            {backgroundColor: "#e0e8d0", marginTop: 60}]
+            }
             placeholder = "Username:"
             onChangeText={usernameInputHandler}
             value={username}
         />
             
         <TextInput 
-            style = {{
-            height: 30,
-            borderColor: 'light-gray',
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            marginLeft: 10
-            }}
+            style = {[
+                styles.accountInput,
+                {backgroundColor: "#c1d9bc"}]
+            
+            }
             secureTextEntry={true}
             placeholder = "Password:"
             onChangeText={passwordInputHandler}
             value={password}
         />
-        <Button
+        <TouchableOpacity
             onPress={async() => {
                 await checkUser(username, password).then(() =>{
                     if(loginStatus == "true") {
@@ -89,10 +88,10 @@ function LogInScreen(props) {
                     }
                 });
             }}
-            title={
-                "Log In"
-            }
-        />
+            style={[styles.roundButton2, {marginTop:60}]}>
+                <Text style={styles.buttonText}>Log in</Text>
+            </TouchableOpacity>
+        </ImageBackground>
         </View>
         
     )

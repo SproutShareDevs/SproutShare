@@ -2,9 +2,10 @@
 // React / Expo Imports
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
-import { View, Button, Text, TextInput } from 'react-native';
+import { View, Button, Text, TextInput, StyleSheet, ImageBackground, Image, TouchableOpacity} from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+
 
 // Navbar Imports
 import { NavigationContainer } from '@react-navigation/native';
@@ -22,6 +23,8 @@ import CreateAccountScreen from './components/account/CreateAccountScreen.js';
 
 // Dotenv
 import {NODE_SERVER} from "@env"
+import styles from './styles/styles.js';
+import { color } from 'react-native-reanimated';
 
 
 // Define a .env file in the root directory of SproutShare consisting of one environment variable:
@@ -154,31 +157,31 @@ function HomeView({ navigation, route }) {
 // The screen with buttons for creating an account, logging in, and bypassing them
 function LogInTop({ navigation }) {
     return(
-        <View style = {{
-            flex: 1,
-            justifyContent: "center",
-        }}>
-        <Button
+        <View style = {{flex: 1}}>
+        <ImageBackground source={require("./assets/homepage.png")} style={styles.backgroundImage}>
+        
+        <Image source = {require("./assets/logo.png")} style={styles.logoImage}/>
+        <View style = {{flexDirection: 'row'}}>
+        <TouchableOpacity
             onPress={() => navigation.navigate('CreateAccountScreen')}
-            title={
-                "Create Account"
-            }
-        />
-        <Button
+            style={styles.roundButton1}>
+            <Text style ={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
             onPress={() => navigation.navigate('LogInScreen')}
-            title={
-                "Log In"
-            }
-        />
-        {/* Skips the login process */}
-        <Button
-            onPress={() => navigation.navigate('Home', {
+            style={styles.roundButton1}>
+            <Text style ={styles.buttonText}>Log In</Text>
+        </TouchableOpacity></View>
+        <TouchableOpacity
+             onPress={() => navigation.navigate('Home', {
                 userName: 'default_admin', userType: 'Admin'
             })}
-            title={
-                "Skip login: Admin"
-            }
-        />
+            style={styles.roundButton2}>
+            <Text style ={styles.buttonText}>Skip Login: Admin</Text>
+            </TouchableOpacity>
+        
+        
+        </ImageBackground>
         </View>
     )
 }
