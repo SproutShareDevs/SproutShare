@@ -58,7 +58,7 @@ class CommunityFeed extends React.Component {
                 return {data: response.data}
             });
           }).catch(err => {
-            console.log('Error: ', err);
+            console.log('Error Fetching Posts: ', err);
         });
     }
 
@@ -67,7 +67,7 @@ class CommunityFeed extends React.Component {
             console.log(response.data);
             console.log("Post deleted");
           }).catch(err => {
-            console.log('Error: ', err);
+            console.log('Error Deleting Post: ', err);
         });
         this.rerender();
     }

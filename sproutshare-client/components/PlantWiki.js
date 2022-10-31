@@ -70,7 +70,7 @@ class PlantWiki extends React.Component {
               return {data: response.data}
           });
         }).catch(err => {
-          console.log('Error: ', err);
+          console.log('Error fetching plants: ', err);
       });
   }
 

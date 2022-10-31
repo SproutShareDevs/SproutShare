@@ -31,8 +31,8 @@ class UserGarden extends React.Component {
     render() {
         return (
           <View style={styles.container}>
-            <WeatherView nodeServer ={this.props.nodeServer}/>
-            <View style={styles.container}>
+            <WeatherView style={{flex: 2}} nodeServer ={this.props.nodeServer}/>
+            <View style={{flex: 4}}>
               <AddGarden nodeServer={this.props.nodeServer}/>
               <View style={styles.listBottomMargin} >
                 <FlatList
@@ -56,7 +56,7 @@ class UserGarden extends React.Component {
           });
         }).catch(err => {
           console.log(`${this.props.nodeServer}/gardens`);
-          console.log('Error: ', err);
+          console.log('Error: Could not retrieve gardens', err);
         });
       // else, normal user view
       } else {
@@ -67,7 +67,7 @@ class UserGarden extends React.Component {
             });
           }).catch(err => {
             console.log(`${this.props.nodeServer}/gardens/getByToken/${accessToken}`);
-            console.log('Error: ', err);
+            console.log('Error: Could not retrieve gardens', err);
         });
       }
     }

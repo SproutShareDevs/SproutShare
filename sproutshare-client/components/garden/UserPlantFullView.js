@@ -13,7 +13,7 @@ function UserPlantFullView(props) {
         }).then((response) => {
             console.log(response.data);
         }).catch(err => {
-            console.log('Error: ', err);
+            console.log('Error updating plant quality: ', err);
         });
     }
 
@@ -23,7 +23,7 @@ function UserPlantFullView(props) {
         }).then((response) => {
             console.log(response.data);
         }).catch(err => {
-            console.log('Error: ', err);
+            console.log('Error updating plant difficulty: ', err);
         });
     }
 

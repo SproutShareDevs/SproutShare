@@ -17,7 +17,7 @@ function AddPlant(props) {
         await axios.get(`${props.nodeServer}/plants`).then((response) => {
             setPlants(response.data);
         }).catch(err => {
-            console.log('Error: ', err);
+            console.log('Error fetching plants: ', err);
         });
     }
 
@@ -35,7 +35,7 @@ function AddPlant(props) {
       }).then((response) => {
           console.log(response);
       }).catch(err => {
-          console.log('Error: ', err);
+          console.log('Error storing plant: ', err);
       });
     } else {
       Alert.alert(

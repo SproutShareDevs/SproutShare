@@ -14,7 +14,7 @@ function GardenFullView(props) {
             await axios.get(`${props.nodeServer}/userPlants`).then((response) => {
                 setUserPlantData(response.data)
             }).catch(err => {
-                console.log('Error: ', err);
+                console.log('Error fetching user plants: ', err);
             });
         }
 

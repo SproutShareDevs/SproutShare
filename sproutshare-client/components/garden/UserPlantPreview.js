@@ -16,7 +16,7 @@ function UserPlantPreview(props) {
                 setPlant(response.data);
                 console.log(response.data);
             }).catch(err => {
-                console.log('Error: ', err);
+                console.log('Error fetching user plant: ', err);
             });
         }
         const extractDate = () => {

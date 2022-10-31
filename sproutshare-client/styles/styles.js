@@ -7,6 +7,10 @@ export default StyleSheet.create({
         flex: 1,
         flexDirection: 'column'
     },
+    containerRow: {
+        flex: 1,
+        flexDirection: 'row'
+    },
     containerCenter: {
         flex: 1,
         alignItems: 'center',

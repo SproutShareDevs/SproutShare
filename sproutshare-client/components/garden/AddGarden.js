@@ -32,7 +32,7 @@ function AddGarden(props) {
         }).then((response) => {
             console.log(response);
         }).catch(err => {
-            console.log('Error: ', err);
+            console.log('Error adding new garden: ', err);
         });
     };
 
