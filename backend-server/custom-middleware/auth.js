@@ -19,7 +19,7 @@ function authorizeUser(req, res, next){
    const refreshToken = authHeader && authHeader.split(' ')[1];
    
    // verify correct user
-   console.log("auth:", refreshToken);
+   console.log("1auth:", refreshToken);
    if(refreshToken == null) return res.sendStatus(401); //user unauthorized
    
    // Verify the refreshToken and return either a 403 or the user key to the calling controller

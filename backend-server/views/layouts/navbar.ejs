@@ -39,6 +39,7 @@
    });
 
    restrictedLink.addEventListener('click', async function(event){
+      if(localStorage.getItem('refreshToken') === null) return;
       event.preventDefault();
       await authorizeUser();
       authorizeUser()
@@ -62,7 +63,6 @@
    
    async function authorizeUser(){
       const fullLink = restrictedLink + '/'
-      console.log(fullLink);
       const response = await fetch(fullLink, {
          method:'GET',
          headers:{
