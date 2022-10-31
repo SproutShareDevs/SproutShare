@@ -6,33 +6,37 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 function WeatherView(props) {
-    const [userZip, setUserZip] = useState([]);
+    const [userZip, setUserZip] = useState('');
     const [weather, setWeather] = useState([]);
     
-    useEffect(() => {
-        const fetchUser = async () => {
-            let accessToken = await SecureStore.getItemAsync('AccessToken');
-            await axios.get(`${props.nodeServer}/user/${accessToken}`).then((response) => {
-                setUserZip(response.data.zip_code);
-            }).catch(err => {
-                console.log('Error: ', err);
-            });
-        }
-        fetchUser();
-        }, []);
+    
 
-    useEffect(() => {
-        const fetchWeather = async() => {
-            console.log(`${props.nodeServer}/weather/${userZip}`);
+
+    const fetchUser = async () => {
+        let accessToken = await SecureStore.getItemAsync('AccessToken');
+        await axios.get(`${props.nodeServer}/user/${accessToken}`).then((response) => {
+            setUserZip(response.data.zip_code);
+        }).catch(err => {
+            console.log('Error: Could not access user', err);
+        });
+    }
+
+    const fetchWeather = async () => {
+        console.log(`${props.nodeServer}/weather/${userZip}`);
             await axios.get(`${props.nodeServer}/weather/${userZip}`).then((response) => {
                 setWeather(response.data);
                 console.log(response.data);
             }).catch(err => {
-                console.log('Error: ', err);
-            });
+                console.log('Error:  Could not access weather', err);
+        });
+    }
+
+    
+    useEffect(() => {
+        fetchUser();
+        if(userZip != '') {
+            fetchWeather();
         }
-        fetchWeather();
-        
     },[userZip]);
 
     return (
