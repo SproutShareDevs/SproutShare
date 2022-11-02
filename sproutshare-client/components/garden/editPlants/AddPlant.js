@@ -33,7 +33,8 @@ function AddPlant(props) {
         garden_key: props.garden.garden_key, 
         plant_qty: plantQuantity
       }).then((response) => {
-          console.log(response);
+          props.onNewPlant();
+          togglePlantModal(false);
       }).catch(err => {
           console.log('Error storing plant: ', err);
       });
@@ -56,7 +57,11 @@ function AddPlant(props) {
 
     return (
         <>
-        <Button color='#228b22' title='Add Plant' onPress={() => togglePlantModal(true)}/>
+        <Button color='#228b22' title='Add Plant' onPress={() => {
+          togglePlantModal(true);
+          
+        }}
+          />
         <Modal visible={plantModal} animationType="slide">
                   <Button title='Close' onPress={()=> togglePlantModal(false)}/>
                   <Button title='Add Selection' onPress={() => postPlant()}/>

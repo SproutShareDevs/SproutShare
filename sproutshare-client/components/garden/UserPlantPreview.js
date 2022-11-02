@@ -31,6 +31,11 @@ function UserPlantPreview(props) {
 
     }, []);
 
+    const deleteHandler = () => {
+        props.onDelete();
+        setSubModalIsVisible(false);
+    }
+
     return (
         <View style={styles.item}>
             <Pressable
@@ -49,7 +54,8 @@ function UserPlantPreview(props) {
             <Text style={styles.title}>Quantity: {props.userPlant.plant_qty}</Text>
             <Text style={styles.title}>Planting Date: {plantingDate}</Text>
             </Pressable>
-            <UserPlantFullView nodeServer ={props.nodeServer} visible={subModalVisible} userPlant={props.userPlant} plant={plant} onClose={() => setSubModalIsVisible(false)}/>
+            <UserPlantFullView nodeServer ={props.nodeServer} visible={subModalVisible} userPlant={props.userPlant} 
+                                plant={plant} onDelete={deleteHandler} onClose={() => setSubModalIsVisible(false)}/>
       </View>
     );
 }
