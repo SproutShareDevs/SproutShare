@@ -18,15 +18,33 @@ function LogInScreen(props) {
         setPassword(password);
     }
 
+    const handleButtonClick = () => {
+        // when button is clicked, check credentials
+        // then set loginStatus to result
+        checkUser(username, password);
+    }
+
+    // once login status is changed, this code executes
+    useEffect(() => {
+        if(loginStatus == "true") {
+            props.navigation.navigate('Home', {
+                userName: username, userType: 'User'
+            }) 
+            {/* For some reason, this alert is blank, even though the function is async */}
+        } else if(loginStatus != "") {
+            alert(loginStatus);
+        }
+    }, [loginStatus]);
+
 
     async function checkUser(myUsername, myPassword) {
         await axios.post(`${props.nodeServer}/login`, {
             username: username,
             password: password
         }).then((response) => {
-            setLoginStatus("true");
             props.saveToken(response.data.userAccessToken);
             console.log("Access token retrieved");
+           setLoginStatus("true");
         }).catch(err => {
             if(err.response.status == 400) {
                 setLoginStatus("Invalid username");
@@ -76,18 +94,7 @@ function LogInScreen(props) {
             value={password}
         />
         <TouchableOpacity
-            onPress={async() => {
-                await checkUser(username, password).then(() =>{
-                    if(loginStatus == "true") {
-                        props.navigation.navigate('Home', {
-                            userName: username, userType: 'User'
-                        }) 
-                        {/* For some reason, this alert is blank, even though the function is async */}
-                    } else {
-                        alert(loginStatus);
-                    }
-                });
-            }}
+            onPress={handleButtonClick}
             style={[styles.roundButton2, {marginTop:60}]}>
                 <Text style={styles.buttonText}>Log in</Text>
             </TouchableOpacity>
