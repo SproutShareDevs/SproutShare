@@ -64,11 +64,13 @@ class Exchange extends React.Component {
                 </View>
 
                 
-
+      
+               
                 <View styles={styles.buttonContainer}>
                     <Button
                     title = "ADD NEW LISTING"
                     onPress = {() => this.setState({NewListing:true})}
+                    color ="green"
                      />
                     <Modal
                     transparent = {false}
@@ -80,16 +82,18 @@ class Exchange extends React.Component {
                     <View style={styles.containerCenter}>
                     <Text>Create a New Exchange Listing</Text>
 
-                    <TextInput style={styles.textInput} placeholder ="Listing Title"
-                    onChangeText={() => {this.setState({ExchangePlant:''})}}
+                    <TextInput style={styles.textInput} placeholder ="Plant Type"
+                    onChangeText = {(text) => {this.setState({ExchangePlant:text})}}
                     />
 
                     <TextInput style={styles.textInput} placeholder ="Listing Title"
-                    onChangeText={() => {this.setState({ExchangeTitle:''})}} />
+                    onChangeText = {(text) => {this.setState({ExchangeName:text})}}
+                    />
 
                     <TextInput style={styles.textInput}  placeholder ="Listing Description"
-                    onChangeText={() => {this.setState({ExchangeDescription:''})}}         
+                    onChangeText = {(text) => {this.setState({ExchangeDescription:text})}}    
                     />    
+
                     <View style={styles.buttonContainer}>
                      <Button color ="red" title = "Close" onPress={() => this.setState({NewListing:false})} />
                      <Button title = "Submit Listing" onPress={()=> this.submitListing}/>
@@ -112,22 +116,32 @@ class Exchange extends React.Component {
             </View>
         );
     }
+    submitListing () {
+        axios.post(`${this.props.nodeServer}/exchangeListings/store`,{
+           ex_plant: this.state.ExchangePlant,
+           ex_post_title: this.state.ExchangeName,
+           ex_post_body: this.state.ExchangeDescription,
+           user_ID: 'Christian'
+       }).then((response) => {
+           this.setState({NewListing: false});
+           console.log(response.data);
+           console.log("Listing Posted");
+           this.rerender();
+         
+       }).catch(err => {
+           console.log('Error: ', err);
+           console.log(err.response.data)
+       });
+      
+       
+   }
+   rerender = async() => {
+    this.componentDidMount();
+    //console.log("REFRESHED");
+      
+  }
 
-    submitListing = async() =>{
-        console.log("in function")
-        await axios.post(`${this.props.nodeServe}/exchangeListings/store`,{
-        ex_plant: ExchangePlant,
-        ex_post_title: ExchangeTitle, 
-        ex_post_body: ExchangeDescription,
-        user_ID: 'Christian'
-
-    }).then((response) => {
-        console.log(response.data);
-        console.log("Listing Posted");
-    }).catch(err => {
-        console.log('Error: ', err);
-    })
-}
+ 
 
     componentDidMount = async() => {
         await axios.get(`${this.props.nodeServer}/exchangeListings`).then((response) => {
