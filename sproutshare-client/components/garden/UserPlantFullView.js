@@ -7,6 +7,7 @@ import axios from 'axios';
 
 function UserPlantFullView(props) {
 
+
     updateQuality = async (quality) => {
         await axios.put(`${props.nodeServer}/userPlants/updatequality/${props.userPlant.user_plant_key}`, {
             plant_quality: quality
@@ -66,7 +67,7 @@ function UserPlantFullView(props) {
                     source={{uri: props.plant.img }}
                 />
                 <Text style={styles.title}> Quantity Planted: {props.userPlant.plant_qty} </Text>
-                <Text style={styles.title}> Date Planted: </Text>
+                <Text style={styles.title}> Date Planted: {props.formattedPlantingDate}</Text>
                 <RatePlant updateQuality={updateQuality} updateDifficulty={updateDifficulty} />
                 <Button title='Delete' onPress={deleteButtonHandler}/>
                 <Button title='Close' onPress={props.onClose}/>

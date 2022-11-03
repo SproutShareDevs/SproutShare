@@ -9,6 +9,12 @@ function UserPlantPreview(props) {
     const [plant, setPlant] = useState({});
     const [plantingDate, setPlantingDate] = useState('');
 
+    const extractDate = () => {
+        const regexExtract = /^(\d{4})-\d{2}-(\d{2})/g;
+        const reorderDate = "$2 $1";
+        let result = props.userPlant.planting_date.match(regexExtract);
+        setPlantingDate(result);
+    }
 
     useEffect(() => {
         const fetchPlant = async () => {
@@ -19,12 +25,7 @@ function UserPlantPreview(props) {
                 console.log('Error fetching user plant: ', err);
             });
         }
-        const extractDate = () => {
-            const regexExtract = /^(\d{4})-\d{2}-(\d{2})/g;
-            const reorderDate = "$2 $1";
-            let result = props.userPlant.planting_date.match(regexExtract);
-            setPlantingDate(result);
-        }
+        
 
         fetchPlant();
         extractDate();
@@ -54,7 +55,7 @@ function UserPlantPreview(props) {
             <Text style={styles.title}>Quantity: {props.userPlant.plant_qty}</Text>
             <Text style={styles.title}>Planting Date: {plantingDate}</Text>
             </Pressable>
-            <UserPlantFullView nodeServer ={props.nodeServer} visible={subModalVisible} userPlant={props.userPlant} 
+            <UserPlantFullView formattedPlantingDate={plantingDate} nodeServer ={props.nodeServer} visible={subModalVisible} userPlant={props.userPlant} 
                                 plant={plant} onDelete={deleteHandler} onClose={() => setSubModalIsVisible(false)}/>
       </View>
     );
