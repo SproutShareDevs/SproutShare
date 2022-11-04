@@ -1,0 +1,6 @@
+﻿common_name,latin_name,light_level,min_temp,max_temp,rec_temp,hardiness_zone,soil_type,img
+Daisy,lorem,5,32,70,52,ZONE_A,loamy,https://images.unsplash.com/photo-1600264195762-c10ff160b264?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=724&q=80
+Lily,ipsum,10,0,120,80,ZONE_B,sandy,https://images.unsplash.com/photo-1501973931234-5ac2964cd94a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80
+Tomato,Solanum Lycopersicum,10,55,90,80,ZONE_C,silt,https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80
+Asparagus,Asparagus Officinalis,10,50,85,75,ZONE_3,loamy,https://images.unsplash.com/photo-1662875805421-21ec52bff622?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1335&q=80
+Carrot,Daucus Carota,10,45,85,65,ZONE_3,sandy,https://images.unsplash.com/photo-1639086495429-d60e72c53c81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2671&q=80
