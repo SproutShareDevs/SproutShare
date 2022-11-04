@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Text, View, Button } from 'react-native';
+import {Text, View, Button, Alert } from 'react-native';
 import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
@@ -16,7 +16,7 @@ class UserGarden extends React.Component {
         super(props);
         this.state = {
           connected: false,
-          data : []
+          data : [],
         };
         this.componentDidMount = this.componentDidMount.bind(this);
 
@@ -33,6 +33,24 @@ class UserGarden extends React.Component {
           <View style={styles.container}>
             <WeatherView style={{flex: 2}} nodeServer ={this.props.nodeServer}/>
             <View style={{flex: 4}}>
+              <Button title='Check for Watering' onPress={async() => {
+                let accessToken = await SecureStore.getItemAsync('AccessToken');
+                axios.get(`http://192.168.50.54:3000/notifications/user/${accessToken}`).then((response) => {
+                  Alert.alert(
+                    "Eventual Notification",
+                    response.data.message,
+                    [
+                        {
+                            text: "Confirm"
+                        }
+                    ]
+                );
+                  console.log(response.data);
+                }).catch(err => {
+                  console.log(`${this.props.nodeServer}/notifications/user/${SecureStore.getItemAsync('AccessToken')}`);
+                  console.log('Error: Could not retrieve notifications', err);
+                });
+              }}/>
               <AddGarden nodeServer={this.props.nodeServer}/>
               <View style={styles.listBottomMargin} >
                 <FlatList
@@ -61,6 +79,8 @@ class UserGarden extends React.Component {
       // else, normal user view
       } else {
         let accessToken = await SecureStore.getItemAsync('AccessToken');
+        console.log(accessToken);
+
         await axios.get(`${this.props.nodeServer}/gardens/getByToken/${accessToken}`).then((response) => {
             this.setState(state => {
                 return {data: response.data}

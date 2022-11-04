@@ -35,6 +35,17 @@ router.get('/:key', async(req, res) => {
    }
 }) 
 
+// by user key
+router.get('/getByUserKey/:key', async(req, res) => {
+   try {
+      const userPlants = userPlantServices.getUserPlantsByUserKey(req.params.key);
+      res.send(userPlants);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
+});
+
+// by garden key
 router.get('/getByUser/:key', async(req, res)=>{
    try {
       const userPlants = userPlantServices.getUserPlantsByGardenKey(req.params.key);

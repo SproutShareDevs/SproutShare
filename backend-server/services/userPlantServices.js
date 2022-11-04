@@ -10,6 +10,18 @@ const userPlantDatabase = require('../database/userPlantDatabase');
    }
 }
 
+// get all user plants from user from user_key
+async function getUserPlantsByUserKey(userKey) {
+   try {
+      const userPlants = await userPlantDatabase.getUserPlantsByUserKey(userKey);
+      return userPlants;
+   } catch(error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+// get user plant from user_plant_key
 async function getUserPlantByKey(userPlantKey){
    try {
       const userPlant = await userPlantDatabase.getUserPlantByKey(userPlantKey);
@@ -101,6 +113,7 @@ async function deleteUserPlant(userPlantKey){
 
 module.exports = {
    getAllUserPlants,
+   getUserPlantsByUserKey,
    getUserPlantByKey,
    getUserPlantsByGardenKey,
    //getPostByQuery,

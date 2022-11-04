@@ -6,9 +6,25 @@ const pool = require('../models/postgresPool');
  */
  async function getAllUserPlants() {
    try {
-      const allUserPlants = await pool.query("SELECT * FROM userPlant");
+      const allUserPlants = await pool.query("SELECT * FROM userplant");
       return allUserPlants.rows;
    } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
+ * 
+ * @param {*} userPlantKey The key of the user that owns all of the userPlants returned 
+ * @returns The userPlants the user owns
+ */
+
+ async function getUserPlantsByUserKey(userKey) {
+   try {
+      const userPlants = await pool.query("SELECT * FROM userplant WHERE user_key = $1", [userKey]);
+      return userPlants.rows;
+   } catch(error) {
       console.error(error);
       return JSON.stringify(error.message);
    }
@@ -178,6 +194,7 @@ async function deleteUserPlant(userPlantKey){
 
 module.exports = {
    getAllUserPlants,
+   getUserPlantsByUserKey,
    getUserPlantByKey,
    getUserPlantsByGardenKey,
    //getPostByQuery,

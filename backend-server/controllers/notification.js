@@ -12,6 +12,17 @@ router.get('/', async(req, res) => {
    }
 })
 
+
+router.get('/user/:accessToken', async(req, res) => {
+   try {
+      const userNotification = await notificationServices.getNotificationByToken(req.params.accessToken);
+      res.send(userNotification);
+   } catch (error) {
+      console.error(error);
+      res.send(JSON.stringify(error.message));
+   }
+});
+
 router.get('/search', async(req, res) =>{
    try {
       const notifications = await notificationServices.getNotificationByQuery({$regex:req.query.string});

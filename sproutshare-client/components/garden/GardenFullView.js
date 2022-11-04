@@ -9,21 +9,22 @@ import AddPlant from './editPlants/AddPlant';
 function GardenFullView(props) {
     const [userPlantData, setUserPlantData] = useState([]);
 
-    useEffect(() => {
-        const fetchUserPlants = async () => {
-            await axios.get(`${props.nodeServer}/userPlants`).then((response) => {
-                setUserPlantData(response.data)
-            }).catch(err => {
-                console.log('Error fetching user plants: ', err);
-            });
-        }
+    const fetchUserPlants = async () => {
+        await axios.get(`${props.nodeServer}/userPlants`).then((response) => {
+            setUserPlantData(response.data)
+        }).catch(err => {
+            console.log('Error fetching user plants: ', err);
+        });
+    }
 
+    useEffect(() => {
         fetchUserPlants();
     },[props.visible]);
+
     
     renderItem = ({item}) => {
         if(item.garden_key == props.garden.garden_key) {
-            return <UserPlantPreview nodeServer ={props.nodeServer} userPlant = {item}/>
+            return <UserPlantPreview onDelete={fetchUserPlants} nodeServer ={props.nodeServer} userPlant = {item}/>
         }
     }
 
@@ -32,7 +33,7 @@ function GardenFullView(props) {
         <Modal visible={props.visible} animationType="slide">
             <View style={styles.container}>
                 <Button title='Close' onPress={props.onClose}/>
-                <AddPlant nodeServer = {props.nodeServer} garden ={props.garden}/>
+                <AddPlant onNewPlant={fetchUserPlants} nodeServer = {props.nodeServer} garden ={props.garden}/>
                 <View style={styles.listBottomMargin}>
                   <FlatList
                     data = {userPlantData}
