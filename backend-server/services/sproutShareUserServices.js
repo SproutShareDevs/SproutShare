@@ -67,6 +67,16 @@ async function getUserByUsername(username){
    }
 }
 
+async function getUserRefreshTokenByKey(userKey){
+   try {
+      const userRefreshToken = await sproutShareUserDatabase.getUserRefreshTokenByKey(userKey);
+      return userRefreshToken;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 /**
  * Store User 
  * Also generates a hashed password for the user account
@@ -178,6 +188,7 @@ module.exports = {
    getUserByQuery,
    getUserByToken,
    getUserByUsername,
+   getUserRefreshTokenByKey,
    storeUser,
    updateUser,
    updateAccessToken,

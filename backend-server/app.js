@@ -6,7 +6,7 @@ const path = require('path');
 const ejs = require('ejs');
 const cors = require('cors');
 console.log(require('dotenv').config());
-const auth = require('./custom-middleware/auth');
+const auth = require('./custom-middleware/authMiddleware');
 /** seed db */
 const seedDB = require("./db/seed.js");
 
@@ -26,6 +26,16 @@ app.use(cors());
 const weatherController = require('./controllers/weather');
 app.use('/weather', weatherController);
 
+const loginController = require('./controllers/login');
+const logoutControler = require('./controllers/logout');
+const registerController = require('./controllers/register');
+const authController = require('./controllers/auth');
+
+app.use('/login', loginController);
+app.use('/logout', logoutControler);
+app.use('/register', registerController);
+app.use('/auth', authController);
+
 /* postgres */
 const plantController = require('./controllers/plants');
 const userPlantsController = require('./controllers/userPlants');
@@ -43,16 +53,12 @@ const commPostController = require('./controllers/commPost');
 const exchangeListingController = require('./controllers/exListing');
 const notificationsController = require('./controllers/notification');
 const forumPostController = require('./controllers/forumPost');
-const loginController = require('./controllers/login');
-const registerController = require('./controllers/register');
 
 app.get('/', homePageController);
 app.use('/communityPosts', commPostController);
 app.use('/exchangeListings', exchangeListingController);
 app.use('/notifications', notificationsController);
 app.use('/forumPosts', forumPostController);
-app.use('/login', loginController);
-app.use('/register', registerController);
 
 
 /** ejs */
@@ -93,6 +99,8 @@ app.use('/ejs-testing/forumPosts', ejsForumPostController);
 
 app.use(auth.authorizeUser);
 app.use('/ejs-testing/userPlants', ejsUserPlantController);
+app.use('/userPlants', userPlantsController);
+
 // seed database, comment out unless you want to reseed database
 //seedDB();
 

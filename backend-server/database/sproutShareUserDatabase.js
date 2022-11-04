@@ -66,6 +66,16 @@ async function getUserByUsername(username){
    }
 }
 
+async function getUserRefreshTokenByKey(userKey){
+   try {
+      const userRefreshToken = await pool.query('SELECT refreshtoken FROM sproutshareuser WHERE user_key = $1', [userKey]);
+      return userRefreshToken.rows[0].refreshtoken;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 /**
  * Store User 
  */
@@ -185,6 +195,7 @@ module.exports = {
    getUserByQuery,
    getUserByToken,
    getUserByUsername,
+   getUserRefreshTokenByKey,
    storeUser,
    updateUser,
    updateAccessToken,

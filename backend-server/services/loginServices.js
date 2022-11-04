@@ -18,12 +18,12 @@ async function verifyUserPassword(password, savedPassword){
    return false;
 }
 
-function createUserAccessToken(userKey, accessToken){
-   return jwt.sign(userKey, accessToken);
+function createUserAccessToken(userKey){
+   return jwt.sign({userKey:userKey}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
 }
 
-function createUserRefreshToken(userKey, refreshToken){
-   return jwt.sign(userKey, refreshToken);
+function createUserRefreshToken(userKey){
+   return jwt.sign({userKey:userKey}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '24h'});
 }
 
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { authorizeUser } = require('../../custom-middleware/auth');
+const { authorizeUser } = require('../../custom-middleware/authMiddleware');
 const router = express.Router();
 const userPlantServices = require('../../services/userPlantServices');
 
