@@ -17,7 +17,7 @@
          <button type="submit">Submit</button>
       </form>
       <h2>3 Day forecast by zip</h2>
-      <form action="/ejs-testing/weather/3dayforcast" method = "get">
+      <form action="/ejs-testing/weather/3dayForecast" method = "get">
          <input type="text" name="zipcode"  placeholder = "Set Zipcode..." >
          <button type="submit">Submit</button>
       </form>
@@ -50,18 +50,24 @@
       </center>
       <% } %>
 
-      <% if (typeof curr3DayForcast !== 'undefined') { %>  
+      <% if (typeof curr3DayForecast !== 'undefined') { %>  
       <center>
-         <div class="threeDayForcast">
-            <div>Forcast 1 Date: <%=curr3DayForcast.forcast1Date%></div>
-            <div>Forcast 1: <%=curr3DayForcast.forcast1main%></div>
-            <div>Forcast 1 Icon: <%=curr3DayForcast.forcast1icon%></div>
-            <div>Forcast 2 Date: <%=curr3DayForcast.forcast2Date%></div>
-            <div>Forcast 2: <%=curr3DayForcast.forcast2main%></div>
-            <div>Forcast 2 Icon: <%=curr3DayForcast.forcast2icon%></div>
-            <div>Forcast 3 Date: <%=curr3DayForcast.forcast3Date%></div>
-            <div>Forcast 3: <%=curr3DayForcast.forcast3main%></div>
-            <div>Forcast 4 Icon: <%=curr3DayForcast.forcast3icon%></div>
+         <div class="threeDayForecast">
+            <div>Forecast 1 Date: <%=curr3DayForecast.Forecast1Date%></div>
+            <div>Forecast 1: <%=curr3DayForecast.Forecast1main%></div>
+            <div>Forecast 1 Icon: <%=curr3DayForecast.Forecast1icon%></div>
+            <div>Forecast 1 description: <%=curr3DayForecast.Forecast1desc%></div>
+            <div>Forecast 1 Rain Inches: <%=curr3DayForecast.Forecast1rain%></div>
+            <div>Forecast 2 Date: <%=curr3DayForecast.Forecast2Date%></div>
+            <div>Forecast 2: <%=curr3DayForecast.Forecast2main%></div>
+            <div>Forecast 2 Icon: <%=curr3DayForecast.Forecast2icon%></div>
+            <div>Forecast 2 description: <%=curr3DayForecast.Forecast2desc%></div>
+            <div>Forecast 2 Rain Inches: <%=curr3DayForecast.Forecast2rain%></div>
+            <div>Forecast 3 Date: <%=curr3DayForecast.Forecast3Date%></div>
+            <div>Forecast 3: <%=curr3DayForecast.Forecast3main%></div>
+            <div>Forecast 3 Icon: <%=curr3DayForecast.Forecast3icon%></div>
+            <div>Forecast 3 description: <%=curr3DayForecast.Forecast3desc%></div>
+            <div>Forecast 3 Rain Inches: <%=curr3DayForecast.Forecast3rain%></div>
             </div>
          </center>
     </div>

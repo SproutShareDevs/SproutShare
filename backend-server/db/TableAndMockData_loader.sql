@@ -75,7 +75,8 @@ CREATE TABLE plant(
   rec_temp int,
   hardiness_zone varchar,
   soil_type soil_type,
-  img varchar
+  img varchar,
+  water_need int
 );
 
 
@@ -158,12 +159,7 @@ VALUES
    ('George', 'Romero', 'george.romero@dotld.com', 'george123', 'password', '0', 'en', '90710'),
    ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'thecricket', 'password', '0', 'en', '24061');
 
-INSERT INTO plant (common_name, latin_name, light_level, 
-min_temp, max_temp, rec_temp, hardiness_zone, soil_type, img)
-VALUES
-   ('Daisy', 'lorem', 5, 32, 70, 52, 'ZONE_A', 'loamy', 'https://images.unsplash.com/photo-1600264195762-c10ff160b264?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=724&q=80'),
-   ('Lily', 'ipsum', 10, 0, 120, 80, 'ZONE_B', 'sandy', 'https://images.unsplash.com/photo-1501973931234-5ac2964cd94a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80'),
-   ('Tomato', 'Solanum Lycopersicum', 10, 55, 90, 80, 'ZONE_C', 'silt', 'https://images.unsplash.com/photo-1588230737595-d49e490bff1c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80');
+\COPY plant(common_name, latin_name, light_level, min_temp, max_temp, rec_temp, hardiness_zone, soil_type, img, water_need) FROM 'plants.csv' WITH DELIMITER ',' HEADER CSV;
 
 INSERT INTO soil (soil_type, ph_level, nitrogen_level, phosp_level, potas_level)
 VALUES
