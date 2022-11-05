@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {StyleSheet, View, Text, Pressable, Image } from 'react-native'
 import GardenFullView from './GardenFullView';
 import styles from "../../styles/styles";
 
 function GardenPreview(props) {
     const [modalVisible, setModalIsVisible] = useState(false);
+
+    useEffect(async() => {
+        console.log("rendered");
+    },[]);
 
     return (
         <View style={styles.item}>

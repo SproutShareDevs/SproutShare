@@ -18,7 +18,6 @@ router.get('/', (req,res)=>{
 // Handling login logic
 router.post("/", async(req, res) => {
 	try {
-
 		// Authenticate The User 
 		const user = await loginServices.authenticateUser(req.body.username);
 		if(!user) return res.status(400).send(`User with username ${req.body.username} not found`);
@@ -32,10 +31,15 @@ router.post("/", async(req, res) => {
 		const userRefreshToken = loginServices.createUserRefreshToken(user.user_key, process.env.REFRESH_TOKEN_SECRET);
 
 		// update the users tokens
-		const updatedUser = await sproutShareUserServices.updateAccessToken(user.user_key, userAccessToken);
+		let updatedUser = await sproutShareUserServices.updateAccessToken(user.user_key, userAccessToken);
 		updatedUser = await sproutShareUserServices.updateRefreshToken(user.user_key, userRefreshToken);
-		if(updatedUser) return res.redirect('/ejs-testing/sproutShareUsers/');
-
+		
+		if(updatedUser) return res.json({
+			status: 'ok', 
+			username:updatedUser.username,
+			userAccessToken: userAccessToken, 
+			userRefreshToken:userRefreshToken
+		});
 	
 	} catch (error) {
 		console.error(error);

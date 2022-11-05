@@ -32,6 +32,15 @@ async function getUserPlantByKey(userPlantKey){
    }
 }
 
+async function getUserPlantsByUserKey(userKey){
+   try {
+      const userPlants = await userPlantDatabase.getUserPlantsByUserKey(userKey);
+      return userPlants;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
 
 /**
 async function getPostByQuery(query){
@@ -56,7 +65,7 @@ async function getUserPlantsByGardenKey(gardenKey){
       const userPlants = userPlantDatabase.getUserPlantsByGardenKey(gardenKey);
       return userPlants;
    } catch (error) {
-      console.log(error);
+      console.error(error);
       return JSON.stringify(error.message);
    }
 }
@@ -116,6 +125,7 @@ module.exports = {
    getUserPlantsByUserKey,
    getUserPlantByKey,
    getUserPlantsByGardenKey,
+   getUserPlantsByUserKey,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,

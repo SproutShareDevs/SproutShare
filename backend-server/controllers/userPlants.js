@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const {authorizeUser} = require('../custom-middleware/authMiddleware');
 const userPlantServices = require('../services/userPlantServices');
-
+/*
 router.get('/', async(req, res) => {
    try {
       const allUserPlants = await userPlantServices.getAllUserPlants();
@@ -11,6 +12,7 @@ router.get('/', async(req, res) => {
       res.send(JSON.stringify(error.message));
    }
 })
+*/
 /*
 router.get('/search', async(req, res) =>{
    
@@ -24,6 +26,20 @@ router.get('/search', async(req, res) =>{
    }
 })
 */
+
+router.get('/', authorizeUser, async(req,res)=>{
+   const userKey = req.body.user_key; // added by authorizeUser
+   try {
+      const userPlants = await userPlantServices.getUserPlantsByUserKey(userKey);
+
+      if(!userPlants) return res.sendStatus(500); // need to define more error cases
+
+      res.status(200).send(userPlants);
+
+   } catch (error) {
+      console.error(error);
+   }
+})
 
 router.get('/:key', async(req, res) => {
    try {
