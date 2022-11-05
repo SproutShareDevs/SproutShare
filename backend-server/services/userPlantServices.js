@@ -53,7 +53,7 @@ async function getUserPlantsByGardenKey(gardenKey){
       const userPlants = userPlantDatabase.getUserPlantsByGardenKey(gardenKey);
       return userPlants;
    } catch (error) {
-      console.log(error);
+      console.error(error);
       return JSON.stringify(error.message);
    }
 }

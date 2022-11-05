@@ -61,15 +61,15 @@ async function getUserByUsername(username){
       const user = await pool.query('SELECT * FROM sproutshareuser WHERE username = $1', [username]);
       return user.rows[0];
    } catch (error) {
-      console.log(error);
+      console.error(error);
       return JSON.stringify(error.message);
    }
 }
 
-async function getUserRefreshTokenByKey(userKey){
+async function getUserAccessTokenByKey(userKey){
    try {
-      const userRefreshToken = await pool.query('SELECT refreshtoken FROM sproutshareuser WHERE user_key = $1', [userKey]);
-      return userRefreshToken.rows[0].refreshtoken;
+      const userAccessToken = await pool.query('SELECT accesstoken FROM sproutshareuser WHERE user_key = $1', [userKey]);
+      return userAccessToken.rows[0].accesstoken;
    } catch (error) {
       console.error(error);
       return JSON.stringify(error.message);
@@ -154,7 +154,6 @@ async function updateAccessToken(userKey, accessToken){
  async function deleteAccessToken(userKey){
    try {
       const updatedUser = await pool.query('UPDATE sproutshareuser SET accesstoken = NULL WHERE user_key = $1 RETURNING *', [userKey]);
-      console.log("Deleted previous access token");
       return updatedUser.rows[0];
    } catch (error) {
       console.error(error);
@@ -168,7 +167,6 @@ async function updateAccessToken(userKey, accessToken){
  async function deleteRefreshToken(userKey){
    try {
       const updatedUser = await pool.query('UPDATE sproutshareuser SET refreshtoken = NULL WHERE user_key = $1 RETURNING *', [userKey]);
-      console.log("Deleted previous refresh token");
       return updatedUser.rows[0];
    } catch (error) {
       console.error(error);
@@ -195,7 +193,7 @@ module.exports = {
    getUserByQuery,
    getUserByToken,
    getUserByUsername,
-   getUserRefreshTokenByKey,
+   getUserAccessTokenByKey,
    storeUser,
    updateUser,
    updateAccessToken,

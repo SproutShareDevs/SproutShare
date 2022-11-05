@@ -67,10 +67,10 @@ async function getUserByUsername(username){
    }
 }
 
-async function getUserRefreshTokenByKey(userKey){
+async function getUserAccessTokenByKey(userKey){
    try {
-      const userRefreshToken = await sproutShareUserDatabase.getUserRefreshTokenByKey(userKey);
-      return userRefreshToken;
+      const userAccessToken = await sproutShareUserDatabase.getUserAccessTokenByKey(userKey);
+      return userAccessToken;
    } catch (error) {
       console.error(error);
       return JSON.stringify(error.message);
@@ -188,7 +188,7 @@ module.exports = {
    getUserByQuery,
    getUserByToken,
    getUserByUsername,
-   getUserRefreshTokenByKey,
+   getUserAccessTokenByKey,
    storeUser,
    updateUser,
    updateAccessToken,

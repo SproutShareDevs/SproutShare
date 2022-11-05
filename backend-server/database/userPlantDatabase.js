@@ -72,7 +72,7 @@ async function getUserPlantsByGardenKey(gardenKey){
       const userPlants = await pool.query("SELECT * FROM userplant WHERE garden_key = $1", [gardenKey]);
       return userPlants.rows;
    } catch (error) {
-      console.log(error);
+      console.error(error);
       return JSON.stringify(error.message);
    }
 }

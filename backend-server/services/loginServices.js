@@ -1,4 +1,3 @@
-const loginDatabase = require('../database/loginDatabase');
 const sproutShareUserServices = require('../services/sproutShareUserServices');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -19,7 +18,7 @@ async function verifyUserPassword(password, savedPassword){
 }
 
 function createUserAccessToken(userKey){
-   return jwt.sign({userKey:userKey}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '60s'});
+   return jwt.sign({userKey:userKey}, process.env.ACCESS_TOKEN_SECRET);
 }
 
 function createUserRefreshToken(userKey){
@@ -30,6 +29,6 @@ function createUserRefreshToken(userKey){
 module.exports = {
    authenticateUser,
    verifyUserPassword,
-   createUserAccessToken,
-   createUserRefreshToken
+   createUserAccessToken
+   //createUserRefreshToken
 }

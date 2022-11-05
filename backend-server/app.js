@@ -29,12 +29,12 @@ app.use('/weather', weatherController);
 const loginController = require('./controllers/login');
 const logoutControler = require('./controllers/logout');
 const registerController = require('./controllers/register');
-const authController = require('./controllers/auth');
+//const authController = require('./controllers/auth');
 
 app.use('/login', loginController);
 app.use('/logout', logoutControler);
 app.use('/register', registerController);
-app.use('/auth', authController);
+//app.use('/auth', authController);
 
 /* postgres */
 const plantController = require('./controllers/plants');

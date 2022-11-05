@@ -30,15 +30,15 @@ router.post("/", async(req, res) => {
 		
 		// Create access token and refresh token for user
 		const userAccessToken = loginServices.createUserAccessToken(user.user_key);
-		const userRefreshToken = loginServices.createUserRefreshToken(user.user_key)
+		//const userRefreshToken = loginServices.createUserRefreshToken(user.user_key)
 		
 		// update the user with new access token
-		let updatedUser = await sproutShareUserServices.updateAccessToken(user.user_key, userAccessToken);
-		updatedUser = await sproutShareUserServices.updateRefreshToken(user.user_key, userRefreshToken);
+		const updatedUser = await sproutShareUserServices.updateAccessToken(user.user_key, userAccessToken);
+		//updatedUser = await sproutShareUserServices.updateRefreshToken(user.user_key, userRefreshToken);
 
 		if(updatedUser) return res.status(200).json({
 				userAccessToken: userAccessToken,
-				userRefreshToken: userRefreshToken
+				//userRefreshToken: userRefreshToken
 			});
 	
 	} catch (error) {

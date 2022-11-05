@@ -28,7 +28,6 @@ router.get('/search', async(req, res) =>{
 */
 
 router.get('/', authorizeUser, async(req,res)=>{
-   console.log("in userPlants: ", req.body.user_key);
    const userKey = req.body.user_key; // added by authorizeUser
    try {
       const userPlants = await userPlantServices.getUserPlantsByUserKey(userKey);
