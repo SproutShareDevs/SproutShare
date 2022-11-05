@@ -12,19 +12,19 @@ import * as SecureStore from 'expo-secure-store'
 function GardenFullView(props) {
     const [userPlantData, setUserPlantData] = useState([]);
 
-    useEffect(async() => {
+
+    const fetchUserPlants = async () => {
         let accessToken = await SecureStore.getItemAsync('AccessToken');
-        const fetchUserPlants = async () => {
-            await axios.get(`${props.nodeServer}/userPlants`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            }).then((response) => {
-                setUserPlantData(response.data)
-            }).catch(err => {
-                console.log('Error: ', err);
-            });
-        }
+        axios.get(`${props.nodeServer}/userPlants`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then((response) => {
+            setUserPlantData(response.data)
+        }).catch(err => {
+            console.log('Error: ', err);
+        });
+    }
 
     useEffect(() => {
         fetchUserPlants();
@@ -55,5 +55,6 @@ function GardenFullView(props) {
       </>
     );
 }
+
 
 export default GardenFullView;

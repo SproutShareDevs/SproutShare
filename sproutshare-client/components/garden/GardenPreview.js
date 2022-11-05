@@ -6,10 +6,6 @@ import styles from "../../styles/styles";
 function GardenPreview(props) {
     const [modalVisible, setModalIsVisible] = useState(false);
 
-    useEffect(async() => {
-        console.log("rendered");
-    },[]);
-
     return (
         <View style={styles.item}>
             <Pressable 
