@@ -11,11 +11,11 @@
       <br/>
       <br/>
       <form action="/ejs-testing/gardens/store" method="post" enctype="application/x-www-form-urlencoded">
-         <label for="garden_id">Garden id</label>
-         <input type="text" name="garden_id">
+         <label for="garden_key">Garden key</label>
+         <input type="text" name="garden_key">
 
-         <label for="user_id">User Id</label>
-         <input type="text" name="user_id">
+         <label for="user_key">User key</label>
+         <input type="text" name="user_key">
 
          <label for="light_level">Light Lvl</label>
          <input type="text" name="light_level">
@@ -26,13 +26,13 @@
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <form action="/ejs-testing/gardens/id" method="get">
-         <input type="text" name="id"  placeholder = "Search by id..." >
+      <form action="/ejs-testing/gardens/key" method="get">
+         <input type="text" name="key"  placeholder = "Search by key..." >
          <button type="submit">Submit</button>
       </form>
       <br/>
-      <form action="/ejs-testing/gardens/getByUser/id" method="get">
-         <input type="text" name="id"  placeholder = "Search by user id..." >
+      <form action="/ejs-testing/gardens/getByUser/key" method="get">
+         <input type="text" name="key"  placeholder = "Search by user key..." >
          <button type="submit">Submit</button>
       </form>
       <br/>
@@ -45,15 +45,15 @@
          <div>
             <% gardens.forEach(garden => { %>
                <%= "{" %> 
-               <div>garden id: <%=garden.garden_id%></div>
-               <div>id: <%=garden.user_id%></div>
+               <div>garden key: <%=garden.garden_key%></div>
+               <div>User key: <%=garden.user_key%></div>
                <div>Light Lvl: <%=garden.light_level%></div> 
-               <div>Soil: <%=garden.soil_id%></div>
+               <div>Soil: <%=garden.soil_key%></div>
                <%= "}" %> 
                <br/>
-               <button class = "edit-record" value="<%=garden.garden_id%>">Edit</button>
+               <button class = "edit-record" value="<%=garden.garden_key%>">Edit</button>
                &emsp;
-               <button class = "delete-record" value="<%=garden.garden_id%>">Delete</button>
+               <button class = "delete-record" value="<%=garden.garden_key%>">Delete</button>
                <br/>
             <% }) %>
          </div>

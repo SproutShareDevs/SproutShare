@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <title>Weather</title>
+      <%-include('layouts/header');-%>
+   </head>
+   <body>
+      <%-include('layouts/navbar');-%>
+      <h1>Weather</h1>
+      <br/>
+      <br/>
+      <br/>
+      <h2>Current Weather By Zip</h2>
+      <form action="/ejs-testing/weather/zipcode" method = "get">
+         <input type="text" name="zipcode"  placeholder = "Set Zipcode..." >
+         <button type="submit">Submit</button>
+      </form>
+      <h2>3 Day forecast by zip</h2>
+      <form action="/ejs-testing/weather/3dayforcast" method = "get">
+         <input type="text" name="zipcode"  placeholder = "Set Zipcode..." >
+         <button type="submit">Submit</button>
+      </form>
+      <% if (typeof weather !== 'undefined') { %>
+         <div class="table">
+            <center>
+                <table class = 'table is-bordered is-striped is-narrow is-hoverable is-borederd'>
+                    <tbody>
+                        <tr><td>City</td><td><%=weather.name%></td></tr>
+                        <tr><td>Weather</td><td><%=weather.weather[0].main%></td></tr>
+                        <tr><td>Temperature</td><td><%=weather.main.temp%></td></tr>
+                    </tbody>
+                </table>
+          </center> 
+      <% } %>
+      
+      <% if (typeof weatherByZip !== 'undefined') { %>
+      <center>
+         <div class="zipDisplay">
+            <div>City Name: <%=weatherByZip.cityName%></div>
+            <div>Date: <%=weatherByZip.clientDate%></div>
+            <div>Curr. Temp: <%=weatherByZip.currentTemp%></div>
+            <div>Low Temp: <%=weatherByZip.lowTemp%></div>
+            <div>Max Temp:<%=weatherByZip.maxTemp%></div>
+            <div>Weather ID: <%=weatherByZip.weatherId%></div>
+            <div>Weather Param: <%=weatherByZip.weatherMain%></div>
+            <div>Param Description: <%=weatherByZip.weatherDescription%></div>
+            <div>Icon Code: <%=weatherByZip.weatherIcon%></div>
+         </div>
+      </center>
+      <% } %>
+
+      <% if (typeof curr3DayForcast !== 'undefined') { %>  
+      <center>
+         <div class="threeDayForcast">
+            <div>Forcast 1 Date: <%=curr3DayForcast.forcast1Date%></div>
+            <div>Forcast 1: <%=curr3DayForcast.forcast1main%></div>
+            <div>Forcast 1 Icon: <%=curr3DayForcast.forcast1icon%></div>
+            <div>Forcast 2 Date: <%=curr3DayForcast.forcast2Date%></div>
+            <div>Forcast 2: <%=curr3DayForcast.forcast2main%></div>
+            <div>Forcast 2 Icon: <%=curr3DayForcast.forcast2icon%></div>
+            <div>Forcast 3 Date: <%=curr3DayForcast.forcast3Date%></div>
+            <div>Forcast 3: <%=curr3DayForcast.forcast3main%></div>
+            <div>Forcast 4 Icon: <%=curr3DayForcast.forcast3icon%></div>
+            </div>
+         </center>
+    </div>
+    <% } %>

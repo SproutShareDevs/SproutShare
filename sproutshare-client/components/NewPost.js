@@ -26,7 +26,7 @@ function NewPost(props) {
               console.log(response.data);
               console.log("Post created");
             }).catch(err => {
-              console.log('Error: ', err);
+              console.log('Error creating new post: ', err);
         });
         togglePostModal(false);
         props.onNewPost();

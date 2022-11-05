@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Users</title>
+      <%-include('layouts/header');-%>
+   </head>
+   <body>
+      <%-include('layouts/navbar');-%>
+      <h1>Users</h1>
+      <br>
+      <br>
+      <br>
+      <form action="/ejs-testing/sproutShareUsers/store" method="post" enctype="application/x-www-form-urlencoded">
+         <label for="first_name">F. Name</label>
+         <input type="text" name="first_name">
+
+         <label for="last_name">L. Name</label>
+         <input type="text" name="last_name">
+
+         <label for="username">Username</label>
+         <input type="text" name="username">
+         
+         <label for="password">Pass</label>
+         <input type="text" name="password">
+         
+         <label for="email_address">Email</label>
+         <input type="text" name="email_address">         
+
+         <label for="lang">lang</label>
+         <input type="text" name="lang">
+
+         <label for="zip">Zip</label>
+         <input type="text" name="zip">
+
+         <label for="accesstoken">Token</label>
+         <input type="text" name="accesstoken">
+
+         <button type="submit">Submit</button>
+      </form>
+      
+      <form action="/ejs-testing/sproutShareUsers/key" method="get">
+         <input type="text" name="key"  placeholder = "Search by key..." >
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <form action="/ejs-testing/sproutShareUsers/search" method="get">
+         <input type="text" name="string"  placeholder = "Search by description..." >
+         <button type="submit">Submit</button>
+      </form>
+      <br/>
+      <% if (typeof users !== 'undefined') { %>
+         <span id="users-selectable" hidden><%=JSON.stringify(users);%></span>
+         <div>
+            <% users.forEach(user => { %>
+               <%= "{" %> 
+               <div>User Key: <%=user.user_key%></div> 
+               <div>Username: <%=user.username%></div>
+               <div>First Name: <%=user.first_name%></div>
+               <div>Last Name: <%=user.last_name%></div>
+               <div>Email Address: <%=user.email_address%></div>
+               <div>Password: <%=user.password%></div>
+               <div>Language: <%=user.lang%></div>
+               <div>Zip Code: <%=user.zip_code%></div>
+               <div>Access Token: <%=user.accesstoken%></div>
+               <div>Refresh Token: <%=user.refreshtoken%></div>
+               <%= "}" %> 
+               <br/>
+               <button class = "edit-record" value="<%=user.user_key%>">Edit</button>
+               &emsp;
+               <button class = "delete-record" value="<%=user.user_key%>">Delete</button>
+               <br/>
+            <% }) %>
+         </div>
+      <% } %>
+      <script>
+         var users = JSON.parse($('#users-selectable').text());
+         console.log();
+         
+         const deleteButtons = document.querySelectorAll('.delete-record').forEach(button=>{
+            button.addEventListener('click',  (e)=>{
+               console.log('delete pressed ' + e.target.value);
+               const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
+               if(confirm(promptText)){
+                  console.log("Deleted record: " + e.target.value);
+                  const deletePost = fetch('http://localhost:3000/ejs-testing/sproutShareUsers/delete/' + e.target.value, {
+                     method:'DELETE'
+                  })
+               }
+               else{
+                  console.log("Deleted record canceled for: " + e.target.value);
+               }
+            });
+         });
+
+         let editButtons = document.querySelectorAll('.edit-record');
+         editButtons.forEach(button=>{
+            button.addEventListener('click', (e)=>{
+               console.log('edit pressed ' + e.target.value);
+            });
+         });
+      </script>
+   </body>
+</html>

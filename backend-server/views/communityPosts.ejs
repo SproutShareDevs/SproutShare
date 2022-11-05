@@ -86,8 +86,9 @@
                const promptText = "Do you really want to delete the record:\n" + e.target.value + "?";
                if(confirm(promptText)){
                   console.log("Deleted record: " + e.target.value);
-                  const deletePost = fetch('http://localhost:3000/ejs-testing/communityPosts/delete/' + e.target.value, {
-                     method:'DELETE'
+                  fetch('http://localhost:3000/ejs-testing/communityPosts/delete/' + e.target.value, {
+                     method:'DELETE',
+                     redirect:"follow"
                   })
                }
                else{

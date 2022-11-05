@@ -19,6 +19,7 @@ class CommunityFeed extends React.Component {
         return(
             <View styles={styles.container}>
                 <NewPost nodeServer={this.props.nodeServer} onNewPost={this.rerender}/>
+                <View style={styles.listBottomMargin}>
                 <FlatList 
                     data={this.state.data}
                     renderItem={({ item }) => 
@@ -35,6 +36,7 @@ class CommunityFeed extends React.Component {
                     }
                     keyExtractor={item => item._id}
                 />
+                </View>
             </View>
         );
     }
@@ -56,7 +58,7 @@ class CommunityFeed extends React.Component {
                 return {data: response.data}
             });
           }).catch(err => {
-            console.log('Error: ', err);
+            console.log('Error Fetching Posts: ', err);
         });
     }
 
@@ -65,7 +67,7 @@ class CommunityFeed extends React.Component {
             console.log(response.data);
             console.log("Post deleted");
           }).catch(err => {
-            console.log('Error: ', err);
+            console.log('Error Deleting Post: ', err);
         });
         this.rerender();
     }

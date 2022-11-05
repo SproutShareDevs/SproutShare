@@ -29,104 +29,11 @@ this seems to be an issue with postgres when altering tables, but works out fine
 
 If this breaks your database for some reason, load from backup or the TableAndMockData_loader.sql script
 */
+ALTER TABLE sproutshareuser
+   ADD password varchar;
 
 ALTER TABLE sproutshareuser
-   RENAME COLUMN user_id TO user_key;
+   ADD accessToken varchar;
 
-ALTER TABLE sproutshareuser
-   ADD username varchar;
-
-ALTER TABLE plant
-   RENAME COLUMN plant_id TO plant_key;
-
-ALTER TABLE soil
-   RENAME COLUMN soil_id TO soil_key;
-
-ALTER TABLE disease
-   RENAME COLUMN disease_id TO disease_key;
-
-ALTER TABLE pest
-   RENAME COLUMN pest_id TO pest_key;
-
-ALTER TABLE plantdisease
-   RENAME COLUMN plant_disease_id TO plant_disease_key;
-
-ALTER TABLE plantdisease
-   RENAME COLUMN plant_id TO plant_key;
-
-ALTER TABLE plantdisease
-   RENAME COLUMN disease_id TO disease_key;
-
-ALTER TABLE plantdisease
-   DROP CONSTRAINT fk_plant,
-   DROP CONSTRAINT fk_disease,
-   ADD CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),
-   ADD CONSTRAINT fk_disease FOREIGN KEY(disease_key) REFERENCES disease(disease_key);
-
-ALTER TABLE plantpest
-   RENAME COLUMN plant_pest_id TO plant_pest_key;
-
-ALTER TABLE plantpest
-   RENAME COLUMN plant_id TO plant_key;
-
-ALTER TABLE plantpest
-   RENAME COLUMN pest_id TO pest_key;
-
-ALTER TABLE plantpest
-   DROP CONSTRAINT fk_plant,
-   DROP CONSTRAINT fk_pest,
-   ADD CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),
-   ADD CONSTRAINT fk_pest FOREIGN KEY(pest_key) REFERENCES disease(pest_key);
-
-ALTER TABLE garden
-   RENAME COLUMN garden_id TO garden_key;
-
-ALTER TABLE garden
-   RENAME COLUMN user_id TO user_key;
-
-ALTER TABLE garden
-   RENAME COLUMN soil_id TO soil_key;
-
-ALTER TABLE garden
-   DROP CONSTRAINT fk_user,
-   DROP CONSTRAINT fk_soil,
-   ADD CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
-   ADD CONSTRAINT fk_soil FOREIGN KEY(soil_key) REFERENCES soil(soil_key);
-
-ALTER TABLE userplant
-   RENAME COLUMN user_plant_id TO user_plant_key;
-
-ALTER TABLE userplant
-   RENAME COLUMN user_id TO user_key;
-
-ALTER TABLE userplant
-   RENAME COLUMN plant_id TO plant_key;
-
-ALTER TABLE userplant
-   RENAME COLUMN garden_id TO garden_key;
-
-ALTER TABLE userplant
-   RENAME COLUMN garden_id TO garden_key;
-
-ALTER TABLE userplant
-   RENAME COLUMN plant_disease_id TO plant_disease_key;
-
-ALTER TABLE userplant
-   RENAME COLUMN plant_pest_id TO plant_pest_key;
-
-ALTER TABLE userplant
-   DROP CONSTRAINT fk_user,
-   DROP CONSTRAINT fk_plant,  
-   DROP CONSTRAINT fk_garden,
-   DROP CONSTRAINT fk_disease,
-   DROP CONSTRAINT fk_pest,
-   ADD CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
-   ADD CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),  
-   ADD CONSTRAINT fk_garden FOREIGN KEY(garden_key) REFERENCES garden(garden_key),
-   ADD CONSTRAINT fk_disease FOREIGN KEY(plant_disease_key) REFERENCES plantdisease(plant_disease_key),
-   ADD CONSTRAINT fk_pest FOREIGN KEY(plant_pest_key) REFERENCES plantpest(plant_pest_key);
-
-
-SELECT * FROM garden;
-
+SELECT * FROM sproutshareuser;
 SELECT * FROM userplant WHERE garden_key IN (1,2); 
