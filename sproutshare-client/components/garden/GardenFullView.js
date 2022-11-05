@@ -6,12 +6,20 @@ import UserPlantPreview from './UserPlantPreview';
 import axios from 'axios';
 import AddPlant from './editPlants/AddPlant';
 
+import * as SecureStore from 'expo-secure-store'
+
+
 function GardenFullView(props) {
     const [userPlantData, setUserPlantData] = useState([]);
 
-    useEffect(() => {
+    useEffect(async() => {
+        let accessToken = await SecureStore.getItemAsync('AccessToken');
         const fetchUserPlants = async () => {
-            await axios.get(`${props.nodeServer}/userPlants`).then((response) => {
+            await axios.get(`${props.nodeServer}/userPlants`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }).then((response) => {
                 setUserPlantData(response.data)
             }).catch(err => {
                 console.log('Error: ', err);
