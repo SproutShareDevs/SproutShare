@@ -36,12 +36,11 @@ function ExchangePreview(props) {
        }).catch(err => {
         console.log('Error: ', err);
     });
-        refreshscreen();
-    }
+}
   
     function handleDelete (id){
         onDelete(id);
-     props.onDeleteListings();
+     props.onDeleteList();
     }
     
 

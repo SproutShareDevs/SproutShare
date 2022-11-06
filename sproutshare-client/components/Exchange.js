@@ -20,13 +20,10 @@ class Exchange extends React.Component {
             ExchangeName:'',
             ExchangeDescription:' '
         }
-       
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
-        this.refreshthelistings = this.refreshthelistings.bind(this);
-        this.GetexchangeListings = this.GetexchangeListings(this);
-    
-        
+        this.refreshpage = this.refreshpage.bind(this);
+        this.getListings= this.getListings.bind(this);
     }
 
     updateSearch = (search) => {
@@ -41,25 +38,19 @@ class Exchange extends React.Component {
         // when no input, show all
         if (searchPhrase === "") {
           return (
-            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} />
+            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} onExchangePreview= {this.refreshpage}/>
           );
         }
         // filter of the name
         if (item.ex_post_title.toUpperCase().includes(searchPhrase.toUpperCase().trim())) {
           return (
-            <ExchangePreview nodeServer={this.props.nodeServer} listing={item}/>
+            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} onExchangePreview= {this.refreshpage}/>
           );
         }
       }
-      
-    
 
     render() {
-
         return(
-      <View styles={styles.container}>
-
-        <ExchangePreview nodeServer={this.props.nodeServer} onDeleteList={this.refreshthelistings}/>
             <View styles={styles.container}>
                 <View>
                     <SearchBar 
@@ -68,14 +59,14 @@ class Exchange extends React.Component {
                     />
                 </View>
 
-                
-               
+                  
                 <View styles={styles.buttonContainer}>
                     <Button
                     title = "ADD NEW LISTING"
                     onPress = {() => this.setState({NewListing:true})}
                     color ="green"
                      />
+                     
                     <Modal
                     transparent = {false}
                     visible = {this.state.NewListing}
@@ -113,8 +104,8 @@ class Exchange extends React.Component {
                     </Modal>
                  </View>
 
-   
-                <View style={styles.ExchangelistBottomMargin}>
+
+                <View style={styles.listBottomMargin}>
                     <FlatList 
                         data={this.state.data}
                         renderItem={this.renderItem}
@@ -122,58 +113,32 @@ class Exchange extends React.Component {
                     />
                 </View>
             </View>
-        </View>
-  
-
         );
     }
-
     submitListing () {
-     axios.post(`${this.props.nodeServer}/exchangeListings/store`,{
-        ex_plant: this.state.ExchangePlant,
-        ex_post_title: this.state.ExchangeName,
-        ex_post_body: this.state.ExchangeDescription,
-        user_ID: 'Christian'
-    }).then((response) => {
-        this.setState({NewListing: false});
-        console.log(response.data);
-        console.log("Listing Posted");
-        
-      
-    }).catch(err => {
-        console.log('Error: ', err);
-        console.log(err.response.data)
-    });
-    this.refreshthelistings();
-    
-}
+        axios.post(`${this.props.nodeServer}/exchangeListings/store`,{
+           ex_plant: this.state.ExchangePlant,
+           ex_post_title: this.state.ExchangeName,
+           ex_post_body: this.state.ExchangeDescription,
+           user_key: 'Christian'
+       }).then((response) => {
+           this.setState({NewListing: false});
+           console.log(response.data);
+           console.log("Listing Posted");
+       }).catch(err => {
+           console.log('Error: ', err);
+           console.log(err.response.data)
+       });
+       this.refreshpage();
+    }
 
-
-refreshthelistings = async() => {
-  this.GetexchangeListings();
-    
-}
-
-componentDidMount = async() => {
-    this.GetexchangeListings();
-}
-
-GetexchangeListings = async() => {
-    await axios.get(`${this.props.nodeServer}/exchangeListings`).then((response) => {
-        this.setState(state => {
-            return {data: response.data}
-            
-        });
-      }).catch(err => {
-        console.log('Error: ', err);
-    });
-    console.log("refreshed");
-}
-}
-
-
-
-   /*ComponentDidMount = async() => {
+    refreshpage() {
+        this.getListings();
+    }
+    componentDidMount = async() =>{
+        this.getListings();
+    }
+    getListings = async() => {
         await axios.get(`${this.props.nodeServer}/exchangeListings`).then((response) => {
             this.setState(state => {
                 return {data: response.data}
@@ -182,6 +147,6 @@ GetexchangeListings = async() => {
             console.log('Error: ', err);
         });
     }
-}*/
+}
 
 export default Exchange;
