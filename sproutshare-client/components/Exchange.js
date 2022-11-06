@@ -14,10 +14,16 @@ class Exchange extends React.Component {
             data: [],
             modalIsVisible: false,
             search: '',
-            success: 'No search yet'
+            success: 'No search yet',
+            NewListing: false,
+            ExchangePlant:'',
+            ExchangeName:'',
+            ExchangeDescription:' '
         }
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
+        this.refreshpage = this.refreshpage.bind(this);
+        this.getListings= this.getListings.bind(this);
     }
 
     updateSearch = (search) => {
@@ -32,13 +38,13 @@ class Exchange extends React.Component {
         // when no input, show all
         if (searchPhrase === "") {
           return (
-            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} />
+            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} onExchangePreview= {this.refreshpage}/>
           );
         }
         // filter of the name
         if (item.ex_post_title.toUpperCase().includes(searchPhrase.toUpperCase().trim())) {
           return (
-            <ExchangePreview nodeServer={this.props.nodeServer} listing={item}/>
+            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} onExchangePreview= {this.refreshpage}/>
           );
         }
       }
@@ -53,6 +59,52 @@ class Exchange extends React.Component {
                     />
                 </View>
 
+                  
+                <View styles={styles.buttonContainer}>
+                    <Button
+                    title = "ADD NEW LISTING"
+                    onPress = {() => this.setState({NewListing:true})}
+                    color ="green"
+                     />
+                     
+                    <Modal
+                    transparent = {false}
+                    visible = {this.state.NewListing}
+                    >
+                    <View style={styles.containerCenter}>
+                    <View style= {{backgroundColor:"#ffffff"}}>
+                        
+                    <View style={styles.containerCenter}>
+                    <Text>Create a New Exchange Listing</Text>
+
+                    <TextInput style={styles.textInput} placeholder ="Plant Type"
+                    onChangeText = {(text) => {this.setState({ExchangePlant:text})}}
+                    />
+
+                    <TextInput style={styles.textInput} placeholder ="Listing Title"
+                    onChangeText = {(text) => {this.setState({ExchangeName:text})}}
+                    />
+
+                    <TextInput style={styles.textInput}  placeholder ="Listing Description"
+                    onChangeText = {(text) => {this.setState({ExchangeDescription:text})}}    
+                    />    
+
+                    <View style={styles.buttonContainer}>
+                    <View style={styles.button}>
+                     <Button color ="red" title = "Close" onPress={() => this.setState({NewListing:false})} />
+                     </View>
+                     <View style={styles.button}>
+                     <Button title = "Submit Listing" onPress={()=> this.submitListing()}/>
+                    </View>
+                    </View>      
+                    </View>
+                    </View>
+                    </View>
+                    
+                    </Modal>
+                 </View>
+
+
                 <View style={styles.listBottomMargin}>
                     <FlatList 
                         data={this.state.data}
@@ -63,8 +115,30 @@ class Exchange extends React.Component {
             </View>
         );
     }
+    submitListing () {
+        axios.post(`${this.props.nodeServer}/exchangeListings/store`,{
+           ex_plant: this.state.ExchangePlant,
+           ex_post_title: this.state.ExchangeName,
+           ex_post_body: this.state.ExchangeDescription,
+           user_key: 'Christian'
+       }).then((response) => {
+           this.setState({NewListing: false});
+           console.log(response.data);
+           console.log("Listing Posted");
+       }).catch(err => {
+           console.log('Error: ', err);
+           console.log(err.response.data)
+       });
+       this.refreshpage();
+    }
 
-    componentDidMount = async() => {
+    refreshpage = async()=> {
+        this.getListings();
+    }
+    componentDidMount = async() =>{
+        this.getListings();
+    }
+    getListings = async() => {
         await axios.get(`${this.props.nodeServer}/exchangeListings`).then((response) => {
             this.setState(state => {
                 return {data: response.data}
