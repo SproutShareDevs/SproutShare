@@ -2,7 +2,6 @@ import { useState } from "react";
 import {StyleSheet, View, Text, Pressable, Image,Button } from 'react-native'
 import styles from "../styles/styles";
 import axios from "axios";
-import ExchangePreview from './ExchangePreview';
 
 
 function ExchangePreview(props) {

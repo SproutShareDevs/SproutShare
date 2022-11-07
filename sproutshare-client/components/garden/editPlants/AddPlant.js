@@ -4,6 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import styles from '../../../styles/styles';
 import axios from 'axios';
 import PlantOption from './PlantOption';
+import RecommendPlant from './RecommendPlant';
 
 function AddPlant(props) {
     const [plantModal, togglePlantModal] = useState(false);
@@ -65,6 +66,7 @@ function AddPlant(props) {
         <Modal visible={plantModal} animationType="slide">
                   <Button title='Close' onPress={()=> togglePlantModal(false)}/>
                   <Button title='Add Selection' onPress={() => postPlant()}/>
+                  <RecommendPlant></RecommendPlant>
                   <TextInput style={styles.textInput} placeholder='Enter Quantity' keyboardType='numeric' onChangeText={text => setQuantity(text)} value={plantQuantity} />
                   <View style={styles.listBottomMargin}>
                     <FlatList

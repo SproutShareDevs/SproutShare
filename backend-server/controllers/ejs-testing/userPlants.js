@@ -53,6 +53,17 @@ router.get('/getByGarden/key', async(req,res)=>{
    }
 });
 
+// Recommend plants by zip code
+router.get('/recommend/:zipcode', async(req, res)=>{
+   try {
+      const plantsMap = userPlantServices.getRecommendedPlants(req.params.zipcode);
+	  console.log("Hi");
+      res.render(plantsMap);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
+})
+
 router.post('/store', async(req,res)=>{
    const userPlant = req.body;
    console.log(userPlant);
