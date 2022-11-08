@@ -47,7 +47,7 @@ async function getRecommendedPlants(zipCode){
    try {
 	   // plantsMap stores keys of plant_key and maps to values of arrays of [total quality (numerator), total number of plants (denominator)]
 	   // that together can be put together to calculate the average quality of a plant
-      plantsMap = new Map();
+     plantsMap = new Map();
 	  users = await sproutShareUserDatabase.getUserByZipCode(zipCode);
 	  for(user of users){
 		  arrayOfPlants = await userPlantDatabase.getUserPlantsByUserKey(user.user_key);

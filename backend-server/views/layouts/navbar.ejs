@@ -37,9 +37,9 @@
          localStorage.clear();
       })
    });
-
+   /* Do not enable
    restrictedLink.addEventListener('click', async function(event){
-      if(localStorage.getItem('refreshToken') === null) return;
+      if(localStorage.getItem('accessToken') === null) return;
       event.preventDefault();
       await authorizeUser();
       authorizeUser()
@@ -50,7 +50,7 @@
          document.close();
       })
    })
-
+   */
    async function logoutHandler(){
       const response = await fetch('http://localhost:3000/ejs-testing/logout/', {
 				method:'POST',
@@ -60,19 +60,19 @@
 				body: JSON.stringify({username:username})
 			})
    }
-   
+   /*Do not enable
    async function authorizeUser(){
       const fullLink = restrictedLink + '/'
       const response = await fetch(fullLink, {
          method:'GET',
          headers:{
-            'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
          }
       });
       return response;
    }
-
-   if(localStorage.getItem('refreshToken') !== null && username !== null){
+   */
+   if(localStorage.getItem('accessToken') !== null && username !== null){
       // user is already logged in, so remove the login button and register button
       loginLink.style.display = 'none';
       registerLink.style.display = 'none';

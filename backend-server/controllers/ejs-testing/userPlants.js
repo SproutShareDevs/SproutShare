@@ -3,7 +3,7 @@ const { authorizeUser } = require('../../custom-middleware/authMiddleware');
 const router = express.Router();
 const userPlantServices = require('../../services/userPlantServices');
 
-/*
+
 router.get('/', async(req,res)=>{
    try {
       const userPlants = await userPlantServices.getAllUserPlants();
@@ -12,8 +12,8 @@ router.get('/', async(req,res)=>{
       console.log(error.message);
    }
 });
-*/
 
+/* Buggy, do not enable
 router.get('/', authorizeUser, async(req,res)=>{
    const userKey = req.body.user_key;
    console.log(userKey);
@@ -25,7 +25,7 @@ router.get('/', authorizeUser, async(req,res)=>{
       console.error(error);
    }
 })
-
+*/
 router.get('/key', async(req,res)=>{
    const userPlantKey = req.query.key;
    try {
