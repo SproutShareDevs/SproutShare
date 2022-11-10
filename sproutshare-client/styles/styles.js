@@ -33,6 +33,24 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: 'green'
     },
+    weatherLocationText: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    weatherTempText: {
+        fontSize: 45,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        
+    },
+    weatherOtherText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginLeft: 15,
+        marginRight: 0
+    },
     commonName: {
         fontSize: 32,
         fontWeight: 'bold',
@@ -43,11 +61,25 @@ export default StyleSheet.create({
         fontStyle: 'italic',
         textAlign: 'center'
     },
-    title: {
-        fontSize: 16,
+    myGardenTitle: {
+        fontSize: 30,
+        marginLeft: 22,
+       
     },
-    
+    myGardenID: {
+        fontSize: 55,
+        marginLeft: 55,
+        fontWeight: 'bold'
+    },
+    myGardenSubs:{
+        fontSize: 20,
+        marginLeft: 20
+    },
     /* image styling */
+    weatherPic: {
+        flex: 2,
+        marginTop:0
+    },
 
     backgroundImage: {
         flex: 1,
@@ -64,11 +96,18 @@ export default StyleSheet.create({
     },
     tinyImage: {
         resizeMode: 'contain',
-        width: 200,
-        height: 60,
+        width: 300,
+        height: 100,
         marginRight: 10,
         marginLeft: 10,
         marginTop: 15      
+    },
+    arrowImage: {
+        resizeMode: 'contain',
+        width: 150,
+        height: 75,
+        marginTop:10
+              
     },
     mediumImage: {
         width: 150,
@@ -94,10 +133,6 @@ export default StyleSheet.create({
         padding: 9,
         elevation: 50,
         backgroundColor: '#5ab07d',
-        shadowColor: '#303838',
-        shadowOffset: { width: 0, height: 5},
-        shadowRadius: 10,
-        shadowOpacity: 0.35,
         marginBottom: 10,
         marginLeft: 30,
         marginRight: 0,
@@ -120,21 +155,22 @@ export default StyleSheet.create({
         borderWidth: 3,
         borderRadius: 30
     },
-    roundButton3: {
-        width: 150,
+    myGardenButtons: {
+        width: 160,
         height: 75,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 9,
-        elevation: 50,
+        elevation: 25,
         borderRadius: 30,
-        backgroundColor: '#5ab07d',
+        backgroundColor: '#A5B8A1',
         marginBottom: 10,
         marginTop: 10,
-        marginRight: 10,
+        marginRight: 15,
+        marginLeft: 10,
         borderColor: "black",
-        borderWidth: 3,
-        borderRadius: 30
+        borderWidth: 4,
+        borderRadius: 30,
     },
     titleText: {
         fontSize: 50,
@@ -170,17 +206,22 @@ export default StyleSheet.create({
     },
     nameplate: {
         flexDirection: 'row',
-        marginBottom: 10
+       
     },
     item: {
-        backgroundColor: '#90EE90',
-        padding: 20,
+        backgroundColor: '#e0e8d0',
+        padding: 2,
         marginVertical: 8,
-        marginHorizontal: 16,
+        marginHorizontal: 15,
+        borderRadius: 30,
+        borderWidth: 3,
+        borderColor: '#A0B86F',
+        height: 125,
+        width: 355
     },
 
     listBottomMargin: {
-        marginBottom: 60
+        marginBottom: 20
     },
     rippleEffect: {
         color: '#638c07'

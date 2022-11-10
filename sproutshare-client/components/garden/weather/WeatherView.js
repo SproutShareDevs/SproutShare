@@ -41,20 +41,27 @@ function WeatherView(props) {
 
     return (
             <Pressable style={{flex: 1,
-            flexDirection: 'row',
-            backgroundColor:'#e0e8d0',
-            padding:20,}}>
-                <View style={{flex: 1}}>
-                    <Image style ={{width:100, height:100}} source = {{uri:`http://openweathermap.org/img/wn/${weather.weatherIcon}@4x.png`}}/>
-                    <Text style={{fontSize:24, marginLeft:15}}>{weather.weatherMain}</Text>
+            backgroundColor:'#87CEEB',
+            borderRadius: 30,
+            marginLeft: 5,
+            marginRight: 5
+            }}>
+                <View style={{flexDirection: 'row'}}>
+                <View style = {{flexDirection: 'column', marginLeft: 50, marginTop: 0}}>
+                    <Text style={styles.weatherLocationText}>{weather.cityName} </Text>
+                    <Text style={styles.weatherTempText}>{Math.round(weather.currentTemp)} F </Text>
+                    </View>
+                <View style ={{marginTop:10, marginBottom: 0}}>
+                    <Image style ={{width:150, height:80}} source = {{uri:`http://openweathermap.org/img/wn/${weather.weatherIcon}@4x.png`}}/>
                 </View>
-                <View style={{flex:3}}>
-                    <Text style={{fontSize:18}}>Location: {weather.cityName} </Text>
-                    <Text style={{fontSize:18}}>Current Temperature: {weather.currentTemp} F </Text>
-                    <Text style={{fontSize:18}}>High: {weather.maxTemp} F</Text>
-                    <Text style={{fontSize:18}}>Low: {weather.lowTemp} F</Text>
                 </View>
-            </Pressable>
+                <View style ={{flexDirection: 'row' , marginLeft:50}}>
+                    <Text style={styles.weatherOtherText}>H: {Math.round(weather.maxTemp)} F</Text>
+                    <Text style={styles.weatherOtherText}>L: {Math.round(weather.lowTemp)} F</Text>
+                    <View style={{marginLeft: 50}}>
+                    <Text style={styles.weatherOtherText}>{weather.weatherMain}</Text>
+           </View></View>
+           </Pressable>
     );
 }
 

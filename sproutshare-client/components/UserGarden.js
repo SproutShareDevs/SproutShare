@@ -33,7 +33,7 @@ class UserGarden extends React.Component {
           <View style={styles.container}>
             <ImageBackground source={require("./../assets/MainBackground.png")} style={styles.backgroundImage}>
             <Image source = {require("./../assets/MyGardens.png")} style={styles.tinyImage}/>
-            <WeatherView style={{flex: 2}} nodeServer ={this.props.nodeServer}/>
+            <WeatherView style={styles.weatherPic} nodeServer ={this.props.nodeServer}/>
             <View style={{flex: 4}}>
             <View style={{flexDirection: 'row', alignSelf: 'center'}}>
             <TouchableOpacity
@@ -55,19 +55,24 @@ class UserGarden extends React.Component {
                 console.log('Error: Could not retrieve notifications', err);
               });
             }}
-            style={styles.roundButton3}>
+            style={styles.myGardenButtons}>
             <Text style ={styles.gardenButtonText}>Check for Watering</Text>
             </TouchableOpacity>
              
               <AddGarden nodeServer={this.props.nodeServer}/>
+              </View>
               <View style={styles.listBottomMargin} >
-                <FlatList
+              
+              
+                <FlatList 
                   data = {this.state.data}
                   renderItem={this.renderItem}
                   keyExtractor={item => item.garden_key}
+                  
                 />
+                <Image source = {require("./../assets/logo.png")} style = {styles.tinyImage}></Image>
                 </View>
-              </View>
+              
             </View>
             </ImageBackground>
           </View>

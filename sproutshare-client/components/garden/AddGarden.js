@@ -40,7 +40,7 @@ function AddGarden(props) {
         <>
         <TouchableOpacity
          onPress={() => toggleGardenModal(true)}
-         style={styles.roundButton3}>
+         style={styles.myGardenButtons}>
             <Text style ={styles.gardenButtonText}>Add a Garden</Text>
          </TouchableOpacity>
         

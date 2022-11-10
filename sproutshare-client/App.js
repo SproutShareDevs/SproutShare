@@ -120,10 +120,10 @@ function HomeView({ navigation, route }) {
     
                 return <Ionicons name={iconName} size={size} color={color} />;
             },
-            tabBarActiveTintColor: 'black', //changes icon color not background
-            tabBarInactiveTintColor: 'gray',
-            tabBarActiveBackgroundColor: '#c1d9bc',
-            tabBarInactiveBackgroundColor: '#c1d9bc'
+            tabBarActiveTintColor: 'green', //changes icon color not background
+            tabBarInactiveTintColor: 'dark gray',
+            tabBarActiveBackgroundColor: '#A5B8A1',
+            tabBarInactiveBackgroundColor: '#A5B8A1'
     
             })}
         >
