@@ -70,7 +70,7 @@ class UserGarden extends React.Component {
                   keyExtractor={item => item.garden_key}
                   
                 />
-                <Image source = {require("./../assets/logo.png")} style = {styles.tinyImage}></Image>
+                
                 </View>
               
             </View>
