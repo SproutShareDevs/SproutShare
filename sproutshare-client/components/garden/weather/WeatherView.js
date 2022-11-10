@@ -42,7 +42,7 @@ function WeatherView(props) {
     return (
             <Pressable style={{flex: 1,
             flexDirection: 'row',
-            backgroundColor:'#949699',
+            backgroundColor:'#e0e8d0',
             padding:20,}}>
                 <View style={{flex: 1}}>
                     <Image style ={{width:100, height:100}} source = {{uri:`http://openweathermap.org/img/wn/${weather.weatherIcon}@4x.png`}}/>

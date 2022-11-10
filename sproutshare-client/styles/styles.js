@@ -28,6 +28,11 @@ export default StyleSheet.create({
    
 
     /* text styling */
+    headerText: {
+        fontSize: 100,
+        fontWeight: 'bold',
+        color: 'green'
+    },
     commonName: {
         fontSize: 32,
         fontWeight: 'bold',
@@ -58,20 +63,23 @@ export default StyleSheet.create({
         marginBottom: 0
     },
     tinyImage: {
-        width: 110,
-        height: 110,
+        resizeMode: 'contain',
+        width: 200,
+        height: 60,
         marginRight: 10,
         marginLeft: 10,
-        marginTop: 10
+        marginTop: 15      
     },
     mediumImage: {
         width: 150,
         height: 150,
         marginRight: 10,
         msrginLeft: 10,
-        marginTop: 10
+        marginTop: 20
     },
-
+    tabBar: {
+        backgroundColor: '#5eb876'
+    },
     /* miscellaneous */
     appBackground: {
         flex: 1,
@@ -112,6 +120,22 @@ export default StyleSheet.create({
         borderWidth: 3,
         borderRadius: 30
     },
+    roundButton3: {
+        width: 150,
+        height: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 9,
+        elevation: 50,
+        borderRadius: 30,
+        backgroundColor: '#5ab07d',
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 10,
+        borderColor: "black",
+        borderWidth: 3,
+        borderRadius: 30
+    },
     titleText: {
         fontSize: 50,
         fontFamily: 'serif',
@@ -124,7 +148,18 @@ export default StyleSheet.create({
         marginLeft: 5
     },
     buttonText: {
+        justifyContent: 'center',
+        alignItems: 'center',
         fontSize: 20,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        textTransform: "uppercase"
+
+    },
+    gardenButtonText: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 15,
         fontFamily: 'serif',
         fontWeight: "700",
         textTransform: "uppercase"

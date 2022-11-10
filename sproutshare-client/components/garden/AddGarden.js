@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {View, Text, Image, Modal, Button } from 'react-native'
+import {View, Text, Image, Modal, Button, TouchableOpacity } from 'react-native'
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import styles from '../../styles/styles';
 import axios from 'axios';
@@ -38,7 +38,12 @@ function AddGarden(props) {
 
     return (
         <>
-        <Button color='#228b22' title='Add Garden' onPress={() => toggleGardenModal(true)}/>
+        <TouchableOpacity
+         onPress={() => toggleGardenModal(true)}
+         style={styles.roundButton3}>
+            <Text style ={styles.gardenButtonText}>Add a Garden</Text>
+         </TouchableOpacity>
+        
         <Modal visible={gardenModal} animationType="slide">
             <View style={styles.button}>
 
