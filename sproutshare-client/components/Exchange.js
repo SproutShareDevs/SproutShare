@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import{SafeAreaView, Text, View, Button, StyleSheet, Modal, TextInput, Pressable } from 'react-native';
+import{SafeAreaView, Text, View, Button, StyleSheet, Modal, TouchableOpacity, TextInput, Pressable, Image, ImageBackground } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
 import ExchangePreview from './ExchangePreview';
@@ -51,22 +51,27 @@ class Exchange extends React.Component {
 
     render() {
         return(
-            <View styles={styles.container}>
+            <View style={styles.container}>
+                <ImageBackground source={require("./../assets/MainBackground.png")} style={styles.backgroundImage}>
+                
                 <View>
+                    <Image source={require("./../assets/Exchange.png")} style={styles.exchangeImage}></Image>
+                    <View style={{marginTop:0}}>
                     <SearchBar 
+                       
                         placeholder='Search Here...'
                         updateSearch={this.updateSearch}
                     />
+                    </View>
                 </View>
 
                   
-                <View styles={styles.buttonContainer}>
-                    <Button
-                    title = "ADD NEW LISTING"
-                    onPress = {() => this.setState({NewListing:true})}
-                    color ="green"
-                     />
-                     
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        onPress = {() => this.setState({NewListing:true})}
+                        style={styles.exchangeButton}>
+                        <Text style ={styles.buttonText}>Add New Listing</Text>
+                    </TouchableOpacity>
                     <Modal
                     transparent = {false}
                     visible = {this.state.NewListing}
@@ -112,6 +117,7 @@ class Exchange extends React.Component {
                         keyExtractor={item => item._id}
                     />
                 </View>
+                </ImageBackground>
             </View>
         );
     }

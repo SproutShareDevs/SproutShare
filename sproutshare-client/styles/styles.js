@@ -96,6 +96,29 @@ export default StyleSheet.create({
         fontSize:12,
         marginLeft:110
     },
+    exUser: {
+        fontSize:18,
+        marginLeft: 7,
+        marginTop: 30 
+    },
+    exTitle: {
+        fontSize:22,
+        fontWeight: 'bold',
+        marginLeft:10
+    },
+    exBody: {
+        fontSize:18,
+        marginLeft:5
+       
+    },
+    exDate: {
+        fontSize:12,
+        marginLeft:145
+    },
+    exPlant: {
+        fontSize:12,
+        marginLeft:250
+    },
     /* image styling */
     weatherPic: {
         flex: 2,
@@ -127,10 +150,17 @@ export default StyleSheet.create({
     communityImage: {
         resizeMode: 'contain',
         width: 300,
-        height: 100,
+        height: 120,
         marginLeft: 10,
-        marginTop:5
         
+    },
+    exchangeImage: {
+        resizeMode: 'contain',
+        width: 365,
+        height: 50,
+        marginLeft: 5,
+        marginRight: 5,  
+        marginTop:20    
     },
     pfpImage: {
         width: 60,
@@ -145,6 +175,19 @@ export default StyleSheet.create({
         borderColor: "#A0B86F",
         borderWidth: 3,
         borderRadius: 50
+    },
+    veggieImage: {
+        width: 80,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 9,
+        elevation: 50,
+        marginLeft: 120,
+        marginTop: 5,
+        borderColor: "#A0B86F",
+        borderWidth: 3,
+        borderRadius: 40
     },
     plusImage: {
         resizeMode: 'contain',
@@ -166,6 +209,21 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: "center", 
         
+    },
+    exchangeButton: {
+        width: 300,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 9,
+        elevation: 50,
+        backgroundColor: '#5ab07d',
+        marginBottom: 10,
+        marginLeft: 30,
+        marginRight: 0,
+        borderColor: "black",
+        borderWidth: 3,
+        borderRadius: 30
     },
     circleButton: {
         width: 60,
@@ -284,6 +342,17 @@ export default StyleSheet.create({
         borderColor: '#A0B86F',
         height: 200,
         width: 355
+    },
+    itemExchange: {
+        backgroundColor: '#e0e8d0',
+        padding: 2,
+        marginVertical: 5,
+        marginHorizontal: 16,
+        borderRadius: 30,
+        borderWidth: 3,
+        borderColor: '#A0B86F',
+        height: 220,
+        width: 360
     },
     listBottomMargin: {
         marginBottom: 20
