@@ -75,6 +75,27 @@ export default StyleSheet.create({
         fontSize: 20,
         marginLeft: 20
     },
+    postText: {
+        fontSize: 15
+    },
+    comUser: {
+        fontSize:18,
+        marginLeft: 7,
+        marginTop: 20 
+    },
+    comTitle: {
+        fontSize:20,
+        fontWeight: 'bold',
+        marginLeft: 20 
+    },
+    comBody: {
+        fontSize:15,
+        marginLeft: 20 
+    },
+    comDate: {
+        fontSize:12,
+        marginLeft:110
+    },
     /* image styling */
     weatherPic: {
         flex: 2,
@@ -84,7 +105,8 @@ export default StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: '100%',
-        height: '100%'
+        height: '100%',
+        resizeMode: 'cover'
     },
     logoImage: {
         resizeMode: 'contain',
@@ -102,12 +124,32 @@ export default StyleSheet.create({
         marginLeft: 10,
         marginTop: 15      
     },
-    arrowImage: {
+    communityImage: {
         resizeMode: 'contain',
-        width: 150,
-        height: 75,
-        marginTop:10
-              
+        width: 300,
+        height: 100,
+        marginLeft: 10,
+        marginTop:5
+        
+    },
+    pfpImage: {
+        width: 60,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 9,
+        elevation: 50,
+        marginBottom: 10,
+        marginLeft: 10,
+        marginTop: 5,
+        borderColor: "#A0B86F",
+        borderWidth: 3,
+        borderRadius: 50
+    },
+    plusImage: {
+        resizeMode: 'contain',
+        width: 35,
+        height: 35              
     },
     mediumImage: {
         width: 150,
@@ -124,6 +166,21 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: "center", 
         
+    },
+    circleButton: {
+        width: 60,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 9,
+        elevation: 50,
+        backgroundColor: '#5ab07d',
+        marginBottom: 10,
+        marginLeft: 10,
+        marginTop: 20,
+        borderColor: "black",
+        borderWidth: 3,
+        borderRadius: 50
     },
     roundButton1: {
         width: 150,
@@ -147,7 +204,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         padding: 9,
         elevation: 50,
-        borderRadius: 30,
         backgroundColor: '#5ab07d',
         marginLeft: 80,
         marginBottom: 10,
@@ -162,7 +218,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         padding: 9,
         elevation: 25,
-        borderRadius: 30,
         backgroundColor: '#A5B8A1',
         marginBottom: 10,
         marginTop: 10,
@@ -219,7 +274,17 @@ export default StyleSheet.create({
         height: 125,
         width: 355
     },
-
+    itemCommunity: {
+        backgroundColor: '#e0e8d0',
+        padding: 2,
+        marginVertical: 8,
+        marginHorizontal: 15,
+        borderRadius: 30,
+        borderWidth: 3,
+        borderColor: '#A0B86F',
+        height: 200,
+        width: 355
+    },
     listBottomMargin: {
         marginBottom: 20
     },
