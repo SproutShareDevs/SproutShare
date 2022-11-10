@@ -162,6 +162,13 @@ export default StyleSheet.create({
         marginRight: 5,  
         marginTop:20    
     },
+    wikiImage: {
+        resizeMode: 'contain',
+        width: 275,
+        height: 80,
+        marginLeft: 50,  
+        marginTop:120
+    },
     pfpImage: {
         width: 60,
         height: 60,
