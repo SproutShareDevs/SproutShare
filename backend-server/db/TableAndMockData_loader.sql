@@ -124,6 +124,7 @@ CREATE TABLE garden(
   user_key int,
   soil_key int,
   light_level varchar,
+  yesterdaysRain int,
   CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
   CONSTRAINT fk_soil FOREIGN KEY(soil_key) REFERENCES soil(soil_key)
 );
@@ -142,7 +143,6 @@ CREATE TABLE userplant(
   plant_difficulty int,
   plant_quality int,
   last_watering_date date NOT NULL DEFAULT CURRENT_DATE,
-  yesterdaysRain int,
   CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
   CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),  
   CONSTRAINT fk_garden FOREIGN KEY(garden_key) REFERENCES garden(garden_key),
@@ -187,16 +187,16 @@ VALUES
    (2,1), 
    (3,1);
 
-INSERT INTO garden (user_key, soil_key, light_level)
+INSERT INTO garden (user_key, soil_key, light_level, yesterdaysRain)
 VALUES
-   (1, 1, 10),
-   (2, 1, 5);
+   (1, 1, 10,5),
+   (2, 1, 5,2);
 
 INSERT INTO userplant(user_key, plant_key, garden_key, plant_disease_key, 
-plant_pest_key, plant_qty, plant_difficulty, plant_quality, yesterdaysRain)
+plant_pest_key, plant_qty, plant_difficulty, plant_quality)
 VALUES
-   (1, 1, 1, null, null, 10, 5, 4, 1),
-   (2, 3, 2, 3, null, 1, 10, 10, 2);
+   (1, 1, 1, null, null, 10, 5, 4),
+   (2, 3, 2, 3, null, 1, 10, 10);
 
 
 
