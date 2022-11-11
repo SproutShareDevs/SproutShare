@@ -142,6 +142,7 @@ CREATE TABLE userplant(
   plant_difficulty int,
   plant_quality int,
   last_watering_date date NOT NULL DEFAULT CURRENT_DATE,
+  yesterdaysRain int,
   CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
   CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),  
   CONSTRAINT fk_garden FOREIGN KEY(garden_key) REFERENCES garden(garden_key),
@@ -192,10 +193,10 @@ VALUES
    (2, 1, 5);
 
 INSERT INTO userplant(user_key, plant_key, garden_key, plant_disease_key, 
-plant_pest_key, plant_qty, plant_difficulty, plant_quality)
+plant_pest_key, plant_qty, plant_difficulty, plant_quality, yesterdaysRain)
 VALUES
-   (1, 1, 1, null, null, 10, 5, 4),
-   (2, 3, 2, 3, null, 1, 10, 10);
+   (1, 1, 1, null, null, 10, 5, 4, 1),
+   (2, 3, 2, 3, null, 1, 10, 10, 2);
 
 
 

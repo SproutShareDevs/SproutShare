@@ -51,24 +51,9 @@ function AccountManagement(props) {
 
         
     }
-    async function testPush() {
-        let result = await SecureStore.getItemAsync('AccessToken');
-        if (result) {
-            axios.post(`https://app.nativenotify.com/api/indie/notification`, {
-            subID: result,
-            appId: 4505,
-            appToken: 'ru8YeSvU7Wot11tFPoaxwX',
-            title: 'Push Notifications are working',
-            message: 'Thank goodness these push notifications are working'
-        });
-            alert('Notification Pushed');
-    } else {
-        alert('No access token in storage');
-    }
          
-    }
 
-      const triggerLocalNotificationHandler = () => {
+    const triggerLocalNotificationHandler = () => {
         Notifications.scheduleNotificationAsync({
           content: {
             title: "Local Notification",
@@ -100,7 +85,6 @@ function AccountManagement(props) {
                     title={"Schedule a push notification"}
                     onPress={triggerLocalNotificationHandler}
                 />
-                <Text>Your expo push token: {expoPushToken}</Text>
             </View>
             
         );
