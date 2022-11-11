@@ -4,13 +4,22 @@ import styles from "../../../styles/styles";
 import axios from 'axios';
 
 import * as SecureStore from 'expo-secure-store';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+import * as Device from 'expo-device'
 
 function WeatherView(props) {
     const [userZip, setUserZip] = useState('');
     const [weather, setWeather] = useState([]);
+    const[threeDayForecast, setThreeDayForecast] = useState([]);
     
-    
-
+    Notifications.setNotificationHandler({
+        handleNotification: async => ({
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: false
+        }),
+    });
 
     const fetchUser = async () => {
         let accessToken = await SecureStore.getItemAsync('AccessToken');
@@ -31,11 +40,34 @@ function WeatherView(props) {
         });
     }
 
+    const fetch3DayForecast = async () => {
+        console.log(`${props.nodeServer}/weather/3dayForecast/${userZip}`);
+        await axios.get(`${props.nodeServer}/weather/3dayForecast/${userZip}`).then((response) => {
+            setThreeDayForecast(response.data);
+            console.log(response.data);
+        }).catch(err => {
+            console.log('Error: Could not access weather', err);
+        });
+    }
     
+    const checkForRainNotification = async () => {
+        if (threeDayForecast.Forecast1main == "Rain") {
+            console.log("hit");
+        Notifications.scheduleNotificationAsync({
+            content: {
+              title: "It is going to rain tomorrow!",
+              body: "Hello, you may not have to water your plants! Check after the rain stops!",
+            },
+            trigger: { seconds: 5 },
+          })
+        }
+    }
     useEffect(() => {
         fetchUser();
         if(userZip != '') {
             fetchWeather();
+            fetch3DayForecast();
+            checkForRainNotification();
         }
     },[userZip]);
 

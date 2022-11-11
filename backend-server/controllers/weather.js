@@ -16,7 +16,7 @@ const weatherServices = require('../services/weatherServices');
    }
    
 });
-router.get('/:3dayForecast', (req, res)=>{
+router.get('/3dayForecast/:zipcode', (req, res)=>{
    try {
       weatherServices.getWeather3DayForecast(req.params.zipcode, (curr3DayForecast)=>{
          res.send(curr3DayForecast);

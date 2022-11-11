@@ -1,11 +1,27 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TextInput, View, Text, Button } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import registerNNPushToken from 'native-notify';
 import {registerIndieID} from 'native-notify';
 import axios from 'axios';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+import * as Device from 'expo-device'
+
+
+
+
+
 function AccountManagement(props) {
+
+    Notifications.setNotificationHandler({
+        handleNotification: async => ({
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: false
+        }),
+    });
 
     async function alertCurrentAccessToken() {
         let result = await SecureStore.getItemAsync('AccessToken');
@@ -51,7 +67,55 @@ function AccountManagement(props) {
     }
          
     }
-    
+
+    async function registerForPushNotificationsAsync() {
+        let token;
+      
+        if (Platform.OS === 'android') {
+          await Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: '#FF231F7C',
+          });
+        }
+      
+        if (Device.isDevice) {
+          const { status: existingStatus } = await Notifications.getPermissionsAsync();
+          let finalStatus = existingStatus;
+          if (existingStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+          }
+          if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+          }
+          token = (await Notifications.getExpoPushTokenAsync()).data;
+          console.log(token);
+        } else {
+          alert('Must use physical device for Push Notifications');
+        }
+      
+        return token;
+      }
+      const triggerLocalNotificationHandler = () => {
+        Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Local Notification",
+            body: "Hello this is a local notification!",
+          },
+          trigger: { seconds: 5 },
+        })
+      }
+      const [expoPushToken, setExpoPushToken] = useState('');
+      const [notification, setNotification] = useState(false);
+      const notificationListener = useRef();
+      const responseListener = useRef();
+
+      useEffect(() => {
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+      }, []);
 
         return (
             <View>
@@ -72,16 +136,13 @@ function AccountManagement(props) {
                     onPress={alertCurrentAccessToken}
                 />
                 <Button
-                    title={"Register For Push Notifications"}
-                    onPress={registerForPushNotifications}
+                    title={"Schedule a push notification"}
+                    onPress={triggerLocalNotificationHandler}
                 />
-                <Button
-                    title={"Test Push Notifications"}
-                    onPress={testPush}
-                />
+                <Text>Your expo push token: {expoPushToken}</Text>
             </View>
             
         );
-}
 
+}
 export default AccountManagement;
