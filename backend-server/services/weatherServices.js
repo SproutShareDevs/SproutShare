@@ -25,6 +25,7 @@ function getWeatherByZip(zipcode, callback){
       callback(weatherByZip);
    })
 }
+
 function getWeather3DayForecast(zipcode, callback){
    let curr3DayForecast;
    weatherAPI.getWeather3DayForecast(zipcode, (weatherObj)=>{
@@ -52,6 +53,31 @@ function getWeather3DayForecast(zipcode, callback){
       callback(curr3DayForecast);
    })
 }
+
+/**
+ * Takes the zipcode of a location and returns the 24-hour rainfall amount
+ * @param {*} zipcode The zipcode of the location where historical rain data is needed
+ * @param {*} callback Rainfall in inches
+ */
+function getDailyRainfall(zipcode, callback){
+   const MM_TO_INCHES = 25.4; // divide rainfallAmountMilli by this to get inches
+   var rainfallAmountMilli = 0;
+   
+   weatherAPI.getDailyHistory(zipcode, (data)=>{
+      const weatherData = Array.from(data.list);
+      weatherData.forEach(hour =>{
+         if(hour.rain){
+            console.log("Rainfall:", hour.rain['1h']);
+            //console.log("start iter:", rainfallAmountMilli);
+            rainfallAmountMilli = rainfallAmountMilli + hour.rain['1h'];
+            //console.log("end iter", rainfallAmountMilli);
+         }
+      })
+      console.log("total: ", rainfallAmountMilli);  
+      callback(rainfallAmountMilli / MM_TO_INCHES);
+   })
+}
+
 /**
  * 
  * @param {*} date The OpenWeatherAPI datetime parameter 
@@ -71,5 +97,6 @@ function formatDate(date){
 module.exports = {
    getWeatherDefault,
    getWeatherByZip,
-   getWeather3DayForecast
+   getWeather3DayForecast,
+   getDailyRainfall
 }

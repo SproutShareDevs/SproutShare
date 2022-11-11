@@ -38,4 +38,14 @@ router.get('/3dayForecast', (req, res)=>{
    }
 })
 
+router.get('/getRain', (req, res)=>{
+   try {
+      weatherServices.getDailyRainfall(req.query.zipcode, (rainfallData)=>{
+         res.render('weather', {rainfallData});
+      })
+   } catch (error) {
+      console.error(error);
+   }
+})
+
 module.exports = router;

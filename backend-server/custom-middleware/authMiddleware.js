@@ -21,7 +21,6 @@ async function authorizeUser(req, res, next){
    
    if(!accessToken || accessToken === null) return res.sendStatus(401);
    // get userKey from access token
-   console.log(accessToken);
    const {userKey} = jwt.decode(accessToken);
 
    // check validity of token
