@@ -1,4 +1,5 @@
 const userPlantDatabase = require('../database/userPlantDatabase');
+const sproutShareUserDatabase = require('../database/sproutShareUserDatabase');
 
  async function getAllUserPlants() {
    try {
@@ -36,6 +37,37 @@ async function getUserPlantsByUserKey(userKey){
    try {
       const userPlants = await userPlantDatabase.getUserPlantsByUserKey(userKey);
       return userPlants;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+/*******AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*******/
+async function getRecommendedPlants(zipCode){
+   try {
+	   // plantsMap stores keys of plant_key and maps to values of arrays of [total quality (numerator), total number of plants (denominator)]
+	   // that together can be put together to calculate the average quality of a plant
+     plantsMap = new Map();
+	  users = await sproutShareUserDatabase.getUserByZipCode(zipCode);
+	  for(user of users){
+		  arrayOfPlants = await userPlantDatabase.getUserPlantsByUserKey(user.user_key);
+		  arrayOfPlants.forEach( plant => {
+			  if(!plantsMap.has(plant.plant_key)){
+				  plantsMap.set(plant.plant_key, [plant.plant_quality, 1]);
+			  }
+			  else {
+				  // Add quality to numerator and increment denominator
+				  let temp = [plantsMap.get(plant.plant_key)[0] + plant.plant_quality, plantsMap.get(plant.plant_key)[1] + 1];
+				  plantsMap.set(plant.plant_key, temp);
+			  }
+		  })
+	  }
+	  // It doesn't like to return maps so I have to convert it to an array :/
+	  plantsArr = [];
+	  plantsMap.forEach( (value, key, map) => {
+		  plantsArr.push( [key, value] );
+	  })
+	  return plantsArr;
    } catch (error) {
       console.error(error);
       return JSON.stringify(error.message);
@@ -126,6 +158,7 @@ module.exports = {
    getUserPlantByKey,
    getUserPlantsByGardenKey,
    getUserPlantsByUserKey,
+   getRecommendedPlants,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,

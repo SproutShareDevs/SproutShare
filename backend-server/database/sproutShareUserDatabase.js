@@ -66,6 +66,19 @@ async function getUserByUsername(username){
    }
 }
 
+/**
+ * Get users by zip code
+ */
+async function getUserByZipCode(zipCode){
+   try {
+      const user = await pool.query('SELECT * FROM sproutshareuser WHERE zip_code = $1',[zipCode]);
+      return user.rows;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 async function getUserAccessTokenByKey(userKey){
    try {
       const userAccessToken = await pool.query('SELECT accesstoken FROM sproutshareuser WHERE user_key = $1', [userKey]);
@@ -190,6 +203,7 @@ async function deleteUser(userKey){
 module.exports = {
    getAllUsers,
    getUserByKey,
+   getUserByZipCode,
    getUserByQuery,
    getUserByToken,
    getUserByUsername,

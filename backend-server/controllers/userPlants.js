@@ -71,6 +71,16 @@ router.get('/getByUser/:key', async(req, res)=>{
    }
 })
 
+// Recommend plants by zip code
+router.get('/recommend/:zipcode', async(req, res)=>{
+   try {
+      const plantsMap = await userPlantServices.getRecommendedPlants(req.params.zipcode);
+      res.send(plantsMap);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
+})
+
 router.post('/store', async(req,res) =>{
    try {
       const storedUserPlant = await userPlantServices.storeUserPlant(req.body);

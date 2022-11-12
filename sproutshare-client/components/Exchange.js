@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import{SafeAreaView, Text, View, Button, StyleSheet, Modal, TextInput, Pressable } from 'react-native';
+import{SafeAreaView, Text, View, Button, StyleSheet, Modal, TouchableOpacity, TextInput, Pressable, Image, ImageBackground } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
 import ExchangePreview from './ExchangePreview';
@@ -49,13 +49,65 @@ class Exchange extends React.Component {
 
     render() {
         return(
-            <View styles={styles.container}>
+            <View style={styles.container}>
+                <ImageBackground source={require("./../assets/MainBackground.png")} style={styles.backgroundImage}>
+                
                 <View>
+                    <Image source={require("./../assets/Exchange.png")} style={styles.exchangeImage}></Image>
+                    <View style={{marginTop:0}}>
                     <SearchBar 
+                       
                         placeholder='Search Here...'
                         updateSearch={this.updateSearch}
                     />
+                    </View>
                 </View>
+
+                  
+                <View styles={styles.buttonContainer}>
+                    <Button
+                    title = "ADD NEW LISTING"
+                    onPress = {() => this.setState({NewListing:true})}
+                    color ="green"
+                     />
+                     
+                    <Modal
+                    transparent = {false}
+                    visible = {this.state.NewListing}
+                    >
+                    <View style={styles.containerCenter}>
+                    <View style= {{backgroundColor:"#ffffff"}}>
+                        
+                    <View style={styles.containerCenter}>
+                    <Text>Create a New Exchange Listing</Text>
+
+                    <TextInput style={styles.textInput} placeholder ="Plant Type"
+                    onChangeText = {(text) => {this.setState({ExchangePlant:text})}}
+                    />
+
+                    <TextInput style={styles.textInput} placeholder ="Listing Title"
+                    onChangeText = {(text) => {this.setState({ExchangeName:text})}}
+                    />
+
+                    <TextInput style={styles.textInput}  placeholder ="Listing Description"
+                    onChangeText = {(text) => {this.setState({ExchangeDescription:text})}}    
+                    />    
+
+                    <View style={styles.buttonContainer}>
+                    <View style={styles.button}>
+                     <Button color ="red" title = "Close" onPress={() => this.setState({NewListing:false})} />
+                     </View>
+                     <View style={styles.button}>
+                     <Button title = "Submit Listing" onPress={()=> this.submitListing()}/>
+                    </View>
+                    </View>      
+                    </View>
+                    </View>
+                    </View>
+                    
+                    </Modal>
+                 </View>
+
 
                 <View style={styles.listBottomMargin}>
                     <FlatList 
@@ -64,6 +116,7 @@ class Exchange extends React.Component {
                         keyExtractor={item => item._id}
                     />
                 </View>
+                </ImageBackground>
             </View>
         );
     }

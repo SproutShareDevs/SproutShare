@@ -83,6 +83,7 @@ const ejsUserPlantController = require('./controllers/ejs-testing/userPlants');
 const ejsGardensController = require('./controllers/ejs-testing/gardens');
 const ejsSproutShareUserController = require('./controllers/ejs-testing/sproutShareUsers');
 app.use('/ejs-testing/plants', ejsPlantController);
+app.use('/ejs-testing/userPlants', ejsUserPlantController);
 app.use('/ejs-testing/gardens', ejsGardensController);
 app.use('/ejs-testing/sproutShareUsers', ejsSproutShareUserController);
 
@@ -98,7 +99,6 @@ app.use('/ejs-testing/notifications', ejsNotificationController);
 app.use('/ejs-testing/forumPosts', ejsForumPostController);
 
 app.use(auth.authorizeUser);
-app.use('/ejs-testing/userPlants', ejsUserPlantController);
 app.use('/userPlants', userPlantsController);
 
 // seed database, comment out unless you want to reseed database

@@ -12,13 +12,17 @@ function GardenPreview(props) {
             onPress={() => setModalIsVisible(true)}
             >
                 <View style={styles.nameplate}>
-                <View>
-                    <Text style={styles.title}>Garden ID: {props.garden.garden_key}</Text>
-                    <Text style={styles.title}>Light Level: {props.garden.light_level}</Text>
-                    <Text style={styles.title}>Soil Type: {props.garden.soil_key}</Text>
+                
+                    <View style = {{flexDirection: 'column'}}>
+                    <Text style={styles.myGardenTitle}>Garden</Text>
+                    <Text style={styles.myGardenID}>{props.garden.garden_key}</Text>
+                    </View>
+                    <View style = {{flexDirection: 'column', marginLeft: 30, marginTop: 30}}>
+                    <Text style={styles.myGardenSubs}>Light Level: {props.garden.light_level}</Text>
+                    <Text style={styles.myGardenSubs}>Soil Type: {props.garden.soil_key}</Text>                    
+                    </View>
                 </View>
-                </View>
-            </Pressable>
+                </Pressable>
             <GardenFullView nodeServer ={props.nodeServer} visible={modalVisible} garden={props.garden} onClose={() => setModalIsVisible(false)}/>
         </View>
 

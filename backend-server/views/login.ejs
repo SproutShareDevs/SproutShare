@@ -24,7 +24,7 @@
 			await loginHandler();
 			loginHandler().then(responseData =>{
 				console.log(responseData);
-				localStorage.setItem('refreshToken', responseData.userRefreshToken);
+				localStorage.setItem('accessToken', responseData.userAccessToken);
 				localStorage.setItem('username', responseData.username);
 				window.location.href = 'http://localhost:3000/ejs-testing/';
 			})

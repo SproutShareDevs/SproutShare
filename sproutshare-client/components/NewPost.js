@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import {StyleSheet, View, Text, Pressable, Image, Modal, Button, TextInput } from 'react-native'
+import {StyleSheet, View, Text, Pressable, Image, Modal, Button, TextInput, TouchableOpacity } from 'react-native'
 import styles from '../styles/styles';
 
 function NewPost(props) {
@@ -35,7 +35,12 @@ function NewPost(props) {
 
     return(
         <>
-        <Button color='#228b22' title='New Post' onPress={() => togglePostModal(true)}/>
+        
+        <TouchableOpacity
+            onPress={() => togglePostModal(true)}
+            style={styles.circleButton}>
+            <Image source={require("./../assets/plus.png")} style={styles.plusImage}></Image>
+        </TouchableOpacity>
         <Modal visible={postModal} animationType="slide">
             <View style={styles.containerCenter}>
                 <Text style={styles.title}>New Post</Text>

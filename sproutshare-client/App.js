@@ -95,6 +95,7 @@ function HomeView({ navigation, route }) {
             justifyContent: "center"
         }}>
         {/* Bottom tab icon styling. More info on how to manipulate this specific navigator: https://reactnavigation.org/docs/bottom-tab-navigator/ */}
+        
         <Tab.Navigator 
             initialRouteName='UserGarden'
 
@@ -119,37 +120,44 @@ function HomeView({ navigation, route }) {
     
                 return <Ionicons name={iconName} size={size} color={color} />;
             },
-            tabBarActiveTintColor: '#228b22',
-            tabBarInactiveTintColor: 'gray',
+            tabBarActiveTintColor: 'green', //changes icon color not background
+            tabBarInactiveTintColor: 'dark gray',
+            tabBarActiveBackgroundColor: '#A5B8A1',
+            tabBarInactiveBackgroundColor: '#A5B8A1'
+    
             })}
         >
             
             {/* In order for this navigation to work, the node server url must be passed down to all child screens to utilize the server calls in all of them */}
-            <Tab.Screen name={'UserGarden'} options={{unmountOnBlur: true}}>
+            <Tab.Screen name={'UserGarden'} options={{unmountOnBlur: true, header: ()=>null}}>
                 {props => <UserGarden {...props} userType={userType}  nodeServer={nodeServer}/>}
+                
             </Tab.Screen>
 
-            <Tab.Screen  name={'CommunityFeed'} options={{unmountOnBlur: true}}>
+            <Tab.Screen  name={'CommunityFeed'} options={{unmountOnBlur: true,  header: ()=>null}}>
                 {props => <CommunityFeed {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'PlantWiki'} options={{unmountOnBlur: true}}>
+            <Tab.Screen name={'PlantWiki'} options={{unmountOnBlur: true,  header: ()=>null}}>
                 {props => <PlantWiki {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'Exchange'} options={{unmountOnBlur: true}}>
+            <Tab.Screen name={'Exchange'} options={{unmountOnBlur: true,  header: ()=>null}}>
                 {props => <Exchange {...props} nodeServer={nodeServer}/>}
             </Tab.Screen>
 
-            <Tab.Screen name={'AccountManagement'} options={{unmountOnBlur: true}}>
+            <Tab.Screen name={'AccountManagement'} options={{unmountOnBlur: true,  header: ()=>null}}>
                 {props => <AccountManagement {...props} nodeServer={nodeServer} 
                     userName={userName} user_ID={user_ID} userType={userType} 
                 />}
             </Tab.Screen>
             {/* Alt Syntax if addtional props dont need to be passed down: <Tab.Screen name="PlantWiki" component={PlantWiki} />*/} 
+            
         </Tab.Navigator>
         {/* Colors system status bar */}
+        
         </View>
+        
     )
 
 }

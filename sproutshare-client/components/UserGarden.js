@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Text, View, Button, Alert } from 'react-native';
+import {Text, View, Button, Alert, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
@@ -31,35 +31,50 @@ class UserGarden extends React.Component {
     render() {
         return (
           <View style={styles.container}>
-            <WeatherView style={{flex: 2}} nodeServer ={this.props.nodeServer}/>
+            <ImageBackground source={require("./../assets/MainBackground.png")} style={styles.backgroundImage}>
+            <Image source = {require("./../assets/MyGardens.png")} style={styles.tinyImage}/>
+            <WeatherView style={styles.weatherPic} nodeServer ={this.props.nodeServer}/>
             <View style={{flex: 4}}>
-              <Button title='Check for Watering' onPress={async() => {
-                let accessToken = await SecureStore.getItemAsync('AccessToken');
-                axios.get(`http://192.168.50.54:3000/notifications/user/${accessToken}`).then((response) => {
-                  Alert.alert(
-                    "Eventual Notification",
-                    response.data.message,
-                    [
-                        {
-                            text: "Confirm"
-                        }
-                    ]
-                );
-                  console.log(response.data);
-                }).catch(err => {
-                  console.log(`${this.props.nodeServer}/notifications/user/${SecureStore.getItemAsync('AccessToken')}`);
-                  console.log('Error: Could not retrieve notifications', err);
-                });
-              }}/>
+            <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+            <TouchableOpacity
+             onPress={async() => {
+              let accessToken = await SecureStore.getItemAsync('AccessToken');
+              axios.get(`http://192.168.50.54:3000/notifications/user/${accessToken}`).then((response) => {
+                Alert.alert(
+                  "Eventual Notification",
+                  response.data.message,
+                  [
+                      {
+                          text: "Confirm"
+                      }
+                  ]
+              );
+                console.log(response.data);
+              }).catch(err => {
+                console.log(`${this.props.nodeServer}/notifications/user/${SecureStore.getItemAsync('AccessToken')}`);
+                console.log('Error: Could not retrieve notifications', err);
+              });
+            }}
+            style={styles.myGardenButtons}>
+            <Text style ={styles.gardenButtonText}>Check for Watering</Text>
+            </TouchableOpacity>
+             
               <AddGarden nodeServer={this.props.nodeServer}/>
+              </View>
               <View style={styles.listBottomMargin} >
-                <FlatList
+              
+              
+                <FlatList 
                   data = {this.state.data}
                   renderItem={this.renderItem}
                   keyExtractor={item => item.garden_key}
+                  
                 />
-              </View>
+                
+                </View>
+              
             </View>
+            </ImageBackground>
           </View>
           );
     }

@@ -3,7 +3,7 @@ const { authorizeUser } = require('../../custom-middleware/authMiddleware');
 const router = express.Router();
 const userPlantServices = require('../../services/userPlantServices');
 
-/*
+
 router.get('/', async(req,res)=>{
    try {
       const userPlants = await userPlantServices.getAllUserPlants();
@@ -12,8 +12,8 @@ router.get('/', async(req,res)=>{
       console.log(error.message);
    }
 });
-*/
 
+/* Buggy, do not enable
 router.get('/', authorizeUser, async(req,res)=>{
    const userKey = req.body.user_key;
    console.log(userKey);
@@ -25,7 +25,7 @@ router.get('/', authorizeUser, async(req,res)=>{
       console.error(error);
    }
 })
-
+*/
 router.get('/key', async(req,res)=>{
    const userPlantKey = req.query.key;
    try {
@@ -52,6 +52,17 @@ router.get('/getByGarden/key', async(req,res)=>{
       console.log(error.message);
    }
 });
+
+// Recommend plants by zip code
+router.get('/recommend/:zipcode', async(req, res)=>{
+   try {
+      const plantsMap = userPlantServices.getRecommendedPlants(req.params.zipcode);
+	  console.log("Hi");
+      res.render(plantsMap);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
+})
 
 router.post('/store', async(req,res)=>{
    const userPlant = req.body;

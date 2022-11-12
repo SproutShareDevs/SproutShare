@@ -19,8 +19,6 @@ async function getNotificationByToken(accessToken){
       const userPlants = await userPlantServices.getUserPlantsByUserKey(user.user_key);
       let plantsToBeWatered = [];
 
-      
-
 
       let currentDateRaw = new Date();
 

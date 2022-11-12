@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import {SafeAreaView, Text, View, Button, FlatList, StyleSheet, Pressable } from 'react-native';
+import {SafeAreaView, Text, View, Button, FlatList, StyleSheet, Pressable, Image, ImageBackground } from 'react-native';
 import NewPost from './NewPost';
 import styles from '../styles/styles';
 
@@ -17,19 +17,29 @@ class CommunityFeed extends React.Component {
 
     render() {
         return(
-            <View styles={styles.container}>
+            <View style={styles.container}>
+                <ImageBackground source={require("./../assets/MainBackground.png")} style={styles.backgroundImage}>
+                <View style={{flexDirection: 'row'}}>
                 <NewPost nodeServer={this.props.nodeServer} onNewPost={this.rerender}/>
+                <Image source={require("./../assets/MyCommunity.png")} style={styles.communityImage}></Image>
+                </View>
                 <View style={styles.listBottomMargin}>
                 <FlatList 
                     data={this.state.data}
                     renderItem={({ item }) => 
                     
-                    <View style={styles.item}>
+                    <View style={styles.itemCommunity}>
                         <Pressable android_ripple={styles.rippleEffect} onLongPress={() => this.deletePost(item._id)}>
-                            <Text style={styles.title}>User: {item.user_key}</Text>
-                            <Text style={styles.title}>Post Title: {item.comm_post_title}</Text>
-                            <Text style={styles.title}>Body: {item.comm_post_body}</Text>
-                            <Text style={styles.title}>Post Date: {item.comm_post_date}</Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Image source={require("./../assets/pfp.png")} style={styles.pfpImage}></Image>
+                                <View style={{flexDirection: 'column'}}>
+                                <Text style={styles.comDate}>{item.comm_post_date}</Text>
+                                <Text style={styles.comUser}>User: {item.user_key}</Text>
+                                </View>
+                            </View>
+                            <Text style={styles.comTitle}>{item.comm_post_title}</Text>
+                            <Text style={styles.comBody}>{item.comm_post_body}</Text>
+                            
                         </Pressable>
                     </View>
                    
@@ -37,6 +47,7 @@ class CommunityFeed extends React.Component {
                     keyExtractor={item => item._id}
                 />
                 </View>
+                </ImageBackground>
             </View>
         );
     }

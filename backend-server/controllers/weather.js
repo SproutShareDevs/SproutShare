@@ -16,11 +16,21 @@ const weatherServices = require('../services/weatherServices');
    }
    
 });
-router.get('/:3dayForecast', (req, res)=>{
+router.get('/3dayForecast/:zipcode', (req, res)=>{
    try {
       weatherServices.getWeather3DayForecast(req.params.zipcode, (curr3DayForecast)=>{
          res.send(curr3DayForecast);
       });
+   } catch (error) {
+      console.error(error);
+   }
+})
+
+router.get('/getRain/:zipcode', (req, res)=>{
+   try {
+      weatherServices.getDailyRainfall(req.params.zipcode, (rainfallData)=>{
+         res.send(JSON.stringify(rainfallData));
+      })
    } catch (error) {
       console.error(error);
    }

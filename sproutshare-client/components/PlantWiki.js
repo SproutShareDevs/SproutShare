@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import {View} from 'react-native';
+import {View,Image, ImageBackground} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
 import PlantPreview from './plant/PlantPreview';
@@ -45,12 +45,17 @@ class PlantWiki extends React.Component {
     render() {
         return(
             <View style={styles.container}>
-                <View>
+                <ImageBackground source={require("./../assets/MainBackground.png")} style={styles.backgroundImage}>
+                
+                <View style={{marginTop:20}}>
+                    <Image source={require("./../assets/Wiki.png")} style={styles.wikiImage}></Image>
+                    <View style={{marginTop:0}}>
+                <View style={{marginTop: 20}}>
                   <SearchBar
                       placeholder='Search Here...'
                       updateSearch={this.updateSearch}
                       />
-                </View>
+                </View></View>
                 
                 <View style={styles.listBottomMargin}>
                   <FlatList
@@ -58,8 +63,8 @@ class PlantWiki extends React.Component {
                     renderItem={this.renderItem}
                     keyExtractor={item => item.plant_key}
                   />
-                </View>
-
+                </View></View>
+            </ImageBackground>
             </View>
         );
     }
