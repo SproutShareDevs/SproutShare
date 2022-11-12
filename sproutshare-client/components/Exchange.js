@@ -110,7 +110,7 @@ class Exchange extends React.Component {
                  </View>
 
 
-                <View style={styles.listBottomMargin}>
+                <View style={styles.ExchangeListingMargin}>
                     <FlatList 
                         data={this.state.data}
                         renderItem={this.renderItem}

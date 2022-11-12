@@ -367,6 +367,9 @@ export default StyleSheet.create({
     rippleEffect: {
         color: '#638c07'
     },
+    ExchangeListingMargin: {
+        marginBottom: 200
+    },
     accountInput: {
             height: 60,
             borderColor: "black",
