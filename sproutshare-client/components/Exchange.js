@@ -22,6 +22,8 @@ class Exchange extends React.Component {
         }
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
+        this.refreshpage = this.refreshpage.bind(this);
+        this.getListings= this.getListings.bind(this);
     }
 
     updateSearch = (search) => {
@@ -36,13 +38,13 @@ class Exchange extends React.Component {
         // when no input, show all
         if (searchPhrase === "") {
           return (
-            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} />
+            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} onExchangePreview= {this.refreshpage}/>
           );
         }
         // filter of the name
         if (item.ex_post_title.toUpperCase().includes(searchPhrase.toUpperCase().trim())) {
           return (
-            <ExchangePreview nodeServer={this.props.nodeServer} listing={item}/>
+            <ExchangePreview nodeServer={this.props.nodeServer} listing={item} onExchangePreview= {this.refreshpage}/>
           );
         }
       }
@@ -64,13 +66,12 @@ class Exchange extends React.Component {
                 </View>
 
                   
-                <View styles={styles.buttonContainer}>
-                    <Button
-                    title = "ADD NEW LISTING"
-                    onPress = {() => this.setState({NewListing:true})}
-                    color ="green"
-                     />
-                     
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        onPress = {() => this.setState({NewListing:true})}
+                        style={styles.exchangeButton}>
+                        <Text style ={styles.buttonText}>Add New Listing</Text>
+                    </TouchableOpacity>
                     <Modal
                     transparent = {false}
                     visible = {this.state.NewListing}
@@ -120,8 +121,30 @@ class Exchange extends React.Component {
             </View>
         );
     }
+    submitListing () {
+        axios.post(`${this.props.nodeServer}/exchangeListings/store`,{
+           ex_plant: this.state.ExchangePlant,
+           ex_post_title: this.state.ExchangeName,
+           ex_post_body: this.state.ExchangeDescription,
+           user_key: 'Christian'
+       }).then((response) => {
+           this.setState({NewListing: false});
+           console.log(response.data);
+           console.log("Listing Posted");
+       }).catch(err => {
+           console.log('Error: ', err);
+           console.log(err.response.data)
+       });
+       this.refreshpage();
+    }
 
-    componentDidMount = async() => {
+    refreshpage = async()=> {
+        this.getListings();
+    }
+    componentDidMount = async() =>{
+        this.getListings();
+    }
+    getListings = async() => {
         await axios.get(`${this.props.nodeServer}/exchangeListings`).then((response) => {
             this.setState(state => {
                 return {data: response.data}
