@@ -8,7 +8,9 @@ router.post('/', async(req,res)=>{
 	const user = req.body;
 	try {
 	   const newUser = await sproutShareUserServices.storeUser(req.body);
-	   res.send(newUser);
+		if(!newUser) return res.sendStatus(500); // need to define more error cases
+		
+	   res.sendStatus(201);
 	} catch (error) {
        console.log(error);
 	   res.send(JSON.stringify(error.message));

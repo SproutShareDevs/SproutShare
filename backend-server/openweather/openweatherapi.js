@@ -31,7 +31,7 @@ function getWeatherByZip(zipcode, callback){
       callback(weatherObj);
    })
 }
-function getWeather3DayForcast(zipcode,callback){
+function getWeather3DayForecast(zipcode,callback){
    let api = constants.openWeatherMap.DAILY_URL+"zip="+zipcode+","+constants.openWeatherMap.COUNTRY_CODE+"&appid="+constants.openWeatherMap.SECRET_KEY;
    https.get(api, function (response){
       console.log(response.statusCode);
@@ -45,5 +45,5 @@ function getWeather3DayForcast(zipcode,callback){
 module.exports = {
    getWeatherDefault,
    getWeatherByZip,
-   getWeather3DayForcast
+   getWeather3DayForecast
 };

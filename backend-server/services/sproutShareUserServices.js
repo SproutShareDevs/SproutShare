@@ -67,6 +67,16 @@ async function getUserByUsername(username){
    }
 }
 
+async function getUserAccessTokenByKey(userKey){
+   try {
+      const userAccessToken = await sproutShareUserDatabase.getUserAccessTokenByKey(userKey);
+      return userAccessToken;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 /**
  * Store User 
  * Also generates a hashed password for the user account
@@ -87,6 +97,7 @@ async function storeUser(user){
  */
 async function updateUser(userKey, userBody){
    try {
+      userBody.password = await encryptPassword(userBody.password);
       const updatedUser = await sproutShareUserDatabase.updateUser(userKey, userBody);
       return updatedUser;
    } catch (error) {
@@ -177,6 +188,7 @@ module.exports = {
    getUserByQuery,
    getUserByToken,
    getUserByUsername,
+   getUserAccessTokenByKey,
    storeUser,
    updateUser,
    updateAccessToken,

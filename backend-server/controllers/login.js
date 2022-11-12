@@ -10,6 +10,12 @@ const sproutShareUserServices = require('../services/sproutShareUserServices');
 	require('crypto').randomBytes(64).toString('hex') 
 */
 
+/**
+ * TO-DO
+ * Set expiration for jwt access and ref tokens
+ * remove saving of access token (review jwt specs)
+*/
+
 // Handling login logic
 router.post("/", async(req, res) => {
 	try {
@@ -22,12 +28,18 @@ router.post("/", async(req, res) => {
 		const isPasswordCorrect = await loginServices.verifyUserPassword(req.body.password, user.password);
 		if(!isPasswordCorrect) return res.status(401).send('Invalid Password');
 		
-		// Create access token for user
-		const userAccessToken = loginServices.createUserAccessToken(user.user_key, process.env.ACCESS_TOKEN_SECRET);
-
+		// Create access token and refresh token for user
+		const userAccessToken = loginServices.createUserAccessToken(user.user_key);
+		//const userRefreshToken = loginServices.createUserRefreshToken(user.user_key)
+		
 		// update the user with new access token
 		const updatedUser = await sproutShareUserServices.updateAccessToken(user.user_key, userAccessToken);
-		if(updatedUser) return res.status(200).json({userAccessToken: userAccessToken});
+		//updatedUser = await sproutShareUserServices.updateRefreshToken(user.user_key, userRefreshToken);
+
+		if(updatedUser) return res.status(200).json({
+				userAccessToken: userAccessToken,
+				//userRefreshToken: userRefreshToken
+			});
 	
 	} catch (error) {
 		console.error(error);

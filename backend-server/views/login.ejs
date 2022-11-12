@@ -6,25 +6,47 @@
 	</head>
 	<body>
 		<%-include('layouts/navbar');-%>
-		<div class="container">
-			<div class="row">
+	<div class="login-form-container">
+		<form class="login-form">
+			<input type="text" id="username" name="username" placeholder="username">
+			<br>
+			<input type="password" id="password" name="username" placeholder="password">
+			<button type="submit" id="submit-button">Login</button>
+		</form>
+	</div>	
 
-				<h1 style="text-align: center;">
-					Log In to SproutShare
-				</h1>
-					<form action="/ejs-testing/login" method="POST">
-						<div class="form-group">
-							<input class="form-control" type="text" name="username" placeholder="username">	
-						</div>
-						<div class="form-group">
-							<input class="form-control" type="password" name="password" placeholder="password">
-						</div>
-						<button class="btn btn-lg btn-default btn-block btn-primary">
-							Log In
-						</button>
-					</form>
-					<a href="/ejs-testing/sproutShareUsers">Go Back</a>
-			</div>
-	</div>
+	<script>
+
+		const submitButton = document.getElementById('submit-button');
+
+		submitButton.addEventListener('click', async function(event){
+			event.preventDefault();
+			await loginHandler();
+			loginHandler().then(responseData =>{
+				console.log(responseData);
+				localStorage.setItem('refreshToken', responseData.userRefreshToken);
+				localStorage.setItem('username', responseData.username);
+				window.location.href = 'http://localhost:3000/ejs-testing/';
+			})
+		})
+
+		async function loginHandler(){
+			const username = document.getElementById("username").value;
+			const password = document.getElementById("password").value;
+			console.log("Username: " + username);
+			console.log("Password: " + password);
+			const response = await fetch('http://localhost:3000/ejs-testing/login/', {
+				method:'POST',
+				headers:{
+					'Content-type':'application/json'
+				},
+				body: JSON.stringify({username:username, password:password})
+			})
+			const responseData = await response.json();
+			console.log(responseData);
+			return responseData;
+	}
+	</script>
+	
 	</body>
 </html>

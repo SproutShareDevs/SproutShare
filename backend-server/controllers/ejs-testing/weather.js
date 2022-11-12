@@ -28,10 +28,10 @@ router.get('/zipcode', (req, res)=>{
    
 });
 
-router.get('/3dayforcast', (req, res)=>{
+router.get('/3dayForecast', (req, res)=>{
    try {
-      weatherServices.getWeather3DayForcast(req.query.zipcode, (curr3DayForcast)=>{
-         res.render('weather', {curr3DayForcast});
+      weatherServices.getWeather3DayForecast(req.query.zipcode, (curr3DayForecast)=>{
+         res.render('weather', {curr3DayForecast});
       });
    } catch (error) {
       console.log(error);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {StyleSheet, View, Text, Pressable, Image } from 'react-native'
 import GardenFullView from './GardenFullView';
 import styles from "../../styles/styles";

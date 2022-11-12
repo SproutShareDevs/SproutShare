@@ -45,7 +45,20 @@ async function getUserPlantByKey(userPlantKey){
       return JSON.stringify(error.message);
    }
 }
-
+/**
+ * 
+ * @param {*} userKeyThe The user key of the user's plants
+ * @returns The userPlants that matches the userKey parameter
+ */
+async function getUserPlantsByUserKey(userKey){
+   try {
+      const userPlants = await pool.query("SELECT * FROM userplant WHERE user_key = $1", [userKey]);
+      return userPlants.rows;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
 
 /**
 async function getPostByQuery(query){
@@ -75,7 +88,7 @@ async function getUserPlantsByGardenKey(gardenKey){
       const userPlants = await pool.query("SELECT * FROM userplant WHERE garden_key = $1", [gardenKey]);
       return userPlants.rows;
    } catch (error) {
-      console.log(error);
+      console.error(error);
       return JSON.stringify(error.message);
    }
 }
@@ -197,6 +210,7 @@ module.exports = {
    getUserPlantsByUserKey,
    getUserPlantByKey,
    getUserPlantsByGardenKey,
+   getUserPlantsByUserKey,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,
