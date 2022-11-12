@@ -54,5 +54,5 @@ var MockCommunityPosts = [
     } 
 ]
 
-db.communityPosts.insert(MockCommunityPosts);
-db.exchangeListings.insert(MockExchangeData);
+db.communityPosts.insertMany(MockCommunityPosts);
+db.exchangeListings.insertMany(MockExchangeData);
