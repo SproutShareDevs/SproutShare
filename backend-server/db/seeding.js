@@ -54,5 +54,5 @@ var MockCommunityPosts = [
     } 
 ]
 
-SproutShareNOSQL.communityPosts.insert(MockCommunityPosts);
-SproutShareNOSQL.exchangeListings.insert(MockExchangeData);
+db.communityPosts.insert(MockCommunityPosts);
+db.exchangeListings.insert(MockExchangeData);
