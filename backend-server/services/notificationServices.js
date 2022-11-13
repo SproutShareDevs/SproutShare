@@ -1,6 +1,8 @@
 const notificationDatabase = require('../database/notificationDatabase');
 const sproutshareUserServices = require('./sproutShareUserServices');
 const userPlantServices = require('./userPlantServices');
+const weatherServices = require('./weatherServices');
+const plantServices = require('./plantServices');
 
 async function getAllNotifications() {
    try {
@@ -22,32 +24,50 @@ async function getNotificationByToken(accessToken){
 
       let currentDateRaw = new Date();
 
+      let lastDaysRain = weatherServices.getDailyRainfall(user.zip_code);
+      let rainToday = weatherServices.getWeatherByZip(user.zip_code);
+      let rain3Days = weatherServices.getWeather3DayForecast(user.zip_code);
+
+      let plantNeedsWatering = false;
+      let sendNotification = false;
+
+      // populate plantsToBeWatered
       for(let plant in userPlants) {
 
-      /**
-       * let lastDaysRain = userPlants[plant].yesterdaysRain;
-       * plantWaterAmount += lastDaysRain
-       * // additionally, have a query for user on the next day to confirm if it rained or not, if they say it didn't, set lastDaysRain to 0
-       * 
-       * let wateringDecay = 1 / userPlants[plant].watering_need;
-       * plantWaterAmount -= wateringDecay
-       * 
-       * if(plantWaterAmount <= 0) {
-       *    let rainToday = get1DayForecast
-       *    userPlants[plant.yesterdaysRain] = rainToday; // will be used the next day
-       *    if(rainToday > 0) {
-       *       plantsToBeWatered.push(plant, rainMayAffectGardenToday);
-       *    } else If(get5DayForecast.rain !== null) {
-       *       rainSoon = true
-       *       // notify, but ignore rain totals more than a day out
-       *       plantsToBeWatered.push(plant, rainMayAffectGardenThisWeek);
-       *    } else {
-       *      plantsToBeWatered.push(plant, rainWillNotAffectGarden)
-       *    }
-       * } else {
-       *    // dont send a notification 
-       * }
-       */
+         let plantType = plantServices.getPlantByKey(userPlants[plant].plant_key);
+         let wateringDecay = (1/plantType.water_need);
+
+         userPlants[plant].water_amount += lastDaysRain;
+         userPlants[plant].water_amount -= wateringDecay;
+
+         // if after accounting for yesterdays rain the water amount is less than 0, push the plant to the notification
+         if(userPlants[plant].water_amount <= 0) {
+            plantNeedsWatering = true;
+            // if theres rain tomorrow that may alter the watering schedule for the plant, let the user know
+            if(userPlants[plant].water_amount + rainToday > 0) {
+               plantsToBeWatered.push({
+                  userPlant: userPlants[plant].user_plant_key,
+                  plantType: userPlant[plant].plant_key,
+                  rainMayAffectToday: true,
+                  rainMayAffectSoon: true
+               });
+            // if theres rain in the next 3 days that may alter the watering schedule for the plant, let the user know
+            } else if (userPlants[plant].water_amount + rain3Days > 0) {
+               plantsToBeWatered.push({
+                  userPlant: userPlants[plant].user_plant_key,
+                  plantType: userPlant[plant].plant_key,
+                  rainMayAffectToday: false,
+                  rainMayAffectSoon: true
+               });
+            } else {
+               plantsToBeWatered.push({
+                  userPlant: userPlants[plant].user_plant_key,
+                  plantType: userPlant[plant].plant_key,
+                  rainMayAffectToday: false,
+                  rainMayAffectSoon: false
+               });
+            }
+         }
 
          // fetch last watering date of current plant
          let lastWateringDateRaw = userPlants[plant].last_watering_date;
@@ -59,67 +79,46 @@ async function getNotificationByToken(accessToken){
          }
       }
 
-
-      /**
-       * if(plantsToBeWatered.length == 1) {
-       *    let plantName = plantsToBeWatered[0].plant_name
-       *    let message = ""
-       *    if(rainToday) {
-       *       message = plantName + " needs to be watered, but rain may affect your garden today. Check your local forecast"
-       *    } else if (rainSoon) {
-       *       message = plantName + " needs to be watered, but it may rain this week."
-       *    } else {
-       *       message = "Time to water your " + plantName + "!" 
-       *    }
-       *    let response = {
-       *       sendNotification: true,
-       *       message: message,
-       *       plantsToBeWatered: plantsToBeWatered
-       *    }
-       * } else if(plantsToBeWatered.length > 0) {
-       *    let message = ""
-       *    if(rainToday) {
-       *       message = "Some of your plants need to be watered, but rain may affect your garden today. Check your local forecast"
-       *    } else if (rainSoon) {
-       *       message = "Some of your plants need to be watered, but it may rain this week."
-       *    } else {
-       *       message = "Some of your plants need to be watered." 
-       *    }
-       *    let response = {
-       *       sendNotification: true,
-       *       message: message,
-       *       plantsToBeWatered: plantsToBeWatered
-       *    }
-       * }  else {
-       *    // don't send a notification
-       *    let response = {
-       *       sendNotification: false
-       *       message: "No plants need to be watered."
-       *    }
-       * }
-       *    
-       *    return response;
-       *    
-       * }
-       * 
-       */
-
-      // if theres plants that need to be watered, send notification
-      if(plantsToBeWatered.length > 0) {
-         let response = {
-            plantsToBeWatered: plantsToBeWatered,
-            sendNotification: true,
-            message: "Some of your plants need to be watered!"
+      // determine notification message, or lack thereof
+      let notificationMessage = "";
+      if(plantsToBeWatered.length == 1) {
+         sendNotification = true;
+         let plantName = plantsToBeWatered[0].plantType;
+         
+         if(plantsToBeWatered[0].rainMayAffectToday) {
+            notificationMessage = plantName + " needs to be watered, but rain may affect your garden today. Check your local forecast"
+         } else if (plantsToBeWatered[0].rainMayAffectSoon) {
+            notificationMessage = plantName + " needs to be watered, but rain may affect your garden in the next few days. Check your local forecast"
+         } else {
+            notificationMessage = "Time to water your " + plantName + "!"
          }
-         return response;
-      // if not
+      } else if (plantsToBeWatered.length > 1) {
+         sendNotification = true;
+         if(rainToday) {
+            notificationMessage = "Some of your plants need to be watered, but rain may affect your garden today. Check your local forecast"
+         } else if (rain3Days) {
+            notificationMessage = "Some of your plants need to be watered, but it may rain this week."
+         } else {
+            notificationMessage = "Some of your plants need to be watered." 
+         }
       } else {
-         let response = {
-            sendNotification: false,
-            message: "None of your plants need to be watered!"
-         }
-         return response;
+         notificationMessage = "No plants need to be watered."
       }
+
+      /*
+         sendNotication: is push notification necessary?
+         notificationMessage: message to be sent in notification if it is
+         plantsToBeWatered: Array of plants that need to be watered, and booleans 
+                            indicating if the plants will be affected by the upcoming weather
+      */
+      let response = {
+         sendNotification: sendNotification,
+         notificationMessage: notificationMessage,
+         plantsToBeWatered: plantsToBeWatered
+      }
+
+      return response;
+
    } catch (error) {
       console.error(error);
       return JSON.stringify(error.message);
