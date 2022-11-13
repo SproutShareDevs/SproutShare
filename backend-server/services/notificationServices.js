@@ -21,12 +21,17 @@ async function getNotificationByToken(accessToken){
       const userPlants = await userPlantServices.getUserPlantsByUserKey(user.user_key);
       let plantsToBeWatered = [];
 
-
       let currentDateRaw = new Date();
+      let lastDaysRain;
+      await weatherServices.getDailyRainfall(user.zip_code, (rainfall) => {
+         lastDaysRain = rainfall;
+      });
 
-      let lastDaysRain = weatherServices.getDailyRainfall(user.zip_code);
-      let rainToday = weatherServices.getWeatherByZip(user.zip_code);
-      let rain3Days = weatherServices.getWeather3DayForecast(user.zip_code);
+      let rainToday;
+      await weatherServices.getWeatherByZip(user.zip_code, (response) => {
+         
+      });
+      let rain3Days = 0;//weatherServices.getWeather3DayForecast(user.zip_code);
 
       let plantNeedsWatering = false;
       let sendNotification = false;

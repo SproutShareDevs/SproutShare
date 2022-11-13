@@ -39,7 +39,7 @@ class UserGarden extends React.Component {
             <TouchableOpacity
              onPress={async() => {
               let accessToken = await SecureStore.getItemAsync('AccessToken');
-              axios.get(`http://192.168.50.54:3000/notifications/user/${accessToken}`).then((response) => {
+              axios.get(`${this.props.nodeServer}/notifications/user/${accessToken}`).then((response) => {
                 Alert.alert(
                   "Eventual Notification",
                   response.data.message,
@@ -51,7 +51,7 @@ class UserGarden extends React.Component {
               );
                 console.log(response.data);
               }).catch(err => {
-                console.log(`${this.props.nodeServer}/notifications/user/${SecureStore.getItemAsync('AccessToken')}`);
+                console.log(`${this.props.nodeServer}/notifications/user/${accessToken}`);
                 console.log('Error: Could not retrieve notifications', err);
               });
             }}
