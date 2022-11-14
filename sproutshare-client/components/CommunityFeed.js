@@ -45,6 +45,7 @@ class CommunityFeed extends React.Component {
                    
                     }
                     keyExtractor={item => item._id}
+                    contentContainerStyle={{paddingBottom: 20}}
                 />
                 </View>
                 </ImageBackground>

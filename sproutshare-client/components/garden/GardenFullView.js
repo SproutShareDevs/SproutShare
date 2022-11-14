@@ -48,6 +48,7 @@ function GardenFullView(props) {
                     data = {userPlantData}
                     renderItem={renderItem}
                     keyExtractor={item => item.user_plant_key}
+                    contentInset={{right:10, top:0, left:10, bottom:20}}
                   />
                 </View>
             </View>

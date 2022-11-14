@@ -373,7 +373,7 @@ export default StyleSheet.create({
         width: 360
     },
     listBottomMargin: {
-        marginBottom: 20
+        marginBottom: 100
     },
     rippleEffect: {
         color: '#638c07'
