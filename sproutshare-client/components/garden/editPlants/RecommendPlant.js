@@ -9,6 +9,8 @@ function RecommendPlant(props){
     const [plantModal, togglePlantModal] = useState(false);
     const [zipCode, setZipCode] = useState('');
     const [plants, setPlants] = useState([]);
+    //const [newPlant, setNewPlant] = useState();
+    const [plantList, setPlantList] = useState([]);
     const [selection, setSelection] = useState(null);
     const [plantQuantity, setQuantity] = useState(0);
 
@@ -19,18 +21,34 @@ function RecommendPlant(props){
             console.log(response.data);
         }).catch(err => {
             console.log('Error fetching plants: ', err);
-            if (
-              err.response &&
-              err.response !== undefined &&
-              err.response.data &&
-              err.response.data !== undefined
-              ) {
-              // print the exception message from axios response
-              console.log(err.response.data);
-            }
         });
     }
 
+    const fetchBasePlant = async (plantKey) => {
+        await axios.get(`${props.nodeServer}/plants/${plantKey}`).then((response) => {
+            console.log(response.data);
+            return(response.data);
+        }).catch(err => {
+            console.log('Error fetching user plant: ', err);
+        });
+    }
+
+    const makePlantList = async () => {
+      await fetchPlants();
+      tempArr = [];
+      for (const plant of plants){
+        console.log("Plant.id: ", plant.id)
+        newPlant = await fetchBasePlant(plant.id);
+        console.log("newPlant: ", newPlant);
+        tempArr.push(newPlant);
+      }
+      console.log("TempArr: ", tempArr)
+      setPlantList(tempArr);
+    }
+
+  renderItem = ({item}) => {
+    return <PlantOption plant={item} selectPlant = {props.selectPlant} />
+}
 
     return (
         <>
@@ -41,15 +59,13 @@ function RecommendPlant(props){
           />
         <Modal visible={plantModal} animationType="slide">
                   <Button title='Close' onPress={()=> togglePlantModal(false)}/>
-                  <Button title='plant' onPress={fetchPlants}/>
+                  <Button title='plant' onPress={makePlantList}/>
                   <TextInput style={styles.textInput} placeholder='Enter Zip Code' keyboardType='numeric' onChangeText={text => setZipCode(text)} value={zipCode} />
                   <View style={styles.listBottomMargin}>
-                    {/*<FlatList
-                      data = {plants}
+                    <FlatList
+                      data = {plantList}
                       renderItem={renderItem}
-                      keyExtractor={item => item.plant_key}
-                    />*/}
-                    <Text>{plants}</Text>
+                    />
                   </View>
         </Modal>
       </>

@@ -218,6 +218,7 @@ module.exports = {
    getUserPlantsByGardenKey,
    getUserPlantsByUserKey,
    getRecommendedPlants,
+   //getRecommendedPlantsByCoords,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,

@@ -74,12 +74,22 @@ router.get('/getByUser/:key', async(req, res)=>{
 // Recommend plants by zip code
 router.get('/recommend/:zipcode', async(req, res)=>{
    try {
-      const plantsMap = userPlantServices.getRecommendedPlants(req.params.zipcode);
+      const plantsMap = await userPlantServices.getRecommendedPlants(req.params.zipcode);
       res.send(plantsMap);
    } catch (error) {
       res.send(JSON.stringify(error.message));
    }
 })
+
+// Recommend plants by coordinates
+/*router.get('/recommend/:userLat/:userLong/:radius', async(req, res)=>{
+   try {
+      const plantsMap = userPlantServices.getRecommendedPlantsByCoords(req.params.userLat, req.params.userLong, req.params.radius);
+      res.send(plantsMap);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
+})*/
 
 router.post('/store', async(req,res) =>{
    try {

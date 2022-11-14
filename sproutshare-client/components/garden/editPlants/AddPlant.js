@@ -66,7 +66,7 @@ function AddPlant(props) {
         <Modal visible={plantModal} animationType="slide">
                   <Button title='Close' onPress={()=> togglePlantModal(false)}/>
                   <Button title='Add Selection' onPress={() => postPlant()}/>
-                  <RecommendPlant></RecommendPlant>
+                  <RecommendPlant nodeServer={props.nodeServer} selectPlant = {selectPlant} ></RecommendPlant>
                   <TextInput style={styles.textInput} placeholder='Enter Quantity' keyboardType='numeric' onChangeText={text => setQuantity(text)} value={plantQuantity} />
                   <View style={styles.listBottomMargin}>
                     <FlatList
