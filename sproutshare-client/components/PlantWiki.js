@@ -62,6 +62,7 @@ class PlantWiki extends React.Component {
                     data = {this.state.data}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.plant_key}
+                    contentContainerStyle={{paddingBottom: 40}}
                   />
                 </View></View>
             </ImageBackground>

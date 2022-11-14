@@ -115,6 +115,7 @@ class Exchange extends React.Component {
                         data={this.state.data}
                         renderItem={this.renderItem}
                         keyExtractor={item => item._id}
+                        contentContainerStyle={{paddingBottom: 100}}
                     />
                 </View>
                 </ImageBackground>
