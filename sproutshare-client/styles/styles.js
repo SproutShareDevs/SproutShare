@@ -184,13 +184,14 @@ export default StyleSheet.create({
         borderRadius: 50
     },
     veggieImage: {
+        flex:1,
         width: 80,
         height: 80,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 9,
         elevation: 50,
-        marginLeft: 120,
+        marginLeft: 10,
         marginTop: 5,
         borderColor: "#A0B86F",
         borderWidth: 3,
@@ -321,16 +322,26 @@ export default StyleSheet.create({
         textTransform: "uppercase"
 
     },
+    veggieText: {
+        flex:1
+    },
+    textContainer: {
+        flex: 3,
+        flexDirection:'column'
+    },  
     buttonContainer: {
         flexDirection: 'row',
     },
     nameplate: {
         flexDirection: 'row',
+        alignItems: 'flex-start'
        
     },
     item: {
+        flexDirection: 'row',
         backgroundColor: '#e0e8d0',
         padding: 2,
+        alignItems:'flex-start',
         marginVertical: 8,
         marginHorizontal: 15,
         borderRadius: 30,

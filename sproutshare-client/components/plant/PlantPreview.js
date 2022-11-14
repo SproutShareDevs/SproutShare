@@ -8,27 +8,21 @@ function PlantPreview(props) {
 
 
     return(
-        <View style={styles.item}>
-            <Pressable 
+        <Pressable 
             onPress={() => setModalIsVisible(true)}
             >
-            <View style={styles.nameplate}>
-            <Image
-                style={styles.tinyImage}
-                source={{uri: props.plant.img }}
-            />
-            <View>
+        <View style={styles.item}>
+                <Image
+                    style={styles.veggieImage}
+                    source={{uri: props.plant.img }}
+                />
+            <View style={styles.textContainer}>
                 <Text style={styles.title}>Plant Name: {props.plant.common_name}</Text>
                 <Text style={styles.title}>Latin Name: {props.plant.latin_name}</Text>
             </View>
-            </View>
-            <Text style={styles.title}>Hardiness Zone: {props.plant.hardiness_zone}</Text>
-            <Text style={styles.title}>Soil Type: {props.plant.soil_type}</Text>
-            <Text style={styles.title}>min_temp: {props.plant.min_temp}</Text>
-            <Text style={styles.title}>max_temp: {props.plant.max_temp}</Text>
-            </Pressable>
             <PlantFullView visible={modalVisible} plant={props.plant} onClose={() => setModalIsVisible(false)}/>
       </View>
+      </Pressable>
     );
 }
 

@@ -38,26 +38,23 @@ function UserPlantPreview(props) {
     }
 
     return (
-        <View style={styles.item}>
-            <Pressable
+        <Pressable
             onPress={() => setSubModalIsVisible(true)}
             >
-            <View style={styles.nameplate}>
-            <View>
+            <View style={styles.item}>
                 <Image
-                    style={styles.tinyImage}
+                    style={styles.veggieImage}
                     source={{uri: plant.img }}
                 />
-                <Text style={styles.title}>Plant Name: {plant.common_name}</Text>
-                <Text style={styles.title}>Latin Name: {plant.latin_name}</Text>
+                <View style={styles.textContainer}>
+                    <Text style={styles.veggieText}>Plant Name: {plant.common_name}</Text>
+                    <Text style={styles.veggieText}>Quantity: {props.userPlant.plant_qty}</Text>
+                    <Text style={styles.veggieText}>Planting Date: {plantingDate}</Text>
+                </View>
+                <UserPlantFullView formattedPlantingDate={plantingDate} nodeServer ={props.nodeServer} visible={subModalVisible} userPlant={props.userPlant} 
+                                    plant={plant} onDelete={deleteHandler} onClose={() => setSubModalIsVisible(false)}/>
             </View>
-            </View>
-            <Text style={styles.title}>Quantity: {props.userPlant.plant_qty}</Text>
-            <Text style={styles.title}>Planting Date: {plantingDate}</Text>
-            </Pressable>
-            <UserPlantFullView formattedPlantingDate={plantingDate} nodeServer ={props.nodeServer} visible={subModalVisible} userPlant={props.userPlant} 
-                                plant={plant} onDelete={deleteHandler} onClose={() => setSubModalIsVisible(false)}/>
-      </View>
+        </Pressable>
     );
 }
 export default UserPlantPreview;
