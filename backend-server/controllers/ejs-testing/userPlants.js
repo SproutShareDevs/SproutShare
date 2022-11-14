@@ -54,15 +54,18 @@ router.get('/getByGarden/key', async(req,res)=>{
 });
 
 // Recommend plants by zip code
-router.get('/recommend/:zipcode', async(req, res)=>{
+router.get('/recommend/zipcode', async(req, res)=>{
    try {
-      const plantsMap = userPlantServices.getRecommendedPlants(req.params.zipcode);
-	  console.log("Hi");
-      res.render(plantsMap);
+	  // req.query works and i have no idea why
+	  const zipcode = req.query.zipcode;
+      const plantsMap = await userPlantServices.getRecommendedPlants(zipcode);
+      res.render('plantsMap', {plantsMap});
    } catch (error) {
       res.send(JSON.stringify(error.message));
    }
 })
+
+
 
 router.post('/store', async(req,res)=>{
    const userPlant = req.body;

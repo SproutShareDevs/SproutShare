@@ -79,6 +79,20 @@ async function getUserByZipCode(zipCode){
    }
 }
 
+/**
+ * Get nearby users by distance
+ */
+ /*
+async function getUserByCoords(userLat, userLong, radius){
+   try {
+      const user = await pool.query('SELECT * FROM sproutshareuser WHERE sqrt( (user_lat-$1)^2 + (user_long-$2)^2 ) <= $3',[userLat, userLong, radius]);
+      return user.rows;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}*/
+
 async function getUserAccessTokenByKey(userKey){
    try {
       const userAccessToken = await pool.query('SELECT accesstoken FROM sproutshareuser WHERE user_key = $1', [userKey]);
@@ -204,6 +218,7 @@ module.exports = {
    getAllUsers,
    getUserByKey,
    getUserByZipCode,
+   //getUserByCoords,
    getUserByQuery,
    getUserByToken,
    getUserByUsername,

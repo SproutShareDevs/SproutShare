@@ -16,10 +16,21 @@ function RecommendPlant(props){
     const fetchPlants = async () => {
         await axios.get(`${props.nodeServer}/userPlants/recommend/${zipCode}`).then((response) => {
             setPlants(response.data);
+            console.log(response.data);
         }).catch(err => {
             console.log('Error fetching plants: ', err);
+            if (
+              err.response &&
+              err.response !== undefined &&
+              err.response.data &&
+              err.response.data !== undefined
+              ) {
+              // print the exception message from axios response
+              console.log(err.response.data);
+            }
         });
     }
+
 
     return (
         <>

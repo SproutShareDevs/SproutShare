@@ -45,7 +45,7 @@ async function getUserPlantsByUserKey(userKey){
 /*******AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*******/
 async function getRecommendedPlants(zipCode){
    try {
-	   // plantsMap stores keys of plant_key and maps to values of arrays of [total quality (numerator), total number of plants (denominator)]
+	   // plantsMap stores keys of plant_key and maps to values of objects of {totalQuality (numerator), totalNumber of plants (denominator)]
 	   // that together can be put together to calculate the average quality of a plant
      plantsMap = new Map();
 	  users = await sproutShareUserDatabase.getUserByZipCode(zipCode);
@@ -53,11 +53,17 @@ async function getRecommendedPlants(zipCode){
 		  arrayOfPlants = await userPlantDatabase.getUserPlantsByUserKey(user.user_key);
 		  arrayOfPlants.forEach( plant => {
 			  if(!plantsMap.has(plant.plant_key)){
-				  plantsMap.set(plant.plant_key, [plant.plant_quality, 1]);
+				  let temp = {};
+				  temp.totalQuality = plant.plant_quality;
+				  temp.totalNumber = 1;
+				  plantsMap.set(plant.plant_key, temp);
 			  }
 			  else {
 				  // Add quality to numerator and increment denominator
-				  let temp = [plantsMap.get(plant.plant_key)[0] + plant.plant_quality, plantsMap.get(plant.plant_key)[1] + 1];
+				  // let temp = [plantsMap.get(plant.plant_key)[0] + plant.plant_quality, plantsMap.get(plant.plant_key)[1] + 1];
+				  let temp = {};
+				  temp.totalQuality = plantsMap.get(plant.plant_key).totalQuality + plant.plant_quality;
+				  temp.totalNumber = plantsMap.get(plant.plant_key).totalNumber + 1
 				  plantsMap.set(plant.plant_key, temp);
 			  }
 		  })
@@ -65,7 +71,10 @@ async function getRecommendedPlants(zipCode){
 	  // It doesn't like to return maps so I have to convert it to an array :/
 	  plantsArr = [];
 	  plantsMap.forEach( (value, key, map) => {
-		  plantsArr.push( [key, value] );
+		  plant = {};
+		  plant.id = key;
+		  plant.average = value;
+		  plantsArr.push( plant );
 	  })
 	  return plantsArr;
    } catch (error) {
@@ -73,6 +82,48 @@ async function getRecommendedPlants(zipCode){
       return JSON.stringify(error.message);
    }
 }
+
+/*
+async function getRecommendedPlantsByCoords(userLat, userLong, radius){
+   try {
+	   // plantsMap stores keys of plant_key and maps to values of objects of {totalQuality (numerator), totalNumber of plants (denominator)]
+	   // that together can be put together to calculate the average quality of a plant
+     plantsMap = new Map();
+	  users = await sproutShareUserDatabase.getUserByCoords(userLat, userLong, radius);
+	  for(user of users){
+		  arrayOfPlants = await userPlantDatabase.getUserPlantsByUserKey(user.user_key);
+		  arrayOfPlants.forEach( plant => {
+			  let dist = sqrt( (userLat - user.user_lat)^2 + (userLong - user.user_long)^2 );
+			  if(!plantsMap.has(plant.plant_key)){
+				  let temp = {};
+				  temp.totalQuality = plant.plant_quality*( radius/(radius + dist) );
+				  temp.totalNumber = 1;
+				  plantsMap.set(plant.plant_key, temp);
+			  }
+			  else {
+				  // Add quality to numerator and increment denominator
+				  // let temp = [plantsMap.get(plant.plant_key)[0] + plant.plant_quality, plantsMap.get(plant.plant_key)[1] + 1];
+				  let temp = {};
+				  temp.totalQuality = plantsMap.get(plant.plant_key).totalQuality + plant.plant_quality*( radius/(radius + dist) );
+				  temp.totalNumber = plantsMap.get(plant.plant_key).totalNumber + 1
+				  plantsMap.set(plant.plant_key, temp);
+			  }
+		  })
+	  }
+	  // It doesn't like to return maps so I have to convert it to an array :/
+	  plantsArr = [];
+	  plantsMap.forEach( (value, key, map) => {
+		  plant = {};
+		  plant.id = key;
+		  plant.average = value;
+		  plantsArr.push( plant );
+	  })
+	  return plantsArr;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}*/
 
 /**
 async function getPostByQuery(query){
