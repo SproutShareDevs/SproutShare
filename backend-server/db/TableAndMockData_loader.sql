@@ -143,7 +143,7 @@ CREATE TABLE userplant(
   plant_difficulty int,
   plant_quality int,
   last_watering_date date NOT NULL DEFAULT CURRENT_DATE,
-  water_amount float,
+  water_amount float NOT NULL DEFAULT 1.00,
   CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
   CONSTRAINT fk_plant FOREIGN KEY(plant_key) REFERENCES plant(plant_key),  
   CONSTRAINT fk_garden FOREIGN KEY(garden_key) REFERENCES garden(garden_key),

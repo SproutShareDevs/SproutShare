@@ -17,11 +17,12 @@ async function getAllNotifications() {
 // much more logic to be implemented in here!
 async function getNotificationByToken(accessToken){
    try {
+
+      
       const user = await sproutshareUserServices.getUserByToken(accessToken);
       const userPlants = await userPlantServices.getUserPlantsByUserKey(user.user_key);
       let plantsToBeWatered = [];
 
-      let currentDateRaw = new Date();
       let lastDaysRain;
       weatherServices.getDailyRainfall(user.zip_code, (rainfall) => {
          lastDaysRain = rainfall;
@@ -81,15 +82,6 @@ async function getNotificationByToken(accessToken){
                   rainMayAffectSoon: false
                });
             }
-         }
-
-         // fetch last watering date of current plant
-         let lastWateringDateRaw = userPlants[plant].last_watering_date;
-
-         let daysAgoWatered = Math.ceil((currentDateRaw-lastWateringDateRaw)/(1000*60*60*24)).toString();
-         // if older than a day, say it needs to be watered
-         if(daysAgoWatered >= 2) {
-            plantsToBeWatered.push(userPlants[plant].user_plant_key);
          }
       }
 
