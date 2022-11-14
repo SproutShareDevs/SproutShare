@@ -23,15 +23,24 @@ async function getNotificationByToken(accessToken){
 
       let currentDateRaw = new Date();
       let lastDaysRain;
-      await weatherServices.getDailyRainfall(user.zip_code, (rainfall) => {
+      weatherServices.getDailyRainfall(user.zip_code, (rainfall) => {
          lastDaysRain = rainfall;
       });
 
-      let rainToday;
-      await weatherServices.getWeatherByZip(user.zip_code, (response) => {
-         
+      let rainToday = 0;
+      let rain3Days = 0;
+      weatherServices.getWeather3DayForecast(user.zip_code, (response) => {
+         if(response.Forecast1rain) {
+            rainToday = response.Forecast1rain + rainToday;
+            rain3Days += response.Forecast1rain;
+         }
+         if(response.Forecast2rain) {
+            rain3Days += response.Forecast2rain;
+         }
+         if(response.Forecast3rain) {
+            rain3Days += response.Forecast3rain;
+         }
       });
-      let rain3Days = 0;//weatherServices.getWeather3DayForecast(user.zip_code);
 
       let plantNeedsWatering = false;
       let sendNotification = false;

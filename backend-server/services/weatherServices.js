@@ -36,17 +36,17 @@ function getWeather3DayForecast(zipcode, callback){
       curr3DayForecast = {
          Forecast1main:weatherObj.list[0].weather[0].main,
          Forecast1icon:weatherObj.list[0].weather[0].icon,
-         Forecast1rain:(weatherObj.list[0].rain/2.54).toFixed(2),
+         Forecast1rain:(weatherObj.list[0].rain/25.4).toFixed(2),
          Forecast1desc:weatherObj.list[0].weather[0].description,
          Forecast1Date:formattedDate1,
          Forecast2main:weatherObj.list[1].weather[0].main,
          Forecast2icon:weatherObj.list[1].weather[0].icon,
-         Forecast2rain:(weatherObj.list[1].rain/2.54).toFixed(2),
+         Forecast2rain:(weatherObj.list[1].rain/25.4).toFixed(2),
          Forecast2desc:weatherObj.list[1].weather[0].description,
          Forecast2Date:formattedDate2,
          Forecast3main:weatherObj.list[2].weather[0].main,
          Forecast3icon:weatherObj.list[2].weather[0].icon,
-         Forecast3rain:(weatherObj.list[2].rain/2.54).toFixed(2),
+         Forecast3rain:(weatherObj.list[2].rain/25.4).toFixed(2),
          Forecast3desc:weatherObj.list[2].weather[0].description,
          Forecast3Date:formattedDate3
       }
