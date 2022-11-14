@@ -76,6 +76,10 @@ async function getRecommendedPlants(zipCode){
 		  plant.average = value;
 		  plantsArr.push( plant );
 	  })
+	  plantsArr.sort( (a, b) => {
+		  // Returns a positive value if b average > a average, sorting b before a, creating a descending list of plants by how good they are
+		  return (b.average.totalQuality/b.average.totalNumber) - (a.average.totalQuality/a.average.totalNumber);
+	  })
 	  return plantsArr;
    } catch (error) {
       console.error(error);
@@ -117,6 +121,10 @@ async function getRecommendedPlantsByCoords(userLat, userLong, radius){
 		  plant.id = key;
 		  plant.average = value;
 		  plantsArr.push( plant );
+	  })
+	  plantsArr.sort( (a, b) => {
+		  // Returns a positive value if b average > a average, sorting b before a, creating a descending list of plants by how good they are
+		  return (b.average.totalQuality/b.average.totalNumber) - (a.average.totalQuality/a.average.totalNumber);
 	  })
 	  return plantsArr;
    } catch (error) {
