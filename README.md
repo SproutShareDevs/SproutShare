@@ -1,11 +1,10 @@
 # SproutShare - How to Run
 
-## Recent Postgres Updates
+## Recent Postgres Updates - 11/14/2022
 
-#### *The Postgres Sproutshareuser table was updated, and 'AlterTables.sql' must be ran to update the changes to the table*
+#### *The Postgres schema tables are being frequently, and 'TableAndMockData_loader.sql' must be ran to update the changes to the tables*
 
-#### *If you are in the project root directory, the command to run it is:* 'psql -U $username -d $dbname -a -f backend-server\db\AlterTables.sql'
-#### *Then TableAndMockData_loader.sql can be ran to repopulate the tables if you wish via:* 'psql -U $username -d $dbname -a -f backend-server\db\AlterTables.sql'
+#### *You MUST run the data loader from the directory it is in, the command to run it is:* 'psql -U $username -d $dbname -a -f .\TableAndMockData_loader.sql'
 #### *Note that $username is equal to your Postgres username, and $dbname is equal to your Postgres database name*
 
 ## Environment Variable Updates (.env Files)
