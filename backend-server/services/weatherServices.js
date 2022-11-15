@@ -69,7 +69,7 @@ function getDailyRainfall(zipcode, callback){
          if(hour.rain){
             console.log("Rainfall:", hour.rain['1h']);
             //console.log("start iter:", rainfallAmountMilli);
-            rainfallAmountMilli = rainfallAmountMilli + hour.rain['1h'];
+            rainfallAmountMilli += hour.rain['1h'];
             //console.log("end iter", rainfallAmountMilli);
          }
       })
