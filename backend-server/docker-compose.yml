@@ -2,7 +2,7 @@ version: '3'
 volumes:
   mongo:
     external: true
-  postgres:
+  postgresdb:
     external: true
 
 services:
@@ -36,4 +36,4 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgresdb:/var/lib/postgresql/data
