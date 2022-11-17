@@ -13,7 +13,7 @@ const seedDB = require("./db/seed.js");
 /** database connection(s) */
 if(process.argv[2] == "local") {
     mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
-} else if(process.argv[2] == "remote") {
+} else {
     mongoose.connect('mongodb://mongo:27017', {useNewUrlParser: true});
 }
 
