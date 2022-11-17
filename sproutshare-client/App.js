@@ -1,4 +1,4 @@
-
+const NODE_SERVER = 'http://cs411-f22-yellow.student.cs.odu.edu:3000'
 // React / Expo Imports
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
@@ -22,7 +22,6 @@ import LogInScreen from './components/account/LogInScreen.js';
 import CreateAccountScreen from './components/account/CreateAccountScreen.js';
 
 // Dotenv
-import {NODE_SERVER} from "@env"
 import styles from './styles/styles.js';
 import { color } from 'react-native-reanimated';
 

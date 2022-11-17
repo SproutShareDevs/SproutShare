@@ -3,7 +3,7 @@ $nodeServer = Get-Content "..\sproutshare-client\.env"
 echo $nodeServer
 
 $content = Get-Content "..\sproutshare-client\App.js" 
-$content[0] = $nodeServer;
+$content[0] = "const " + $nodeServer;
 echo $content[0]
 $content | Set-Content "..\sproutshare-client\App.js"
 
