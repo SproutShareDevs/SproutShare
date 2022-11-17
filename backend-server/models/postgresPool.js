@@ -1,4 +1,18 @@
 const Pool = require('pg').Pool;
+
+let host;
+let databaseName;
+let password;
+
+if(process.argv[2] == "local") {
+   host = "localhost";
+   databaseName = process.env.DATABASE_NAME;
+   password = process.env.DB_PASSWORD;
+} else {
+   host = "postgres";
+   databaseName = "sproutshare";
+   password = "postgres";
+}
 /**
  * Please read these comments carefully!
  */
@@ -14,11 +28,11 @@ const pool = new Pool({
    // My .env file is 2 lines:
    // DATABASE_NAME="SproutShare"
    // DB_PASSWORD="password"
-   password: process.env.DB_PASSWORD || "1234",
-   host: "postgres",
+   password: password || "1234",
+   host: host,
    port: 5432,
    // this is your db name!
-   database: process.env.DATABASE_NAME || "SproutShare-dev-1"
+   database: databaseName || "SproutShare-dev-1"
 });
 
 module.exports = pool;

@@ -11,7 +11,11 @@ const auth = require('./custom-middleware/authMiddleware');
 const seedDB = require("./db/seed.js");
 
 /** database connection(s) */
-mongoose.connect(process.env.MONGO_SERVER, {useNewUrlParser: true});
+if(process.argv[2] == "local") {
+    mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
+} else if(process.argv[2] == "remote") {
+    mongoose.connect('mongodb://mongo:27017', {useNewUrlParser: true});
+}
 
 /** npm package middleware */
 const app = express();
@@ -104,4 +108,9 @@ app.use('/userPlants', userPlantsController);
 // seed database, comment out unless you want to reseed database
 //seedDB();
 
-app.listen(3000, ()=>{console.log('Listening on port 3000...')});
+app.listen(3000, ()=>{
+    process.argv.forEach(function (val, index, array) {
+        console.log(index + ': ' + val);
+      });
+    console.log('Listening on port 3000...')
+});
