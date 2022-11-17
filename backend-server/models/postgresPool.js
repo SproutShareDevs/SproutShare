@@ -15,7 +15,7 @@ const pool = new Pool({
    // DATABASE_NAME="SproutShare"
    // DB_PASSWORD="password"
    password: process.env.DB_PASSWORD || "1234",
-   host: "localhost",
+   host: "postgres",
    port: 5432,
    // this is your db name!
    database: process.env.DATABASE_NAME || "SproutShare-dev-1"

@@ -11,7 +11,7 @@ const auth = require('./custom-middleware/authMiddleware');
 const seedDB = require("./db/seed.js");
 
 /** database connection(s) */
-mongoose.connect('mongodb://localhost/SproutShareNoSQL', {useNewUrlParser: true});
+mongoose.connect('mongodb://mongo:27017', {useNewUrlParser: true});
 
 /** npm package middleware */
 const app = express();

@@ -1,0 +1,39 @@
+version: '3'
+volumes:
+  mongo:
+    external: true
+  postgres:
+    external: true
+
+services:
+  mongo:
+    container_name: mongoContainer
+    image: "mongo"
+    restart: always
+    volumes:
+      - mongo:/data/db
+    ports:
+      - '27017:27107'
+  backend:
+    container_name: nodeContainer
+    restart: always
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - DB_PASSWORD=postgres
+      - DATABASE_NAME=sproutshare
+    links:
+      - mongo
+      - postgres
+  postgres:
+    image: postgres:15.1
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
