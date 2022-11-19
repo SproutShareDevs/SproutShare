@@ -4,14 +4,14 @@
 
 ### You can now either connect to the dedicated VM Backend, or use your local backend instead for development. Instructions for each are starting up each are below:
 
-###Case 1: You're running your local backend/databases
-####1. Set up backend- run npm start local in /backend-server
-####2. Launch frontend expo- run StartupLocal.ps1 from /scripts
-####Note: Ensure that your Postgres Tables are up to date if there has been any commits by running the ''TableAndMockData_loader.sql' script. More instructions for that in the following section 'Recent Postgres Updates'
+### Case 1: You're running your local backend/databases
+#### 1. Set up backend- run npm start local in /backend-server
+#### 2. Launch frontend expo- run StartupLocal.ps1 from /scripts
+#### Note: Ensure that your Postgres Tables are up to date if there has been any commits by running the ''TableAndMockData_loader.sql' script. More instructions for that in the following section 'Recent Postgres Updates'
 
-###Case 2: You're using the VM databases and server
-####1. Connect to the ODU CS VPN
-####2. Start frontend, and connect to VM server- run StartupRemote.ps1 from /scripts
+### Case 2: You're using the VM databases and server
+#### 1. Connect to the ODU CS VPN
+#### 2. Start frontend, and connect to VM server- run StartupRemote.ps1 from /scripts
 
 ## Recent Postgres Updates - 11/14/2022
 
