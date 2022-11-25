@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Recommendations</title>
+      <%-include('layouts/header');-%>
+   </head>
+   <body>
+      <%-include('layouts/navbar');-%>
+      <h1>Recommendations</h1>
+      <br/>
+      <br/>
+      <br/>
+      <form action="/ejs-testing/userPlants/recommend/zipcode" method="get">
+         <input type="text" name="zipcode"  placeholder = "Search by zip code..." >
+         <button type="submit">Submit</button>
+      </form>
+	  <% if (typeof plantsMap !== 'undefined') { %>
+		 <div>i'm real! <%=typeof plantsMap%></div>
+		 <div>length: <%=Object.keys(plantsMap).length%></div>
+		 <div>me: <%=JSON.stringify(plantsMap)%></div>
+         <div>
+            <% for (const [key, value] of Object.entries(plantsMap)) { %>
+               <%= "{" %> 
+               <div>plant key: <%=value.id%></div>
+               <div>plant quality: <%=value.average.totalQuality%></div>
+               <div>plant number: <%=value.average.totalNumber%></div> 
+               <%= "}" %> 
+            <% } %>
+         </div>
+      <% } %>
+	  <% if (typeof plantsMap == 'undefined') { %>
+		 <div>i'm not real!</div>
+      <% } %>
+	</body>
+</html>

@@ -159,7 +159,10 @@ Script to create tables in database
 INSERT INTO sproutshareuser(first_name, last_name, email_address, username, password, accessToken, lang, zip_code)
 VALUES
    ('George', 'Romero', 'george.romero@dotld.com', 'george123', 'password', '0', 'en', '90710'),
-   ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'thecricket', 'password', '0', 'en', '24061');
+   ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'thecricket', 'password', '0', 'en', '24061'),
+   ('Albert', 'Albertson', 'al@gmail.com', 'BigAl', 'password', '0', 'en', '23529'),
+   ('Bob', 'Bobertson', 'bob@gmail.com', 'Bobby', 'password', '0', 'en', '23529'),
+   ('Carol', 'Carolson', 'carol@gmail.com', 'Carolina', 'password', '0', 'en', '23529');
 
 \COPY plant(common_name, latin_name, light_level, min_temp, max_temp, rec_temp, hardiness_zone, soil_type, img, water_need) FROM 'plants.csv' WITH DELIMITER ',' HEADER CSV;
 
@@ -190,15 +193,82 @@ VALUES
 
 INSERT INTO garden (user_key, soil_key, light_level, yesterdaysRain)
 VALUES
-   (1, 1, 10,5),
-   (2, 1, 5,2);
+   (1, 1, 10, 5),
+   (2, 1, 5, 2),
+   (3, 1, 6, 2),
+   (3, 1, 2, 2),
+   (4, 1, 3, 2),
+   (5, 1, 2, 2);
+
+/*
+There are 15 plants, keys are 1-15
+*/
 
 INSERT INTO userplant(user_key, plant_key, garden_key, plant_disease_key, 
 plant_pest_key, plant_qty, plant_difficulty, plant_quality)
 VALUES
-   (1, 1, 1, null, null, 10, 5, 4),
-   (2, 3, 2, 3, null, 1, 10, 10);
-
+    (1, 1, 1, null, null, 10, 5, 4),
+    (2, 3, 2, 3, null, 1, 10, 10),
+    (3, 12, 3, null, null, 1, 1, 4),
+	(3, 10, 4, null, null, 1, 4, 3),
+	(3, 15, 3, null, null, 5, 2, 2),
+	(4, 1, 5, null, null, 1, 4, 5),
+	(4, 4, 5, null, null, 3, 2, 4),
+	(3, 7, 3, null, null, 5, 2, 2),
+	(3, 11, 4, null, null, 3, 1, 2),
+	(5, 11, 6, null, null, 3, 5, 2),
+	(5, 6, 6, null, null, 1, 1, 4),
+	(5, 15, 6, null, null, 4, 3, 2),
+	(5, 11, 6, null, null, 2, 3, 3),
+	(5, 1, 6, null, null, 4, 3, 2),
+	(3, 13, 3, null, null, 5, 4, 5),
+	(3, 2, 4, null, null, 2, 1, 5),
+	(5, 15, 6, null, null, 3, 3, 4),
+	(4, 10, 5, null, null, 4, 2, 4),
+	(5, 3, 6, null, null, 2, 1, 3),
+	(3, 14, 3, null, null, 4, 2, 2),
+	(5, 12, 6, null, null, 5, 1, 5),
+	(4, 4, 5, null, null, 2, 3, 1),
+	(5, 14, 6, null, null, 1, 3, 4),
+	(3, 11, 4, null, null, 5, 1, 5),
+	(4, 15, 5, null, null, 3, 3, 3),
+	(4, 8, 5, null, null, 4, 1, 5),
+	(4, 15, 5, null, null, 3, 1, 5),
+	(4, 1, 5, null, null, 1, 2, 2),
+	(5, 7, 6, null, null, 4, 5, 1),
+	(5, 14, 6, null, null, 4, 4, 1),
+	(3, 14, 3, null, null, 2, 4, 5),
+	(3, 2, 4, null, null, 4, 1, 1),
+	(5, 14, 6, null, null, 1, 5, 4),
+	(5, 6, 6, null, null, 1, 5, 2),
+	(3, 12, 3, null, null, 1, 5, 3),
+	(3, 10, 4, null, null, 3, 5, 5),
+	(5, 7, 6, null, null, 3, 5, 4),
+	(4, 10, 5, null, null, 5, 3, 5),
+	(3, 2, 3, null, null, 2, 1, 3),
+	(4, 3, 5, null, null, 1, 4, 3),
+	(3, 9, 4, null, null, 1, 5, 4),
+	(5, 15, 6, null, null, 3, 2, 2),
+	(3, 3, 3, null, null, 1, 1, 3),
+	(5, 13, 6, null, null, 2, 2, 3),
+	(3, 12, 4, null, null, 2, 2, 5),
+	(5, 9, 6, null, null, 2, 2, 5),
+	(4, 4, 5, null, null, 3, 4, 4),
+	(4, 3, 5, null, null, 4, 3, 4),
+	(4, 8, 5, null, null, 3, 2, 2),
+	(4, 2, 5, null, null, 1, 1, 3),
+	(5, 8, 6, null, null, 4, 4, 4),
+	(3, 12, 3, null, null, 5, 1, 1),
+	(4, 1, 5, null, null, 3, 2, 5),
+	(3, 1, 4, null, null, 3, 4, 5),
+	(5, 7, 6, null, null, 5, 2, 3),
+	(4, 1, 5, null, null, 3, 2, 1),
+	(3, 3, 3, null, null, 1, 5, 3),
+	(5, 13, 4, null, null, 5, 4, 5),
+	(3, 14, 3, null, null, 5, 1, 4),
+	(3, 5, 4, null, null, 4, 5, 1),
+	(5, 3, 6, null, null, 5, 4, 3),
+	(3, 11, 3, null, null, 1, 4, 1);
 
 
 /*

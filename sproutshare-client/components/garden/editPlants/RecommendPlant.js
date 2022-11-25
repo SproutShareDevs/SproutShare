@@ -25,15 +25,17 @@ function RecommendPlant(props){
     }
 
     const fetchBasePlant = async (plantKey) => {
-        await axios.get(`${props.nodeServer}/plants/${plantKey}`).then((response) => {
+      let basePlant;  
+      await axios.get(`${props.nodeServer}/plants/${plantKey}`).then((response) => {
             console.log(response.data);
-            return(response.data);
+            basePlant = response.data;
         }).catch(err => {
             console.log('Error fetching user plant: ', err);
         });
+      return basePlant;
     }
 
-    const makePlantList = async () => {
+    async function makePlantList() {
       await fetchPlants();
       tempArr = [];
       for (const plant of plants){
@@ -46,9 +48,9 @@ function RecommendPlant(props){
       setPlantList(tempArr);
     }
 
-  renderItem = ({item}) => {
-    return <PlantOption plant={item} selectPlant = {props.selectPlant} />
-}
+    renderItem = ({item}) => {
+      return <PlantOption plant={item} selectPlant = {props.selectPlant} />
+    }
 
     return (
         <>
