@@ -54,7 +54,7 @@ router.get('/:key', async(req, res) => {
 // by user key
 router.get('/getByUserKey/:key', async(req, res) => {
    try {
-      const userPlants = userPlantServices.getUserPlantsByUserKey(req.params.key);
+      const userPlants = await userPlantServices.getUserPlantsByUserKey(req.params.key);
       res.send(userPlants);
    } catch (error) {
       res.send(JSON.stringify(error.message));
@@ -64,7 +64,17 @@ router.get('/getByUserKey/:key', async(req, res) => {
 // by garden key
 router.get('/getByUser/:key', async(req, res)=>{
    try {
-      const userPlants = userPlantServices.getUserPlantsByGardenKey(req.params.key);
+      const userPlants = await userPlantServices.getUserPlantsByGardenKey(req.params.key);
+      res.send(userPlants);
+   } catch (error) {
+      res.send(JSON.stringify(error.message));
+   }
+})
+
+router.get('/water/:key', async(req, res)=>{
+   try {
+      const userPlants = await userPlantServices.getUserPlantsToBeWatered(req.params.key);
+      console.log(userPlants);
       res.send(userPlants);
    } catch (error) {
       res.send(JSON.stringify(error.message));

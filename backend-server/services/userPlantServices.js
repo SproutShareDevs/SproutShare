@@ -2,6 +2,7 @@ const userPlantDatabase = require('../database/userPlantDatabase');
 const sproutShareUserDatabase = require('../database/sproutShareUserDatabase');
 const weatherServices = require('./weatherServices');
 const plantServices = require('./plantServices');
+const userServices = require('./sproutShareUserServices');
 
  async function getAllUserPlants() {
    try {
@@ -44,6 +45,19 @@ async function getUserPlantsByUserKey(userKey){
       return JSON.stringify(error.message);
    }
 }
+
+async function getUserPlantsToBeWatered(accessToken){
+   try {
+      const user = await userServices.getUserByToken(accessToken);
+      const userPlants = await userPlantDatabase.getUserPlantsToBeWatered(user.user_key)
+      return userPlants;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+
 /*******AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*******/
 async function getRecommendedPlants(zipCode){
    try {
@@ -223,12 +237,14 @@ async function deleteUserPlant(userPlantKey){
    }
 }
 
+/*
+   Get all user plants, advance their water decay by the amount of days specified
+   and account for the rain passed in.
+*/
 async function advanceDays(rainAmount, userKey, days) {
    try {
       const userPlants = await getUserPlantsByUserKey(userKey);
       
-      
-
       for(let plant in userPlants) {
          let plantType = await plantServices.getPlantByKey(userPlants[plant].plant_key);
          let wateringDecay = (1/plantType.water_need);
@@ -251,9 +267,7 @@ async function advanceDays(rainAmount, userKey, days) {
          console.log("Updated Water Amount: " + userPlants[plant].water_amount + "\n\n");
 
       }
-      
-      const updatedUserPlants = await getUserPlantsByUserKey(userKey);
-      return updatedUserPlants;
+      return userPlants;
 
    } catch(error) {
       console.log("Error occured in advanceTime services function");
@@ -268,6 +282,7 @@ module.exports = {
    getUserPlantByKey,
    getUserPlantsByGardenKey,
    getUserPlantsByUserKey,
+   getUserPlantsToBeWatered,
    getRecommendedPlants,
    //getRecommendedPlantsByCoords,
    //getPostByQuery,

@@ -52,7 +52,7 @@ async function getUserPlantByKey(userPlantKey){
  */
 async function getUserPlantsByUserKey(userKey){
    try {
-      const userPlants = await pool.query("SELECT * FROM userplant WHERE user_key = $1", [userKey]);
+      const userPlants = await pool.query('SELECT * FROM userplant WHERE user_key = $1', [userKey]);
       return userPlants.rows;
    } catch (error) {
       console.error(error);
@@ -86,6 +86,21 @@ async function getPostByQuery(query){
 async function getUserPlantsByGardenKey(gardenKey){
    try {
       const userPlants = await pool.query("SELECT * FROM userplant WHERE garden_key = $1", [gardenKey]);
+      return userPlants.rows;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+/**
+ * 
+ * @param {*} userKey The user key of the user's plants
+ * @returns The userPlant with the gardenKey parameter as a foreign key 
+ */
+ async function getUserPlantsToBeWatered(userKey){
+   try {
+      const userPlants = await pool.query("SELECT * FROM userplant WHERE user_key = $1 AND water_amount <= 0.001", [userKey]);
       return userPlants.rows;
    } catch (error) {
       console.error(error);
@@ -233,6 +248,7 @@ module.exports = {
    getUserPlantByKey,
    getUserPlantsByGardenKey,
    getUserPlantsByUserKey,
+   getUserPlantsToBeWatered,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,

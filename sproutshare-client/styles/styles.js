@@ -278,7 +278,23 @@ export default StyleSheet.create({
         borderRadius: 30
     },
     myGardenButtons: {
-        width: 160,
+        width: "45%",
+        height: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 9,
+        elevation: 25,
+        backgroundColor: '#A5B8A1',
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 15,
+        marginLeft: 10,
+        borderColor: "black",
+        borderWidth: 4,
+        borderRadius: 30,
+    },
+    myGardenButtonsFullWidth: {
+        width: "90%",
         height: 75,
         justifyContent: 'center',
         alignItems: 'center',
@@ -403,5 +419,28 @@ export default StyleSheet.create({
         padding: 8,
         color: '#120438',
         margin: 15
+    },
+    waterContainer: {
+        width: "95%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 9,
+        elevation: 25,
+        backgroundColor: '#AFE4DE',
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 15,
+        marginLeft: 10,
+        borderColor: "black",
+        borderWidth: 4,
+        borderRadius: 30
+    },
+    wateringContainerText: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 15,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        marginTop: 5
     }
 });
