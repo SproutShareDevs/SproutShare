@@ -232,15 +232,6 @@ async function advanceDays(rainAmount, userKey, days) {
       for(let plant in userPlants) {
          let plantType = await plantServices.getPlantByKey(userPlants[plant].plant_key);
          let wateringDecay = (1/plantType.water_need);
-
-         /*
-         console.log(
-            "UserPlant Key: " + userPlants[plant].user_plant_key + "\n"
-            + "Current Water Amount: " + userPlants[plant].water_amount + "\n"
-            + "Water Decay: " + wateringDecay
-         );
-         */
-
          
          let waterChange = (rainAmount - (days * wateringDecay));
 
@@ -250,7 +241,6 @@ async function advanceDays(rainAmount, userKey, days) {
             "Water Decay: " + wateringDecay + "\n" + 
             "Days: " + days + "\n" +
             "Water Change: " + waterChange + "\n"
-
          );
    
 
