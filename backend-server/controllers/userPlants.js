@@ -131,6 +131,16 @@ router.put('/updatequality/:key', async(req,res)=>{
    }
 })
 
+router.put('/updatewateramount/:key', async(req,res)=> {
+   try {
+      const updatedUserPlant = await userPlantServices.updateUserPlantWaterAmount(req.params.key, req.body);
+      res.send(updatedUserPlant);
+   } catch (error) {
+      console.error(error);
+      res.send(JSON.stringify(error.message));   
+   }
+});
+
 router.delete('/delete/:key', async(req, res)=>{
    try {
       const deletedUserPlant = await userPlantServices.deleteUserPlant(req.params.key);
@@ -140,5 +150,17 @@ router.delete('/delete/:key', async(req, res)=>{
       res.send(JSON.stringify(error.message)); 
    }
 })
+
+// expects user key and rain amount as arguments in body
+router.put('/advancedays', async(req, res) => {
+   try {
+      const updatedPlants = await userPlantServices.advanceDays(req.body.rain_amount, req.body.user_key, req.body.days);
+      res.send(updatedPlants);
+   } catch (error) {
+      console.log("Error in advancing time route");
+      console.log(error);
+      res.send(JSON.stringify(error.message));
+   }
+});
 
 module.exports = router;

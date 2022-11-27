@@ -1,5 +1,7 @@
 const userPlantDatabase = require('../database/userPlantDatabase');
 const sproutShareUserDatabase = require('../database/sproutShareUserDatabase');
+const weatherServices = require('./weatherServices');
+const plantServices = require('./plantServices');
 
  async function getAllUserPlants() {
    try {
@@ -201,12 +203,71 @@ async function updateUserPlantQuality(userPlantKey, userPlant){
    }
 }
 
+async function updateUserPlantWaterAmount(userPlantKey, waterAmount) {
+   try {
+      const updatedUserPlant = await userPlantDatabase.updateUserPlantWaterAmount(userPlantKey, waterAmount);
+      return updatedUserPlant;
+   }catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 async function deleteUserPlant(userPlantKey){
    try {
       const deletedUserPlant = await userPlantDatabase.deleteUserPlant(userPlantKey);
       return deletedUserPlant;
    } catch (error) {
       console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+async function advanceDays(rainAmount, userKey, days) {
+   try {
+      const userPlants = await getUserPlantsByUserKey(userKey);
+      
+      
+
+      for(let plant in userPlants) {
+         let plantType = await plantServices.getPlantByKey(userPlants[plant].plant_key);
+         let wateringDecay = (1/plantType.water_need);
+
+         /*
+         console.log(
+            "UserPlant Key: " + userPlants[plant].user_plant_key + "\n"
+            + "Current Water Amount: " + userPlants[plant].water_amount + "\n"
+            + "Water Decay: " + wateringDecay
+         );
+         */
+
+         
+         let waterChange = (rainAmount - (days * wateringDecay));
+
+         console.log(
+            "Current Water Amount: " + userPlants[plant].water_amount + "\n" +
+            "Rain Amount: " +  rainAmount + "\n" +
+            "Water Decay: " + wateringDecay + "\n" + 
+            "Days: " + days + "\n" +
+            "Water Change: " + waterChange + "\n"
+
+         );
+   
+
+         userPlants[plant].water_amount += waterChange;
+
+         await userPlantDatabase.updateUserPlantWaterAmount(userPlants[plant].user_plant_key, userPlants[plant].water_amount);
+      
+         console.log("Updated Water Amount: " + userPlants[plant].water_amount + "\n\n");
+
+      }
+      
+      const updatedUserPlants = await getUserPlantsByUserKey(userKey);
+      return updatedUserPlants;
+
+   } catch(error) {
+      console.log("Error occured in advanceTime services function");
+      console.log(error);
       return JSON.stringify(error.message);
    }
 }
@@ -224,5 +285,7 @@ module.exports = {
    updateUserPlant,
    updateUserPlantDifficulty,
    updateUserPlantQuality,
-   deleteUserPlant
+   updateUserPlantWaterAmount,
+   deleteUserPlant,
+   advanceDays
 };

@@ -191,6 +191,28 @@ async function updateUserPlantQuality(userPlantKey, userPlant){
 
 /**
  * 
+ * @param {*} userPlantKey The userPlant to edit 
+ * @param {*} waterAmount The increase or decrease in water that the plant contains
+ * @return the edited userplant or an error as a JSON object
+ */
+async function updateUserPlantWaterAmount(userPlantKey, waterAmount){
+   try {
+      const updatedUserPlant = await pool.query("UPDATE userplant SET water_amount=$1 WHERE user_plant_key=$2 RETURNING *", 
+      [
+         waterAmount, 
+         userPlantKey      
+      ]);
+      return updatedUserPlant.rows[0];   
+   }catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
+
+
+/**
+ * 
  * @param {*} userPlantKey The id of the ForumPost to delete 
  * @return the deleted userplant or an error as a JSON object
  */
@@ -216,5 +238,6 @@ module.exports = {
    updateUserPlant,
    updateUserPlantDifficulty,
    updateUserPlantQuality,
+   updateUserPlantWaterAmount,
    deleteUserPlant
 };
