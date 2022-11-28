@@ -103,7 +103,7 @@ async function getRecommendedPlants(zipCode){
    }
 }
 
-/*
+
 async function getRecommendedPlantsByCoords(userLat, userLong, radius){
    try {
 	   // plantsMap stores keys of plant_key and maps to values of objects of {totalQuality (numerator), totalNumber of plants (denominator)]
@@ -113,7 +113,9 @@ async function getRecommendedPlantsByCoords(userLat, userLong, radius){
 	  for(user of users){
 		  arrayOfPlants = await userPlantDatabase.getUserPlantsByUserKey(user.user_key);
 		  arrayOfPlants.forEach( plant => {
-			  let dist = sqrt( (userLat - user.user_lat)^2 + (userLong - user.user_long)^2 );
+			  // acos( sin( radians(user_lat) )*sin( radians($1) ) + cos( radians(user_lat) )*cos( radians($1) )*cos( radians(user_long)-radians($2) ) )*6371.009
+			  // let dist = sqrt( (userLat - user.user_lat)^2 + (userLong - user.user_long)^2 ); Old, do not use
+			  let dist = Math.acos( Math.sin( user.user_lat * Math.PI / 180 )*Math.sin( userLat * Math.PI / 180 ) + Math.cos( user.user_lat * Math.PI / 180 )*Math.cos( userLat * Math.PI / 180 )*Math.cos( (user.user_long * Math.PI / 180)-(userLong * Math.PI / 180) ) )*6371.009;
 			  if(!plantsMap.has(plant.plant_key)){
 				  let temp = {};
 				  temp.totalQuality = plant.plant_quality*( radius/(radius + dist) );
@@ -147,7 +149,7 @@ async function getRecommendedPlantsByCoords(userLat, userLong, radius){
       console.error(error);
       return JSON.stringify(error.message);
    }
-}*/
+}
 
 /**
 async function getPostByQuery(query){
@@ -284,7 +286,7 @@ module.exports = {
    getUserPlantsByUserKey,
    getUserPlantsToBeWatered,
    getRecommendedPlants,
-   //getRecommendedPlantsByCoords,
+   getRecommendedPlantsByCoords,
    //getPostByQuery,
    storeUserPlant,
    updateUserPlant,
