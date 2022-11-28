@@ -62,7 +62,9 @@ CREATE TABLE sproutshareuser(
   last_name varchar,
   email_address varchar,
   lang varchar,
-  zip_code int
+  zip_code int,
+  user_lat double precision NOT NULL DEFAULT 1.00,
+  user_long double precision NOT NULL DEFAULT 1.00
 );
 
 CREATE TABLE plant(
@@ -156,13 +158,13 @@ CREATE TABLE userplant(
 Script to create tables in database
 */
 
-INSERT INTO sproutshareuser(first_name, last_name, email_address, username, password, accessToken, lang, zip_code)
+INSERT INTO sproutshareuser(first_name, last_name, email_address, username, password, accessToken, lang, zip_code, user_lat, user_long)
 VALUES
-   ('George', 'Romero', 'george.romero@dotld.com', 'george123', 'password', '0', 'en', '90710'),
-   ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'thecricket', 'password', '0', 'en', '24061'),
-   ('Albert', 'Albertson', 'al@gmail.com', 'BigAl', 'password', '0', 'en', '23529'),
-   ('Bob', 'Bobertson', 'bob@gmail.com', 'Bobby', 'password', '0', 'en', '23529'),
-   ('Carol', 'Carolson', 'carol@gmail.com', 'Carolina', 'password', '0', 'en', '23529');
+   ('George', 'Romero', 'george.romero@dotld.com', 'george123', 'password', '0', 'en', '90710', '33.7958', '118.2965'),
+   ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'thecricket', 'password', '0', 'en', '24061', '37.2209', '80.4228'),
+   ('Albert', 'Albertson', 'al@gmail.com', 'BigAl', 'password', '0', 'en', '23529', '36.8861', '76.3081'),
+   ('Bob', 'Bobertson', 'bob@gmail.com', 'Bobby', 'password', '0', 'en', '23529', '36.8861', '76.3081'),
+   ('Carol', 'Carolson', 'carol@gmail.com', 'Carolina', 'password', '0', 'en', '23529', '36.8861', '76.3081');
 
 \COPY plant(common_name, latin_name, light_level, min_temp, max_temp, rec_temp, hardiness_zone, soil_type, img, water_need) FROM 'plants.csv' WITH DELIMITER ',' HEADER CSV;
 

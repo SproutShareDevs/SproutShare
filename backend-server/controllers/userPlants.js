@@ -92,14 +92,14 @@ router.get('/recommend/:zipcode', async(req, res)=>{
 })
 
 // Recommend plants by coordinates
-/*router.get('/recommend/:userLat/:userLong/:radius', async(req, res)=>{
+router.get('/recommend/:userLat/:userLong/:radius', async(req, res)=>{
    try {
-      const plantsMap = userPlantServices.getRecommendedPlantsByCoords(req.params.userLat, req.params.userLong, req.params.radius);
+      const plantsMap = await userPlantServices.getRecommendedPlantsByCoords(req.params.userLat, req.params.userLong, req.params.radius);
       res.send(plantsMap);
    } catch (error) {
       res.send(JSON.stringify(error.message));
    }
-})*/
+})
 
 router.post('/store', async(req,res) =>{
    try {

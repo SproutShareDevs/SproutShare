@@ -82,16 +82,20 @@ async function getUserByZipCode(zipCode){
 /**
  * Get nearby users by distance
  */
- /*
+
 async function getUserByCoords(userLat, userLong, radius){
    try {
-      const user = await pool.query('SELECT * FROM sproutshareuser WHERE sqrt( (user_lat-$1)^2 + (user_long-$2)^2 ) <= $3',[userLat, userLong, radius]);
+      // Old version; inaccurate, do not use
+	  // const user = await pool.query('SELECT * FROM sproutshareuser WHERE sqrt( (user_lat-$1)^2 + (user_long-$2)^2 ) <= $3',[userLat, userLong, radius]);
+	  // This distance formula is the great-circle distance. The acos function returns the angle between the two points, which needs to be multiplied by 
+	  // the radius of the circle to yield distance. The radius of the Earth is taken from this page, https://en.wikipedia.org/wiki/Great-circle_distance.
+	  const user = await pool.query('SELECT * FROM sproutshareuser WHERE acos( sin( radians(user_lat) )*sin( radians($1) ) + cos( radians(user_lat) )*cos( radians($1) )*cos( radians(user_long)-radians($2) ) )*6371.009 <= $3',[userLat, userLong, radius]);
       return user.rows;
    } catch (error) {
       console.error(error);
       return JSON.stringify(error.message);
    }
-}*/
+}
 
 async function getUserAccessTokenByKey(userKey){
    try {
@@ -218,7 +222,7 @@ module.exports = {
    getAllUsers,
    getUserByKey,
    getUserByZipCode,
-   //getUserByCoords,
+   getUserByCoords,
    getUserByQuery,
    getUserByToken,
    getUserByUsername,
