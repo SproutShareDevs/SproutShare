@@ -52,20 +52,20 @@ function AccountManagement(props) {
         }
     }
 
-    async function advanceDays() {
+    const advanceDays = async () => {
         let token = await SecureStore.getItemAsync('AccessToken');
+        console.log(token);
         await axios.put(`${props.nodeServer}/userPlants/advancedays`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
             rain_amount: rain,
             days: days  
-        }).then((response) => {
+        }, {headers: {
+            Authorization: `Bearer ${token}`
+        }}).then((response) => {
             console.log(response);
             console.log('Time has been advanced.');
         }).catch((err) => {
             console.log(err);
-        })
+        });
     }
 
     const triggerLocalNotificationHandler = () => {
