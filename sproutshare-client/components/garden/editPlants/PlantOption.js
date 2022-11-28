@@ -18,29 +18,22 @@ function PlantOption(props) {
     }
 
     return(
-        <View style={{backgroundColor: bgColor,
-                    padding: 20,
-                    marginVertical: 8,
-                    marginHorizontal: 16,}}>
-            <Pressable 
-            onPress={() => {selected()}}
-            >
-            <View style={styles.nameplate}>
-            <Image
-                style={styles.tinyImage}
-                source={{uri: props.plant.img }}
-            />
-            <View>
-                <Text style={styles.title}>Plant Name: {props.plant.common_name}</Text>
-                <Text style={styles.title}>Latin Name: {props.plant.latin_name}</Text>
+        <Pressable
+            onPress={() => { selected() }}
+        >
+            <View style={[styles.item,
+                {backgroundColor:bgColor}
+                ]}>
+                <Image
+                    style={styles.veggieImage}
+                    source={{ uri: props.plant.img }}
+                />
+                <View style={styles.textContainer}>
+                    <Text style={styles.title}>Plant Name: {props.plant.common_name}</Text>
+                    <Text style={styles.title}>Latin Name: {props.plant.latin_name}</Text>
+                </View>
             </View>
-            </View>
-            <Text style={styles.title}>Hardiness Zone: {props.plant.hardiness_zone}</Text>
-            <Text style={styles.title}>Soil Type: {props.plant.soil_type}</Text>
-            <Text style={styles.title}>min_temp: {props.plant.min_temp}</Text>
-            <Text style={styles.title}>max_temp: {props.plant.max_temp}</Text>
-            </Pressable>
-      </View>
+        </Pressable>
     );
 }
 

@@ -161,8 +161,8 @@ router.delete('/delete/:key', async(req, res)=>{
    }
 })
 
-// expects user key and rain amount as arguments in body
-router.put('/advancedays', async(req, res) => {
+// expects rain amount and number of days as arguments in body
+router.put('/advancedays', authorizeUser, async(req, res) => {
    try {
       const updatedPlants = await userPlantServices.advanceDays(req.body.rain_amount, req.body.user_key, req.body.days);
       res.send(updatedPlants);
