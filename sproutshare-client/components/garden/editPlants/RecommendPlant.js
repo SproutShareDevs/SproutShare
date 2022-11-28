@@ -137,6 +137,8 @@ function RecommendPlant(props){
                         <TextInput placeholder='Enter hardiness zone' keyboardType='numeric' onChangeText={text => setHardZone(text)} value={hardZone} style={{justifyContent: 'flex-end',}} />
                     </View>
                   </View>
+                  
+                  <Button title='Add Selection' onPress={() => props.postPlant()}/>
                   <View style={styles.listBottomMargin}>
                     <FlatList
                       data = {plantList}
