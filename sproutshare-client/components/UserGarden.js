@@ -7,7 +7,7 @@ import GardenPreview from './garden/GardenPreview'
 import WeatherView from './garden/weather/WeatherView';
 import AddGarden from './garden/AddGarden';
 import WateringList from './garden/WateringList'
-
+import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -132,6 +132,24 @@ class UserGarden extends React.Component {
         console.log(`${this.props.nodeServer}/gardens/getByToken/${accessToken}`);
         console.log('Error: Could not retrieve gardens', err);
       });
+
+      //put notification call here
+      await axios.get(`${this.props.nodeServer}/notifications/user/${accessToken}`).then((response) => {
+        let notification = response.data;
+        console.log(response.data);
+        //if (notification.sendNotification === true) {
+          Notifications.scheduleNotificationAsync({
+            content: {
+              title: "Water Alert!",
+              body: notification.notificationMessage,
+            },
+            trigger: { seconds: 5 },
+          });
+      //}
+    }).catch(err => {
+        console.log(`${this.props.nodeServer}/notifications/user/${accessToken}`);
+        console.log('Error: Could not calculate notification', err);
+    });
     }
   }
 
