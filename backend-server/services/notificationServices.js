@@ -1,13 +1,12 @@
 const notificationDatabase = require('../database/notificationDatabase');
 const sproutshareUserServices = require('./sproutShareUserServices');
-const userPlantServices = require('./userPlantServices');
 const weatherServices = require('./weatherServices');
+const userPlantServices = require('./userPlantServices');
 const plantServices = require('./plantServices');
 
 async function getAllNotifications() {
    try {
-      const allNotifications = await notificationDatabase.getAllNotifications();
-      return allNotifications;
+      return "hey";
    } catch (error) {
       console.error(error);
       return JSON.stringify(error.message);
@@ -22,8 +21,7 @@ async function getNotificationByToken(accessToken){
       const user = await sproutshareUserServices.getUserByToken(accessToken);
       const userPlants = await userPlantServices.getUserPlantsByUserKey(user.user_key);
       let plantsToBeWatered = [];
-
-      
+      console.log(userPlants);
 
       let rainToday = 0;
       let rain3Days = 0;

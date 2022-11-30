@@ -34,17 +34,17 @@ function WeatherView(props) {
         console.log(`${props.nodeServer}/weather/${userZip}`);
             await axios.get(`${props.nodeServer}/weather/${userZip}`).then((response) => {
                 setWeather(response.data);
-                console.log(response.data);
+                //console.log(response.data);
             }).catch(err => {
                 console.log('Error:  Could not access weather', err);
         });
     }
 
     const fetch3DayForecast = async () => {
-        console.log(`${props.nodeServer}/weather/3dayForecast/${userZip}`);
+        //console.log(`${props.nodeServer}/weather/3dayForecast/${userZip}`);
         await axios.get(`${props.nodeServer}/weather/3dayForecast/${userZip}`).then((response) => {
             setThreeDayForecast(response.data);
-            console.log(response.data);
+            //console.log(response.data);
         }).catch(err => {
             console.log('Error: Could not access weather', err);
         });
@@ -52,7 +52,7 @@ function WeatherView(props) {
     
     const checkForRainNotification = async () => {
         if (threeDayForecast.Forecast1main == "Rain") {
-            console.log("hit");
+            //console.log("hit");
         Notifications.scheduleNotificationAsync({
             content: {
               title: "It is going to rain tomorrow!",

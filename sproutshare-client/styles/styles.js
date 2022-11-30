@@ -427,7 +427,7 @@ export default StyleSheet.create({
         padding: 9,
         elevation: 25,
         backgroundColor: '#AFE4DE',
-        marginBottom: 10,
+        marginBottom: 205,
         marginTop: 10,
         marginRight: 15,
         marginLeft: 10,
@@ -442,5 +442,44 @@ export default StyleSheet.create({
         fontFamily: 'serif',
         fontWeight: "700",
         marginTop: 5
-    }
+    },
+    wateringImage: {
+
+        width: 70,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+        padding: 9,
+        marginLeft: 10,
+        marginTop: 5,
+        marginRight: 10,
+        borderColor: "#AFE4DE",
+        borderWidth: 3,
+        borderRadius: 40
+    },
+    wateringItem: {
+        flexDirection: 'row',
+        backgroundColor: '#079BF5',
+        paddingTop: 4,
+        alignItems:'flex-start',
+        marginVertical: 8,
+        marginHorizontal: 15,
+        borderRadius: 30,
+        borderWidth: 3,
+        borderColor: '#079BF5',
+        height: 100,
+        width: 320
+    },
+    wateringTextContainer: {
+        flex: 2,
+        flexDirection:'column',
+    },
+    wateringTextBold: {
+        marginTop: 13,
+        fontWeight: "bold"
+    },
+    checkbox: {
+        alignSelf: 'center'
+    },
 });

@@ -3,7 +3,6 @@ const sproutShareUserDatabase = require('../database/sproutShareUserDatabase');
 const weatherServices = require('./weatherServices');
 const plantServices = require('./plantServices');
 const userServices = require('./sproutShareUserServices');
-const notificationServices = require('./notificationServices');
 
  async function getAllUserPlants() {
    try {
@@ -259,15 +258,6 @@ async function advanceDays(rainAmount, accessToken, days) {
          
          let waterChange = (rainAmount - (days * wateringDecay));
 
-         console.log(
-            "Current Water Amount: " + userPlants[plant].water_amount + "\n" +
-            "Rain Amount: " +  rainAmount + "\n" +
-            "Water Decay: " + wateringDecay + "\n" + 
-            "Days: " + days + "\n" +
-            "Water Change: " + waterChange + "\n"
-         );
-   
-
          userPlants[plant].water_amount += waterChange;
 
          await userPlantDatabase.updateUserPlantWaterAmount(userPlants[plant].user_plant_key, userPlants[plant].water_amount);
@@ -275,8 +265,6 @@ async function advanceDays(rainAmount, accessToken, days) {
          console.log("Updated Water Amount: " + userPlants[plant].water_amount + "\n\n");
 
       }
-
-      notificationServices.getNotificationByToken(accessToken);
 
       return userPlants;
 
@@ -313,8 +301,6 @@ async function advanceRealDay(accessToken) {
          await userPlantDatabase.updateUserPlantWaterAmount(userPlants[plant].user_plant_key, userPlants[plant].water_amount);
          console.log("Real day weather added to water amount.");
       }
-
-      notificationServices.getNotificationByToken(accessToken);
 
       return userPlants;
 

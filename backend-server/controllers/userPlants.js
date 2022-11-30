@@ -143,7 +143,7 @@ router.put('/updatequality/:key', async(req,res)=>{
 
 router.put('/updatewateramount/:key', async(req,res)=> {
    try {
-      const updatedUserPlant = await userPlantServices.updateUserPlantWaterAmount(req.params.key, req.body);
+      const updatedUserPlant = await userPlantServices.updateUserPlantWaterAmount(req.params.key, req.body.water_amount);
       res.send(updatedUserPlant);
    } catch (error) {
       console.error(error);
@@ -164,7 +164,7 @@ router.delete('/delete/:key', async(req, res)=>{
 // expects rain amount and number of days as arguments in body
 router.put('/advancedays', authorizeUser, async(req, res) => {
    try {
-      const updatedPlants = await userPlantServices.advanceDays(req.body.rain_amount, req.body.user_key, req.body.days);
+      const updatedPlants = await userPlantServices.advanceDays(req.body.rain_amount, req.body.accessToken, req.body.days);
       res.send(updatedPlants);
    } catch (error) {
       console.log("Error in advancing time route");
