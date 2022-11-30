@@ -18,13 +18,12 @@ async function getAllNotifications() {
 async function getNotificationByToken(accessToken){
    try {
 
-      
       const user = await sproutshareUserServices.getUserByToken(accessToken);
       const userPlants = await userPlantServices.getUserPlantsByUserKey(user.user_key);
       let plantsToBeWatered = [];
 
-      let lastDaysRain;
-      weatherServices.getDailyRainfall(user.zip_code, (rainfall) => {
+      let lastDaysRain = 0;
+      await weatherServices.getDailyRainfall(user.zip_code, (rainfall) => {
          lastDaysRain = rainfall;
       });
 
@@ -49,11 +48,14 @@ async function getNotificationByToken(accessToken){
       // populate plantsToBeWatered
       for(let plant in userPlants) {
 
-         let plantType = plantServices.getPlantByKey(userPlants[plant].plant_key);
+         let plantType = await plantServices.getPlantByKey(userPlants[plant].plant_key);
          let wateringDecay = (1/plantType.water_need);
+         console.log(plantType.common_name);
 
          userPlants[plant].water_amount += lastDaysRain;
          userPlants[plant].water_amount -= wateringDecay;
+
+
 
          // if after accounting for yesterdays rain the water amount is less than 0, push the plant to the notification
          if(userPlants[plant].water_amount <= 0) {
@@ -62,7 +64,7 @@ async function getNotificationByToken(accessToken){
             if(userPlants[plant].water_amount + rainToday > 0) {
                plantsToBeWatered.push({
                   userPlant: userPlants[plant].user_plant_key,
-                  plantType: userPlant[plant].plant_key,
+                  plantType: plantType.common_name,
                   rainMayAffectToday: true,
                   rainMayAffectSoon: true
                });
@@ -70,21 +72,20 @@ async function getNotificationByToken(accessToken){
             } else if (userPlants[plant].water_amount + rain3Days > 0) {
                plantsToBeWatered.push({
                   userPlant: userPlants[plant].user_plant_key,
-                  plantType: userPlant[plant].plant_key,
+                  plantType: plantType.common_name,
                   rainMayAffectToday: false,
                   rainMayAffectSoon: true
                });
             } else {
                plantsToBeWatered.push({
                   userPlant: userPlants[plant].user_plant_key,
-                  plantType: userPlant[plant].plant_key,
+                  plantType: plantType.common_name,
                   rainMayAffectToday: false,
                   rainMayAffectSoon: false
                });
             }
          }
       }
-
       // determine notification message, or lack thereof
       let notificationMessage = "";
       if(plantsToBeWatered.length == 1) {
