@@ -7,6 +7,7 @@ const ejs = require('ejs');
 const cors = require('cors');
 console.log(require('dotenv').config());
 const auth = require('./custom-middleware/authMiddleware');
+const processes = require('./processes/WateringNotificationProcess');
 /** seed db */
 const seedDB = require("./db/seed.js");
 
@@ -25,6 +26,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 app.use(cors());
+
+/** Processes */
+//processes.start(); // starts watering notification process on timer
+
 /** production */
 
 const weatherController = require('./controllers/weather');
