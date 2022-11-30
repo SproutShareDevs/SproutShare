@@ -3,6 +3,7 @@ const sproutShareUserDatabase = require('../database/sproutShareUserDatabase');
 const weatherServices = require('./weatherServices');
 const plantServices = require('./plantServices');
 const userServices = require('./sproutShareUserServices');
+const notificationServices = require('./notificationServices');
 
  async function getAllUserPlants() {
    try {
@@ -239,13 +240,18 @@ async function deleteUserPlant(userPlantKey){
    }
 }
 
-/*
-   Get all user plants, advance their water decay by the amount of days specified
+
+/**
+ * Get all user plants, advance their water decay by the amount of days specified
    and account for the rain passed in.
-*/
-async function advanceDays(rainAmount, userKey, days) {
+ * @param {*} rainAmount The amount of rain over the provided period of days
+ * @param {*} accessToken The users access token
+ * @param {*} days The amount of days to account for decay of water_amount
+ */
+async function advanceDays(rainAmount, accessToken, days) {
    try {
-      const userPlants = await getUserPlantsByUserKey(userKey);
+      const user = await userServices.getUserByToken(accessToken);
+      const userPlants = await getUserPlantsByUserKey(user.user_key);
       
       for(let plant in userPlants) {
          let plantType = await plantServices.getPlantByKey(userPlants[plant].plant_key);
@@ -269,6 +275,9 @@ async function advanceDays(rainAmount, userKey, days) {
          console.log("Updated Water Amount: " + userPlants[plant].water_amount + "\n\n");
 
       }
+
+      notificationServices.getNotificationByToken(accessToken);
+
       return userPlants;
 
    } catch(error) {
@@ -277,6 +286,45 @@ async function advanceDays(rainAmount, userKey, days) {
       return JSON.stringify(error.message);
    }
 }
+
+/**
+ * Get all user plants, advance their water decay by one day 
+   and accounts for the last 24 hours of rain in their area
+ * @param {*} accessToken The users access token
+ */
+async function advanceRealDay(accessToken) {
+   try {
+      const user = await userServices.getUserByToken(accessToken);
+      const userPlants = await getUserPlantsByUserKey(user.user_key);
+
+      let lastDaysRain;
+      weatherServices.getDailyRainfall(user.zip_code, (rainfall) => {
+         lastDaysRain = rainfall;
+      });
+      
+      for(let plant in userPlants) {
+         let plantType = await plantServices.getPlantByKey(userPlants[plant].plant_key);
+         let wateringDecay = (1/plantType.water_need);
+         
+         let waterChange = (lastDaysRain - (days * wateringDecay));
+
+         userPlants[plant].water_amount += waterChange;
+
+         await userPlantDatabase.updateUserPlantWaterAmount(userPlants[plant].user_plant_key, userPlants[plant].water_amount);
+         console.log("Real day weather added to water amount.");
+      }
+
+      notificationServices.getNotificationByToken(accessToken);
+
+      return userPlants;
+
+   } catch(error) {
+      console.log("Error occured in advanceRealDay services function");
+      console.log(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 
 module.exports = {
    getAllUserPlants,
@@ -294,5 +342,6 @@ module.exports = {
    updateUserPlantQuality,
    updateUserPlantWaterAmount,
    deleteUserPlant,
-   advanceDays
+   advanceDays,
+   advanceRealDay
 };

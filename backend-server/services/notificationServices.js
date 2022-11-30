@@ -14,6 +14,7 @@ async function getAllNotifications() {
    }
 }
 
+
 // much more logic to be implemented in here!
 async function getNotificationByToken(accessToken){
    try {
@@ -22,10 +23,7 @@ async function getNotificationByToken(accessToken){
       const userPlants = await userPlantServices.getUserPlantsByUserKey(user.user_key);
       let plantsToBeWatered = [];
 
-      let lastDaysRain = 0;
-      await weatherServices.getDailyRainfall(user.zip_code, (rainfall) => {
-         lastDaysRain = rainfall;
-      });
+      
 
       let rainToday = 0;
       let rain3Days = 0;
@@ -49,15 +47,8 @@ async function getNotificationByToken(accessToken){
       for(let plant in userPlants) {
 
          let plantType = await plantServices.getPlantByKey(userPlants[plant].plant_key);
-         let wateringDecay = (1/plantType.water_need);
-         console.log(plantType.common_name);
 
-         userPlants[plant].water_amount += lastDaysRain;
-         userPlants[plant].water_amount -= wateringDecay;
-
-
-
-         // if after accounting for yesterdays rain the water amount is less than 0, push the plant to the notification
+         // if  the water amount is less than 0, push the plant to the notification
          if(userPlants[plant].water_amount <= 0) {
             plantNeedsWatering = true;
             // if theres rain tomorrow that may alter the watering schedule for the plant, let the user know
