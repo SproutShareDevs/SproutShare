@@ -23,17 +23,14 @@ function SimulateTime(props) {
 
     async function advanceTime() {
         let accessToken = await SecureStore.getItemAsync('AccessToken');
-        console.log("ACCESS TOKEN: " + accessToken);
-        console.log("DAYS:" + days);
-        console.log("RAIN AMOUNT: " + rainAmount);
         await axios.put(`${props.nodeServer}/userplants/advancedays`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
             days: days,
             accessToken: accessToken,
             rain_amount: rainAmount
-        }).then((response) => {
+        }, 
+        { headers: {
+            Authorization: `Bearer ${accessToken}`
+        }}).then((response) => {
             console.log(response);
             
         }).catch(err => {
