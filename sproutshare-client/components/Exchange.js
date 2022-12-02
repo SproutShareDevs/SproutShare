@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import{SafeAreaView, Text, View, Button, StyleSheet, Modal, TouchableOpacity, TextInput, Pressable, Image, ImageBackground } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, Switch } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
 import ExchangePreview from './ExchangePreview';
 import styles from '../styles/styles';
+
 
 
 class Exchange extends React.Component {
@@ -18,7 +19,8 @@ class Exchange extends React.Component {
             NewListing: false,
             ExchangePlant:'',
             ExchangeName:'',
-            ExchangeDescription:' '
+            ExchangeDescription:' ',
+            Imagewanted: false
         }
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
@@ -31,6 +33,10 @@ class Exchange extends React.Component {
           return {search: search};
         });
     }
+
+
+    
+
 
     /*Returns item if state.search is included in common name*/
     renderItem = ({ item }) => {
@@ -93,6 +99,9 @@ class Exchange extends React.Component {
                     <TextInput style={styles.textInput}  placeholder ="Listing Description"
                     onChangeText = {(text) => {this.setState({ExchangeDescription:text})}}    
                     />    
+                   
+
+                    
 
                     <View style={styles.buttonContainer}>
                     <View style={styles.button}>
