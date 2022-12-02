@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const exListingServices = require('../../services/exListingServices');
+const upload = require('../../custom-middleware/upload');
 
 router.get('/', async(req, res) => {
    try {
@@ -31,7 +32,7 @@ router.get('/search', async(req, res) =>{
    }
 })
 
-router.post('/store', async(req,res) =>{
+router.post('/store',upload.single('listing'), async(req,res) =>{
    const listing = req.body;
    try {
       await exListingServices.storeListing(listing);
