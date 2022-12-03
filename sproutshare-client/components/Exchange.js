@@ -6,6 +6,8 @@ import SearchBar from './SearchBar';
 import ExchangePreview from './ExchangePreview';
 import styles from '../styles/styles';
 
+import * as ImagePicker from 'expo-image-picker';
+
 
 
 class Exchange extends React.Component {
@@ -34,8 +36,21 @@ class Exchange extends React.Component {
         });
     }
 
-
-    
+    takePhoto = async () =>{
+        
+      const result = await ImagePicker.launchCameraAsync();
+    }
+ 
+        pickImage = async () => {
+           
+             //No permissions request is necessary for launching the image library
+            let result = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.All,
+              allowsEditing: true,
+              aspect: [4, 3],
+              quality: 1,
+            });
+        }
 
 
     /*Returns item if state.search is included in common name*/
@@ -82,11 +97,22 @@ class Exchange extends React.Component {
                     transparent = {false}
                     visible = {this.state.NewListing}
                     >
+                   
                     <View style={styles.containerCenter}>
                     <View style= {{backgroundColor:"#ffffff"}}>
                         
                     <View style={styles.containerCenter}>
                     <Text>Create a New Exchange Listing</Text>
+                    <View style={styles.buttonContainer}>
+                    <Button title="Take a New Image"
+                    onPress={() => this.pickImage()}
+                    />
+                    <View style={styles.buttonContainer}>
+                    <Button title="Upload an Image"
+                    onPress={() => this.takePhoto()}
+                    />
+                    </View>
+                    </View>
 
                     <TextInput style={styles.textInput} placeholder ="Plant Type"
                     onChangeText = {(text) => {this.setState({ExchangePlant:text})}}
