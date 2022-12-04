@@ -21,8 +21,10 @@ class Exchange extends React.Component {
             NewListing: false,
             ExchangePlant:'',
             ExchangeName:'',
+            imageurivariable:null,
             ExchangeDescription:' ',
             Imagewanted: false
+            
         }
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
@@ -39,6 +41,10 @@ class Exchange extends React.Component {
     takePhoto = async () =>{
         
       const result = await ImagePicker.launchCameraAsync();
+     
+      this.imageurivariable = result.uri;console.log(this.imageurivariable)
+      
+  
     }
  
         pickImage = async () => {
@@ -50,6 +56,10 @@ class Exchange extends React.Component {
               aspect: [4, 3],
               quality: 1,
             });
+          
+           this.imageurivariable = result.uri;
+           
+            
         }
 
 
@@ -104,11 +114,11 @@ class Exchange extends React.Component {
                     <View style={styles.containerCenter}>
                     <Text>Create a New Exchange Listing</Text>
                     <View style={styles.buttonContainer}>
-                    <Button title="Take a New Image"
+                    <Button title="Upload an Image"
                     onPress={() => this.pickImage()}
                     />
                     <View style={styles.buttonContainer}>
-                    <Button title="Upload an Image"
+                    <Button title="Take a new image"
                     onPress={() => this.takePhoto()}
                     />
                     </View>
@@ -125,6 +135,7 @@ class Exchange extends React.Component {
                     <TextInput style={styles.textInput}  placeholder ="Listing Description"
                     onChangeText = {(text) => {this.setState({ExchangeDescription:text})}}    
                     />    
+                    
                    
 
                     
