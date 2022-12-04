@@ -42,7 +42,9 @@ class Exchange extends React.Component {
         
       const result = await ImagePicker.launchCameraAsync();
      
-      this.imageurivariable = result.uri;console.log(this.imageurivariable)
+      this.imageurivariable = result.uri;
+      console.log(this.imageurivariable)
+     
       
   
     }
@@ -57,9 +59,9 @@ class Exchange extends React.Component {
               quality: 1,
             });
           
-           this.imageurivariable = result.uri;
-           
-            
+           //this.imageurivariable = result.uri;
+           this.setState({imageurivariable:result.uri});
+           console.log(this.state.imageurivariable)
         }
 
 
@@ -123,10 +125,15 @@ class Exchange extends React.Component {
                     />
                     </View>
                     </View>
+                    <Text>Current Image Selected</Text>
+                    <Image style={styles.exchangeImage} source={{uri:this.state.imageurivariable}} />
+                
+               
 
                     <TextInput style={styles.textInput} placeholder ="Plant Type"
                     onChangeText = {(text) => {this.setState({ExchangePlant:text})}}
                     />
+                    
 
                     <TextInput style={styles.textInput} placeholder ="Listing Title"
                     onChangeText = {(text) => {this.setState({ExchangeName:text})}}
