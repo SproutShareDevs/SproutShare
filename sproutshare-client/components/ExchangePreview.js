@@ -47,6 +47,13 @@ function ExchangePreview(props) {
                     </View>
                     <View style={{flexDirection: 'column'}}>
                     <Text style={styles.exTitle}>{props.listing.ex_post_title}</Text>
+                    <Image  style={{
+                        width: 51,
+                        height: 51,
+                        resizeMode: 'contain'
+                            }}
+                        source={{uri:props.listing.image}}
+                        />
                     <Text style={styles.exBody}>{props.listing.ex_post_body}</Text>
                    
             </View>

@@ -127,7 +127,8 @@ class Exchange extends React.Component {
                     </View>
                     <Text>Current Image Selected</Text>
                     <Image style={styles.exchangeImage} source={{uri:this.state.imageurivariable}} />
-                
+                    <Button title='Delete Image'
+                    onPress={() => {this.setState({imageurivariable:null})}}/>
                
 
                     <TextInput style={styles.textInput} placeholder ="Plant Type"
@@ -179,7 +180,8 @@ class Exchange extends React.Component {
            ex_plant: this.state.ExchangePlant,
            ex_post_title: this.state.ExchangeName,
            ex_post_body: this.state.ExchangeDescription,
-           user_key: 'Christian'
+           user_key: 'Christian',
+           image:this.state.imageurivariable
        }).then((response) => {
            this.setState({NewListing: false});
            console.log(response.data);
