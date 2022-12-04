@@ -190,7 +190,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         padding: 9,
         elevation: 50,
-        marginLeft: 120,
+        marginLeft: 50,
         marginTop: 5,
         borderColor: "#A0B86F",
         borderWidth: 3,
