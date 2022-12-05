@@ -109,10 +109,10 @@ function AccountManagement(props) {
                 value={rain}
             />
 
-            <Button
+            {/* <Button
                 title="Advance Time"
                 onPress={advanceDays}
-            />
+            /> */}
         </View>
 
     );

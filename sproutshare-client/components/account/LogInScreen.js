@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { TextInput, View, Text, Button, Alert, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import styles from '../../styles/styles'
-
+import * as Notifications from 'expo-notifications';
+import * as SecureStore from 'expo-secure-store';
 // The screen where users can input their username and password to log into an existing account
 function LogInScreen(props) {
     const [username, setUsername] = useState('');
@@ -29,6 +30,7 @@ function LogInScreen(props) {
             props.navigation.navigate('Home', {
                 userName: username, userType: 'User'
             })
+            getNotifications();
         } else if (loginStatus != "") {
             alert(loginStatus);
         }
@@ -56,6 +58,27 @@ function LogInScreen(props) {
         })
     }
 
+    async function getNotifications() {
+  
+        let accessToken = await SecureStore.getItemAsync('AccessToken');
+        await axios.get(`${props.nodeServer}/notifications/user/${accessToken}`).then((response) => {
+          let notification = response.data;
+          console.log(response.data);
+          if (notification.sendNotification === true) {
+          Notifications.scheduleNotificationAsync({
+            content: {
+              title: "Water Alert!",
+              body: notification.notificationMessage,
+            },
+            trigger: { seconds: 5 },
+          });
+          }
+        }).catch(err => {
+          //console.log(`${this.props.nodeServer}/notifications/user/${accessToken}`);
+          console.log('Error: Could not calculate notification', err);
+        });
+      }
+      
     return (
 
         <View style={{
