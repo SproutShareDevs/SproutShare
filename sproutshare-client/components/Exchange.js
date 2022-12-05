@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import{SafeAreaView, Text, View, Button, StyleSheet, Modal, TouchableOpacity, TextInput, Pressable, Image, ImageBackground } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, Switch } from 'react-native-gesture-handler';
 import SearchBar from './SearchBar';
 import ExchangePreview from './ExchangePreview';
 import styles from '../styles/styles';
+
+import * as ImagePicker from 'expo-image-picker';
+
 
 
 class Exchange extends React.Component {
@@ -18,7 +21,10 @@ class Exchange extends React.Component {
             NewListing: false,
             ExchangePlant:'',
             ExchangeName:'',
-            ExchangeDescription:' '
+            imageurivariable:null,
+            ExchangeDescription:' ',
+            Imagewanted: false
+            
         }
         this.updateSearch = this.updateSearch.bind(this);
         this.renderItem = this.renderItem.bind(this);
@@ -31,6 +37,33 @@ class Exchange extends React.Component {
           return {search: search};
         });
     }
+
+    takePhoto = async () =>{
+        
+      const result = await ImagePicker.launchCameraAsync();
+     
+      this.imageurivariable = result.uri;
+      console.log(this.imageurivariable)
+     
+      
+  
+    }
+ 
+        pickImage = async () => {
+           
+             //No permissions request is necessary for launching the image library
+            let result = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.All,
+              allowsEditing: true,
+              aspect: [4, 3],
+              quality: 1,
+            });
+          
+           //this.imageurivariable = result.uri;
+           this.setState({imageurivariable:result.uri});
+           console.log(this.state.imageurivariable)
+        }
+
 
     /*Returns item if state.search is included in common name*/
     renderItem = ({ item }) => {
@@ -76,15 +109,32 @@ class Exchange extends React.Component {
                     transparent = {false}
                     visible = {this.state.NewListing}
                     >
+                   
                     <View style={styles.containerCenter}>
                     <View style= {{backgroundColor:"#ffffff"}}>
                         
                     <View style={styles.containerCenter}>
                     <Text>Create a New Exchange Listing</Text>
+                    <View style={styles.buttonContainer}>
+                    <Button title="Upload an Image"
+                    onPress={() => this.pickImage()}
+                    />
+                    <View style={styles.buttonContainer}>
+                    <Button title="Take a new image"
+                    onPress={() => this.takePhoto()}
+                    />
+                    </View>
+                    </View>
+                    <Text>Current Image Selected</Text>
+                    <Image style={styles.exchangeImage} source={{uri:this.state.imageurivariable}} />
+                    <Button title='Delete Image'
+                    onPress={() => {this.setState({imageurivariable:null})}}/>
+               
 
                     <TextInput style={styles.textInput} placeholder ="Plant Type"
                     onChangeText = {(text) => {this.setState({ExchangePlant:text})}}
                     />
+                    
 
                     <TextInput style={styles.textInput} placeholder ="Listing Title"
                     onChangeText = {(text) => {this.setState({ExchangeName:text})}}
@@ -93,6 +143,10 @@ class Exchange extends React.Component {
                     <TextInput style={styles.textInput}  placeholder ="Listing Description"
                     onChangeText = {(text) => {this.setState({ExchangeDescription:text})}}    
                     />    
+                    
+                   
+
+                    
 
                     <View style={styles.buttonContainer}>
                     <View style={styles.button}>
@@ -110,12 +164,11 @@ class Exchange extends React.Component {
                  </View>
 
 
-                <View style={styles.listBottomMargin}>
+                <View style={styles.ExchangeListingMargin}>
                     <FlatList 
                         data={this.state.data}
                         renderItem={this.renderItem}
                         keyExtractor={item => item._id}
-                        contentContainerStyle={{paddingBottom: 100}}
                     />
                 </View>
                 </ImageBackground>
@@ -127,7 +180,8 @@ class Exchange extends React.Component {
            ex_plant: this.state.ExchangePlant,
            ex_post_title: this.state.ExchangeName,
            ex_post_body: this.state.ExchangeDescription,
-           user_key: 'Christian'
+           user_key: 'Christian',
+           image:this.state.imageurivariable
        }).then((response) => {
            this.setState({NewListing: false});
            console.log(response.data);
