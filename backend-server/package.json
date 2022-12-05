@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/SproutShareDevs/SproutShare/issues"
   },
-  "homepage": "https://github.com/SproutShareDevs/SproutShare#readme",
+  "homepage": "https://github.com/SproutShareDevs/SproutShare#readme", 
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.0",
