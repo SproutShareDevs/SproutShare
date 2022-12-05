@@ -190,8 +190,8 @@ class UserGarden extends React.Component {
       });
 
 
-      //put notification call here
-      this.getNotifications();
+      //put notification call here for testing
+      //this.getNotifications();
     }
   }
 
