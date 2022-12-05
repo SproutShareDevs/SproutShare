@@ -154,6 +154,23 @@ async function updateUser(userKey, userBody){
 }
 
 /**
+ * Update user password
+ */
+async function updateUserPassword(userKey, newPassword)
+{
+   try {
+      const updatedPassword = await pool.query('UPDATE sproutshareuser SET password = $1 WHERE user_key = $2 RETURNING password',
+      [
+         newPassword, 
+         userKey
+      ]);
+      return updatedPassword.rows[0];
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+/**
  * Update access token by user key
  */
 async function updateAccessToken(userKey, accessToken){
@@ -229,6 +246,7 @@ module.exports = {
    getUserAccessTokenByKey,
    storeUser,
    updateUser,
+   updateUserPassword,
    updateAccessToken,
    updateRefreshToken,
    deleteAccessToken,

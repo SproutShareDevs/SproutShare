@@ -107,6 +107,20 @@ async function updateUser(userKey, userBody){
 }
 
 /**
+ * Update user password by key
+ */
+async function updateUserPassword(userKey, rawPassword){
+   try {
+      const hashedPassword = await encryptPassword(rawPassword);
+      const updatedPassword = await sproutShareUserDatabase.updateUserPassword(userKey, hashedPassword);
+      return updatedPassword;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);      
+   }
+}
+
+/**
  * Update access token
  */
 async function updateAccessToken(userKey, accessToken){
@@ -178,7 +192,8 @@ async function encryptPassword(password){
       // return hashed password
       return hashedPassword;
    } catch (error) {
-      
+      console.error(error);
+      return JSON.stringify(error.message);
    }
 }
 
@@ -191,6 +206,7 @@ module.exports = {
    getUserAccessTokenByKey,
    storeUser,
    updateUser,
+   updateUserPassword,
    updateAccessToken,
    updateRefreshToken,
    deleteAccessToken,

@@ -15,6 +15,15 @@ router.get('/allUsers', async(req, res)=>{
    }
 })
 
+router.put('/changePassword/:userKey', async(req, res)=>{
+   try {
+      const updatedPassword = await sproutShareUserServices.updateUserPassword(userKey, rawPassword);
+      res.send(updatedPassword);
+   } catch (error) {
+      
+   }
+})
+
 router.get('/:token', async(req,res)=>{
    try {
       const user = await sproutShareUserServices.getUserByToken(req.params.token);
