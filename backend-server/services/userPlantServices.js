@@ -71,7 +71,7 @@ async function getRecommendedPlants(zipCode){
 			  if(!plantsMap.has(plant.plant_key)){
 				  let temp = {};
 				  temp.totalQuality = plant.plant_quality;
-				  temp.totalNumber = 1;
+				  temp.totalNumber = plant.plant_qty;
 				  plantsMap.set(plant.plant_key, temp);
 			  }
 			  else {
@@ -79,7 +79,7 @@ async function getRecommendedPlants(zipCode){
 				  // let temp = [plantsMap.get(plant.plant_key)[0] + plant.plant_quality, plantsMap.get(plant.plant_key)[1] + 1];
 				  let temp = {};
 				  temp.totalQuality = plantsMap.get(plant.plant_key).totalQuality + plant.plant_quality;
-				  temp.totalNumber = plantsMap.get(plant.plant_key).totalNumber + 1
+				  temp.totalNumber = plantsMap.get(plant.plant_key).totalNumber + plant.plant_qty
 				  plantsMap.set(plant.plant_key, temp);
 			  }
 		  })
@@ -119,7 +119,7 @@ async function getRecommendedPlantsByCoords(userLat, userLong, radius){
 			  if(!plantsMap.has(plant.plant_key)){
 				  let temp = {};
 				  temp.totalQuality = plant.plant_quality*( radius/(radius + dist) );
-				  temp.totalNumber = 1;
+				  temp.totalNumber = plant.plant_qty;
 				  plantsMap.set(plant.plant_key, temp);
 			  }
 			  else {
@@ -127,7 +127,7 @@ async function getRecommendedPlantsByCoords(userLat, userLong, radius){
 				  // let temp = [plantsMap.get(plant.plant_key)[0] + plant.plant_quality, plantsMap.get(plant.plant_key)[1] + 1];
 				  let temp = {};
 				  temp.totalQuality = plantsMap.get(plant.plant_key).totalQuality + plant.plant_quality*( radius/(radius + dist) );
-				  temp.totalNumber = plantsMap.get(plant.plant_key).totalNumber + 1
+				  temp.totalNumber = plantsMap.get(plant.plant_key).totalNumber + plant.plant_qty
 				  plantsMap.set(plant.plant_key, temp);
 			  }
 		  })
