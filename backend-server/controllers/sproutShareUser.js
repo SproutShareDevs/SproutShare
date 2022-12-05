@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const sproutShareUserServices = require('../services/sproutShareUserServices');
 
+/**
+ * Returns a collection of every user in the database
+ */
 router.get('/allUsers', async(req, res)=>{
    try {
       const allUsers = await sproutShareUserServices.getAllUsers();
