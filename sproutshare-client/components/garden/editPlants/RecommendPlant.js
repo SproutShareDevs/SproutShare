@@ -101,14 +101,12 @@ function RecommendPlant(props){
     }
 
     renderItem = ({item}) => {
-      return <View>
+      return <View> 
         <PlantOption plant={item} selectPlant = {props.selectPlant} />
-        {(plants.find( (element) => {return true;} ).average == undefined) ? <></> : (
+        {(plants.find( (element) => {return element.id === item.plant_key;} ) == undefined) ? <></> : (
           <><Text style={styles.title}>Plant Rating: {plants.find( (element) => {return element.id === item.plant_key;} ).average.totalQuality}</Text>
           <Text style={styles.title}>Number of users with this plant: {plants.find( (element) => {return element.id === item.plant_key;} ).average.totalNumber}</Text></>
         )}
-        
-        
       </View>
     }
 
