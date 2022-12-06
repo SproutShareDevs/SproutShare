@@ -4,6 +4,7 @@ import styles from '../../../styles/styles';
 import axios from "axios";
 import { FlatList } from 'react-native-gesture-handler';
 import PlantOption from './PlantOption';
+import * as SecureStore from 'expo-secure-store';
 
 function RecommendPlant(props){
     const [plantModal, togglePlantModal] = useState(false);
@@ -14,6 +15,7 @@ function RecommendPlant(props){
     const [lightLevel, setLightLevel] = useState('');
     const [soilType, setSoilType] = useState('');
     const [hardZone, setHardZone] = useState('');
+    const [user, setUser] = useState('');
     const [plants, setPlants] = useState([]);
     //const [newPlant, setNewPlant] = useState();
     const [plantList, setPlantList] = useState([]);
@@ -101,8 +103,12 @@ function RecommendPlant(props){
     renderItem = ({item}) => {
       return <View>
         <PlantOption plant={item} selectPlant = {props.selectPlant} />
-        <Text style={styles.title}>Plant Rating: {plants.find( (element) => {return element.id === item.plant_key;} ).average.totalQuality}</Text>
-        <Text style={styles.title}>Plant Number: {plants.find( (element) => {return element.id === item.plant_key;} ).average.totalNumber}</Text>
+        {(plants.find( (element) => {return true;} ).average == undefined) ? <></> : (
+          <><Text style={styles.title}>Plant Rating: {plants.find( (element) => {return element.id === item.plant_key;} ).average.totalQuality}</Text>
+          <Text style={styles.title}>Number of users with this plant: {plants.find( (element) => {return element.id === item.plant_key;} ).average.totalNumber}</Text></>
+        )}
+        
+        
       </View>
     }
 
@@ -115,6 +121,35 @@ function RecommendPlant(props){
           />
         <Modal visible={plantModal} animationType="slide">
                   <Button title='Close' onPress={()=> togglePlantModal(false)}/>
+                  <Button title='Get User Attributes' onPress={ async () => {
+                    let accessToken = await SecureStore.getItemAsync('AccessToken');
+                    console.log("ACCESS TOKEN:    ", accessToken);
+                    console.log("ROUTE:   ", `${props.nodeServer}/sproutShareUser/${accessToken}`)
+                    await axios.get(`${props.nodeServer}/sproutShareUser/${accessToken}`).then((response) => {
+                      setUser(response.data);
+                      console.log(response.data);
+                    }).catch(err => {
+                      console.log('Error fetching user: ', err);
+                    });
+                    setZipCode(user.zip_code);
+                    setUserLat(user.user_lat);
+                    setUserLong(user.user_long);
+                    setLightLevel(props.garden.light_level);
+                    switch(props.garden.soil_key){
+                      case 1:
+                        setSoilType("silty");
+                        break;
+                      case 2:
+                        setSoilType("clay");
+                        break;
+                      case 3:
+                        setSoilType("loamy");
+                        break;
+                      case 4:
+                        setSoilType("sandy");
+                        break;
+                    }
+                    }}/>
                   <Button title='By Zip Code' onPress={makePlantListZip}/>
                   <Button title='By Coords' onPress={makePlantListCoords}/>
                   <Button title='By Garden Attributes' onPress={makePlantListZone}/>
@@ -135,7 +170,7 @@ function RecommendPlant(props){
                         <TextInput placeholder='Enter light level' keyboardType='numeric' onChangeText={text => setLightLevel(text)} value={lightLevel} style={{justifyContent: 'flex-start',}} />
                     </View>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter soil type' keyboardType='numeric' onChangeText={text => setSoilType(text)} value={soilType} style={{justifyContent: 'flex-end',}} />
+                        <TextInput placeholder='Enter soil type' onChangeText={text => setSoilType(text)} value={soilType} style={{justifyContent: 'flex-end',}} />
                     </View>
                     <View style={{flex:1}}>
                         <TextInput placeholder='Enter hardiness zone' keyboardType='numeric' onChangeText={text => setHardZone(text)} value={hardZone} style={{justifyContent: 'flex-end',}} />
