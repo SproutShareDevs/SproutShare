@@ -66,7 +66,7 @@ function RecommendPlant(props){
       let tempArr = [];
       for (const plant of plants){
         console.log("Plant.id: ", plant.id)
-        newPlant = await fetchBasePlant(plant.id);
+        let newPlant = await fetchBasePlant(plant.id);
         console.log("newPlant: ", newPlant);
         tempArr.push(newPlant);
       }
@@ -79,7 +79,7 @@ function RecommendPlant(props){
       let tempArr = [];
       for (const plant of plants){
         console.log("Plant.id: ", plant.id)
-        newPlant = await fetchBasePlant(plant.id);
+        let newPlant = await fetchBasePlant(plant.id);
         console.log("newPlant: ", newPlant);
         tempArr.push(newPlant);
       }
@@ -124,15 +124,18 @@ function RecommendPlant(props){
                   <Button title='Get User Attributes' onPress={ async () => {
                     let accessToken = await SecureStore.getItemAsync('AccessToken');
                     console.log("ACCESS TOKEN:    ", accessToken);
-                    console.log("ROUTE:   ", `${props.nodeServer}/sproutShareUser/${accessToken}`)
-                    await axios.get(`${props.nodeServer}/sproutShareUser/${accessToken}`).then((response) => {
+                    console.log("ROUTE:   ", `${props.nodeServer}/user/${accessToken}`)
+                    await axios.get(`${props.nodeServer}/user/${accessToken}`).then((response) => {
                       setUser(response.data);
                       console.log(response.data);
                     }).catch(err => {
                       console.log('Error fetching user: ', err);
                     });
+                    console.log("User: ", user, user.zip_code);
                     setZipCode(user.zip_code);
+                    console.log("New zip: ", zipCode);
                     setUserLat(user.user_lat);
+                    console.log("New lat: ", userLat);
                     setUserLong(user.user_long);
                     setLightLevel(props.garden.light_level);
                     switch(props.garden.soil_key){
@@ -153,13 +156,13 @@ function RecommendPlant(props){
                   <Button title='By Zip Code' onPress={makePlantListZip}/>
                   <Button title='By Coords' onPress={makePlantListCoords}/>
                   <Button title='By Garden Attributes' onPress={makePlantListZone}/>
-                  <TextInput style={styles.textInput} placeholder='Enter Zip Code' keyboardType='numeric' onChangeText={text => setZipCode(text)} value={zipCode} />
+                  <TextInput style={styles.textInput} placeholder={ (String(zipCode) == undefined || String(zipCode) == "") ? "Enter Zipcode" : String(zipCode)} keyboardType='numeric' onChangeText={text => setZipCode(text)} value={zipCode} />
                   <View style={{flexDirection:"row"}}>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter Latitude' keyboardType='numeric' onChangeText={text => setUserLat(text)} value={userLat} style={{justifyContent: 'flex-start',}} />
+                        <TextInput placeholder={ (String(userLat) == undefined || String(userLat) == "") ? "Enter Latitude" : String(userLat)} keyboardType='numeric' onChangeText={text => setUserLat(text)} value={userLat} style={{justifyContent: 'flex-start',}} />
                     </View>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter Longitude' keyboardType='numeric' onChangeText={text => setUserLong(text)} value={userLong} style={{justifyContent: 'flex-end',}} />
+                        <TextInput placeholder={ (String(userLong) == undefined || String(userLong) == "") ? "Enter Longitude" : String(userLong)} keyboardType='numeric' onChangeText={text => setUserLong(text)} value={userLong} style={{justifyContent: 'flex-end',}} />
                     </View>
                     <View style={{flex:1}}>
                         <TextInput placeholder='Enter Radius' keyboardType='numeric' onChangeText={text => setRadius(text)} value={radius} style={{justifyContent: 'flex-end',}} />
