@@ -73,24 +73,18 @@ async function storePost(post) {
 
 async function storeComment(comment, postID) {
    try {
-      const post = await CommunityPosts.findById(postID).exec();
-      const newComment = await Comment.create(comment, (err, newComment) => {
-         newComment.user_ID = comment.user_ID;
-         newComment.text = comment.text;
-         newComment.save();
-      });
-      post.save();
-      newComment.save();
+      console.log(comment);
+      const post = await CommunityPosts.findById(postID);
+      const newComment = new Comment(comment);
+      post.comments.push(newComment);
+      await newComment.save();
+      await post.save();
       return newComment;
    } catch (error) {
       console.error(error);
       return JSON.stringify(error.message);
    }
 
-   return storedComment;
-
-   console.error(error);
-   return JSON.stringify(error.message);
 
 }
 

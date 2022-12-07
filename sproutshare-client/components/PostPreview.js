@@ -13,6 +13,10 @@ function PostPreview(props) {
         setSubModalIsVisible(false);
     }
 
+    const newCommentHandler = () => {
+        props.onNewComment();
+    }
+
     const setModalVisibility = () => {
         setSubModalIsVisible(!subModalVisible);
     }
@@ -33,7 +37,7 @@ function PostPreview(props) {
             <Text style={styles.comBody}>{props.post.comm_post_body}</Text>
             
         </Pressable>
-        <ExpandedPost nodeServer={props.nodeServer} post={props.post} visible={subModalVisible} onDelete={deleteHandler} onClose={setSubModalIsVisible} />
+        <ExpandedPost nodeServer={props.nodeServer} post={props.post} visible={subModalVisible} onNewComment={newCommentHandler} onDelete={deleteHandler} onClose={setSubModalIsVisible} />
         </>
     );
 }

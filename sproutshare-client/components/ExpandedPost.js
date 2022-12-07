@@ -8,9 +8,11 @@ import * as SecureStore from 'expo-secure-store';
 import NewComment from './NewComment';
 
 function ExpandedPost(props) {
+    const [post, setPost] = useState({});
     const [user, setUser] = useState({});
     const [commentModal, setCommentModalVisibility] = useState(false);
     useEffect(() => {
+        setPost(props.post);
         fetchUserId();
         renderControlButtons();
     }, [props.visible]);
@@ -36,17 +38,8 @@ function ExpandedPost(props) {
         }
     }
 
-    function renderComments() {
-        const comments = [];
-        for (let i = 0; i < props.post.comments.length; i++) {
-            comments.push(
-                <View key={props.post.comments[i]._id} style={{ paddingHorizontal: 20, marginTop: 5 }}>
-                    <Text>{props.post.comments[i].user_ID}</Text>
-                    <Text>{props.post.comments[i].text}</Text>
-                </View>
-            )
-        }
-        return comments;
+    async function rerender() {
+        props.onNewComment();
     }
 
     const deleteButtonHandler = () => {
@@ -129,7 +122,7 @@ function ExpandedPost(props) {
                         renderItem={renderItem}
                         keyExtractor={item => item._id}
                     />
-                    <NewComment nodeServer={props.nodeServer} post={props.post}/>
+                    <NewComment nodeServer={props.nodeServer} post={props.post} onNewComment={rerender}/>
                     {renderControlButtons()}
                 </View>
 

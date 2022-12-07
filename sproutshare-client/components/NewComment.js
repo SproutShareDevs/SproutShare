@@ -35,6 +35,7 @@ function NewComment(props) {
             .then((response) => {
               console.log(response.data);
               console.log("Comment created");
+              //props.onNewComment();
             }).catch(err => {
               console.log('Error creating new comment: ', err);
         });
