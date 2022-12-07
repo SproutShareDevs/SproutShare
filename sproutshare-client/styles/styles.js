@@ -7,10 +7,6 @@ export default StyleSheet.create({
         flex: 1,
         flexDirection: 'column'
     },
-    containerRow: {
-        flex: 1,
-        flexDirection: 'row'
-    },
     containerCenter: {
         flex: 1,
         alignItems: 'center',
@@ -31,14 +27,42 @@ export default StyleSheet.create({
         borderColor: '#000000',
         borderWidth: 1
     },
+<<<<<<< HEAD
 
+=======
+    appBackground: {
+        flex: 1,
+        justifyContent: "center", 
+        
+    },
+    textContainer: {
+        flex: 3,
+        flexDirection:'column'
+    },  
+    buttonContainer: {
+        flexDirection: 'row',
+    },
+    nameplate: {
+        flexDirection: 'row',
+        alignItems: 'flex-start'
+       
+    },
+    wateringTextContainer: {
+        flex: 2,
+        flexDirection:'column',
+    },
+    checkbox: {
+        alignSelf: 'center'
+    },
+    listBottomMargin: {
+        marginBottom: 100
+    },
+    rippleEffect: {
+        color: '#638c07'
+    },
+>>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
 
     /* text styling */
-    headerText: {
-        fontSize: 100,
-        fontWeight: 'bold',
-        color: 'green'
-    },
     weatherLocationText: {
         fontSize: 25,
         fontWeight: 'bold',
@@ -49,6 +73,11 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
 
+    },
+    soilQ: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
     weatherOtherText: {
         fontSize: 15,
@@ -79,9 +108,6 @@ export default StyleSheet.create({
     myGardenSubs: {
         fontSize: 20,
         marginLeft: 20
-    },
-    postText: {
-        fontSize: 15
     },
     comUser: {
         fontSize: 18,
@@ -132,12 +158,62 @@ export default StyleSheet.create({
         fontSize: 12,
         marginLeft: 250
     },
+    titleText: {
+        fontSize: 50,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        textTransform: "uppercase",
+        color: "#5ab07d",
+        textShadowColor:'black',
+        textShadowOffset:{width: 2, height: 2},
+        textShadowRadius:1, 
+        marginLeft: 10,
+        marginRight: 1
+    },
+    buttonText: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 20,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        textTransform: "uppercase"
+
+    },
+    gardenButtonText: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 15,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        textTransform: "uppercase"
+
+    },
+    veggieText: {
+        flex:1
+    },
+    wateringContainerText: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 15,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        marginTop: 5
+    },
+    wateringTextBold: {
+        marginTop: 13,
+        fontWeight: "bold"
+    },
     /* image styling */
     weatherPic: {
         flex: 2,
         marginTop: 0
     },
-
+    buttonImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover'
+    },
     backgroundImage: {
         flex: 1,
         width: '100%',
@@ -215,12 +291,33 @@ export default StyleSheet.create({
         width: 35,
         height: 35
     },
+    newProfile: {
+        width: 115,
+        height: 115,
+        marginLeft: 10,
+        marginTop: 20
+    },
     mediumImage: {
         width: 150,
         height: 150,
         marginRight: 10,
         msrginLeft: 10,
         marginTop: 20
+    },
+    wateringImage: {
+
+        width: 70,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+        padding: 9,
+        marginLeft: 10,
+        marginTop: 5,
+        marginRight: 10,
+        borderColor: "#AFE4DE",
+        borderWidth: 3,
+        borderRadius: 40
     },
     tabBar: {
         backgroundColor: '#5eb876'
@@ -231,6 +328,7 @@ export default StyleSheet.create({
         justifyContent: "center",
 
     },
+    /* buttons */
     exchangeButton: {
         width: 300,
         height: 50,
@@ -290,6 +388,33 @@ export default StyleSheet.create({
         borderWidth: 3,
         borderRadius: 30
     },
+    newGarden: {
+        width: 300,
+        height: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 1,
+        elevation: 50,
+        marginLeft: 45,
+        marginBottom: 10,
+        borderColor: "black",
+        borderWidth: 3,
+        borderRadius: 30
+    },
+    quizButton: {
+        width: 290,
+        height: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 1,
+        elevation: 50,
+        marginLeft: 45,
+        marginBottom: 10,
+        marginTop:5,
+        borderColor: "black",
+        borderWidth: 3,
+        borderRadius: 30
+    },
     myGardenButtons: {
         width: "45%",
         height: 75,
@@ -305,6 +430,22 @@ export default StyleSheet.create({
         borderColor: "black",
         borderWidth: 4,
         borderRadius: 30,
+    },
+    soilButton: {
+        width: 70,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 25,
+        padding: 1,
+        backgroundColor: '#A5B8A1',
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 10,
+        marginLeft: 5,
+        borderColor: "black",
+        borderWidth: 2,
+        borderRadius: 10
     },
     myGardenButtonsFullWidth: {
         width: "90%",
@@ -322,6 +463,7 @@ export default StyleSheet.create({
         borderWidth: 4,
         borderRadius: 30,
     },
+<<<<<<< HEAD
     titleText: {
         fontSize: 50,
         fontFamily: 'serif',
@@ -366,6 +508,9 @@ export default StyleSheet.create({
         alignItems: 'flex-start'
 
     },
+=======
+    /*misc */
+>>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
     item: {
         flexDirection: 'row',
         backgroundColor: '#e0e8d0',
@@ -410,12 +555,6 @@ export default StyleSheet.create({
         height: 220,
         width: 360
     },
-    listBottomMargin: {
-        marginBottom: 100
-    },
-    rippleEffect: {
-        color: '#638c07'
-    },
     accountInput: {
         height: 60,
         borderColor: "black",
@@ -457,29 +596,6 @@ export default StyleSheet.create({
         borderWidth: 4,
         borderRadius: 30
     },
-    wateringContainerText: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 15,
-        fontFamily: 'serif',
-        fontWeight: "700",
-        marginTop: 5
-    },
-    wateringImage: {
-
-        width: 70,
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
-        elevation: 5,
-        padding: 9,
-        marginLeft: 10,
-        marginTop: 5,
-        marginRight: 10,
-        borderColor: "#AFE4DE",
-        borderWidth: 3,
-        borderRadius: 40
-    },
     wateringItem: {
         flexDirection: 'row',
         backgroundColor: '#079BF5',
@@ -493,6 +609,7 @@ export default StyleSheet.create({
         height: 100,
         width: 320
     },
+<<<<<<< HEAD
     wateringTextContainer: {
         flex: 2,
         flexDirection: 'column',
@@ -504,4 +621,7 @@ export default StyleSheet.create({
     checkbox: {
         alignSelf: 'center'
     },
+=======
+    
+>>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
 });

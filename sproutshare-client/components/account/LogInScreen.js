@@ -4,6 +4,7 @@ import { TextInput, View, Text, Button, Alert, StyleSheet, Image, ImageBackgroun
 import styles from '../../styles/styles'
 import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
+
 // The screen where users can input their username and password to log into an existing account
 function LogInScreen(props) {
     const [username, setUsername] = useState('');
@@ -17,7 +18,7 @@ function LogInScreen(props) {
     function passwordInputHandler(password) {
         setPassword(password);
     }
-
+    
     const handleButtonClick = () => {
         // when button is clicked, check credentials
         // then set loginStatus to result
@@ -86,13 +87,12 @@ function LogInScreen(props) {
             justifyContent: "center",
         }}>
             <ImageBackground source={require("../../assets/Newlogin.png")} style={styles.backgroundImage}>
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={{ marginTop: 75, marginBottom: 80, marginLeft: 20 }}>
-                        <Text style={styles.titleText}>Sign In</Text>
+                <View style={{ flexDirection: 'row', marginBottom:30 }}>
+                    
+                    <Text style={[styles.titleText, {marginTop: 80}]}>Sign In</Text>
+                    
+                    <Image source={require("../../assets/signIn.png")} style={[styles.newProfile, {marginLeft:50, marginTop:50}]}></Image>
                     </View>
-                    <View style={{ marginTop: 40, marginBottom: 80, marginLeft: 15 }}>
-                        <Image source={require("../../assets/signIn.png")} style={styles.tinyImage}></Image>
-                    </View></View>
                 <TextInput
                     style={[
                         styles.accountInput,
