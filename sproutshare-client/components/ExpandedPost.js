@@ -11,6 +11,8 @@ function ExpandedPost(props) {
     const [post, setPost] = useState({});
     const [user, setUser] = useState({});
     const [rating, setRating] = useState(false);
+    const [editView, setEditView] = useState(false);
+    const [editPost, setEditPost] = useState('');
     const [commentModal, setCommentModalVisibility] = useState(false);
     useEffect(() => {
         setPost(props.post);
@@ -69,7 +71,8 @@ function ExpandedPost(props) {
     }
 
     const editButtonHandler = () => {
-        Alert.alert(
+        setEditView(true);
+        /*Alert.alert(
             "Edit Post",
             "Edit Post Placeholder:",
             [
@@ -84,7 +87,7 @@ function ExpandedPost(props) {
                     }
                 }
             ]
-        )
+        )*/
     }
 
     const renderItem = ({ item }) => {
@@ -173,6 +176,10 @@ function ExpandedPost(props) {
                     />
                     <NewComment nodeServer={props.nodeServer} post={props.post} onNewComment={rerender}/>
                     {renderControlButtons()}
+                    {editView ? <><TextInput style={styles.textInput} placeholder = 'New post...' onChangeText={text => setEditPost(text)} value={editPost}></TextInput>
+                    <Button title='Confirm' onPress={() => props.post.comm_post_body = editPost} />
+                    <Button title='Close' onPress={() => setEditView(false)} />
+                    </> : <></>}
                 </View>
 
             </Modal>
