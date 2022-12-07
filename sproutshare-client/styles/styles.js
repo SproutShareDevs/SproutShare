@@ -423,6 +423,22 @@ export default StyleSheet.create({
         borderWidth: 2,
         borderRadius: 10
     },
+    textureButton: {
+        width: 175,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 25,
+        padding: 1,
+        backgroundColor: '#A5B8A1',
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 10,
+        marginLeft: 5,
+        borderColor: "black",
+        borderWidth: 2,
+        borderRadius: 10
+    },
     myGardenButtonsFullWidth: {
         width: "90%",
         height: 75,
