@@ -152,9 +152,9 @@ function RecommendPlant(props){
                     }
                     }}/>
                   <Button title='By Zip Code' onPress={makePlantListZip}/>
-                  <Button title='By Coords' onPress={makePlantListCoords}/>
+                  <Button title='By Coordinates' onPress={makePlantListCoords}/>
                   <Button title='By Garden Attributes' onPress={makePlantListZone}/>
-                  <TextInput style={styles.textInput} placeholder={ (String(zipCode) == undefined || String(zipCode) == "") ? "Enter Zipcode" : String(zipCode)} keyboardType='numeric' onChangeText={text => setZipCode(text)} value={zipCode} />
+                  <TextInput style={styles.textInput} placeholder={ (String(zipCode) == undefined || String(zipCode) == "") ? "Enter Zip Code" : String(zipCode)} keyboardType='numeric' onChangeText={text => setZipCode(text)} value={zipCode} />
                   <View style={{flexDirection:"row"}}>
                     <View style={{flex:1}}>
                         <TextInput placeholder={ (String(userLat) == undefined || String(userLat) == "") ? "Enter Latitude" : String(userLat)} keyboardType='numeric' onChangeText={text => setUserLat(text)} value={userLat} style={{justifyContent: 'flex-start',}} />
@@ -168,13 +168,13 @@ function RecommendPlant(props){
                   </View>
                   <View style={{flexDirection:"row"}}>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter light level' keyboardType='numeric' onChangeText={text => setLightLevel(text)} value={lightLevel} style={{justifyContent: 'flex-start',}} />
+                        <TextInput placeholder='Enter Light Level' keyboardType='numeric' onChangeText={text => setLightLevel(text)} value={lightLevel} style={{justifyContent: 'flex-start',}} />
                     </View>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter soil type' onChangeText={text => setSoilType(text)} value={soilType} style={{justifyContent: 'flex-end',}} />
+                        <TextInput placeholder='Enter Soil Type' onChangeText={text => setSoilType(text)} value={soilType} style={{justifyContent: 'flex-end',}} />
                     </View>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter hardiness zone' keyboardType='numeric' onChangeText={text => setHardZone(text)} value={hardZone} style={{justifyContent: 'flex-end',}} />
+                        <TextInput placeholder='Enter Hardiness Zone' keyboardType='numeric' onChangeText={text => setHardZone(text)} value={hardZone} style={{justifyContent: 'flex-end',}} />
                     </View>
                   </View>
                   <TextInput style={styles.textInput} placeholder='Enter Quantity' keyboardType='numeric' onChangeText={text => props.selectQty(text)} value={props.plantQuantity} />
