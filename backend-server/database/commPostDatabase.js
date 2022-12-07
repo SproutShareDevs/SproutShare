@@ -73,14 +73,23 @@ async function storePost(post) {
 
 async function storeComment(comment, postID) {
    try {
-      const post = await CommunityPosts.findById(postID).exec();
-      const newComment = await Comment.create(comment, (err, newComment) => {
+      post = await CommunityPosts.findById(postID).exec();
+      newComment = await Comment.create(comment, (err, newComment) => {
          newComment.user_ID = comment.user_ID;
          newComment.text = comment.text;
          newComment.save();
       });
+	  await CommunityPosts.update({ _id: postID }, { $push: {comments: comment} }, {}, function () {
+	  });
       post.save();
-      newComment.save();
+	  console.error(post);
+	  //setTimeout( () => {console.error(newComment);}, 30000);
+	  /*while(newComment == undefined){
+		  
+	  }*/
+	  console.error("New comment: ", newComment);
+      //newComment.save();
+	  console.error(newComment);
       return newComment;
    } catch (error) {
       console.error(error);

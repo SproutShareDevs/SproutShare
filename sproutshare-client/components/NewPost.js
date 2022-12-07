@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import {StyleSheet, View, Text, Pressable, Image, Modal, Button, TextInput, TouchableOpacity } from 'react-native'
 import styles from '../styles/styles';
+import * as SecureStore from 'expo-secure-store';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -9,7 +10,7 @@ function NewPost(props) {
     const [postModal, togglePostModal] = useState(false);
     const [postTitle, setTitle] = useState('');
     const [postBody, setBody] = useState('');
-    const [username, setUsername] = useState('');
+    const [user, setUser] = useState(props.user);
 
     function titleInputHandler(enteredTitle) {
         setTitle(enteredTitle);
@@ -19,33 +20,34 @@ function NewPost(props) {
         setBody(enteredBody);
     }
 
-    useEffect(() => {
-        const fetchUsername = async () => {
-            let accessToken = await SecureStore.getItemAsync('AccessToken');
-            await axios.get(`${props.nodeServer}/user/${accessToken}`).then((response) => {
-                setUsername(response.data.username)
-            }).catch(err => {
-                console.log('Error: ', err);
-            });
-        }
-        fetchUsername();
-    }, []);
+    async function getUser(){
+        let accessToken = await SecureStore.getItemAsync('AccessToken');
+        await axios.get(`${props.nodeServer}/user/${accessToken}`).then((response) => {
+            setUser(response.data);
+            console.log(response.data);
+        }).catch(err => {
+            console.log('Error fetching user: ', err);
+        });
+    }
 
     async function createPost() {
-
-        await axios.post(`${props.nodeServer}/communityPosts/store`, {
-            comm_post_title: postTitle,
-            comm_post_body: postBody,
-            user_ID: username
-            })
-            .then((response) => {
-              console.log(response.data);
-              console.log("Post created");
-            }).catch(err => {
-              console.log('Error creating new post: ', err);
-        });
-        togglePostModal(false);
-        props.onNewPost();
+        await getUser();
+        console.log("User: ", user)
+        if(user !== undefined && user !== ''){
+            await axios.post(`${props.nodeServer}/communityPosts/store`, {
+                comm_post_title: postTitle,
+                comm_post_body: postBody,
+                user_ID: user.username
+                })
+                .then((response) => {
+                  console.log(response.data);
+                  console.log("Post created");
+                }).catch(err => {
+                  console.log('Error creating new post: ', err);
+            });
+            togglePostModal(false);
+            props.onNewPost();
+        }
     }
 
 

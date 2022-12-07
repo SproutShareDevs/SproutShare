@@ -22,6 +22,7 @@ function ExpandedPost(props) {
         }).catch(err => {
             console.log('Error Fetching User: ', err);
         });
+        {console.log("Post: ", props.post)}
     }
 
     function renderControlButtons() {
