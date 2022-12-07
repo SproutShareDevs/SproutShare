@@ -151,19 +151,43 @@ function SoilQuestionnaire(props) {
                   </TouchableOpacity>
                   
             <Modal visible={soilQuest} animationType="slide">
-                <Text>Don't know your soil type? Fill out our questionnaire!</Text>
-                <Text>Pick some wet soil and squish it. Does it feel...</Text>
-                <View style={{ justifyContent: "center" }}>
+            <ImageBackground source={require("./../../assets/MainBackground.png")} style={styles.backgroundImage}>
+                <Text style={[styles.titleText, {marginLeft:60}]}>Soil Quiz</Text>
+                <Text style={{fontSize:15, fontWeight:'bold', marginLeft:50, marginTop:10}}>To Start: Pick some wet soil and squish it.</Text>
+                <Text style={{fontSize:30, fontWeight:'bold', marginLeft:15, marginTop:15}}>Does it feel...</Text>
+                <View style={{flexDirection: 'column'}}>
+                <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                     {/* Smooth and slimy is silt, and sticky and lumpy is clay. Source: https://www.dammannsgardenco.com/blog/how-to-identify-soil-types */}
-                    <Button title='Smooth and slimy?' onPress={() => props.setSoilType(1)}></Button>
-                    <Button title='Sticky and lumpy?' onPress={() => props.setSoilType(2)}></Button>
-                    {/* These should be added when those types are added to the DB. Gritty is sandy, and NOTA is loamy. */}
-                    <Button title='Gritty?' onPress={()=> props.setSoilType(3)}></Button>
-                    <Button title='None of the above?' onPress={()=> props.setSoilType(4)}></Button>
-                </View>
-                <Text>Current soil type: {props.soilType}</Text>
-                <Text>Questions taken from https://www.dammannsgardenco.com/blog/how-to-identify-soil-types. More information can also be found there.</Text>
-                <Button color='red' title='Close' onPress={() => toggleSoilQuest(false)} />
+                    <TouchableOpacity style={styles.textureButton}
+                    onPress={() => props.setSoilType('Silt')}>
+                    <Text style={styles.buttonText}>Smooth and slimy?</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.textureButton}
+                    onPress={() => props.setSoilType('Clay')}>
+                    <Text style={styles.buttonText}>Sticky and lumpy?</Text>
+                  </TouchableOpacity></View>
+                  {/* These should be added when those types are added to the DB. Gritty is sandy, and NOTA is loamy. */}
+                <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                  <TouchableOpacity style={styles.textureButton}
+                    onPress={() => props.setSoilType('Sand')}>
+                    <Text style={styles.buttonText}>Gritty?</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.textureButton}
+                    onPress={() => props.setSoilType('Loam')}>
+                    <Text style={styles.buttonText}>None of the Above?</Text>
+                  </TouchableOpacity>
+                </View></View>
+                <Text style={{fontSize:20, fontWeight:'bold', marginLeft:90, marginTop:5, marginBottom:50}}>Soil Type Result: {props.soilType}</Text>
+                <TouchableOpacity style={[styles.newGarden, {backgroundColor:'#D4CD68'}]}
+                    onPress={() => toggleSoilQuest(false)}>
+                    <Text style={styles.buttonText}>Exit Quiz</Text>
+                  </TouchableOpacity>
+                
+                <Text style={{marginTop:40, marginLeft:115,fontSize:15}}>Questions taken from: </Text>
+                <Text style={{marginTop:5, marginLeft:10}}>https://www.dammannsgardenco.com/blog/how-to-identify-soil-types. </Text>
+                <Text style={{marginLeft:10}}>More information can also be found there.</Text>
+                
+            </ImageBackground>
             </Modal>
         </>
     )
