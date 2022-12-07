@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const gardenServices = require('../services/gardenServices');
 const sproutShareUserServices = require('../services/sproutShareUserServices');
+const userPlantServices = require('../services/userPlantServices');
 
 router.get('/', async(req, res) => {
    try {
@@ -111,7 +112,8 @@ router.put('/archive/:key', async(req,res)=>{
 
 router.delete('/delete/:key', async(req, res)=>{
    try {
-      const deletedGarden = await gardenServices.deletedGarden(req.params.key);
+      const deletedPlants = await userPlantServices.deleteUserPlantsByGarden(req.params.key);
+      const deletedGarden = await gardenServices.deleteGarden(req.params.key);
       res.send(deletedGarden);
    } catch (error) {
       console.error(error);
