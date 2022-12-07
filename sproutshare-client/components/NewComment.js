@@ -30,7 +30,8 @@ function NewComment(props) {
 
         await axios.post(`${props.nodeServer}/communityPosts/${props.post._id}/addcomment`, {
             text: commentText,
-            user_ID: username
+            user_ID: username,
+            rated_by_users: [],
             })
             .then((response) => {
               console.log(response.data);

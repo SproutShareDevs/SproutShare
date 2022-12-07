@@ -47,7 +47,8 @@ class CommunityFeed extends React.Component {
 
 
                                 <View style={styles.itemCommunity}>
-                                    <PostPreview nodeServer={this.props.nodeServer} onNewComment={this.rerender} onDelete={this.rerender} post={item}/>
+                                    {console.log('Post: ', item)}
+                                    <PostPreview nodeServer={this.props.nodeServer} onNewComment={this.rerender} onDelete={this.rerender} post={item} user={this.state.user}/>
                                     {/*<Pressable android_ripple={styles.rippleEffect} onLongPress={() => this.deletePost(item._id)}>*/}
                                 </View>
 
