@@ -67,13 +67,13 @@ function getDailyRainfall(zipcode, callback){
       const weatherData = Array.from(data.list);
       weatherData.forEach(hour =>{
          if(hour.rain){
-            console.log("Rainfall:", hour.rain['1h']);
+            //console.log("Rainfall:", hour.rain['1h']);
             //console.log("start iter:", rainfallAmountMilli);
             rainfallAmountMilli += hour.rain['1h'];
             //console.log("end iter", rainfallAmountMilli);
          }
       })
-      console.log("total: ", rainfallAmountMilli);  
+      //console.log("total: ", rainfallAmountMilli);  
       callback(rainfallAmountMilli / MM_TO_INCHES);
    })
 }

@@ -21,7 +21,6 @@ async function getNotificationByToken(accessToken){
       const user = await sproutshareUserServices.getUserByToken(accessToken);
       const userPlants = await userPlantServices.getUserPlantsByUserKey(user.user_key);
       let plantsToBeWatered = [];
-      console.log(userPlants);
 
       let rainToday = 0;
       let rain3Days = 0;
@@ -49,14 +48,6 @@ async function getNotificationByToken(accessToken){
          rain3Days += parseFloat(forecastResponse.Forecast3rain);
       }
 
-      console.log("RAIN FIRST DAY: " + forecastResponse.Forecast1rain);
-      console.log("RAIN SECOND DAY: " + forecastResponse.Forecast2rain);
-      console.log("RAIN THIRD DAY: " + forecastResponse.Forecast3rain);
-
-      console.log("RAIN 1 DAY: " + rainToday);
-      
-      console.log("RAIN 3 DAYS: " + rain3Days);
-
       let plantNeedsWatering = false;
       let sendNotification = false;
 
@@ -67,11 +58,9 @@ async function getNotificationByToken(accessToken){
 
          // if  the water amount is less than 0, push the plant to the notification
          if(userPlants[plant].water_amount <= 0) {
-            console.log("PLANT WATER AMOUNT WITH 1 DAY: " + (userPlants[plant].water_amount + rainToday));
             plantNeedsWatering = true;
             // if theres rain tomorrow that may alter the watering schedule for the plant, let the user know
             if(userPlants[plant].water_amount + rainToday > 0) {
-               console.log("WOOOOO!!!!");
                plantsToBeWatered.push({
                   userPlant: userPlants[plant].user_plant_key,
                   plantType: plantType.common_name,
