@@ -51,11 +51,13 @@ function AddGarden(props) {
             <Modal visible={gardenModal} animationType="slide">
                 <View style={styles.button}>
 
-                    <SoilQuestionnaire {...props} setSoilType={setSoilType} />
+                    <SoilQuestionnaire {...props} setSoilType={setSoilType} soilType={soilType} />
 
-                    <ChooseSoilType {...props} setSoilType={setSoilType} />
+                    <ChooseSoilType {...props} setSoilType={setSoilType} soilType={soilType} />
+                    <Text>Current soil type: {soilType}</Text>
 
                     <ChooseLightLevel {...props} setLightLevel={setLightLevel} />
+                    <Text>Current light level: {lightLevel}</Text>
 
                     <>
                         <Text> Garden name:</Text>
@@ -99,11 +101,11 @@ function ChooseSoilType(props) {
         <>
             <Text>Select soil type:</Text>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                <Button title='Silt' onPress={() => props.setSoilType(1)}></Button>
+                <Button title='Silty' onPress={() => props.setSoilType(1)}></Button>
                 <Button title='Clay' onPress={() => props.setSoilType(2)}></Button>
                 {/* These should be added when those types are added to the DB */}
-                {/* <Button title='3' onPress={()=> setSoilType(3)}></Button>
-                <Button title='4' onPress={()=> setSoilType(4)}></Button> */}
+                <Button title='Sandy' onPress={()=> props.setSoilType(3)}></Button>
+                <Button title='Loamy' onPress={()=> props.setSoilType(4)}></Button> 
             </View>
         </>
     )
@@ -121,12 +123,11 @@ function SoilQuestionnaire(props) {
                     {/* Smooth and slimy is silt, and sticky and lumpy is clay. Source: https://www.dammannsgardenco.com/blog/how-to-identify-soil-types */}
                     <Button title='Smooth and slimy?' onPress={() => props.setSoilType(1)}></Button>
                     <Button title='Sticky and lumpy?' onPress={() => props.setSoilType(2)}></Button>
-                    {/* These should be added when those types are added to the DB. Gritty is sandy, and NOTA is loamy. */
-                /*onPress={()=> setSoilType(3)}*/
-                /*onPress={()=> setSoilType(4)}*/}
-                    <Button title='Gritty?'></Button>
-                    <Button title='None of the above?'></Button>
+                    {/* These should be added when those types are added to the DB. Gritty is sandy, and NOTA is loamy. */}
+                    <Button title='Gritty?' onPress={()=> props.setSoilType(3)}></Button>
+                    <Button title='None of the above?' onPress={()=> props.setSoilType(4)}></Button>
                 </View>
+                <Text>Current soil type: {props.soilType}</Text>
                 <Text>Questions taken from https://www.dammannsgardenco.com/blog/how-to-identify-soil-types. More information can also be found there.</Text>
                 <Button color='red' title='Close' onPress={() => toggleSoilQuest(false)} />
             </Modal>

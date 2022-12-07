@@ -175,8 +175,8 @@ INSERT INTO soil (soil_type, ph_level, nitrogen_level, phosp_level, potas_level)
 VALUES
    ('silt', 'neutral', 'adequate', 'sufficient', 'surplus'),
    ('clay', 'basic', 'deficient', 'adequate', 'sufficient'),
-   ('loamy', 'basic', 'deficient', 'adequate', 'sufficient'),
-   ('sandy', 'basic', 'deficient', 'adequate', 'sufficient');
+   ('sandy', 'basic', 'deficient', 'adequate', 'sufficient'),
+   ('loamy', 'basic', 'deficient', 'adequate', 'sufficient');
 
 INSERT INTO disease(disease_name, threat_level, care_tips)
 VALUES

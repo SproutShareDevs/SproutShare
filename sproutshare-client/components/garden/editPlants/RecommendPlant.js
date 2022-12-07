@@ -144,10 +144,10 @@ function RecommendPlant(props){
                         setSoilType("clay");
                         break;
                       case 3:
-                        setSoilType("loamy");
+                        setSoilType("sandy");
                         break;
                       case 4:
-                        setSoilType("sandy");
+                        setSoilType("loamy");
                         break;
                     }
                     }}/>
