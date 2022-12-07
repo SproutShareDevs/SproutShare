@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Image, Modal, Button, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Image, Modal, Button, TouchableOpacity, Alert, ImageBackground } from 'react-native'
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
 import axios from 'axios';
@@ -30,9 +30,18 @@ function ExpandedPost(props) {
 
 
         if (user.username == props.post.user_ID) {
-            const controlButtons = <View>
-                <Button title="Delete Post" onPress={deleteButtonHandler} />
-                <Button title="Edit" onPress={editButtonHandler} />
+            const controlButtons = <View style={{alignItems: 'center'}}>
+                <TouchableOpacity
+                    onPress={editButtonHandler}
+                    style={styles.formButton}>
+                    <Text style={styles.formButtonText}>Edit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={deleteButtonHandler}
+                    style={styles.formButtonDelete}>
+                    <Text style={styles.formButtonText}>Delete</Text>
+                </TouchableOpacity>
+                
             </View>
             return controlButtons;
         }
@@ -104,7 +113,8 @@ function ExpandedPost(props) {
 
         <>
             <Modal visible={props.visible} animationType="slide">
-                <Button title='Close' onPress={props.onClose} />
+                <Button title='Close' color="#19543E" onPress={props.onClose} />
+                <ImageBackground source={require("./../assets/MainBackground.png")} style={styles.backgroundImage}>
 
                 <View style={styles.fullItemCommunity}>
                     <View style={{ flexDirection: 'row' }}>
@@ -122,10 +132,10 @@ function ExpandedPost(props) {
                         renderItem={renderItem}
                         keyExtractor={item => item._id}
                     />
-                    <NewComment nodeServer={props.nodeServer} post={props.post} onNewComment={rerender}/>
+                    <NewComment nodeServer={props.nodeServer} post={props.post} onNewComment={rerender} />
                     {renderControlButtons()}
                 </View>
-
+                </ImageBackground>
             </Modal>
         </>
     );

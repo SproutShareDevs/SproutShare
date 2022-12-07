@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import {StyleSheet, View, Text, Pressable, Image, Modal, Button, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Pressable, Image, Modal, Button, TextInput, TouchableOpacity, ImageBackground } from 'react-native'
 import styles from '../styles/styles';
 
 import * as SecureStore from 'expo-secure-store';
@@ -37,52 +37,54 @@ function NewPost(props) {
             comm_post_title: postTitle,
             comm_post_body: postBody,
             user_ID: username
-            })
+        })
             .then((response) => {
-              console.log(response.data);
-              console.log("Post created");
+                console.log(response.data);
+                console.log("Post created");
             }).catch(err => {
-              console.log('Error creating new post: ', err);
-        });
+                console.log('Error creating new post: ', err);
+            });
         togglePostModal(false);
         props.onNewPost();
     }
 
 
-    return(
+    return (
         <>
-        
-        <TouchableOpacity
-            onPress={() => togglePostModal(true)}
-            style={styles.circleButton}>
-            <Image source={require("./../assets/plus.png")} style={styles.plusImage}></Image>
-        </TouchableOpacity>
-        <Modal visible={postModal} animationType="slide">
-            <View style={styles.containerCenter}>
-                <Text style={styles.title}>New Post</Text>
-                <TextInput style={styles.textInput}
-                    placeholder='Post Title'
-                    onChangeText={titleInputHandler}
-                    value={postTitle}
-                />
-                <TextInput style={styles.textInput}
-                    placeholder='Post Body'
-                    onChangeText={bodyInputHandler}
-                    value={postBody}
-                />
 
-                <View style={styles.buttonContainer}>
-                    <View style={styles.button}>
-                        <Button color='#228b22' title='Create' onPress={createPost}/>
+            <TouchableOpacity
+                onPress={() => togglePostModal(true)}
+                style={styles.circleButton}>
+                <Image source={require("./../assets/plus.png")} style={styles.plusImage}></Image>
+            </TouchableOpacity>
+            <Modal visible={postModal} animationType="slide">
+                <ImageBackground source={require("./../assets/MainBackground.png")} style={styles.backgroundImage}>
+                    <View style={styles.containerCenter}>
+                        <Text style={styles.title}>New Post</Text>
+                        <TextInput style={styles.textInput}
+                            placeholder='Post Title'
+                            onChangeText={titleInputHandler}
+                            value={postTitle}
+                        />
+                        <TextInput style={styles.textInput}
+                            placeholder='Post Body'
+                            onChangeText={bodyInputHandler}
+                            value={postBody}
+                        />
+
+                        <View style={styles.buttonContainer}>
+                            <View style={styles.button}>
+                                <Button color='#228b22' title='Create' onPress={createPost} />
+                            </View>
+                            <View style={styles.button}>
+                                <Button color='red' title='Close' onPress={() => togglePostModal(false)} />
+                            </View>
+
+                        </View>
                     </View>
-                    <View style={styles.button}>
-                    <Button color='red' title='Close' onPress={() => togglePostModal(false)}/>
-                    </View>
-                    
-                </View>         
-            </View>
-        </Modal>
-      </>
+                </ImageBackground>
+            </Modal>
+        </>
     );
 }
 

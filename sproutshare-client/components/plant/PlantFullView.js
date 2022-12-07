@@ -1,4 +1,4 @@
-import {View, Text, Image, Modal, Button } from 'react-native'
+import {View, Text, Image, Modal, Button, ImageBackground } from 'react-native'
 import styles from '../../styles/styles';
 
 function PlantFullView(props) {
@@ -8,6 +8,7 @@ function PlantFullView(props) {
     return(
         <>
         <Modal visible={props.visible} animationType="slide">
+            <ImageBackground source={require("../../assets/MainBackground.png")} style={styles.backgroundImage}>
             <View style={styles.containerCenter}>
                 <View style={{justifyContent: 'center'}}>
                     <Text style={styles.commonName}>Plant Name: {props.plant.common_name}</Text>
@@ -25,6 +26,7 @@ function PlantFullView(props) {
                 <Text style={styles.title}>max_temp: {props.plant.max_temp}</Text>
                 <Button title='Close' onPress={props.onClose}/>
             </View>
+            </ImageBackground>
         </Modal>
       </>
     );

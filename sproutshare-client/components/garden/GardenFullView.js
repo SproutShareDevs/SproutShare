@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Image, Modal, Button, Alert} from 'react-native'
+import { View, Text, Image, Modal, Button, Alert, ImageBackground } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
 import styles from '../../styles/styles';
 import UserPlantPreview from './UserPlantPreview';
@@ -39,7 +39,7 @@ function GardenFullView(props) {
             [
                 {
                     text: "Cancel",
-                    onPress: () => {},
+                    onPress: () => { },
                     style: "cancel"
                 },
                 {
@@ -51,8 +51,7 @@ function GardenFullView(props) {
     }
 
     const deleteGarden = async () => {
-        await axios.delete(`${props.nodeServer}/gardens/delete/${props.garden.garden_key}`).then((response) => 
-        {
+        await axios.delete(`${props.nodeServer}/gardens/delete/${props.garden.garden_key}`).then((response) => {
             props.onClose();
             console.log(response.data);
         }).catch((err) => {
@@ -99,7 +98,7 @@ function GardenFullView(props) {
     }
 
     renderItem = ({ item }) => {
-        if(props.garden.is_archived == false) {
+        if (props.garden.is_archived == false) {
             return <UserPlantPreview onDelete={fetchUserPlants} nodeServer={props.nodeServer} userPlant={item} />
         } else {
             return <ArchivePreview onDelete={deleteHandler} nodeServer={props.nodeServer} userPlant={item} />
@@ -109,35 +108,37 @@ function GardenFullView(props) {
     return (
         <>
             <Modal visible={props.visible} animationType="slide">
-                <View style={styles.container}>
-                    <Button title='Close' onPress={props.onClose} />
-                    <Button title='Delete Garden' onPress={deletePopup}/>
-                    {props.garden.is_archived == false &&
-                        <>
-                            <AddPlant onNewPlant={fetchUserPlants} nodeServer={props.nodeServer} garden={props.garden} />
-                            <Button title='Archive Garden' onPress={() => setArchiveModal(true)} />
-                        </>
-                    }
-                    {props.garden.is_archived == true &&
-                        <>
-                            <Button title='Recreate Garden' onPress={addGarden}/>
-                            <Text> Long press plants to remove them, then press "Recreate Garden" to make a new garden with the plants still in the list</Text>
-                        </>
-                    }
+                <ImageBackground source={require("../../assets/MainBackground.png")} style={styles.backgroundImage}>
+                    <View style={styles.container}>
+                        <Button title='Close' onPress={props.onClose} />
+                        <Button title='Delete Garden' onPress={deletePopup} />
+                        {props.garden.is_archived == false &&
+                            <>
+                                <AddPlant onNewPlant={fetchUserPlants} nodeServer={props.nodeServer} garden={props.garden} />
+                                <Button title='Archive Garden' onPress={() => setArchiveModal(true)} />
+                            </>
+                        }
+                        {props.garden.is_archived == true &&
+                            <>
+                                <Button title='Recreate Garden' onPress={addGarden} />
+                                <Text> Long press plants to remove them, then press "Recreate Garden" to make a new garden with the plants still in the list</Text>
+                            </>
+                        }
 
-                    <View style={styles.listBottomMargin}>
-                        <FlatList
-                            data={userPlantData}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.user_plant_key}
-                            contentInset={{ right: 10, top: 0, left: 10, bottom: 20 }}
-                        />
+                        <View style={styles.listBottomMargin}>
+                            <FlatList
+                                data={userPlantData}
+                                renderItem={renderItem}
+                                keyExtractor={item => item.user_plant_key}
+                                contentInset={{ right: 10, top: 0, left: 10, bottom: 20 }}
+                            />
+                        </View>
+
+                        <ArchiveGarden nodeServer={props.nodeServer} visible={archiveModal} userPlants={userPlantData}
+                            onClose={() => { setArchiveModal(false) }} doneRating={() => props.archiveGarden(props.garden.garden_key)} />
+
                     </View>
-
-                    <ArchiveGarden nodeServer={props.nodeServer} visible={archiveModal} userPlants={userPlantData}
-                        onClose={() => { setArchiveModal(false) }} doneRating={() => props.archiveGarden(props.garden.garden_key)} />
-                    
-                </View>
+                </ImageBackground>
             </Modal>
         </>
     );

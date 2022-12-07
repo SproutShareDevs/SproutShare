@@ -27,22 +27,22 @@ export default StyleSheet.create({
         borderColor: '#000000',
         borderWidth: 1
     },
-        
+
     textContainer: {
         flex: 3,
-        flexDirection:'column'
-    },  
+        flexDirection: 'column'
+    },
     buttonContainer: {
         flexDirection: 'row',
     },
     nameplate: {
         flexDirection: 'row',
         alignItems: 'flex-start'
-       
+
     },
     wateringTextContainer: {
         flex: 2,
-        flexDirection:'column',
+        flexDirection: 'column',
     },
     checkbox: {
         alignSelf: 'center'
@@ -155,9 +155,9 @@ export default StyleSheet.create({
         fontWeight: "700",
         textTransform: "uppercase",
         color: "#5ab07d",
-        textShadowColor:'black',
-        textShadowOffset:{width: 2, height: 2},
-        textShadowRadius:1, 
+        textShadowColor: 'black',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 1,
         marginLeft: 10,
         marginRight: 1
     },
@@ -179,8 +179,18 @@ export default StyleSheet.create({
         fontWeight: "700",
         textTransform: "uppercase"
     },
+    formButtonText: {
+        color: "#F2F3F5",
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        fontSize: 15,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        textTransform: "uppercase"
+    },
     veggieText: {
-        flex:1
+        flex: 1
     },
     wateringContainerText: {
         justifyContent: 'center',
@@ -401,7 +411,7 @@ export default StyleSheet.create({
         elevation: 50,
         marginLeft: 45,
         marginBottom: 10,
-        marginTop:5,
+        marginTop: 5,
         borderColor: "black",
         borderWidth: 3,
         borderRadius: 30
@@ -568,6 +578,30 @@ export default StyleSheet.create({
         borderColor: '#079BF5',
         height: 100,
         width: 320
-    }
-    
+    },
+    formButton: {
+        alignItems: "center",
+        backgroundColor: "#19543E",
+        margin: 2,
+        padding: 10,
+        justifyContent: 'center',
+        elevation: 25,
+        borderColor: "black",
+        borderWidth: 1,
+        borderRadius: 30,
+        width: "70%"
+    },
+    formButtonDelete: {
+        alignItems: "center",
+        backgroundColor: "#943B60",
+        margin: 2,
+        padding: 10,
+        justifyContent: 'center',
+        elevation: 25,
+        borderColor: "black",
+        borderWidth: 1,
+        borderRadius: 30,
+        width: "70%"
+    },
+
 });

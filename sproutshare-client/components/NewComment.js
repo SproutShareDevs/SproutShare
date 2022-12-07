@@ -46,7 +46,13 @@ function NewComment(props) {
 
     return(
         <>
-        <Button title="Add Comment" onPress={() => toggleCommentModal(true)}/>
+        <View style={{alignItems:'center', marginTop: 10}}>
+        <TouchableOpacity
+                onPress={() => toggleCommentModal(true)}
+                style={styles.formButton}>
+                <Text style={styles.formButtonText}>Add Comment</Text>
+        </TouchableOpacity>
+        </View>
         <Modal visible={commentModal} animationType="slide">
             <View style={styles.containerCenter}>
                 <Text style={styles.title}>New Comment</Text>
