@@ -56,7 +56,7 @@ async function getPostByQuery(query){
  */
 async function getGardensByUserKey(userKey){
    try {
-      const gardens = await pool.query("SELECT * FROM garden WHERE user_key = $1", [userKey]);
+      const gardens = await pool.query("SELECT * FROM garden WHERE user_key = $1 AND NOT is_archived ", [userKey]);
       return gardens.rows;
    } catch (error) {
       console.log(error);
@@ -64,6 +64,15 @@ async function getGardensByUserKey(userKey){
    }
 }
 
+async function getHistoryByUserKey(userKey){
+   try{
+      const history = await pool.query("SELECT * FROM garden WHERE user_key = $1 AND is_archived", [userKey]);
+      return history.rows;
+   } catch(error) {
+      console.log(error);
+      return JSON.stringify(error.message);
+   }
+}
 
 /**
  * 
@@ -71,8 +80,8 @@ async function getGardensByUserKey(userKey){
  */
 async function storeGarden(garden){
    try {
-      const storedGarden = await pool.query("INSERT INTO garden(user_key, soil_key, light_level) VALUES ($1, $2, $3) RETURNING *",
-      [garden.user_key, garden.soil_key, garden.light_level]);
+      const storedGarden = await pool.query("INSERT INTO garden(user_key, soil_key, light_level, garden_name, is_archived) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [garden.user_key, garden.soil_key, garden.light_level, garden.garden_name, garden.is_archived]);
       return storedGarden.rows[0];
    } catch (error) {
       console.error(error);
@@ -96,6 +105,16 @@ async function updateGarden(gardenKey, garden){
    }
 }
 
+async function archiveGarden(gardenKey){
+   try {
+      const archivedGarden = await pool.query("UPDATE garden SET is_archived = true WHERE garden_key = $1 RETURNING *", 
+      [gardenKey]);
+      return archivedGarden.rows[0];
+   }catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
 /**
  * 
  * @param {*} gardenKey The key of the garden to delete 
@@ -115,8 +134,10 @@ module.exports = {
    getAllGardens,
    getGardenByKey,
    getGardensByUserKey,
+   getHistoryByUserKey,
    //getPostByQuery,
    storeGarden,
    updateGarden,
+   archiveGarden,
    deleteGarden
 };
