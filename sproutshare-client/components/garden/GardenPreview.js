@@ -13,9 +13,8 @@ function GardenPreview(props) {
             >
                 <View style={styles.nameplate}>
                 
-                    <View style = {{flexDirection: 'column'}}>
-                    <Text style={styles.myGardenTitle}>Garden</Text>
-                    <Text style={styles.myGardenID}>{props.garden.garden_key}</Text>
+                    <View style = {{flexDirection: 'column', marginTop: 30}}>
+                    <Text style={styles.myGardenTitle}>{props.garden.garden_name}</Text>
                     </View>
                     <View style = {{flexDirection: 'column', marginLeft: 30, marginTop: 30}}>
                     <Text style={styles.myGardenSubs}>Light Level: {props.garden.light_level}</Text>
@@ -23,7 +22,7 @@ function GardenPreview(props) {
                     </View>
                 </View>
                 </Pressable>
-            <GardenFullView nodeServer ={props.nodeServer} visible={modalVisible} garden={props.garden} onClose={() => setModalIsVisible(false)}/>
+            <GardenFullView nodeServer ={props.nodeServer} visible={modalVisible} garden={props.garden} onClose={() => setModalIsVisible(false)} archiveGarden ={props.archiveGarden}/>
         </View>
 
     );

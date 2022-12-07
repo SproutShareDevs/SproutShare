@@ -64,10 +64,9 @@ export default StyleSheet.create({
     myGardenTitle: {
         fontSize: 30,
         marginLeft: 22,
-       
     },
     myGardenID: {
-        fontSize: 55,
+        fontSize: 30,
         marginLeft: 55,
         fontWeight: 'bold'
     },

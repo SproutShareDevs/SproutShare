@@ -55,6 +55,20 @@ router.get('/getByToken/:token', async(req, res) => {
    }
 })
 
+router.get('/getHistoryByToken/:token', async(req, res) => {
+   try {
+      // find user with current access token
+      const user = await sproutShareUserServices.getUserByToken(req.params.token);
+      const userGardens = await gardenServices.getHistoryByUserKey(user.user_key);
+
+      //if there is a user with that access token, display their gardens
+      res.send(userGardens);
+   } catch (error) {
+      console.error(error);
+      res.send(JSON.stringify(error.message));
+   }
+})
+
 router.get('/getByUser/:key', async(req, res)=>{
    try {
       const getGardenByUser = gardenServices.getGardensByUserKey(req.params.key);
@@ -63,6 +77,8 @@ router.get('/getByUser/:key', async(req, res)=>{
       res.send(JSON.stringify(error.message));
    }
 })
+
+
 router.post('/store', async(req,res) =>{
    try {
       const storedGarden = await gardenServices.storeGarden(req.body);
@@ -77,6 +93,16 @@ router.put('/update/:key', async(req,res)=>{
    try {
       const updatedGarden = await gardenServices.updateGarden(req.params.key, req.body);
       res.send(updatedGarden);
+   } catch (error) {
+      console.error(error);
+      res.send(JSON.stringify(error.message));   
+   }
+})
+
+router.put('/archive/:key', async(req,res)=>{
+   try {
+      const archivedGarden = await gardenServices.archiveGarden(req.params.key);
+      res.send(archivedGarden);
    } catch (error) {
       console.error(error);
       res.send(JSON.stringify(error.message));   

@@ -86,33 +86,6 @@ function AccountManagement(props) {
                 title={"Schedule a push notification"}
                 onPress={triggerLocalNotificationHandler}
             />
-
-            <TextInput
-                style={[styles.accountInput,
-                { marginBottom: 10,
-                  marginTop: 10
-                }
-                ]}
-                keyboardType='numeric'
-                placeholder='number of days'
-                onChangeText={text => setDays(text)}
-                value={days}
-            />
-
-            <TextInput
-                style={[styles.accountInput,
-                { marginBottom: 10 }
-                ]}
-                keyboardType='numeric'
-                placeholder='amount of rain in inches'
-                onChangeText={text => setRain(text)}
-                value={rain}
-            />
-
-            {/* <Button
-                title="Advance Time"
-                onPress={advanceDays}
-            /> */}
         </View>
 
     );

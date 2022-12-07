@@ -123,10 +123,12 @@ CREATE TABLE plantpest(
 
 CREATE TABLE garden(
   garden_key SERIAL PRIMARY KEY,
+  garden_name varchar,
   user_key int,
   soil_key int,
   light_level varchar,
   yesterdaysRain int,
+  is_archived boolean,
   CONSTRAINT fk_user FOREIGN KEY(user_key) REFERENCES sproutshareuser(user_key),
   CONSTRAINT fk_soil FOREIGN KEY(soil_key) REFERENCES soil(soil_key)
 );
@@ -193,14 +195,14 @@ VALUES
    (2,1), 
    (3,1);
 
-INSERT INTO garden (user_key, soil_key, light_level, yesterdaysRain)
+INSERT INTO garden (user_key, soil_key, light_level, yesterdaysRain, garden_name, is_archived)
 VALUES
-   (1, 1, 10, 5),
-   (2, 1, 5, 2),
-   (3, 1, 6, 2),
-   (3, 1, 2, 2),
-   (4, 1, 3, 2),
-   (5, 1, 2, 2);
+   (1, 1, 10, 5, 'test garden 1', false),
+   (2, 1, 5, 2, 'test garden 2', false), 
+   (3, 1, 6, 2, 'test garden 3', false),
+   (3, 1, 2, 2, 'test garden 4', false),
+   (4, 1, 3, 2, 'test garden 5', false),
+   (5, 1, 2, 2, 'test garden 6', false);
 
 /*
 There are 15 plants, keys are 1-15
@@ -209,9 +211,9 @@ There are 15 plants, keys are 1-15
 INSERT INTO userplant(user_key, plant_key, garden_key, plant_disease_key, 
 plant_pest_key, plant_qty, plant_difficulty, plant_quality)
 VALUES
-    (1, 1, 1, null, null, 10, 5, 4),
-    (2, 3, 2, 3, null, 1, 10, 10),
-    (3, 12, 3, null, null, 1, 1, 4),
+  (1, 1, 1, null, null, 10, 5, 4),
+  (2, 3, 2, 3, null, 1, 10, 10),
+  (3, 12, 3, null, null, 1, 1, 4),
 	(3, 10, 4, null, null, 1, 4, 3),
 	(3, 15, 3, null, null, 5, 2, 2),
 	(4, 1, 5, null, null, 1, 4, 5),
@@ -283,4 +285,4 @@ SELECT * FROM plant;
 
 SELECT * FROM userplant WHERE garden_key = 1;
 
-SELECT * FROM disease WHERE disease_name LIKE 'lycan%';
+SELECT * FROM garden;

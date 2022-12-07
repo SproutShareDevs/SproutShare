@@ -49,6 +49,16 @@ async function getGardensByUserKey(userKey){
    }
 }
 
+async function getHistoryByUserKey(userKey){
+   try{
+      const history = await gardenDatabase.getHistoryByUserKey(userKey);
+      return history;
+   } catch (error) {
+      console.log(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 async function storeGarden(garden){
    try {
       const storedGarden = await gardenDatabase.storeGarden(garden);
@@ -69,6 +79,16 @@ async function updateGarden(gardenKey, garden){
    }
 }
 
+async function archiveGarden(gardenKey){
+   try {
+      const archivedGarden = await gardenDatabase.archiveGarden(gardenKey);
+      return archivedGarden;
+   }catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 async function deleteGarden(gardenKey){
    try {
       const deletedGarden = await gardenDatabase.deleteGarden(gardenKey);
@@ -83,8 +103,10 @@ module.exports = {
    getAllGardens,
    getGardenByKey,
    getGardensByUserKey,
+   getHistoryByUserKey,
    //getPostByQuery,
    storeGarden,
    updateGarden,
+   archiveGarden,
    deleteGarden
 };
