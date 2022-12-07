@@ -12,15 +12,24 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    postContainerCenter: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: "10%"
+    },
     searchBarContainer: {
         margin: 15,
-        paddingLeft:4,
+        paddingLeft: 4,
         justifyContent: "flex-start",
         alignItems: "center",
         width: "90%",
         borderColor: '#000000',
         borderWidth: 1
     },
+<<<<<<< HEAD
+
+=======
     appBackground: {
         flex: 1,
         justifyContent: "center", 
@@ -51,6 +60,7 @@ export default StyleSheet.create({
     rippleEffect: {
         color: '#638c07'
     },
+>>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
 
     /* text styling */
     weatherLocationText: {
@@ -62,7 +72,7 @@ export default StyleSheet.create({
         fontSize: 45,
         fontWeight: 'bold',
         textAlign: 'center',
-        
+
     },
     soilQ: {
         fontSize: 20,
@@ -80,7 +90,7 @@ export default StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         textAlign: 'center'
-    },  
+    },
     latinName: {
         fontSize: 20,
         fontStyle: 'italic',
@@ -95,50 +105,58 @@ export default StyleSheet.create({
         marginLeft: 55,
         fontWeight: 'bold'
     },
-    myGardenSubs:{
+    myGardenSubs: {
         fontSize: 20,
         marginLeft: 20
     },
     comUser: {
-        fontSize:18,
+        fontSize: 18,
         marginLeft: 7,
-        marginTop: 20 
+        marginTop: 20
+    },
+    fullComUser: {
+        fontSize: 18,
+        marginLeft: 7
     },
     comTitle: {
-        fontSize:20,
+        fontSize: 20,
         fontWeight: 'bold',
-        marginLeft: 20 
+        marginLeft: 20
     },
     comBody: {
-        fontSize:15,
-        marginLeft: 20 
+        fontSize: 15,
+        marginLeft: 20
     },
     comDate: {
-        fontSize:12,
-        marginLeft:110
+        fontSize: 12,
+        marginLeft: 110
+    },
+    fullComDate: {
+        fontSize: 12,
+        marginLeft: 7
     },
     exUser: {
-        fontSize:18,
+        fontSize: 18,
         marginLeft: 7,
-        marginTop: 30 
+        marginTop: 30
     },
     exTitle: {
-        fontSize:22,
+        fontSize: 22,
         fontWeight: 'bold',
-        marginLeft:10
+        marginLeft: 10
     },
     exBody: {
-        fontSize:18,
-        marginLeft:5
-       
+        fontSize: 18,
+        marginLeft: 5
+
     },
     exDate: {
-        fontSize:12,
-        marginLeft:145
+        fontSize: 12,
+        marginLeft: 145
     },
     exPlant: {
-        fontSize:12,
-        marginLeft:250
+        fontSize: 12,
+        marginLeft: 250
     },
     titleText: {
         fontSize: 50,
@@ -188,7 +206,7 @@ export default StyleSheet.create({
     /* image styling */
     weatherPic: {
         flex: 2,
-        marginTop:0
+        marginTop: 0
     },
     buttonImage: {
         flex: 1,
@@ -216,29 +234,29 @@ export default StyleSheet.create({
         height: 100,
         marginRight: 10,
         marginLeft: 10,
-        marginTop: 15      
+        marginTop: 15
     },
     communityImage: {
         resizeMode: 'contain',
         width: 300,
         height: 120,
         marginLeft: 10,
-        
+
     },
     exchangeImage: {
         resizeMode: 'contain',
         width: 365,
         height: 50,
         marginLeft: 5,
-        marginRight: 5,  
-        marginTop:20    
+        marginRight: 5,
+        marginTop: 20
     },
     wikiImage: {
         resizeMode: 'contain',
         width: 275,
         height: 80,
-        marginLeft: 50,  
-        marginTop:120
+        marginLeft: 50,
+        marginTop: 120
     },
     pfpImage: {
         width: 60,
@@ -255,7 +273,7 @@ export default StyleSheet.create({
         borderRadius: 50
     },
     veggieImage: {
-        flex:1,
+        flex: 1,
         width: 80,
         height: 80,
         justifyContent: 'center',
@@ -271,7 +289,7 @@ export default StyleSheet.create({
     plusImage: {
         resizeMode: 'contain',
         width: 35,
-        height: 35              
+        height: 35
     },
     newProfile: {
         width: 115,
@@ -303,6 +321,12 @@ export default StyleSheet.create({
     },
     tabBar: {
         backgroundColor: '#5eb876'
+    },
+    /* miscellaneous */
+    appBackground: {
+        flex: 1,
+        justifyContent: "center",
+
     },
     /* buttons */
     exchangeButton: {
@@ -455,12 +479,59 @@ export default StyleSheet.create({
         borderWidth: 4,
         borderRadius: 30,
     },
+<<<<<<< HEAD
+    titleText: {
+        fontSize: 50,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        textTransform: "uppercase",
+        color: "#5ab07d",
+        textShadowColor: 'black',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 1,
+        marginLeft: 5
+    },
+    buttonText: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 20,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        textTransform: "uppercase"
+
+    },
+    gardenButtonText: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 15,
+        fontFamily: 'serif',
+        fontWeight: "700",
+        textTransform: "uppercase"
+
+    },
+    veggieText: {
+        flex: 1
+    },
+    textContainer: {
+        flex: 3,
+        flexDirection: 'column'
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+    },
+    nameplate: {
+        flexDirection: 'row',
+        alignItems: 'flex-start'
+
+    },
+=======
     /*misc */
+>>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
     item: {
         flexDirection: 'row',
         backgroundColor: '#e0e8d0',
         padding: 2,
-        alignItems:'flex-start',
+        alignItems: 'flex-start',
         marginVertical: 8,
         marginHorizontal: 15,
         borderRadius: 30,
@@ -471,14 +542,23 @@ export default StyleSheet.create({
     },
     itemCommunity: {
         backgroundColor: '#e0e8d0',
-        padding: 2,
+        padding: 5,
         marginVertical: 8,
         marginHorizontal: 15,
         borderRadius: 30,
         borderWidth: 3,
         borderColor: '#A0B86F',
-        height: 200,
         width: 355
+    },
+    fullItemCommunity: {
+        backgroundColor: '#e0e8d0',
+        padding: 5,
+        marginVertical: 8,
+        marginHorizontal: 15,
+        borderRadius: 30,
+        borderWidth: 3,
+        borderColor: '#A0B86F',
+        width: 355,
     },
     itemExchange: {
         backgroundColor: '#e0e8d0',
@@ -492,18 +572,18 @@ export default StyleSheet.create({
         width: 360
     },
     accountInput: {
-            height: 60,
-            borderColor: "black",
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            marginLeft: 15,
-            marginRight: 15,
-            marginBottom: 50,
-            padding: 5,
-            fontSize: 20,
-            fontFamily: 'serif',
-            fontWeight: "700"
+        height: 60,
+        borderColor: "black",
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        marginLeft: 15,
+        marginRight: 15,
+        marginBottom: 50,
+        padding: 5,
+        fontSize: 20,
+        fontFamily: 'serif',
+        fontWeight: "700"
     },
     textInput: {
         borderWidth: 1,
@@ -536,7 +616,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#079BF5',
         paddingTop: 4,
-        alignItems:'flex-start',
+        alignItems: 'flex-start',
         marginVertical: 8,
         marginHorizontal: 15,
         borderRadius: 30,
@@ -545,5 +625,19 @@ export default StyleSheet.create({
         height: 100,
         width: 320
     },
+<<<<<<< HEAD
+    wateringTextContainer: {
+        flex: 2,
+        flexDirection: 'column',
+    },
+    wateringTextBold: {
+        marginTop: 13,
+        fontWeight: "bold"
+    },
+    checkbox: {
+        alignSelf: 'center'
+    },
+=======
     
+>>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
 });

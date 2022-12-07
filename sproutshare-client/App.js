@@ -1,4 +1,4 @@
-const NODE_SERVER = 'http://192.168.0.127:3000'
+const NODE_SERVER = 'http://192.168.50.54:3000'
 // React / Expo Imports
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';

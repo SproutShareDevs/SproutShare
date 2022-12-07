@@ -2,10 +2,12 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, View, Button, FlatList, StyleSheet, Pressable, Image, ImageBackground } from 'react-native';
 import NewPost from './NewPost';
+import PostPreview from './PostPreview';
 import ExpandedPost from './ExpandedPost';
 import styles from '../styles/styles';
 
 import * as SecureStore from 'expo-secure-store';
+
 
 class CommunityFeed extends React.Component {
     constructor(props) {
@@ -13,21 +15,15 @@ class CommunityFeed extends React.Component {
         this.state = {
             data: [],
             user: {},
-            modalVisible: false
         }
         this.rerender = this.rerender.bind(this);
         this.fetchCommunityPosts = this.fetchCommunityPosts.bind(this);
         this.fetchUserId = this.fetchUserId.bind(this);
         this.deletePost = this.deletePost.bind(this);
-        this.setModalVisiblity = this.setModalVisiblity.bind(this);
         this.sortPosts = this.sortPosts.bind(this);
     }
 
-    setModalVisiblity(bool) {
-        this.setState(state => {
-            return { modalVisible: bool }
-        });
-    }
+
 
     sortPosts = () => {
         const data = this.state.data;
@@ -51,22 +47,8 @@ class CommunityFeed extends React.Component {
 
 
                                 <View style={styles.itemCommunity}>
-                                    <Pressable
-                                        onPress={() => this.setModalVisiblity(true)}
-                                    >
-                                        <View style={{ flexDirection: 'row' }}>
-                                            <Image source={require("./../assets/pfp.png")} style={styles.pfpImage}></Image>
-                                            <View style={{ flexDirection: 'column' }}>
-                                                <Text style={styles.comDate}>{item.comm_post_date}</Text>
-                                                <Text style={styles.comUser}>User: {item.user_ID}</Text>
-                                            </View>
-                                        </View>
-                                        <Text style={styles.comTitle}>{item.comm_post_title}</Text>
-                                        <Text style={styles.comBody}>{item.comm_post_body}</Text>
-                                    </Pressable>
-                                    <ExpandedPost nodeServer={this.props.nodeServer} post={item} visible={this.state.modalVisible} onClose={() => this.setModalVisiblity(false)} />
+                                    <PostPreview nodeServer={this.props.nodeServer} onDelete={this.rerender} post={item}/>
                                     {/*<Pressable android_ripple={styles.rippleEffect} onLongPress={() => this.deletePost(item._id)}>*/}
-
                                 </View>
 
 

@@ -43,6 +43,16 @@ router.post('/store', async(req,res) =>{
    }
 })
 
+router.post('/:id/addcomment', async(req, res) => {
+   try {
+      const storeCommentResponse = await commPostServices.storeComment(req.body, req.params.id);
+      res.send(storeCommentResponse);
+   } catch(error) {
+      console.error(error);
+      res.send(JSON.stringify(error.message));
+   }
+});
+
 router.put('/update/:id', async(req,res)=>{
    try {
       const updatedCommPost = await commPostServices.updatePost(req.params.id, req.body);
