@@ -7,8 +7,6 @@ import ExpandedPost from './ExpandedPost';
 import styles from '../styles/styles';
 import * as SecureStore from 'expo-secure-store';
 
-import * as SecureStore from 'expo-secure-store';
-
 
 class CommunityFeed extends React.Component {
     constructor(props) {
@@ -66,7 +64,7 @@ class CommunityFeed extends React.Component {
                                 <Text style={styles.comBody}>{item.comm_post_body}</Text>
                                 
                             </Pressable>
-                            <CommPostBigView bigViewModal={this.state.bigViewModal} offBigViewModal={this.offBigViewModal} item={item} styles={styles} user={this.state.user}/>
+                            <CommPostBigView bigViewModal={this.state.bigViewModal} offBigViewModal={this.offBigViewModal} item={item} styles={styles} user={this.state.user} nodeserver={this.props.nodeServer}/>
                         </View>
                     }
                     keyExtractor={item => item._id}
@@ -137,24 +135,32 @@ function CommPostBigView(props){
     const [commentModal, setCommentModal] = useState(false);
     const [comment, setComment] = useState('');
     
-    function toggleRating (){
-        let index = props.item.rated_by_users.findIndex((element) => element == props.user.username);
+    // setRating and rating aren't actually used, but they update state and force a rerender so.... they're necessary.
+    function toggleRating(item){
+        let index = item.rated_by_users.findIndex((element) => element == props.user.username);
         console.log("Index: ", index);
         console.log("User: ", props.user);
         if(index != -1){
             setRating(false);
-            props.item.rated_by_users.splice(0, 1);
+            item.rated_by_users.splice(index, 1);
             console.log("Rating: ", rating);
-            console.log("Item: ", props.item);
+            console.log("Item: ", item);
         } else{
             setRating(true);
-            props.item.rated_by_users.push(props.user.username);
+            item.rated_by_users.push(props.user.username);
             console.log("Rating: ", rating);
-            console.log("Item: ", props.item);
+            console.log("Item: ", item);
         }
     }
 
-    function addComment (){
+    function hasUserRated(item){
+        if(item.rated_by_users.findIndex((element) => element == props.user.username) == -1){
+            return false;
+        } else
+            return true;
+    }
+
+    function addComment(){
         props.item.comments.push(
             {
                 user_ID: props.user.username,
@@ -164,9 +170,26 @@ function CommPostBigView(props){
         )
     }
 
+    async function closeModal(post, nodeserver){
+        await axios.put(`${nodeserver}/communityPosts/update/${post._id}`, {
+            user_ID: post.user_ID,
+            comm_post_date: post.comm_post_date, 
+            comm_post_title: post.comm_post_title, 
+            comm_post_body: post.comm_post_body,
+            rated_by_users: post.rated_by_users,
+            comments: post.comments
+          }).then((response) => {
+            console.log(response.data);
+            console.log("Post updated");
+        }).catch(err => {
+            console.log('Error Deleting Post: ', err);
+        });
+        props.offBigViewModal();
+    }
+
     return(
         <><Modal visible={props.bigViewModal} animationType="slide">
-            <Button title='Close' onPress={props.offBigViewModal} />
+            <Button title='Close' onPress={() => closeModal(props.item, props.nodeserver)} />
             <View style={{flexDirection: 'row'}}>
                 <Image source={require("./../assets/pfp.png")} style={props.styles.pfpImage}></Image>
                 <View style={{flexDirection: 'column'}}>
@@ -180,7 +203,7 @@ function CommPostBigView(props){
             {/*The length of the rated by users array is the number of users who have rated it. You can't see this from the main comm feed atm,
             if anyone asks say it's like YouTube - need to engage with the full content for at least a bit before you can see/engange with ratings*/}
             <Text style={props.styles.comBody}>{props.item.rated_by_users.length}</Text>
-            <Button title={(rating) ? "Upvoted!" : "Not upvoted"} onPress={toggleRating} />
+            <Button title={(hasUserRated(props.item)) ? "Upvoted!" : "Not upvoted"} onPress={() => toggleRating(props.item)} />
             <Button title={"Add comment"} onPress={addComment} />
             <TextInput placeholder='Enter Comment' onChangeText={text => setComment(text)} value={comment} />
             <FlatList 
@@ -195,8 +218,9 @@ function CommPostBigView(props){
                                 <Text style={styles.comUser}>User: {item.user_ID}</Text>
                                 </View>
                             </View>
-                            <Text style={styles.comBody}>{item.comm_post_body}</Text>
+                            <Text> {item.comm_post_body}</Text>
                             <Text>Rating: {item.rated_by_users.length} </Text>
+                            <Button title={(hasUserRated(item)) ? "Upvoted!" : "Not upvoted"} onPress={() => toggleRating(item)} />
                         </View>
                     }
                     keyExtractor={item => item._id}

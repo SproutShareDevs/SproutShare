@@ -4,8 +4,6 @@ import {StyleSheet, View, Text, Pressable, Image, Modal, Button, TextInput, Touc
 import styles from '../styles/styles';
 import * as SecureStore from 'expo-secure-store';
 
-import * as SecureStore from 'expo-secure-store';
-
 function NewPost(props) {
     const [postModal, togglePostModal] = useState(false);
     const [postTitle, setTitle] = useState('');
