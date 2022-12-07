@@ -64,6 +64,11 @@ export default StyleSheet.create({
         textAlign: 'center',
         
     },
+    soilQ: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
     weatherOtherText: {
         fontSize: 15,
         fontWeight: 'bold',
@@ -185,7 +190,12 @@ export default StyleSheet.create({
         flex: 2,
         marginTop:0
     },
-
+    buttonImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover'
+    },
     backgroundImage: {
         flex: 1,
         width: '100%',
@@ -354,6 +364,33 @@ export default StyleSheet.create({
         borderWidth: 3,
         borderRadius: 30
     },
+    newGarden: {
+        width: 300,
+        height: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 1,
+        elevation: 50,
+        marginLeft: 45,
+        marginBottom: 10,
+        borderColor: "black",
+        borderWidth: 3,
+        borderRadius: 30
+    },
+    quizButton: {
+        width: 290,
+        height: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 1,
+        elevation: 50,
+        marginLeft: 45,
+        marginBottom: 10,
+        marginTop:5,
+        borderColor: "black",
+        borderWidth: 3,
+        borderRadius: 30
+    },
     myGardenButtons: {
         width: "45%",
         height: 75,
@@ -369,6 +406,22 @@ export default StyleSheet.create({
         borderColor: "black",
         borderWidth: 4,
         borderRadius: 30,
+    },
+    soilButton: {
+        width: 70,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 25,
+        padding: 1,
+        backgroundColor: '#A5B8A1',
+        marginBottom: 10,
+        marginTop: 10,
+        marginRight: 10,
+        marginLeft: 5,
+        borderColor: "black",
+        borderWidth: 2,
+        borderRadius: 10
     },
     myGardenButtonsFullWidth: {
         width: "90%",
