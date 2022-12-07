@@ -94,7 +94,7 @@ function PlantToBeWatered(props) {
                 />
                 <View style={styles.wateringTextContainer}>
                     <Text style={styles.wateringTextBold}>{plant.common_name}</Text>
-                    <Text style={styles.wateringText}>Garden: {props.userPlant.garden_key}</Text>
+                    <Text style={styles.wateringText}>Garden: {props.userPlant.garden_name}</Text>
                     <Text style={styles.wateringText}>Planted: {plantingDate}</Text>
                 </View>
                 <BouncyCheckbox

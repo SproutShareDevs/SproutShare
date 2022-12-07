@@ -31,13 +31,14 @@ function PostPreview(props) {
                 <View style={{ flexDirection: 'column' }}>
                     <Text style={styles.comDate}>{props.post.comm_post_date}</Text>
                     <Text style={styles.comUser}>User: {props.post.user_ID}</Text>
+                    <Text >Rating: {props.post.rated_by_users.length}</Text>
                 </View>
             </View>
             <Text style={styles.comTitle}>{props.post.comm_post_title}</Text>
             <Text style={styles.comBody}>{props.post.comm_post_body}</Text>
             
         </Pressable>
-        <ExpandedPost nodeServer={props.nodeServer} post={props.post} visible={subModalVisible} onNewComment={newCommentHandler} onDelete={deleteHandler} onClose={setSubModalIsVisible} />
+        <ExpandedPost nodeServer={props.nodeServer} post={props.post} visible={subModalVisible} onNewComment={newCommentHandler} onDelete={deleteHandler} onClose={() =>setSubModalIsVisible(false)} user={props.user} />
         </>
     );
 }
