@@ -239,6 +239,15 @@ async function deleteUserPlant(userPlantKey){
       return JSON.stringify(error.message);
    }
 }
+async function deleteUserPlantsByGarden(gardenKey) {
+   try{
+      const deletedPlants = await userPlantDatabase.deleteUserPlantsByGarden(gardenKey);
+      return deletedPlants;
+   } catch (error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
 
 
 /**
@@ -329,6 +338,7 @@ module.exports = {
    updateUserPlantQuality,
    updateUserPlantWaterAmount,
    deleteUserPlant,
+   deleteUserPlantsByGarden,
    advanceDays,
    advanceRealDay
 };
