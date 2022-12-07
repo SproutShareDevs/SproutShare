@@ -1,6 +1,7 @@
 const mongoose 	= require("mongoose"),
 	ExchangeListings = require("../models/ExchangeListing"),
-	CommunityPosts = require("../models/CommunityPost");
+	CommunityPosts = require("../models/CommunityPost"),
+    Comment = require("../models/Comment");
 
 const MockExchangeData = [
     {
@@ -90,6 +91,30 @@ function seedDB() {
                     console.log(error);
                 } else {
                     console.log("Added community post");
+                    Comment.create(
+						{text: "Wow, this is a great post!", user_ID: "egg"},
+						function(err, comment) {
+							if(err) {
+								console.log(err);
+							} else {
+								communityPost.comments.push(comment);
+								
+							}
+							
+						}
+					);
+                    Comment.create(
+						{text: "Really love your garden!", user_ID: "TheTomatoMan"},
+						function(err, comment) {
+							if(err) {
+								console.log(err);
+							} else {
+								communityPost.comments.push(comment);
+								communityPost.save();
+							}
+							
+						}
+					);
                 }
              });
         });

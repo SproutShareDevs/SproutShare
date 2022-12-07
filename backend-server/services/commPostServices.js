@@ -41,6 +41,16 @@ async function storePost(post){
    }
 }
 
+async function storeComment(comment, postID) {
+   try {
+      const storedComment = await commPostDatabase.storeComment(comment, postID);
+      return storedComment;
+   } catch(error) {
+      console.error(error);
+      return JSON.stringify(error.message);
+   }
+}
+
 async function updatePost(postId, postBody){
    try {
       const updatedCommPost = await commPostDatabase.updatePost(postId, postBody);
@@ -65,6 +75,7 @@ module.exports = {
    getPostById,
    getPostByQuery,
    storePost,
+   storeComment,
    updatePost,
    deletePost
 }
