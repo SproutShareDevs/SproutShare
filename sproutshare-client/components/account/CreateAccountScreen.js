@@ -48,7 +48,7 @@ function CreateAccountScreen(props) {
         <ImageBackground source={require("../../assets/Newlogin.png")} style={styles.backgroundImage}>
         <View style = {{flexDirection: 'row', marginTop: 35, marginBottom: 80}}>
         <Text style = {styles.titleText}>Create Account</Text>
-        <Image source={require("../../assets/PFPicon.png")} style ={styles.mediumImage}></Image>
+        <Image source={require("../../assets/PFPicon.png")} style ={styles.newProfile}></Image>
         </View>
         <TextInput 
             style = {[
