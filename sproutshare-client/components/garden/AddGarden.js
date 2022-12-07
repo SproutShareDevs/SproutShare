@@ -34,6 +34,7 @@ function AddGarden(props) {
             is_archived: false,
         }).then((response) => {
             console.log(response);
+            toggleGardenModal(false);
         }).catch(err => {
             console.log('Error adding new garden: ', err);
         });
