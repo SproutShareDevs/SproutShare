@@ -27,14 +27,7 @@ export default StyleSheet.create({
         borderColor: '#000000',
         borderWidth: 1
     },
-<<<<<<< HEAD
-
-=======
-    appBackground: {
-        flex: 1,
-        justifyContent: "center", 
         
-    },
     textContainer: {
         flex: 3,
         flexDirection:'column'
@@ -60,11 +53,9 @@ export default StyleSheet.create({
     rippleEffect: {
         color: '#638c07'
     },
->>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
 
     /* text styling */
     weatherLocationText: {
-        fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center'
     },
@@ -479,54 +470,7 @@ export default StyleSheet.create({
         borderWidth: 4,
         borderRadius: 30,
     },
-<<<<<<< HEAD
-    titleText: {
-        fontSize: 50,
-        fontFamily: 'serif',
-        fontWeight: "700",
-        textTransform: "uppercase",
-        color: "#5ab07d",
-        textShadowColor: 'black',
-        textShadowOffset: { width: 2, height: 2 },
-        textShadowRadius: 1,
-        marginLeft: 5
-    },
-    buttonText: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 20,
-        fontFamily: 'serif',
-        fontWeight: "700",
-        textTransform: "uppercase"
-
-    },
-    gardenButtonText: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 15,
-        fontFamily: 'serif',
-        fontWeight: "700",
-        textTransform: "uppercase"
-
-    },
-    veggieText: {
-        flex: 1
-    },
-    textContainer: {
-        flex: 3,
-        flexDirection: 'column'
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-    },
-    nameplate: {
-        flexDirection: 'row',
-        alignItems: 'flex-start'
-
-    },
-=======
     /*misc */
->>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
     item: {
         flexDirection: 'row',
         backgroundColor: '#e0e8d0',
@@ -624,20 +568,6 @@ export default StyleSheet.create({
         borderColor: '#079BF5',
         height: 100,
         width: 320
-    },
-<<<<<<< HEAD
-    wateringTextContainer: {
-        flex: 2,
-        flexDirection: 'column',
-    },
-    wateringTextBold: {
-        marginTop: 13,
-        fontWeight: "bold"
-    },
-    checkbox: {
-        alignSelf: 'center'
-    },
-=======
+    }
     
->>>>>>> 8f0ae07a66f27f36e777cca5b4d6461913b6e491
 });
