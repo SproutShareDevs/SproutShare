@@ -7,7 +7,11 @@ const ExchangeListingSchema = new Schema({
    ex_plant: String,
    ex_post_date: {type: Date, default: new Date()},
    ex_post_title: String,
-   ex_post_body: String
+   ex_post_body: String,
+   image:{
+      type: String
+
+   }
 });
 
 const ExchangeListing = mongoose.model('ExchangeListing', ExchangeListingSchema);

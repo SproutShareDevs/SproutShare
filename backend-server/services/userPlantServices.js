@@ -118,7 +118,8 @@ async function getRecommendedPlantsByCoords(userLat, userLong, radius){
 			  let dist = Math.acos( Math.sin( user.user_lat * Math.PI / 180 )*Math.sin( userLat * Math.PI / 180 ) + Math.cos( user.user_lat * Math.PI / 180 )*Math.cos( userLat * Math.PI / 180 )*Math.cos( (user.user_long * Math.PI / 180)-(userLong * Math.PI / 180) ) )*6371.009;
 			  if(!plantsMap.has(plant.plant_key)){
 				  let temp = {};
-				  temp.totalQuality = plant.plant_quality*( radius/(radius + dist) );
+				  // 1/(1 + dist) ensures that at 0 distance the plant gets full quality rating, but as distance increases the quality rating decreases
+				  temp.totalQuality = plant.plant_quality*( 1/(1 + dist) );
 				  temp.totalNumber = 1;
 				  plantsMap.set(plant.plant_key, temp);
 			  }

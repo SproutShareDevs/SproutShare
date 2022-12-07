@@ -8,6 +8,7 @@ const cors = require('cors');
 console.log(require('dotenv').config());
 const auth = require('./custom-middleware/authMiddleware');
 const processes = require('./processes/WateringNotificationProcess');
+
 /** seed db */
 const seedDB = require("./db/seed.js");
 

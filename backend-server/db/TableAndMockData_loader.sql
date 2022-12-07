@@ -162,18 +162,21 @@ Script to create tables in database
 
 INSERT INTO sproutshareuser(first_name, last_name, email_address, username, password, accessToken, lang, zip_code, user_lat, user_long)
 VALUES
-   ('George', 'Romero', 'george.romero@dotld.com', 'george123', 'password', '0', 'en', '90710', '33.7958', '118.2965'),
-   ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'thecricket', 'password', '0', 'en', '24061', '37.2209', '80.4228'),
-   ('Albert', 'Albertson', 'al@gmail.com', 'BigAl', 'password', '0', 'en', '23529', '36.8861', '76.3081'),
-   ('Bob', 'Bobertson', 'bob@gmail.com', 'Bobby', 'password', '0', 'en', '23529', '36.8861', '76.3081'),
-   ('Carol', 'Carolson', 'carol@gmail.com', 'Carolina', 'password', '0', 'en', '23529', '36.8861', '76.3081');
+   ('George', 'Romero', 'george.romero@dotld.com', 'george123', 'password', '0', 'en', '90710', '33.7958', '-118.2965'),
+   ('Jiminy', 'Cricket', 'jiminy.cricket@gmail.com', 'thecricket', 'password', '0', 'en', '24061', '37.2209', '-80.4228'),
+   ('Albert', 'Albertson', 'al@gmail.com', 'BigAl', 'password', '0', 'en', '23529', '36.8861', '-76.3081'),
+   ('Bob', 'Bobertson', 'bob@gmail.com', 'Bobby', 'password', '0', 'en', '23529', '36.8861', '-76.3081'),
+   ('Carol', 'Carolson', 'carol@gmail.com', 'Carolina', 'password', '0', 'en', '23529', '36.8861', '-76.3081'),
+   ('David', 'Davidson', 'david@gmail.com', 'BigDave', 'password', '0', 'en', '90001', '33.9698', '-118.2468');
 
 \COPY plant(common_name, latin_name, light_level, min_temp, max_temp, rec_temp, hardiness_zone, soil_type, img, water_need) FROM 'plants.csv' WITH DELIMITER ',' HEADER CSV;
 
 INSERT INTO soil (soil_type, ph_level, nitrogen_level, phosp_level, potas_level)
 VALUES
    ('silt', 'neutral', 'adequate', 'sufficient', 'surplus'),
-   ('clay', 'basic', 'deficient', 'adequate', 'sufficient');
+   ('clay', 'basic', 'deficient', 'adequate', 'sufficient'),
+   ('loamy', 'basic', 'deficient', 'adequate', 'sufficient'),
+   ('sandy', 'basic', 'deficient', 'adequate', 'sufficient');
 
 INSERT INTO disease(disease_name, threat_level, care_tips)
 VALUES
@@ -202,7 +205,8 @@ VALUES
    (3, 1, 6, 2, 'test garden 3', false),
    (3, 1, 2, 2, 'test garden 4', false),
    (4, 1, 3, 2, 'test garden 5', false),
-   (5, 1, 2, 2, 'test garden 6', false);
+   (5, 1, 2, 2, 'test', false),
+   (6, 1, 2, 2, 'test garden 6', false);
 
 /*
 There are 15 plants, keys are 1-15
@@ -272,7 +276,10 @@ VALUES
 	(3, 14, 3, null, null, 5, 1, 4),
 	(3, 5, 4, null, null, 4, 5, 1),
 	(5, 3, 6, null, null, 5, 4, 3),
-	(3, 11, 3, null, null, 1, 4, 1);
+	(3, 11, 3, null, null, 1, 4, 1),
+	(6, 13, 7, null, null, 1, 4, 1),
+	(6, 11, 7, null, null, 1, 4, 1),
+	(6, 14, 7, null, null, 1, 4, 1);
 
 
 /*

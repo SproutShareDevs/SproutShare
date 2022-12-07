@@ -4,6 +4,7 @@ import styles from '../../../styles/styles';
 import axios from "axios";
 import { FlatList } from 'react-native-gesture-handler';
 import PlantOption from './PlantOption';
+import * as SecureStore from 'expo-secure-store';
 
 function RecommendPlant(props){
     const [plantModal, togglePlantModal] = useState(false);
@@ -14,6 +15,7 @@ function RecommendPlant(props){
     const [lightLevel, setLightLevel] = useState('');
     const [soilType, setSoilType] = useState('');
     const [hardZone, setHardZone] = useState('');
+    const [user, setUser] = useState('');
     const [plants, setPlants] = useState([]);
     //const [newPlant, setNewPlant] = useState();
     const [plantList, setPlantList] = useState([]);
@@ -64,7 +66,7 @@ function RecommendPlant(props){
       let tempArr = [];
       for (const plant of plants){
         console.log("Plant.id: ", plant.id)
-        newPlant = await fetchBasePlant(plant.id);
+        let newPlant = await fetchBasePlant(plant.id);
         console.log("newPlant: ", newPlant);
         tempArr.push(newPlant);
       }
@@ -77,7 +79,7 @@ function RecommendPlant(props){
       let tempArr = [];
       for (const plant of plants){
         console.log("Plant.id: ", plant.id)
-        newPlant = await fetchBasePlant(plant.id);
+        let newPlant = await fetchBasePlant(plant.id);
         console.log("newPlant: ", newPlant);
         tempArr.push(newPlant);
       }
@@ -99,7 +101,13 @@ function RecommendPlant(props){
     }
 
     renderItem = ({item}) => {
-      return <PlantOption plant={item} selectPlant = {props.selectPlant} />
+      return <View> 
+        <PlantOption plant={item} selectPlant = {props.selectPlant} />
+        {(plants.find( (element) => {return element.id === item.plant_key;} ) == undefined) ? <></> : (
+          <><Text style={styles.title}>Plant Rating: {plants.find( (element) => {return element.id === item.plant_key;} ).average.totalQuality}</Text>
+          <Text style={styles.title}>Number of users with this plant: {plants.find( (element) => {return element.id === item.plant_key;} ).average.totalNumber}</Text></>
+        )}
+      </View>
     }
 
     return (
@@ -111,16 +119,48 @@ function RecommendPlant(props){
           />
         <Modal visible={plantModal} animationType="slide">
                   <Button title='Close' onPress={()=> togglePlantModal(false)}/>
+                  <Button title='Get User Attributes' onPress={ async () => {
+                    let accessToken = await SecureStore.getItemAsync('AccessToken');
+                    console.log("ACCESS TOKEN:    ", accessToken);
+                    console.log("ROUTE:   ", `${props.nodeServer}/user/${accessToken}`)
+                    await axios.get(`${props.nodeServer}/user/${accessToken}`).then((response) => {
+                      setUser(response.data);
+                      console.log(response.data);
+                    }).catch(err => {
+                      console.log('Error fetching user: ', err);
+                    });
+                    console.log("User: ", user, user.zip_code);
+                    setZipCode(user.zip_code);
+                    console.log("New zip: ", zipCode);
+                    setUserLat(user.user_lat);
+                    console.log("New lat: ", userLat);
+                    setUserLong(user.user_long);
+                    setLightLevel(props.garden.light_level);
+                    switch(props.garden.soil_key){
+                      case 1:
+                        setSoilType("silty");
+                        break;
+                      case 2:
+                        setSoilType("clay");
+                        break;
+                      case 3:
+                        setSoilType("loamy");
+                        break;
+                      case 4:
+                        setSoilType("sandy");
+                        break;
+                    }
+                    }}/>
                   <Button title='By Zip Code' onPress={makePlantListZip}/>
-                  <Button title='By Coords' onPress={makePlantListCoords}/>
+                  <Button title='By Coordinates' onPress={makePlantListCoords}/>
                   <Button title='By Garden Attributes' onPress={makePlantListZone}/>
-                  <TextInput style={styles.textInput} placeholder='Enter Zip Code' keyboardType='numeric' onChangeText={text => setZipCode(text)} value={zipCode} />
+                  <TextInput style={styles.textInput} placeholder={ (String(zipCode) == undefined || String(zipCode) == "") ? "Enter Zip Code" : String(zipCode)} keyboardType='numeric' onChangeText={text => setZipCode(text)} value={zipCode} />
                   <View style={{flexDirection:"row"}}>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter Latitude' keyboardType='numeric' onChangeText={text => setUserLat(text)} value={userLat} style={{justifyContent: 'flex-start',}} />
+                        <TextInput placeholder={ (String(userLat) == undefined || String(userLat) == "") ? "Enter Latitude" : String(userLat)} keyboardType='numeric' onChangeText={text => setUserLat(text)} value={userLat} style={{justifyContent: 'flex-start',}} />
                     </View>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter Longitude' keyboardType='numeric' onChangeText={text => setUserLong(text)} value={userLong} style={{justifyContent: 'flex-end',}} />
+                        <TextInput placeholder={ (String(userLong) == undefined || String(userLong) == "") ? "Enter Longitude" : String(userLong)} keyboardType='numeric' onChangeText={text => setUserLong(text)} value={userLong} style={{justifyContent: 'flex-end',}} />
                     </View>
                     <View style={{flex:1}}>
                         <TextInput placeholder='Enter Radius' keyboardType='numeric' onChangeText={text => setRadius(text)} value={radius} style={{justifyContent: 'flex-end',}} />
@@ -128,16 +168,16 @@ function RecommendPlant(props){
                   </View>
                   <View style={{flexDirection:"row"}}>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter light level' keyboardType='numeric' onChangeText={text => setLightLevel(text)} value={lightLevel} style={{justifyContent: 'flex-start',}} />
+                        <TextInput placeholder='Enter Light Level' keyboardType='numeric' onChangeText={text => setLightLevel(text)} value={lightLevel} style={{justifyContent: 'flex-start',}} />
                     </View>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter soil type' keyboardType='numeric' onChangeText={text => setSoilType(text)} value={soilType} style={{justifyContent: 'flex-end',}} />
+                        <TextInput placeholder='Enter Soil Type' onChangeText={text => setSoilType(text)} value={soilType} style={{justifyContent: 'flex-end',}} />
                     </View>
                     <View style={{flex:1}}>
-                        <TextInput placeholder='Enter hardiness zone' keyboardType='numeric' onChangeText={text => setHardZone(text)} value={hardZone} style={{justifyContent: 'flex-end',}} />
+                        <TextInput placeholder='Enter Hardiness Zone' keyboardType='numeric' onChangeText={text => setHardZone(text)} value={hardZone} style={{justifyContent: 'flex-end',}} />
                     </View>
                   </View>
-                  <TextInput style={styles.textInput} placeholder='Enter Quantity' keyboardType='numeric' onChangeText={text => props.setQuantity(text)} value={props.plantQuantity} />
+                  <TextInput style={styles.textInput} placeholder='Enter Quantity' keyboardType='numeric' onChangeText={text => props.selectQty(text)} value={props.plantQuantity} />
                   <Button title='Add Selection' onPress={() => props.postPlant()}/>
                   <View style={styles.listBottomMargin}>
                     <FlatList
