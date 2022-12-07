@@ -25,18 +25,37 @@ async function getNotificationByToken(accessToken){
 
       let rainToday = 0;
       let rain3Days = 0;
-      weatherServices.getWeather3DayForecast(user.zip_code, (response) => {
-         if(response.Forecast1rain) {
-            rainToday = response.Forecast1rain + rainToday;
-            rain3Days += response.Forecast1rain;
-         }
-         if(response.Forecast2rain) {
-            rain3Days += response.Forecast2rain;
-         }
-         if(response.Forecast3rain) {
-            rain3Days += response.Forecast3rain;
-         }
-      });
+
+      function forecastPromise(zipCode) {
+         return new Promise((resolve, reject) => {
+            weatherServices.getWeather3DayForecast(zipCode, (response) => {
+               resolve(response);
+            }), (errorResponse) => {
+               reject(errorResponse);
+            }
+         });
+      }
+
+      let forecastResponse = await forecastPromise(user.zip_code);
+
+      if(!isNaN(forecastResponse.Forecast1rain)) {
+         rainToday = parseFloat(forecastResponse.Forecast1rain);
+         rain3Days += parseFloat(forecastResponse.Forecast1rain)
+      }
+      if(!isNaN(forecastResponse.Forecast2rain)) {
+         rain3Days += parseFloat(forecastResponse.Forecast2rain);
+      }
+      if(!isNaN(forecastResponse.Forecast3rain)) {
+         rain3Days += parseFloat(forecastResponse.Forecast3rain);
+      }
+
+      console.log("RAIN FIRST DAY: " + forecastResponse.Forecast1rain);
+      console.log("RAIN SECOND DAY: " + forecastResponse.Forecast2rain);
+      console.log("RAIN THIRD DAY: " + forecastResponse.Forecast3rain);
+
+      console.log("RAIN 1 DAY: " + rainToday);
+      
+      console.log("RAIN 3 DAYS: " + rain3Days);
 
       let plantNeedsWatering = false;
       let sendNotification = false;
@@ -48,9 +67,11 @@ async function getNotificationByToken(accessToken){
 
          // if  the water amount is less than 0, push the plant to the notification
          if(userPlants[plant].water_amount <= 0) {
+            console.log("PLANT WATER AMOUNT WITH 1 DAY: " + (userPlants[plant].water_amount + rainToday));
             plantNeedsWatering = true;
             // if theres rain tomorrow that may alter the watering schedule for the plant, let the user know
             if(userPlants[plant].water_amount + rainToday > 0) {
+               console.log("WOOOOO!!!!");
                plantsToBeWatered.push({
                   userPlant: userPlants[plant].user_plant_key,
                   plantType: plantType.common_name,
