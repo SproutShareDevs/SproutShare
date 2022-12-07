@@ -49,7 +49,7 @@ function SimulateTime(props) {
         <>
             <TouchableOpacity
                 onPress={() => toggleTimeModal(true)}
-                style={styles.myGardenButtonsFullWidth}>
+                style={styles.myGardenButtons}>
                 <Text style={styles.gardenButtonText}>Advance Time</Text>
             </TouchableOpacity>
 

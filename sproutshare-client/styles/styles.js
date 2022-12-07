@@ -88,12 +88,12 @@ export default StyleSheet.create({
         textAlign: 'center'
     },
     myGardenTitle: {
-        fontSize: 30,
+        fontSize: 24,
         marginLeft: 22,
     },
     myGardenID: {
         fontSize: 30,
-        marginLeft: 55,
+        marginLeft: 45,
         fontWeight: 'bold'
     },
     myGardenSubs: {
@@ -173,11 +173,11 @@ export default StyleSheet.create({
     gardenButtonText: {
         justifyContent: 'center',
         alignItems: 'center',
+        textAlign: 'center',
         fontSize: 15,
         fontFamily: 'serif',
         fontWeight: "700",
         textTransform: "uppercase"
-
     },
     veggieText: {
         flex:1
@@ -407,7 +407,7 @@ export default StyleSheet.create({
         borderRadius: 30
     },
     myGardenButtons: {
-        width: "45%",
+        width: "40%",
         height: 75,
         justifyContent: 'center',
         alignItems: 'center',

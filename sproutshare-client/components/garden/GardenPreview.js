@@ -16,7 +16,7 @@ function GardenPreview(props) {
                     <View style = {{flexDirection: 'column', marginTop: 30}}>
                     <Text style={styles.myGardenTitle}>{props.garden.garden_name}</Text>
                     </View>
-                    <View style = {{flexDirection: 'column', marginLeft: 30, marginTop: 30}}>
+                    <View style = {{flexDirection: 'column', marginLeft: 15, marginTop: 30}}>
                     <Text style={styles.myGardenSubs}>Light Level: {props.garden.light_level}</Text>
                     <Text style={styles.myGardenSubs}>Soil Type: {props.garden.soil_key}</Text>                    
                     </View>

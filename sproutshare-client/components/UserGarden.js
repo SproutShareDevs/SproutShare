@@ -34,13 +34,13 @@ class UserGarden extends React.Component {
 
   renderCurrentGardenItem = ({ item }) => {
     return (
-      <GardenPreview nodeServer={this.props.nodeServer} garden={item} archiveGarden={this.archiveGarden} updated = {this.state.updated}/>
+      <GardenPreview nodeServer={this.props.nodeServer} garden={item} archiveGarden={this.archiveGarden} updated={this.state.updated} />
     );
   }
 
   renderArchivedGardenItem = ({ item }) => {
     return (
-      <GardenPreview nodeServer={this.props.nodeServer} garden={item} archiveGarden={this.archiveGarden}  updated = {this.state.updated}/>
+      <GardenPreview nodeServer={this.props.nodeServer} garden={item} archiveGarden={this.archiveGarden} updated={this.state.updated} />
     );
   }
 
@@ -119,7 +119,7 @@ class UserGarden extends React.Component {
           <Image source={require("./../assets/MyGardens.png")} style={styles.tinyImage} />
           <WeatherView style={styles.weatherPic} nodeServer={this.props.nodeServer} />
           <View style={{ flex: 4 }}>
-      
+
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity
                 onPress={() => this.toggleGardenViewModal(true)}
@@ -128,15 +128,13 @@ class UserGarden extends React.Component {
               </TouchableOpacity>
             </View>
 
+
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity
                 onPress={() => this.toggleHistoryViewModal(true)}
-                style={styles.myGardenButtonsFullWidth}>
+                style={styles.myGardenButtons}>
                 <Text style={styles.gardenButtonText}>View Garden History</Text>
               </TouchableOpacity>
-            </View>
-
-            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <SimulateTime repushNotifications={this.getNotifications} rerenderGarden={this.rerender} nodeServer={this.props.nodeServer} />
             </View>
 
