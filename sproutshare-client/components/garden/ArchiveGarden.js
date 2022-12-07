@@ -32,7 +32,8 @@ function ArchiveGarden(props) {
         if (item.item.plant_difficulty == null || item.item.plant_quality == null) {
             return (
                 <>
-                    <RatePlant nodeServer={props.nodeServer} userPlantKey={item.item.user_plant_key} updateQuality={updateQuality} updateDifficulty={updateDifficulty} />
+                    <RatePlant nodeServer={props.nodeServer} plantKey={item.item.plant_key} plantingDate = {item.item.plantingDate} userPlantKey={item.item.user_plant_key} 
+                    updateQuality={updateQuality} updateDifficulty={updateDifficulty} />
                 </>
             )
         }

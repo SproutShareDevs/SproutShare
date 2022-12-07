@@ -9,15 +9,13 @@ function RatePlant(props) {
 
     useEffect(() => {
         const fetchPlant = async () => {
-            await axios.get(`${props.nodeServer}/plants/${props.userPlantKey}`).then((response) => {
+            await axios.get(`${props.nodeServer}/plants/${props.plantKey}`).then((response) => {
                 setPlant(response.data);
                 console.log(response.data);
             }).catch(err => {
                 console.log('Error fetching user plant: ', err);
             });
         }
-
-
         fetchPlant();
     }, []);
 
@@ -28,7 +26,8 @@ function RatePlant(props) {
                 source={{ uri: plant.img }}
             />
             <View style={styles.textContainer}>
-                <Text style={styles.veggieText}>Plant Name: {plant.common_name}</Text>
+                <Text style={styles.veggieText}>{plant.common_name}</Text>
+                <Text style={styles.veggieText}>{props.plantingDate}</Text>
             </View>
             <View style={{ justifyContent: "center" }}>
                 <Text>How well does this plant grow?</Text>
