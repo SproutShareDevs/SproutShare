@@ -148,7 +148,7 @@ function ExpandedPost(props) {
             comm_post_title: post.comm_post_title, 
             comm_post_body: post.comm_post_body,
             rated_by_users: post.rated_by_users,
-            comments: post.comments
+            //comments: post.comments,
           }).then((response) => {
             console.log(response.data);
             console.log("Post updated");

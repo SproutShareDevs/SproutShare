@@ -75,8 +75,11 @@ async function storeComment(comment, postID) {
    try {
       console.log(comment);
       const post = await CommunityPosts.findById(postID);
+	  console.log("Parent post: ", post); 
       const newComment = new Comment(comment);
+	  console.log("New comment: ", post); 
       post.comments.push(newComment);
+	  console.log("New post with comment: ", post); 
       await newComment.save();
       await post.save();
       return newComment;

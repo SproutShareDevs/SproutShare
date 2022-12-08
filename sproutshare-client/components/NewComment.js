@@ -31,11 +31,23 @@ function NewComment(props) {
         await axios.post(`${props.nodeServer}/communityPosts/${props.post._id}/addcomment`, {
             text: commentText,
             user_ID: username,
-            rated_by_users: [],
+            rated_by_users: [username],
             })
             .then((response) => {
-              console.log(response.data);
+              console.log("Parent post: ", props.post);
+              console.log("Comment: ", response.data);
               console.log("Comment created");
+              //props.onNewComment();
+            }).catch(err => {
+              console.log('Error creating new comment: ', err);
+        });
+        await axios.get(`${props.nodeServer}/communityPosts/${props.post._id}`)
+            .then((response) => {
+              props.post.comments.push(response.data);
+              console.log("Parent post: ", props.post);
+              console.log("Comment: ", response.data);
+              console.log("Comment created");
+              
               //props.onNewComment();
             }).catch(err => {
               console.log('Error creating new comment: ', err);
