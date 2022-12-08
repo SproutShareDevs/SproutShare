@@ -64,38 +64,34 @@ function GardenFullView(props) {
         setUserPlantData(filteredPlants);
     }
 
-    const addGarden = () => {
-        const postGarden = async () => {
-            await axios.post(`${props.nodeServer}/gardens/store`, {
-                garden_name: props.garden.garden_name,
-                user_key: props.garden.user_key,
-                soil_key: props.garden.soil_key,
-                light_level: props.garden.light_level,
-                is_archived: false,
-            }).then((response) => {
-                setNewGardenKey(response.data.garden_key);
-                console.log(response);
-            }).catch(err => {
-                console.log('Error adding new garden: ', err);
-            });
-        }
-
-        const postUserPlant = async (userPlant) => {
-            await axios.post(`${props.nodeServer}/userPlants/store`, {
-                user_key: props.garden.user_key,
-                plant_key: userPlant.plant_key,
-                garden_key: newGardenKey,
-                plant_qty: userPlant.plant_quantity
-            }).then((response) => {
-                console.log('added ', userPlant.plant_key);
-            }).catch(err => {
-                console.log('Error adding plant: ', err);
-            });
-        }
-
-        postGarden();
-        userPlantData.forEach(item => postUserPlant(item));
+    const addGarden = async () => {
+        await axios.post(`${props.nodeServer}/gardens/store`, {
+            garden_name: props.garden.garden_name,
+            user_key: props.garden.user_key,
+            soil_key: props.garden.soil_key,
+            light_level: props.garden.light_level,
+            is_archived: false,
+        }).then((response) => {
+            userPlantData.forEach(item => postUserPlant(item, response.data.garden_key));
+            console.log(response.data);
+        }).catch(err => {
+            console.log('Error adding new garden: ', err);
+        });
     }
+
+    const postUserPlant = async (userPlant, gardenKey) => {
+        await axios.post(`${props.nodeServer}/userPlants/store`, {
+            user_key: props.garden.user_key,
+            plant_key: userPlant.plant_key,
+            garden_key: gardenKey,
+            plant_qty: userPlant.plant_quantity
+        }).then((response) => {
+            console.log(response.data);
+        }).catch(err => {
+            console.log('Error adding plant: ', err);
+        });
+    }
+    
 
     renderItem = ({ item }) => {
         if (props.garden.is_archived == false) {
