@@ -31,7 +31,7 @@ function NewComment(props) {
         await axios.post(`${props.nodeServer}/communityPosts/${props.post._id}/addcomment`, {
             text: commentText,
             user_ID: username,
-            rated_by_users: [username],
+            rated_by_users: [],
             })
             .then((response) => {
               console.log("Parent post: ", props.post);
@@ -43,9 +43,11 @@ function NewComment(props) {
         });
         await axios.get(`${props.nodeServer}/communityPosts/${props.post._id}`)
             .then((response) => {
-              props.post.comments.push(response.data);
-              console.log("Parent post: ", props.post);
-              console.log("Comment: ", response.data);
+              // Need someway to add the new comment to the current post
+              //props.post.comments.push(response.data.comments);
+              props.post.comments = response.data.comments;
+              console.log("Props post: ", props.post);
+              console.log("New post: ", response.data);
               console.log("Comment created");
               
               //props.onNewComment();

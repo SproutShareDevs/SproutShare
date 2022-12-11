@@ -104,6 +104,7 @@ function ExpandedPost(props) {
         return <View key={item._id} style={{ paddingHorizontal: 20, marginTop: 5 }}>
             <Text style={{fontWeight: "bold", fontSize: 20}} >{item.user_ID}</Text>
             <Text>{item.text}</Text>
+            {console.log("renderItem item: ", item)}
             <Text>Rating: {item.rated_by_users.length} </Text>
             <Button title={(hasUserRated(item)) ? "Upvoted!" : "Not upvoted"} onPress={() => toggleRating(item)} />
         </View>
@@ -183,7 +184,7 @@ function ExpandedPost(props) {
                     <FlatList
                         data={props.post.comments}
                         renderItem={renderItem}
-                        keyExtractor={item => item._id}
+                        keyExtractor={(item) => item._id}
                     />
                     <NewComment nodeServer={props.nodeServer} post={props.post} onNewComment={rerender} />
                     {renderControlButtons()}
